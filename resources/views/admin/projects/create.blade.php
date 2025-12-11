@@ -11,11 +11,21 @@
     <div class="row">
          <div class="col-md-4 mb-3">
             <label class="form-label">State *</label>
-            <input type="text" name="location" value="{{ old('location') }}" class="form-control" required>
+            <select name="location"  class="form-select" required>
+                <option value="">Select State</option>
+                @foreach($states as $state)
+                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label">Department *</label>
-            <input type="text" name="department" value="{{ old('department') }}" class="form-control" required>
+            <select name="department_id" class="form-select" required>
+                    <option value="">Select Department</option>
+                    @foreach($departments as $dept)
+                        <option value="{{ $dept->id }}">{{ $dept->name }}</option>
+                    @endforeach
+            </select>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
@@ -85,4 +95,6 @@
     <button class="btn btn-success">Save Project</button>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
 </form>
+
+
 @endsection

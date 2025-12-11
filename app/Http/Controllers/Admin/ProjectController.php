@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
+use App\Models\Department;
 use App\Models\Project;
+use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -17,7 +19,9 @@ class ProjectController extends Controller
 
     public function create()
     {
-        return view('admin.projects.create');
+        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
+        $states = State::orderBy('name')->get();
+        return view('admin.projects.create', compact('departments','states'));
     }
 
     public function store(ProjectRequest $request)

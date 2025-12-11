@@ -49,6 +49,17 @@
             </div>
 
             <div class="nav-item">
+                <a href="{{ route('departments.index') }}" 
+                class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="nav-text">Departments</span>
+                </a>
+            </div>
+
+
+            <div class="nav-item">
                 <a href="{{ route('admin.projects.index') }}" class="nav-link {{ Request::is('admin/projects*') ? 'active' : '' }}">
                     <span class="nav-icon">
                         <i class="fas fa-project-diagram"></i>

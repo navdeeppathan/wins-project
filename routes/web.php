@@ -85,6 +85,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     )->name('attachments.store');
 });
 
+use App\Http\Controllers\Admin\DepartmentController;
+
+Route::resource('departments', DepartmentController::class);
+
 
 
 use App\Http\Controllers\Auth\LoginController;
