@@ -50,7 +50,7 @@
         .shape:nth-child(2){top:60%; right:10%; font-size:80px; animation-delay:2s;}
         .shape:nth-child(3){bottom:20%; left:15%; font-size:90px; animation-delay:4s;}
         @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-20px) rotate(10deg);}}
-        .auth-container{display:flex; max-width:1000px; width:100%; background:white; border-radius:30px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,0.3); position:relative; z-index:2; animation:slideUp 0.6s ease-out;}
+        .auth-container{display:flex; max-width:1000px; width:100%; background:rgba(255, 255, 255, 0.872); border-radius:30px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,0.3); position:relative; z-index:2; animation:slideUp 0.6s ease-out;}
         @keyframes slideUp{from{opacity:0; transform:translateY(30px);}to{opacity:1; transform:translateY(0);}}
         .left-panel{flex:1; background:linear-gradient(135deg,#2d3561 0%, #1a1f3a 100%); padding:60px 40px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; position:relative; overflow:hidden;}
         .left-panel::before{content:''; position:absolute; top:-50%; right:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation:pulse 8s infinite;}
@@ -219,10 +219,36 @@
             text-decoration: none;
             font-weight: bold;
         }
+        /* Background Slider Animation */
+.bg-slider {
+    position: relative;
+    overflow: hidden;
+    background-size: cover !important;
+    background-position: center !important;
+    animation: bgChange 25s infinite linear;
+}
+
+/* 5 images × 5 seconds = 25 seconds total loop */
+@keyframes bgChange {
+    0%   { background-image: url('/s1.jpg'); }
+    20%  { background-image: url('/s1.jpg'); }
+
+    20.01% { background-image: url('/s2.jpg'); }
+    40%    { background-image: url('/s2.jpg'); }
+
+    40.01% { background-image: url('/s3.jpg'); }
+    60%    { background-image: url('/s3.jpg'); }
+
+    60.01% { background-image: url('/s4.jpg'); }
+    80%    { background-image: url('/s4.jpg'); }
+
+   
+}
+
     </style>
 </head>
 
-<body>
+<body style="background: url('/bgimg.jpg') no-repeat center center/cover;">
 
     <!-- Floating Background Shapes -->
     <div class="floating-shapes">
@@ -231,26 +257,27 @@
         <div class="shape"><i class="fas fa-crown"></i></div>
     </div>
 
-    <div class="auth-container">
+   <div class="auth-container"  >
+
 
         <button class="close-btn" onclick="window.history.back()">
             <i class="fas fa-times"></i>
         </button>
 
         <!-- LEFT PANEL -->
-        <div class="left-panel">
+       <div class="left-panel bg-slider">
             <div class="brand-logo">
                 <i class="fas fa-crown crown-icon"></i>
             </div>
             <div class="brand-name">Wins</div>
             <p class="brand-description">
-              The best way to manage your expenses.
+                The best way to manage your expenses.
             </p>
-            {{-- <button class="learn-more-btn">Learn More</button> --}}
         </div>
 
+
         <!-- RIGHT PANEL (LOGIN FORM) -->
-        <div class="right-panel">
+        <div class="right-panel" >
             <h2 class="welcome-text">Welcome Back!</h2>
             <p class="subtitle">Sign in to continue</p>
 

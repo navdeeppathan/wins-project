@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProjectPgController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +16,88 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     })->name('dashboard');
 
+      Route::get('/acceptance', [App\Http\Controllers\Admin\ProjectController::class, 'acceptanceIndex'])
+    ->name('projects.acceptance');
+
+     Route::get('/award', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndex'])
+    ->name('projects.award');
+
+     Route::get('/agreement', [App\Http\Controllers\Admin\ProjectController::class, 'agreementIndex'])
+    ->name('projects.agreement');
+
+    Route::get(
+        '/projects/{project}/agreement-date',
+        [App\Http\Controllers\Admin\ProjectController::class, 'agreementDateCreate']
+    )->name('projects.agreementdate.create');
+
+
+    Route::get(
+        '/returned',
+        [App\Http\Controllers\Admin\ProjectController::class, 'returnedCreate']
+    )->name('projects.returned.create');
+
+    Route::get(
+        '/forfieted',
+        [App\Http\Controllers\Admin\ProjectController::class, 'forfietedCreate']
+    )->name('projects.forfieted.create');
+
+
     /* ===================== PROJECTS (BIDDING) ===================== */
     Route::resource('projects', App\Http\Controllers\Admin\ProjectController::class);
+
+
+
+    Route::get(
+        '/projects/{project}/pg',
+        [ProjectPgController::class, 'create']
+    )->name('projects.pg.create');
+
+    Route::post(
+        '/projects/{project}/pg',
+        [ProjectPgController::class, 'store']
+    )->name('projects.pg.store');
+
+  
+
+    Route::post('/projects/update-qualified/{project}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateQualified'])
+    ->name('projects.updateQualified');
+
+    Route::post('/projects/update-returned/{project}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateReturned'])
+    ->name('projects.updateReturned');
+
+     Route::post('/projects/update-forfieted/{project}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateforfittedReturned'])
+    ->name('projects.updateForfieted');
+
+    // routes/web.php
+    Route::put(
+        '/projects/{project}/acceptance-update',
+        [App\Http\Controllers\Admin\ProjectController::class, 'updateDocAndStatus']
+    )->name('projects.acceptance.update');
+
+    Route::put(
+        '/projects/{project}/award-update',
+        [App\Http\Controllers\Admin\ProjectController::class, 'updateDocAndStatus2']
+    )->name('projects.award.update');
+
+     Route::put(
+        '/projects/{project}/agreement-update',
+        [App\Http\Controllers\Admin\ProjectController::class, 'updateDocAndStatus3']
+    )->name('projects.agreement.update');
+
+
+     Route::put(
+        '/projects/{project}/agreement-date-update',
+        [App\Http\Controllers\Admin\ProjectController::class, 'updateDocAndStatus4']
+    )->name('projects.agreementdate.update');
+
+
+     Route::post('/projects/update-returned/{project}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateReturned'])
+    ->name('projects.updateReturned');
+
 
     /* ---- Project Workflow: Acceptance + Award + Agreement ---- */
     Route::post('projects/{project}/acceptance',
@@ -32,10 +112,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\AgreementController::class, 'store']
     )->name('projects.agreement.store');
 
+    
+
     /* ===================== BILLING (PROJECT WISE) ===================== */
     Route::get('projects/{project}/billing',
         [App\Http\Controllers\Admin\BillingController::class, 'index']
     )->name('projects.billing.index');
+    
+     Route::get('bill',
+        [App\Http\Controllers\Admin\BillingController::class, 'indexprojects']
+    )->name('indexprojects');
 
     Route::post('projects/{project}/billing',
         [App\Http\Controllers\Admin\BillingController::class, 'store']
@@ -95,7 +181,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
 /* ========== AUTH ROUTES (NO UI) ========== */
-Route::get('login', [LoginController::class, 'loginForm'])->name('login.form');
+Route::get('/', [LoginController::class, 'loginForm'])->name('login.form');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::get('register', [RegisterController::class, 'registerForm'])->name('register.form');

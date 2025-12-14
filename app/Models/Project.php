@@ -8,6 +8,7 @@ class Project extends Model
 {
     protected $fillable = [
         'nit_number',
+        'name',
         'department',
         'location',
         'estimated_amount',
@@ -21,6 +22,20 @@ class Project extends Model
         'stipulated_completion',
         'status',
         'created_by',
+        'isQualified',
+        'isReturned',
+        'acceptance_upload',
+        'tendered_amount',
+        'acceptance_letter_no',
+        'date',
+        'award_letter_no',
+        'award_date',
+        'award_upload',
+        'agreement_upload',
+        'agreement_start_date',
+        'agreement_no',
+        'stipulated_date_ofcompletion',
+        'isForfitted'
     ];
 
     // Project belongs to User
@@ -70,4 +85,25 @@ class Project extends Model
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function emds()
+    {
+        return $this->hasMany(EmdDetail::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department', 'id');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class,'location','id');
+    }
+
+    public function pgDetails()
+    {
+        return $this->hasMany(PgDetail::class, 'project_id');
+    }
+
 }

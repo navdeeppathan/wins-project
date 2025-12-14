@@ -116,7 +116,7 @@
       .auth-container {
         width: 100%;
         max-width: 1100px;
-        background: #ffffff;
+        background: rgba(255, 255, 255, 0.872);
         border-radius: 28px;
         overflow: hidden;
         display: flex;
@@ -347,10 +347,35 @@
             text-decoration: none;
             font-weight: bold;
         }
+
+        .bg-slider {
+    position: relative;
+    overflow: hidden;
+    background-size: cover !important;
+    background-position: center !important;
+    animation: bgChange 25s infinite linear;
+}
+
+/* 5 images × 5 seconds = 25 seconds total loop */
+@keyframes bgChange {
+    0%   { background-image: url('/s1.jpg'); }
+    20%  { background-image: url('/s1.jpg'); }
+
+    20.01% { background-image: url('/s2.jpg'); }
+    40%    { background-image: url('/s2.jpg'); }
+
+    40.01% { background-image: url('/s3.jpg'); }
+    60%    { background-image: url('/s3.jpg'); }
+
+    60.01% { background-image: url('/s4.jpg'); }
+    80%    { background-image: url('/s4.jpg'); }
+
+   
+}
     </style>
   </head>
 
-  <body>
+  <body style="background: url('/bgimg.jpg') no-repeat center center/cover;">
     <!-- Floating Crown Background -->
     <div class="floating-shapes">
       <div class="shape"><i class="fas fa-crown"></i></div>
@@ -365,7 +390,7 @@
       </button>
 
       <!-- LEFT PANEL -->
-      <div class="left-panel">
+      <div class="left-panel bg-slider">
         <div class="brand-logo">
           <i class="fas fa-crown crown-icon"></i>
         </div>

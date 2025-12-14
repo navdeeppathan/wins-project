@@ -16,6 +16,12 @@ class BillingController extends Controller
         return view('admin.billing.index', compact('project','billings'));
     }
 
+     public function indexprojects()
+    {
+        $projects = Project::where('status', 'billing')->latest()->paginate(20);
+        return view('admin.billing.indexprojects', compact('projects'));
+    }
+    
     public function store(Request $request, Project $project)
     {
         $request->validate([

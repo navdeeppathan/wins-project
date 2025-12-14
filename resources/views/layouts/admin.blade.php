@@ -9,6 +9,10 @@
     
    <link rel="stylesheet" href="{{ asset('/style.css') }}">
     
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
+
     @stack('styles')
 </head>
 <body>
@@ -70,6 +74,77 @@
                     @endif
                 </a>
             </div>
+
+             <div class="nav-item">
+                <a href="{{ route('admin.projects.acceptance') }}" class="nav-link {{ Request::is('admin/acceptance*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </span>
+                    <span class="nav-text">Projects (Acceptance)</span>
+                    @if(isset($projectCount) && $projectCount > 0)
+                        <span class="nav-badge">{{ $projectCount }}</span>
+                    @endif
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.award') }}" class="nav-link {{ Request::is('admin/award*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </span>
+                    <span class="nav-text">Projects (Award)</span>
+                    @if(isset($projectCount) && $projectCount > 0)
+                        <span class="nav-badge">{{ $projectCount }}</span>
+                    @endif
+                </a>
+            </div>
+
+             <div class="nav-item">
+                <a href="{{ route('admin.projects.agreement') }}" class="nav-link {{ Request::is('admin/agreement*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </span>
+                    <span class="nav-text">Projects (Agreement)</span>
+                    @if(isset($projectCount) && $projectCount > 0)
+                        <span class="nav-badge">{{ $projectCount }}</span>
+                    @endif
+                </a>
+            </div>
+            
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.returned.create') }}" class="nav-link {{ Request::is('admin/returned*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </span>
+                    <span class="nav-text">EMD Returned</span>
+                    @if(isset($projectCount) && $projectCount > 0)
+                        <span class="nav-badge">{{ $projectCount }}</span>
+                    @endif
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.forfieted.create') }}" class="nav-link {{ Request::is('admin/forfieted*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </span>
+                    <span class="nav-text">EMD Returned (Forfieted)</span>
+                    @if(isset($projectCount) && $projectCount > 0)
+                        <span class="nav-badge">{{ $projectCount }}</span>
+                    @endif
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="{{url('/admin/bill')}}"
+                class="nav-link {{ Request::is('admin/bill*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="nav-text">Billing</span>
+                </a>
+            </div>
+
 
             <div class="nav-item">
                 <a href="{{ route('admin.vendors.index') }}" class="nav-link {{ Request::is('admin/vendors*') ? 'active' : '' }}">
@@ -196,6 +271,39 @@
             }
         });
     </script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+
+<script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.js"></script>
+
+<script>
+new DataTable('#example', {
+    scrollX: true,
+    responsive: false,
+    autoWidth: false,
+    // layout: {
+    //     topStart: {
+    //         buttons: ['copy', 'excel', 'pdf', 'print']
+    //     }
+    // }
+});
+
+</script>
+
+  
     @stack('scripts')
+    
 </body>
 </html>

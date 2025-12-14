@@ -1,0 +1,159 @@
+
+
+
+
+
+
+
+@extends('layouts.admin')
+
+@section('title','Projects')
+
+@section('content')
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Projects (Award)</h3>
+
+</div>
+
+<div class="table-responsive">
+    <table id="example" class="table table-striped nowrap" style="width:100%">
+
+    <thead >
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Award Letter No.</th>
+            <th>Award Date</th>
+            <th>Estimate Amount</th>
+            <th>Tendered Amount</th>
+            <th>Location</th>
+            <th>Department</th>
+            <th>Agreement No.</th>
+            <th>Agreement Start Date</th>
+            <!-- NEW COLUMNS -->
+            <th>Upload</th>
+            <th>Save</th>
+            <th>Status</th>
+            <th>PG Details</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @forelse($projects as $p)
+            <tr>
+                <td>{{ $p->id }}</td>
+                <td>{{ $p->name }}</td>
+                <td>{{ $p->award_letter_no }}</td>
+                <td>{{ $p->award_date}}</td>
+
+                <td>{{ number_format($p->estimated_amount,2) }}</td>
+                <td>{{ number_format($p->tendered_amount,2) }}</td>
+                <td>{{ $p->state->name ?? '' }}</td>
+                <td>{{ $p->department->name ?? '-' }}</td> 
+                  {{-- Acceptance Letter No --}}
+                <td>
+                    <input type="text"
+                        class="form-control form-control-sm agreement_no"
+                        value="{{ $p->agreement_no }}">
+                </td>
+
+                <td>{{ $p->agreement_start_date ?? '-' }}</td> 
+
+
+                {{-- Upload --}}
+                <td>
+                    <input type="file"
+                        class="form-control form-control-sm agreement_upload">
+                </td>
+                
+
+               {{-- Save --}}
+                <td>
+                    <button class="btn btn-sm btn-success saveAgreementBtn"
+                            data-id="{{ $p->id }}">
+                        Save
+                    </button>
+                </td>
+                
+                <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                <td>
+                   <a href="{{ route('admin.projects.agreementdate.create', $p->id) }}"
+                    class="btn btn-sm btn-primary">
+                        Agreement Date
+                    </a>
+                </td>
+
+                
+            </tr>
+        @empty
+            <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
+        @endforelse
+    </tbody>
+</table>
+</div>
+
+
+@push('scripts')
+<script>
+$(document).on('click', '.saveAgreementBtn', function () {
+
+    let btn = $(this);
+    let row = btn.closest('tr');
+    let projectId = btn.data('id');
+
+    let formData = new FormData();
+    formData.append('_method', 'PUT'); // spoof PUT
+    formData.append('_token', "{{ csrf_token() }}");
+
+    
+
+    formData.append(
+        'agreement_no',
+        row.find('.agreement_no').val()
+    );
+
+    let fileInput = row.find('.agreement_upload')[0];
+    if (fileInput.files.length > 0) {
+        formData.append('agreement_upload', fileInput.files[0]);
+    }
+
+    btn.prop('disabled', true).text('Saving...');
+
+    $.ajax({
+        url: "/admin/projects/" + projectId + "/agreement-update",
+        type: "POST", // IMPORTANT
+        data: formData,
+        processData: false, // required for FormData
+        contentType: false, // required for FormData
+        success: function (response) {
+            btn.prop('disabled', false).text('Save');
+
+            if (response.success) {
+                alert(response.message);
+
+                // OPTIONAL: update status text without reload
+                row.find('.badge')
+                   .removeClass('bg-info')
+                   .addClass('bg-success')
+                   .text('Agreement');
+            } else {
+                alert('Update failed');
+            }
+        },
+        error: function (xhr) {
+            btn.prop('disabled', false).text('Save');
+            alert('Server error');
+            console.error(xhr.responseText);
+        }
+    });
+});
+</script>
+@endpush
+
+
+
+{{ $projects->links() }}
+
+@endsection
