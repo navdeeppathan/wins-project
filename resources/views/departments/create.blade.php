@@ -32,7 +32,8 @@
                 
                 <div class="mb-3">
                     <label class="form-label">Department Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control">
+                    {{-- <input type="text" name="name" value="{{ old('name') }}" class="form-control"> --}}
+                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" style="text-transform: uppercase;">
                     @error('name')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror

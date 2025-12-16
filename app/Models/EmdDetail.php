@@ -19,6 +19,8 @@ class EmdDetail extends Model
         'amount',
         'remarks',
         'upload',
+        'isReturned',
+        'isForfieted'
     ];
 
     // Relationship: Each EMD belongs to one project

@@ -23,4 +23,13 @@ class Department extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Relationship: A department has many projects
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'department');
+    }
+
 }

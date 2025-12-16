@@ -10,86 +10,95 @@
 
 </div>
 
+
+    
+@if($projects->count() > 0)
 <div class="table-responsive">
     <table id="example" class="table table-striped nowrap" style="width:100%">
 
-    <thead >
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>NIT No</th>
-            <th>Estimate Amount</th>
-            <th>Tendered Amount</th>
-            <th>Location</th>
-            <th>Department</th>
-            <th>EMD Amount</th>
-            <th>Acceptance Letter No.</th>
-            <!-- NEW COLUMNS -->
-            <th>Upload</th>
-            <th>Save</th>
-            <th>Status</th>
-            <th>PG Details</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($projects as $p)
+        <thead >
             <tr>
-                <td>{{ $p->id }}</td>
-                <td>{{ $p->name }}</td>
-                <td>{{ $p->nit_number }}</td>
-                <td>{{ number_format($p->estimated_amount,2) }}</td>
+                <th>#</th>
+                <th>Name</th>
+                <th>NIT No</th>
+                <th>Estimate Amount</th>
+                <th>Tendered Amount</th>
+                <th>Location</th>
+                <th>Department</th>
+                <th>EMD Amount</th>
+                <th>Acceptance Letter No.</th>
+                <th>Date</th>
+                <th>Upload</th>
+                <th>Save</th>
+                <th>Status</th>
+                <th>PG Details</th>
 
-                {{-- Tendered Amount --}}
-                <td>
-                    <input type="number" step="0.01"
-                        class="form-control form-control-sm tendered_amount"
-                        value="{{ $p->tendered_amount }}">
-                </td>
-                {{-- <td>{{ $p->date_of_opening }}</td> --}}
-                 <td>{{ $p->location }}</td>
-                <td>{{ $p->department }}</td> 
-                <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-
-                  {{-- Acceptance Letter No --}}
-                <td>
-                    <input type="text"
-                        class="form-control form-control-sm acceptance_letter_no"
-                        value="{{ $p->acceptance_letter_no }}">
-                </td>
-
-                {{-- Upload --}}
-                <td>
-                    <input type="file"
-                        class="form-control form-control-sm acceptance_upload">
-                </td>
-                
-
-               {{-- Save --}}
-                <td>
-                    <button class="btn btn-sm btn-success saveAcceptanceBtn"
-                            data-id="{{ $p->id }}">
-                        Save
-                    </button>
-                </td>
-                
-                <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
-                <td>
-                    <a href="{{ route('admin.projects.pg.create', $p->id) }}"
-                    class="btn btn-sm btn-primary">
-                        Add PG
-                    </a>
-                </td>
-
-                
             </tr>
-        @empty
-            <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
-        @endforelse
-    </tbody>
-</table>
-</div>
+        </thead>
+        <tbody>
+            @forelse($projects as $p)
+                <tr>
+                    <td>{{ $p->id }}</td>
+                    <td>{{ $p->name }}</td>
+                    <td>{{ $p->nit_number }}</td>
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
 
+                    <td>
+                        <input type="number" step="0.01"
+                            class="form-control form-control-sm tendered_amount"
+                            value="{{ $p->tendered_amount }}">
+                    </td>
+                    
+                    <td>{{ $p->state->name ?? '-' }}</td>
+                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td>
+
+
+                    <td>
+                        <input type="text"
+                            class="form-control form-control-sm acceptance_letter_no"
+                            value="{{ $p->acceptance_letter_no }}">
+                    </td>
+
+                    <td>
+                        <input type="date"
+                            class="form-control form-control-sm acceptance_date"
+                            value="{{ $p->acceptance_date }}">
+                    </td>
+
+                    <td>
+                        <input type="file"
+                            class="form-control form-control-sm acceptance_upload">
+                    </td>
+
+                    <td>
+                        <button class="btn btn-sm btn-success saveAcceptanceBtn"
+                                data-id="{{ $p->id }}">
+                            Save
+                        </button>
+                    </td>
+                    
+                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    <td>
+                        <a href="{{ route('admin.projects.pg.create', $p->id) }}"
+                        class="btn btn-sm btn-primary">
+                            Add PG
+                        </a>
+                    </td>
+
+                    
+                </tr>
+            @empty
+                <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+@else
+    <div class="alert alert-warning text-center">
+        Data is not available.
+    </div>
+@endif
 
 @push('scripts')
 <script>
@@ -111,6 +120,11 @@ $(document).on('click', '.saveAcceptanceBtn', function () {
     formData.append(
         'acceptance_letter_no',
         row.find('.acceptance_letter_no').val()
+    );
+
+    formData.append(
+        'date',
+        row.find('.acceptance_date').val()
     );
 
     let fileInput = row.find('.acceptance_upload')[0];

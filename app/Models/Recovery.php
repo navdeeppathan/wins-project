@@ -17,7 +17,8 @@ class Recovery extends Model
         'sgst',
         'withheld_1',
         'withheld_2',
-        'total'
+        'total',
+        'recovery'
     ];
 
     public function billing()
