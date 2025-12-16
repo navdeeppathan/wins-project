@@ -15,6 +15,8 @@ class PgDetail extends Model
         'instrument_date',
         'amount',
         'upload',
+        'isReturned',
+        'isForfieted'
     ];
 
     // Laravel will manage these automatically

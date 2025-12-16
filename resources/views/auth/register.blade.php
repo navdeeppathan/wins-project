@@ -192,7 +192,7 @@
       /* Right Panel */
       .right-panel {
         flex: 1.1;
-        padding: 60px 45px;
+        padding: 30px 45px;
       }
 
       .welcome-text {
@@ -418,21 +418,52 @@
           @csrf
 
           <!-- NAME -->
-          <div class="mb-3">
+          <div class="mb-2">
             <input
               type="text"
               name="name"
               required
               class="form-control"
-              placeholder="Name"
+              placeholder="Name of Agency"
+              value="{{ old('name') }}"
             />
             @error('name')
             <div class="login-error">{{ $message }}</div>
             @enderror
           </div>
 
+          <div class="mb-2">
+              <input
+                  type="text"
+                  name="gst_number"
+                  class="form-control"
+                  placeholder="Enter GST Number"
+                  required
+                  maxlength="15"
+                  style="text-transform: uppercase;"
+                  value="{{ old('gst_number') }}"
+              />
+              @error('gst_number')
+                  <div class="login-error">{{ $message }}</div>
+              @enderror
+          </div>
+
+          <div class="mb-2">
+            <input
+              type="text"
+              name="auth_person_name"
+              required
+              class="form-control"
+              placeholder="Name of Authorized Person"
+              value="{{ old('auth_person_name') }}"
+            />
+            @error('auth_person_name')
+            <div class="login-error">{{ $message }}</div>
+            @enderror
+          </div>
+
           <!-- EMAIL -->
-          <div class="mb-3">
+          <div class="mb-2">
             <input
               type="email"
               name="email"
@@ -448,7 +479,7 @@
           </div>
 
           <!-- PASSWORD -->
-          <div class="mb-3 password-group">
+          <div class="mb-2 password-group">
             <input
               type="password"
               name="password"
@@ -468,7 +499,7 @@
           </div>
 
           <!-- CONFIRM PASSWORD -->
-          <div class="mb-3 password-group">
+          <div class="mb-2 password-group">
             <input
               type="password"
               name="password_confirmation"
@@ -491,7 +522,7 @@
           </button>
           <div class="login-link">
                     Already have an account?
-                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('login.form') }}">Login</a>
                 </div>
         </form>
       </div>

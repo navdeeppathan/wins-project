@@ -19,7 +19,8 @@ class Billing extends Model
         'status',
         'approved_by',
         'approved_at',
-        'bill_file'
+        'bill_file',
+        'remarks'
     ];
 
     public function project()
@@ -36,9 +37,20 @@ class Billing extends Model
     {
         return $this->hasOne(Recovery::class);
     }
+    public function recoveries()
+    {
+        return $this->hasMany(Recovery::class);
+    }
+
 
     public function approver()
     {
         return $this->belongsTo(User::class, 'approved_by');
     }
+
+    public function securityDeposits()
+{
+    return $this->hasMany(SecurityDeposit::class);
+}
+
 }

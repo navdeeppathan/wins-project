@@ -67,11 +67,11 @@
                         <td>{{ $i->vendor_id }}</td>
                         <td>{{ $i->remarks }}</td>
                         <td>
-                            <form action="{{ route('admin.inventory.destroy', $i) }}" method="POST"
+                            {{-- <form action="{{ route('admin.inventory.destroy', $i) }}" method="POST"
                                   onsubmit="return confirm('Delete item?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-danger">Del</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                 @empty

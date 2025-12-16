@@ -5,107 +5,81 @@
 @section('content')
 
 
+
+
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (Forfitted)</h3>
+    {{-- <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a> --}}
 </div>
-
+@if($projects->count() > 0)
 <div class="table-responsive">
     <table id="example" class="table table-striped nowrap" style="width:100%">
 
-    <thead >
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>NIT No</th>
-            <th>Estimate Amount</th>
-            {{-- <th>Date of Opening</th> --}}
-            <th>Location</th>
-
-
-            <th>Department</th>
-            
-            <th>EMD Amount</th>
-            <th>Instrument Type</th>
-            <th>Instrument Number</th>
-            <th>Instrument Date</th>
-            
-
-
-            <!-- NEW COLUMNS -->
-        <th>Forfieted</th>
-        <th>Save</th>
-            <th>Status</th>
-            {{-- <th width="160">Actions</th> --}}
-        </tr>
-    </thead>
-    <tbody>
-        @forelse($projects as $p)
+        <thead >
             <tr>
-                <td>{{ $p->id }}</td>
-                <td>{{ $p->name }}</td>
-                <td>{{ $p->nit_number }}</td>
-                <td>{{ number_format($p->estimated_amount,2) }}</td>
-                {{-- <td>{{ $p->date_of_opening }}</td> --}}
-                 <td>{{ $p->location }}</td>
-                <td>{{ $p->department }}</td> 
-                <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-               <td>
-                    @foreach($p->emds as $emd)
-                        {{ $emd->instrument_type }}<br>
-                    @endforeach
-                </td>
+                <th>#</th>
+                <th>Name</th>
+                <th>NIT No</th>
+                <th>Estimate Amount</th>
+                <th>Date of Opening</th>
+                <th>Location</th>
 
-                <td>
-                    @foreach($p->emds as $emd)
-                        {{ $emd->instrument_number }}<br>
-                    @endforeach
-                </td>
-
-                <td>
-                    @foreach($p->emds as $emd)
-                        {{ $emd->instrument_date }}<br>
-                    @endforeach
-                </td>
-
-                <td style="background:yellow;">
-                        <input type="checkbox"
-                            class="form-check-input isForfittedBox"
-                            data-id="{{ $p->id }}"
-                            {{ $p->isForfitted ? 'checked' : '' }}>
-                    </td>
-
-                <!-- SAVE BUTTON -->
-                <td style="background:yellow;">
-                    <button class="btn btn-sm btn-success saveisForfittedBtn"
-                            data-id="{{ $p->id }}">
-                        Save
-                    </button>
-                </td>
+                <th>Department</th>
                 
-                <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
-               
+                <th>EMD Amount</th>
+
+            
+                <th>Status</th>
+                <th width="160">Actions</th>
             </tr>
-        @empty
-            <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
-        @endforelse
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @forelse($projects as $p)
+                <tr>
+                    <td>{{ $p->id }}</td>
+                    <td>{{ $p->name }}</td>
+                    <td>{{ $p->nit_number }}</td>
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
+                    <td>{{ $p->date_of_opening }}</td>
+                    <td>{{  $p->state->name ?? '-' }}</td>
+                    <td>{{  $p->departments->name ?? '-' }}</td> 
+                    <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
+
+
+                    
+                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    <td>
+                        <a href="{{ route('admin.projects.forfieted.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            @empty
+                <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
+@else
+    <div class="alert alert-warning text-center">
+        Data is not available.
+    </div>
+@endif
+
 
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveisForfittedBtn', function () {
+$(document).on('click', '.saveQualifiedBtn', function () {
 
     let id = $(this).data('id');
-    let isForfitted = $(this).closest('tr').find('.isForfittedBox').is(':checked') ? 1 : 0;
+    let isQualified = $(this).closest('tr').find('.isQualifiedBox').is(':checked') ? 1 : 0;
 
     $.ajax({
-        url: "/admin/projects/update-forfieted/" + id,
+        url: "/admin/projects/update-qualified/" + id,
         type: "POST",
         data: {
             _token: "{{ csrf_token() }}",
-            isForfitted: isForfitted,
+            isQualified: isQualified,
         },
         success: function (response) {
             alert("Updated Successfully");

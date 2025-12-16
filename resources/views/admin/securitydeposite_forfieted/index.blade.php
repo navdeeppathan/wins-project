@@ -9,10 +9,9 @@
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Bidding)</h3>
+    <h3>Projects (Security Deposit Forfieted)</h3>
     <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a>
 </div>
-
 @if($projects->count() > 0)
 
 <div class="table-responsive">
@@ -30,12 +29,10 @@
                 
                 <th>EMD Amount</th>
 
-                <!-- NEW COLUMNS -->
-                <th>Qualified</th>
-                <th>Save</th>
-                    <th>Status</th>
-                    <th width="160">Actions</th>
-                </tr>
+            
+                <th>Status</th>
+                <th width="160">Actions</th>
+            </tr>
         </thead>
         <tbody>
             @forelse($projects as $p)
@@ -48,32 +45,12 @@
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-                    <td style="background:yellow;">
-                            <input type="checkbox"
-                                class="form-check-input isQualifiedBox"
-                                data-id="{{ $p->id }}"
-                                {{ $p->isQualified ? 'checked' : '' }}>
-                    </td>
 
-                    <!-- SAVE BUTTON -->
-                    <td style="background:yellow;">
-                        <button class="btn btn-sm btn-success saveQualifiedBtn"
-                                data-id="{{ $p->id }}">
-                            Save
-                        </button>
-                    </td>
+
                     
                     <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
                     <td>
-                        <a href="{{ route('admin.projects.edit', $p) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{{ route('admin.projects.billing.index', $p) }}" class="btn btn-sm btn-secondary">
-                            Billing
-                        </a>
-                        {{-- <form action="{{ route('admin.projects.destroy', $p) }}" method="POST" class="d-inline"
-                            onsubmit="return confirm('Delete this project?')">
-                            @csrf @method('DELETE')
-                            <button class="btn btn-sm btn-danger">Del</button>
-                        </form> --}}
+                        <a href="{{ route('admin.projects.securityforfieted.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
             @empty

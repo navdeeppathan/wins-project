@@ -16,15 +16,27 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
-            'name'=> 'required|string|max:50',
-            'email'=> 'required|email|unique:users',
-            'password'=> 'required|min:6|confirmed',
-        ]);
+       $request->validate([
+        'name' => 'required|string|max:50',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6|confirmed',
+        'auth_person_name' => 'required|string|max:50',
+
+        // GST validation
+        'gst_number' => [
+            'required',
+            'string',
+            'size:15',
+            'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+            'unique:users,gst_number',
+        ],
+    ]);
 
         User::create([
             'name'=> $request->name,
             'email'=> $request->email,
+            'auth_person_name'=> $request->auth_person_name,
+            'gst_number' => strtoupper($request->gst_number),
             'password'=> Hash::make($request->password),
             'role' => 'admin'
         ]);

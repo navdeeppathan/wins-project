@@ -9,7 +9,7 @@
     @csrf
 
     <div class="row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 mb-3">
             <label class="form-label">State *</label>
             <select name="location" class="form-select" required>
                 <option value="">Select State</option>
@@ -19,7 +19,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-6 mb-3">
             <label class="form-label">Department *</label>
             <select name="department" class="form-select" required>
                 <option value="">Select Department</option>
@@ -28,14 +28,19 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-md-12 mb-3">
             <label class="form-label">Project Name *</label>
-            <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
+            <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter Project Name" class="form-control" required>
         </div>
 
         <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
-            <input type="text" name="nit_number" value="{{ old('nit_number') }}" class="form-control" required>
+            <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
+        </div>
+
+         <div class="col-md-4 mb-3">
+            <label class="form-label">Date of Submission</label>
+            <input type="date" name="date_of_start" value="{{ old('date_of_start') }}" class="form-control">
         </div>
 
         <div class="col-md-4 mb-3">
@@ -44,19 +49,13 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Date of Submission</label>
-            <input type="date" name="date_of_start" value="{{ old('date_of_start') }}" class="form-control">
-        </div>
-
-        <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Cost *</label>
-            <input type="number" step="0.01" name="estimated_amount" value="{{ old('estimated_amount') }}" class="form-control" required>
+            <input type="number" step="0.01" name="estimated_amount" value="{{ old('estimated_amount') }}" placeholder="Enter Estimated Cost" class="form-control" required>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label">Time Allowed (Number) *</label>
-            <select name="time_allowed_number" class="form-select" style="height: 45px;" required>
+            <select name="time_allowed_number" class="form-select"  required>
                 <option value="">Select</option>
-
                 @for ($i = 1; $i <= 120; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                 @endfor
@@ -72,33 +71,11 @@
                 <option value="Days">Days</option>
                 <option value="Weeks">Weeks</option>
                 <option value="Months">Months</option>
+                <option value="Months">Years</option>
             </select>
         </div>
 
-        {{-- <div class="col-md-4 mb-3">
-            <label class="form-label">EMD Amount</label>
-            <input type="number" step="0.01" name="emd_amount" value="{{ old('emd_amount') }}" class="form-control">
-        </div> --}}
-
-        {{-- <div class="col-md-4 mb-3">
-            <label class="form-label">EMD Type</label>
-            <select name="emd_type" class="form-select">
-                <option value="">Select</option>
-                <option value="FDR">FDR</option>
-                <option value="DD">DD</option>
-                <option value="BG">BG</option>
-            </select>
-        </div> --}}
-
-        {{-- <div class="col-md-4 mb-3">
-            <label class="form-label">EMD Document (PDF/JPG/PNG)</label>
-            <input type="file" name="emd_file" class="form-control">
-        </div> --}}
-
-        {{-- <div class="col-md-4 mb-3">
-            <label class="form-label">Stipulated Completion</label>
-            <input type="date" name="stipulated_completion" value="{{ old('stipulated_completion') }}" class="form-control">
-        </div> --}}
+        
     </div>
 
     <!-- ---------------- EMD DETAILS MULTIPLE ROW SECTION ---------------- -->
@@ -141,7 +118,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary mb-4" id="addEmdRow">+ Add More</button>
+    <button type="button" class="btn btn-primary" id="addEmdRow">+ Add More</button>
 
     <button class="btn btn-success">Save Project</button>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>

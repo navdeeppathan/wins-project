@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
-use App\Models\Department;
+use App\Models\departments;
 use App\Models\EmdDetail;
 use App\Models\PgDetail;
 use App\Models\Project;
+use App\Models\SecurityDeposit;
 use App\Models\State;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,29 +17,97 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['department', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+       
         return view('admin.projects.index', compact('projects'));
+    }
+
+    public function returnIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.unqualified.index', compact('projects'));
+    }
+
+     public function forfietedIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.forfitted.index', compact('projects'));
+    }
+
+
+     public function pgreturnIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.pgreturn.index', compact('projects'));
+    }
+
+     public function securityreturnIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.security_deposits.index', compact('projects'));
+    }
+
+     public function pgforfietedIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.pgforfitted.index', compact('projects'));
+    }
+
+     public function securityforfietedIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.securitydeposite_forfieted.index', compact('projects'));
     }
 
     public function create()
     {
-        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
+        $departmentss = departments::where('user_id', auth()->id())->orderBy('name')->get();
         $states = State::orderBy('name')->get();
-        return view('admin.projects.create', compact('departments','states'));
+        return view('admin.projects.create', compact('department','states'));
     }
 
-    public function returnedCreate()
+   
+
+        public function returnedCreate(Project $project)
+        {
+            $emdDetails = $project->emds;
+
+            return view('admin.unqualified.index2', compact('project', 'emdDetails'));
+        }
+
+          public function pgreturnedCreate(Project $project)
+        {
+            $pgDetails = $project->pgDetails;
+
+            return view('admin.pgreturn.index2', compact('project', 'pgDetails'));
+        }
+
+          public function securityreturnedCreate(Project $project)
+        {
+            $securityDeposits = $project->securityDeposits;
+
+            return view('admin.security_deposits.index2', compact('project', 'securityDeposits'));
+        }
+
+    public function forfietedCreate(Project $project)
     {
-         $projects = Project::with(['department', 'state','emds'])->latest()->paginate(20);
-        return view('admin.unqualified.index', compact('projects'));
+        $emdDetails = $project->emds;
+        return view('admin.forfitted.index2', compact('project', 'emdDetails'));
     }
 
-    public function forfietedCreate()
+    public function pgforfietedCreate(Project $project)
     {
-         $projects = Project::with(['department', 'state','emds'])->latest()->paginate(20);
-        return view('admin.forfitted.index', compact('projects'));
+        $pgDetails = $project->pgDetails;
+
+        return view('admin.pgforfitted.index2', compact('project', 'pgDetails'));
     }
 
+    public function securityforfietedCreate(Project $project)
+    {
+        $securityDeposits = $project->securityDeposits;
+
+        return view('admin.securitydeposite_forfieted.index2', compact('project', 'securityDeposits'));
+    }
 
    public function store(ProjectRequest $request)
     {
@@ -97,28 +166,97 @@ class ProjectController extends Controller
         ]);
     }
 
-     public function updateReturned(Request $request, Project $project)
-    {
+    //  public function updateReturned(Request $request, Project $project)
+    // {
         
-        $project->isReturned = $request->isReturned;
-        $project->save();
+    //     $project->isReturned = $request->isReturned;
+    //     $project->save();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Project return updated.'
+    //     ]);
+    // }
+
+    public function updateReturned(Request $request, EmdDetail $emdDetail)
+    {
+        $emdDetail->isReturned = $request->isReturned;
+        $emdDetail->save();
 
         return response()->json([
             'success' => true,
-            'message' => 'Project return updated.'
+            'message' => 'EMD return updated successfully.'
+        ]);
+    }
+
+    public function updatePgReturned(Request $request, PgDetail $pgDetail)
+    {
+        $pgDetail->isReturned = $request->isReturned;
+        $pgDetail->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'EMD pgreturn updated successfully.'
         ]);
     }
 
 
-     public function updateforfittedReturned(Request $request, Project $project)
+    public function updateSecurityReturned(Request $request, SecurityDeposit $securityDeposit)
     {
-        
-        $project->isForfitted = $request->isForfitted;
-        $project->save();
+        $securityDeposit->isReturned = $request->isReturned;
+        $securityDeposit->save();
 
         return response()->json([
             'success' => true,
-            'message' => 'Project forfitted updated.'
+            'message' => 'Security return updated successfully.'
+        ]);
+    }
+
+
+    //  public function updateforfittedReturned(Request $request, Project $project)
+    // {
+        
+    //     $project->isForfieted = $request->isForfitted;
+    //     $project->save();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Project forfitted updated.'
+    //     ]);
+    // }
+
+    public function updateforfittedReturned(Request $request, EmdDetail $emdDetail)
+    {
+        $emdDetail->isForfieted = $request->isForfieted;
+        $emdDetail->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'EMD forfieted updated successfully.'
+        ]);
+    }
+
+
+        public function updateforfittedPgReturned(Request $request, PgDetail $pgDetail)
+    {
+        $pgDetail->isForfieted = $request->isForfieted;
+        $pgDetail->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'EMD pgforfieted updated successfully.'
+        ]);
+    }
+
+
+        public function updateforfittedSecurityReturned(Request $request, SecurityDeposit $securityDeposit)
+    {
+        $securityDeposit->isForfeited = $request->isForfieted;
+        $securityDeposit->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Security forfieted updated successfully.'
         ]);
     }
 
@@ -157,12 +295,13 @@ class ProjectController extends Controller
             'tendered_amount'       => 'nullable|numeric',
             'acceptance_letter_no'  => 'nullable|string|max:255',
             'acceptance_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
+            'date'                  => 'nullable|date',
         ]);
 
         $project->status = 'accepted';
         $project->tendered_amount = $request->tendered_amount;
         $project->acceptance_letter_no = $request->acceptance_letter_no;
-        $project->date = now()->toDateString();
+        $project->date = $request->date;
 
         if ($request->hasFile('acceptance_upload')) {
             $project->acceptance_upload = $request->acceptance_upload
@@ -184,12 +323,13 @@ class ProjectController extends Controller
             
             'award_letter_no'  => 'nullable|string|max:255',
             'award_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
+            'award_date'       => 'nullable|date',
         ]);
 
         $project->status = 'awarded';
         
         $project->award_letter_no = $request->award_letter_no;
-        $project->award_date = now()->toDateString();
+        $project->award_date = $request->award_date;
 
         if ($request->hasFile('acceptance_upload')) {
             $project->award_upload = $request->award_upload

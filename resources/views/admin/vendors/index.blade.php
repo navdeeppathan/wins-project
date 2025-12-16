@@ -71,11 +71,11 @@
                         <td>{{ $v->phone }}</td>
                         <td>{{ $v->gst_number }}</td>
                         <td>
-                            <form action="{{ route('admin.vendors.destroy', $v) }}" method="POST"
+                            {{-- <form action="{{ route('admin.vendors.destroy', $v) }}" method="POST"
                                   onsubmit="return confirm('Delete vendor?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-danger">Del</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                 @empty

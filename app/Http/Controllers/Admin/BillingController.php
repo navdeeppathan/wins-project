@@ -29,11 +29,26 @@ class BillingController extends Controller
             'bill_date' => 'required|date',
             'bill_type' => 'required|in:running,final',
             'mb_number' => 'required',
-            'page_number' => 'required'
+            'page_number' => 'required',
+            'gross_amount' => 'required|numeric',
+            'net_payable' => 'required|numeric',
+            'remarks' => 'required|string',
+            'bill_file' => 'nullable|mimes:pdf,jpg,png|max:4096'
         ]);
 
         $data = $request->only('bill_number','bill_date','bill_type','mb_number','page_number');
         $data['project_id'] = $project->id;
+
+        if ($request->hasFile('bill_file')) {
+            $data['bill_file'] = $request->bill_file->store('bills','public');
+        }
+
+
+        $data['gross_amount'] = $request->gross_amount;
+        $data['net_payable'] = $request->net_payable;
+        $data['remarks'] = $request->remarks;
+        
+        $data['approved_at'] = now();
 
         Billing::create($data);
 

@@ -3,17 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wins</title>
+    <title>Wins - Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
-
-    
     <style>
         * {
             margin: 0;
@@ -272,18 +264,18 @@
         }
 
         /* Dropdown Menu */
-        .sidebar-dropdown {
+        .dropdown-menu {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
             margin-left: 0.5rem;
         }
 
-        .nav-item.open .sidebar-dropdown {
+        .nav-item.open .dropdown-menu {
             max-height: 500px;
         }
 
-        .sidebar.collapsed .sidebar-dropdown {
+        .sidebar.collapsed .dropdown-menu {
             display: none;
         }
 
@@ -885,8 +877,6 @@
             }
         }
     </style>
-
-  @stack('styles')
 </head>
 <body class="mode-dark">
     <button class="mobile-menu-btn" onclick="toggleMobile()">
@@ -913,8 +903,7 @@
 
         <nav class="sidebar-nav">
             <div class="nav-item">
-                <a href="{{ url('/admin') }}"
-                class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
+                <a href="#dashboard" class="nav-link active" data-route="Admin\HomeController@index">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -923,352 +912,185 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </div>
-
-             <div class="nav-item">
-                <a href="{{ route('departments.index') }}"
-                class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Departments</span>
-                </a>
-            </div>
-
-
             <div class="nav-item">
-                <a href="{{ route('admin.projects.index') }}"
-                class="nav-link {{ Request::is('admin/projects*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Projects (Bidding)</span>
-                </a>
-            </div>
-
-
-            <div class="nav-item">
-                <a href="{{ route('admin.projects.acceptance') }}"
-                class="nav-link {{ Request::is('admin/acceptance*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Projects (Acceptance)</span>
-                </a>
-            </div>
-
-             <div class="nav-item">
-                <a href="{{ route('admin.projects.award') }}"
-                class="nav-link {{ Request::is('admin/award*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Projects (Award)</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="{{ route('admin.projects.agreement') }}"
-                class="nav-link {{ Request::is('admin/agreement*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Projects (Agreement)</span>
-                </a>
-            </div>
-
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.returned.index') }}"
-                class="nav-link {{ Request::is('admin/returned*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">EMD Returned</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.returned.forfieted') }}"
-                class="nav-link {{ Request::is('admin/forfieted*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">EMD Returned (Forfieted)</span>
-                </a>
-            </div> --}}
-
-             <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </span>
-                    <span class="nav-text">EMD</span>
+                    <span class="nav-text">Customers</span>
                     <span class="dropdown-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item {{ Request::is('admin/emdreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.returned.forfieted') }}" class="dropdown-item {{ Request::is('admin/emdforfieted*') ? 'active' : '' }}">Forfieted</a>
+                <div class="dropdown-menu">
+                    <a href="#customers" class="dropdown-item" data-route="Admin\CustomerController@index">Customers</a>
+                    <a href="#subscriptions" class="dropdown-item" data-route="Admin\SubscriptionController@index">Subscriptions</a>
                 </div>
             </div>
-
-             {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.pgreturned.index') }}"
-                class="nav-link {{ Request::is('admin/pgreturned*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">PG Returned</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.pgreturned.forfieted') }}"
-                class="nav-link {{ Request::is('admin/pgforfieted*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">PG Returned (Forfieted)</span>
-                </a>
-            </div> --}}
-
             <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/pg*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                         </svg>
                     </span>
-                    <span class="nav-text">PG</span>
+                    <span class="nav-text">Plans</span>
                     <span class="dropdown-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('admin/pgreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.pgreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/pgforfieted*') ? 'active' : '' }}">Forfieted</a>
+                <div class="dropdown-menu">
+                    <a href="#plans" class="dropdown-item" data-route="Admin\PlanController@index">Plans</a>
+                    <a href="#currencies" class="dropdown-item" data-route="Admin\CurrencyController@index">Currencies</a>
+                    <a href="#tax" class="dropdown-item" data-route="Admin\TaxController@settings">Tax Settings</a>
+                    <a href="#invoice" class="dropdown-item" data-route="Admin\InvoiceController@template">Invoice Template</a>
                 </div>
             </div>
-
-
             <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/security*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </span>
-                    <span class="nav-text">SECURITY</span>
+                    <span class="nav-text">Admins</span>
                     <span class="dropdown-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/securityreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.securityreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/securityforfieted*') ? 'active' : '' }}">Forfieted</a>
+                <div class="dropdown-menu">
+                    <a href="#admins" class="dropdown-item" data-route="Admin\AdminController@index">Admins</a>
+                    <a href="#admin-groups" class="dropdown-item" data-route="Admin\AdminGroupController@index">Admin Groups</a>
                 </div>
             </div>
-
-            {{-- <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </span>
-                    <span class="nav-text">WITH HELD</span>
+                    <span class="nav-text">Sending</span>
                     <span class="dropdown-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item {{ Request::is('admin/emdreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.returned.forfieted') }}" class="dropdown-item {{ Request::is('admin/emdforfieted*') ? 'active' : '' }}">Forfieted</a>
+                <div class="dropdown-menu">
+                    <a href="#sending-servers" class="dropdown-item" data-route="Admin\SendingServerController@index">Sending Servers</a>
+                    <a href="#sub-accounts" class="dropdown-item" data-route="Admin\SubAccountController@index">Sub Accounts</a>
+                    <a href="#bounce-handlers" class="dropdown-item" data-route="Admin\BounceHandlerController@index">Bounce Handlers</a>
+                    <a href="#feedback-handlers" class="dropdown-item" data-route="Admin\FeedbackLoopHandlerController@index">Feedback Loop Handlers</a>
+                    <a href="#email-verification" class="dropdown-item" data-route="Admin\EmailVerificationServerController@index">Email Verification Servers</a>
                 </div>
-            </div> --}}
-
-
-
-            <div class="nav-item">
-                <a href="{{url('/admin/bill')}}"
-                class="nav-link {{ Request::is('admin/bill*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Billing</span>
-                </a>
-            </div>
-
-
-             <div class="nav-item">
-                <a href="{{ route('admin.vendors.index') }}"
-                class="nav-link {{ Request::is('admin/vendors*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Vendors</span>
-                </a>
-            </div>
-
-            <div class="nav-item">
-                <a href="{{ route('admin.inventory.index') }}"
-                class="nav-link {{ Request::is('admin/inventory*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Inventory</span>
-                </a>
             </div>
             <div class="nav-item">
-                <a href="{{ route('admin.tandp.index') }}"
-                class="nav-link {{ Request::is('admin/tandp*') ? 'active' : '' }}">
-                    
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
                         </svg>
                     </span>
-
-                    <span class="nav-text">T & P</span>
+                    <span class="nav-text">Server Config</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
                 </a>
+                <div class="dropdown-menu">
+                    <a href="#add-server" class="dropdown-item" data-route="servers.create">Add Server</a>
+                    <a href="#list-servers" class="dropdown-item" data-route="servers.index">List Servers</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">Settings</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="#all-settings" class="dropdown-item" data-route="Admin\SettingController@index">All Settings</a>
+                    <a href="#oauth" class="dropdown-item" data-route="Admin\AuthController@index">OAuth</a>
+                    <a href="#templates" class="dropdown-item" data-route="Admin\TemplateController@index">Template Gallery</a>
+                    <a href="#form-templates" class="dropdown-item" data-route="Admin\FormTemplateController@index">Form Templates</a>
+                    <a href="#layouts" class="dropdown-item" data-route="Admin\LayoutController@index">Page Form Layout</a>
+                    <a href="#languages" class="dropdown-item" data-route="Admin\LanguageController@index">Languages</a>
+                    <a href="#payment-gateways" class="dropdown-item" data-route="Admin\PaymentGatewayController@index">Payment Gateways</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">Plugins</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="#new-plugin" class="dropdown-item" data-route="Admin\PluginController@install">New Plugin</a>
+                    <a href="#all-plugins" class="dropdown-item" data-route="Admin\PluginController@index">All Plugins</a>
+                </div>
             </div>
 
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">Reports</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="#blacklist" class="dropdown-item" data-route="Admin\BlacklistController@index">Blacklist</a>
+                    <a href="#blocked-rules" class="dropdown-item" data-route="Admin\BlockedRuleController@index">Blocked Rules</a>
+                    <a href="#tracking-log" class="dropdown-item" data-route="Admin\TrackingLogController@index">Tracking Log</a>
+                    <a href="#bounce-log" class="dropdown-item" data-route="Admin\BounceLogController@index">Bounce Log</a>
+                    <a href="#feedback-log" class="dropdown-item" data-route="Admin\FeedbackLogController@index">Feedback Log</a>
+                    <a href="#open-log" class="dropdown-item" data-route="Admin\OpenLogController@index">Open Log</a>
+                    <a href="#click-log" class="dropdown-item" data-route="Admin\ClickLogController@index">Click Log</a>
+                    <a href="#unsubscribe-log" class="dropdown-item" data-route="Admin\UnsubscribeLogController@index">Unsubscribe Log</a>
+                </div>
+            </div>
         </nav>
 
         <div class="sidebar-footer">
             <div class="user-info">
-                <div class="user-avatar-small">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'Admin', 0, 1)) }}
-                </div>
+                <div class="user-avatar-small">TT</div>
                 <div class="user-details">
-                    <div class="user-name">{{ auth()->user()->name ?? 'Admin User' }}</div>
+                    <div class="user-name">test test</div>
                 </div>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <i class="fas fa-sign-out-alt me-2"></i>Logout
-                </button>
-                <style>
-                    .logout-btn {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 0px;
-
-                            padding: 6px 10px;
-                            font-size: 10px;
-                            font-weight: 600;
-
-                            color: #000000;
-                            
-
-                            border: none;
-                            border-radius: 6px;
-                            cursor: pointer;
-
-                            transition: all 0.25s ease;
-                            
-                        }
-
-                        .logout-btn i {
-                            font-size: 10px;
-                        }
-
-                        /* Hover */
-                        .logout-btn:hover {
-                            color: #ffffff;
-                            background: linear-gradient(135deg, #c82333, #9f1d2d);
-                            box-shadow: 0 6px 14px rgba(220, 53, 69, 0.35);
-                            transform: translateY(-1px);
-                        }
-
-                        /* Active (click) */
-                        .logout-btn:active {
-                            transform: scale(0.97);
-                            box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
-                        }
-
-                        /* Focus (accessibility) */
-                        .logout-btn:focus {
-                            outline: none;
-                            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4);
-                        }
-
-                </style>
-            </form>
             </div>
-            
         </div>
     </aside>
 
@@ -1296,24 +1118,176 @@
                     <span class="notification-badge"></span>
                 </button>
                 <div class="user-profile">
-                    <div class="user-avatar">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'Admin', 0, 1)) }}
-
-                    </div>
-                    <span class="user-profile-text">{{ auth()->user()->name ?? 'Admin User' }}</span>
+                    <div class="user-avatar">TT</div>
+                    <span class="user-profile-text">test test</span>
                     <span class="status-badge">Active</span>
                 </div>
             </div>
         </header>
 
         <main class="content">
-            <!-- Main Content -->
-            <main class="main-content" id="mainContent">
-                <div class="container-fluid">
-                    @include('partials.alerts')
-                    @yield('content')
+            <div class="page-header">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Welcome back! Here's an overview of your email marketing performance.</p>
+            </div>
+
+            <div class="action-cards">
+                <div class="action-card">
+                    <div class="action-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3>New Campaign</h3>
+                    <p>Create a new email campaign</p>
                 </div>
-            </main>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <h3>Add Customers</h3>
+                    <p>Import or add new contacts</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                        </svg>
+                    </div>
+                    <h3>Create Template</h3>
+                    <p>Design a new email template</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3>Setup Automation</h3>
+                    <p>Build automated workflows</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change positive">↑ 12.5%</span>
+                    </div>
+                    <div class="stat-value">2,847</div>
+                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change positive">↑ 8.2%</span>
+                    </div>
+                    <div class="stat-value">48.2K</div>
+                    <div class="stat-label">Emails Sent</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change negative">↓ 2.4%</span>
+                    </div>
+                    <div class="stat-value">24.5%</div>
+                    <div class="stat-label">Open Rate</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change positive">↑ 5.1%</span>
+                    </div>
+                    <div class="stat-value">3.8%</div>
+                    <div class="stat-label">Click Rate</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change positive">↑ 18.7%</span>
+                    </div>
+                    <div class="stat-value">1,248</div>
+                    <div class="stat-label">Subscriptions</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <span class="stat-change positive">↑ 22.3%</span>
+                    </div>
+                    <div class="stat-value">$12.4K</div>
+                    <div class="stat-label">Revenue</div>
+                    <div class="stat-meta">vs last month</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">
+                        <div class="chart-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <div class="chart-title-text">
+                            <h3>Email Performance</h3>
+                            <p>Monthly email statistics</p>
+                        </div>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #3b82f6;"></span>
+                            <span>Sent</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #10b981;"></span>
+                            <span>Opened</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #f59e0b;"></span>
+                            <span>Clicked</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -1567,109 +1541,5 @@
         // Initialize chart on page load
         initChart();
     </script>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Sidebar toggle functionality
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggleSidebar');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const mainContent = document.getElementById('mainContent');
-        const toggleIcon = toggleBtn.querySelector('i');
-
-        // Desktop toggle
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('closed');
-            mainContent.classList.toggle('expanded');
-            
-            if (sidebar.classList.contains('closed')) {
-                toggleIcon.classList.remove('fa-angle-left');
-                toggleIcon.classList.add('fa-angle-right');
-            } else {
-                toggleIcon.classList.remove('fa-angle-right');
-                toggleIcon.classList.add('fa-angle-left');
-            }
-        });
-
-        // Mobile toggle
-        mobileToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('mobile-open');
-            sidebarOverlay.classList.toggle('active');
-            
-            if (sidebar.classList.contains('mobile-open')) {
-                mobileToggle.querySelector('i').classList.remove('fa-bars');
-                mobileToggle.querySelector('i').classList.add('fa-times');
-            } else {
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-            }
-        });
-
-        // Close sidebar when clicking overlay
-        sidebarOverlay.addEventListener('click', function() {
-            sidebar.classList.remove('mobile-open');
-            sidebarOverlay.classList.remove('active');
-            mobileToggle.querySelector('i').classList.remove('fa-times');
-            mobileToggle.querySelector('i').classList.add('fa-bars');
-        });
-
-        // Close sidebar when clicking a link on mobile
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 992) {
-                    sidebar.classList.remove('mobile-open');
-                    sidebarOverlay.classList.remove('active');
-                    mobileToggle.querySelector('i').classList.remove('fa-times');
-                    mobileToggle.querySelector('i').classList.add('fa-bars');
-                }
-            });
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 992) {
-                sidebar.classList.remove('mobile-open');
-                sidebarOverlay.classList.remove('active');
-                mobileToggle.querySelector('i').classList.remove('fa-times');
-                mobileToggle.querySelector('i').classList.add('fa-bars');
-            }
-        });
-    </script>
-
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
-
-<script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
-<script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.bootstrap5.js"></script>
-
-<script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
-<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.js"></script>
-<script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.js"></script>
-
-<script>
-new DataTable('#example', {
-    scrollX: true,
-    responsive: false,
-    autoWidth: false,
-    // layout: {
-    //     topStart: {
-    //         buttons: ['copy', 'excel', 'pdf', 'print']
-    //     }
-    // }
-});
-
-</script>
-
-  
-    @stack('scripts')
 </body>
 </html>

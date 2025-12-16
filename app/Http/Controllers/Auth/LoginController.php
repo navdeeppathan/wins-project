@@ -22,6 +22,10 @@ class LoginController extends Controller
 
         if(Auth::attempt($request->only('email','password')))
         {
+            if(Auth::user()->role == 'super_admin')
+            {
+                return redirect()->route('superadmin.superdashboard');
+            }
             return redirect()->route('admin.dashboard');
         }
 

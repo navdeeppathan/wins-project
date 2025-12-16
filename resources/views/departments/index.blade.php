@@ -48,9 +48,9 @@
             <table class="table table-bordered dept-table text-center">
                 <thead>
                     <tr>
-                        <th width="80">ID</th>
+                        <th width="80">No.</th>
                         <th>Name</th>
-                        <th width="150">User ID</th>
+                        {{-- <th width="150">User ID</th> --}}
                         <th width="180">Action</th>
                     </tr>
                 </thead>
@@ -59,15 +59,15 @@
                     <tr>
                         <td>{{ $dept->id }}</td>
                         <td>{{ $dept->name }}</td>
-                        <td>{{ $dept->user_id ?? '-' }}</td>
+                        {{-- <td>{{ $dept->user_id ?? '-' }}</td> --}}
                         <td class="action-btns">
                             <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline">
+                            {{-- <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm"
                                         onclick="return confirm('Delete this department?')">Delete</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                     @empty

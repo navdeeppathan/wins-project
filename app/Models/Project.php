@@ -35,7 +35,10 @@ class Project extends Model
         'agreement_start_date',
         'agreement_no',
         'stipulated_date_ofcompletion',
-        'isForfitted'
+        'isForfitted',
+        'total_work_done',
+        'total_work_tobe_done'
+        
     ];
 
     // Project belongs to User
@@ -91,7 +94,7 @@ class Project extends Model
         return $this->hasMany(EmdDetail::class);
     }
 
-    public function department()
+    public function departments()
     {
         return $this->belongsTo(Department::class, 'department', 'id');
     }
@@ -105,5 +108,11 @@ class Project extends Model
     {
         return $this->hasMany(PgDetail::class, 'project_id');
     }
+
+    public function securityDeposits()
+{
+    return $this->hasMany(SecurityDeposit::class);
+}
+
 
 }
