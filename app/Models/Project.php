@@ -110,9 +110,25 @@ class Project extends Model
     }
 
     public function securityDeposits()
-{
-    return $this->hasMany(SecurityDeposit::class);
-}
+    {
+        return $this->hasMany(SecurityDeposit::class, 'project_id');
+    }
+
+   public function scheduleWorks()
+    {
+        return $this->hasMany(ScheduleWork::class, 'project_id');
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function withhelds()
+    {
+        return $this->hasMany(Withheld::class);
+    }
+
 
 
 }

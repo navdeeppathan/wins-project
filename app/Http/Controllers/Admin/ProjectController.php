@@ -10,6 +10,7 @@ use App\Models\PgDetail;
 use App\Models\Project;
 use App\Models\SecurityDeposit;
 use App\Models\State;
+use App\Models\Withheld;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,6 +48,13 @@ class ProjectController extends Controller
         return view('admin.security_deposits.index', compact('projects'));
     }
 
+     public function withheldreturnIndex()
+    {
+        $projects = Project::with(['departments', 'state','withhelds'])->latest()->paginate(20);
+        return view('admin.withheld.index', compact('projects'));
+    }
+    
+
      public function pgforfietedIndex()
     {
         $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
@@ -59,9 +67,17 @@ class ProjectController extends Controller
         return view('admin.securitydeposite_forfieted.index', compact('projects'));
     }
 
+    
+     public function withheldforfietedIndex()
+    {
+        $projects = Project::with(['departments', 'state','withhelds'])->latest()->paginate(20);
+        return view('admin.withheld_forfieted.index', compact('projects'));
+    }
+
+
     public function create()
     {
-        $departmentss = departments::where('user_id', auth()->id())->orderBy('name')->get();
+        $departmentss = Departments::where('user_id', auth()->id())->orderBy('name')->get();
         $states = State::orderBy('name')->get();
         return view('admin.projects.create', compact('department','states'));
     }
@@ -89,6 +105,15 @@ class ProjectController extends Controller
             return view('admin.security_deposits.index2', compact('project', 'securityDeposits'));
         }
 
+           public function withheldreturnedCreate(Project $project)
+        {
+            $withhelds = $project->withhelds;
+
+            return view('admin.withheld.index2', compact('project', 'withhelds'));
+        }
+
+
+
     public function forfietedCreate(Project $project)
     {
         $emdDetails = $project->emds;
@@ -107,6 +132,13 @@ class ProjectController extends Controller
         $securityDeposits = $project->securityDeposits;
 
         return view('admin.securitydeposite_forfieted.index2', compact('project', 'securityDeposits'));
+    }
+
+    public function withheldforfietedCreate(Project $project)
+    {
+        $withhelds = $project->withhelds;
+
+        return view('admin.withheld_forfieted.index2', compact('project', 'withhelds'));
     }
 
    public function store(ProjectRequest $request)
@@ -212,6 +244,16 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function updateWithheldReturned(Request $request, Withheld $withheld)
+    {
+        $withheld->isReturned = $request->isReturned;
+        $withheld->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Withheld return updated successfully.'
+        ]);
+    }
 
     //  public function updateforfittedReturned(Request $request, Project $project)
     // {
@@ -257,6 +299,17 @@ class ProjectController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Security forfieted updated successfully.'
+        ]);
+    }
+
+         public function updateforfittedWithheldReturned(Request $request, Withheld $withheld)
+    {
+        $withheld->isForfeited = $request->isForfieted;
+        $withheld->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Withheld forfieted updated successfully.'
         ]);
     }
 

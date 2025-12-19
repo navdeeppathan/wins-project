@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\SecurityDepositController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectPgController;
-
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Admin\WithheldController;
+use App\Http\Controllers\ScheduleWorkController;
 /*
 |--------------------------------------------------------------------------
 | AUTH PROTECTED ADMIN ROUTES
@@ -52,7 +54,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\ProjectController::class, 'securityreturnIndex']
     )->name('projects.securityreturned.index');
 
-    
+    Route::get(
+        '/withheldreturned',
+        [App\Http\Controllers\Admin\ProjectController::class, 'withheldreturnIndex']
+    )->name('projects.withheldreturned.index');
 
      Route::get(
         '/pgforfieted',
@@ -64,6 +69,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\ProjectController::class, 'securityforfietedIndex']
     )->name('projects.securityreturned.forfieted');
 
+     Route::get(
+        '/withheldforfieted',
+        [App\Http\Controllers\Admin\ProjectController::class, 'withheldforfietedIndex']
+    )->name('projects.withheldreturned.forfieted');
 
     Route::get(
         '/returned/{project}',
@@ -80,6 +89,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\ProjectController::class, 'securityreturnedCreate']
     )->name('projects.securityreturned.create');
 
+      Route::get(
+        '/withheldreturned/{project}',
+        [App\Http\Controllers\Admin\ProjectController::class, 'withheldreturnedCreate']
+    )->name('projects.withheldreturned.create');
+
     Route::get(
         '/forfieted/{project}',
         [App\Http\Controllers\Admin\ProjectController::class, 'forfietedCreate']
@@ -94,6 +108,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         '/securityforfieted/{project}',
         [App\Http\Controllers\Admin\ProjectController::class, 'securityforfietedCreate']
     )->name('projects.securityforfieted.create');
+
+     Route::get(
+        '/withheldforfieted/{project}',
+        [App\Http\Controllers\Admin\ProjectController::class, 'withheldforfietedCreate']
+    )->name('projects.withheldforfieted.create');
 
     /* ===================== PROJECTS (BIDDING) ===================== */
     Route::resource('projects', App\Http\Controllers\Admin\ProjectController::class);
@@ -128,6 +147,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     [App\Http\Controllers\Admin\ProjectController::class, 'updateSecurityReturned'])
     ->name('projects.updateSecurityReturned');
 
+    Route::post('/projects/update-withheldreturned/{withheldDetail}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateWithheldReturned'])
+    ->name('projects.updateWithheldReturned');
+
      Route::post('/projects/update-forfieted/{emdDetail}', 
     [App\Http\Controllers\Admin\ProjectController::class, 'updateforfittedReturned'])
     ->name('projects.updateForfieted');
@@ -139,6 +162,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
      Route::post('/projects/update-securityforfieted/{securityDeposit}', 
     [App\Http\Controllers\Admin\ProjectController::class, 'updateforfittedSecurityReturned'])
     ->name('projects.updateSecurityForfieted');
+
+     Route::post('/projects/update-withheldforfieted/{withheldDetail}', 
+    [App\Http\Controllers\Admin\ProjectController::class, 'updateforfittedWithheldReturned'])
+    ->name('projects.updateWithheldForfieted');
+
+
 
     // routes/web.php
     Route::put(
@@ -201,6 +230,17 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'projects/{project}/{billing}/security-deposits',
         [SecurityDepositController::class, 'store']
     )->name('security-deposits.store');
+
+    
+     Route::get(
+        'projects/{project}/{billing}/withheld-deposits/create',
+        [WithheldController::class, 'create']
+    )->name('withheld-deposits.create');
+
+    Route::post(
+        'projects/{project}/{billing}/withheld-deposits',
+        [WithheldController::class, 'store']
+    )->name('withheld-deposits.store');
     
      Route::get('bill',
         [App\Http\Controllers\Admin\BillingController::class, 'indexprojects']
@@ -247,6 +287,26 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('tandp', App\Http\Controllers\Admin\TAndPController::class)->only([
         'index', 'store'
     ]);
+
+
+    
+
+    Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+    Route::get('/activities/{project}', [ActivityController::class, 'index2'])->name('activities.index2');
+    Route::post('/activities', [ActivityController::class, 'store'])->name('activities.store');
+    Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
+    Route::put('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
+
+
+    
+
+    Route::get('/schedule-work', [ScheduleWorkController::class, 'index'])->name('schedule-work.index');
+    Route::get('/schedule-work/{project}', [ScheduleWorkController::class, 'index2'])->name('schedule-work.index2');
+    Route::post('/schedule-work', [ScheduleWorkController::class, 'store'])->name('schedule-work.store');
+    Route::get('/schedule-work/{scheduleWork}/edit', [ScheduleWorkController::class, 'edit'])->name('schedule-work.edit');
+    Route::put('/schedule-work/{scheduleWork}', [ScheduleWorkController::class, 'update'])->name('schedule-work.update');
+
+
 
     /* ===================== Attachments (POLYMORPHIC) ===================== */
     Route::post('attachments',
