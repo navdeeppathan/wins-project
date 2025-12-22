@@ -9,7 +9,7 @@
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Unqualified)</h3>
+    <h3>Projects (EMD)</h3>
     <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a>
 </div>
 
@@ -31,7 +31,8 @@
                 <th>EMD Amount</th>
 
             
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 <th width="160">Actions</th>
             </tr>
         </thead>
@@ -46,7 +47,8 @@
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
+
                     <td>
                         <a href="{{ route('admin.projects.returned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                     </td>

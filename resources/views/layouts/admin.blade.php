@@ -1069,8 +1069,24 @@
                 </a>
             </div> --}}
 
-             <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
+            {{-- <div class="nav-item">
+                <a href="{{ route('admin.projects.common.index') }}"
+                class="nav-link {{ Request::is('admin/common*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">Common</span>
+
+                </a>
+            </div> --}}
+
+             {{-- <div class="nav-item">
+                <a href="{{ route('admin.projects.returned.index') }}" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -1087,7 +1103,23 @@
                     <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item {{ Request::is('admin/emdreturned*') ? 'active' : '' }}">Returned</a>
                     <a href="{{ route('admin.projects.returned.forfieted') }}" class="dropdown-item {{ Request::is('admin/emdforfieted*') ? 'active' : '' }}">Forfieted</a>
                 </div>
-            </div>
+            </div> --}}
+            <div class="nav-item">
+             <a href="{{ route('admin.projects.returned.index') }}"
+                class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">EMD</span>
+
+                </a>
+
+            </div>    
 
              {{-- <div class="nav-item">
                 <a href="{{ route('admin.projects.pgreturned.index') }}"
@@ -1119,7 +1151,7 @@
                 </a>
             </div> --}}
 
-            <div class="nav-item">
+            {{-- <div class="nav-item">
                 <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/pg*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1137,10 +1169,24 @@
                     <a href="{{ route('admin.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('admin/pgreturned*') ? 'active' : '' }}">Returned</a>
                     <a href="{{ route('admin.projects.pgreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/pgforfieted*') ? 'active' : '' }}">Forfieted</a>
                 </div>
+            </div> --}}
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.pgreturned.index') }}"
+                    class="nav-link {{ Request::is('admin/pg*') ? 'active' : '' }}">
+                        
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </span>
+
+                        <span class="nav-text">PG</span>
+
+                </a>
             </div>
 
-
-            <div class="nav-item">
+            {{-- <div class="nav-item">
                 <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/security*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1158,10 +1204,25 @@
                     <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/securityreturned*') ? 'active' : '' }}">Returned</a>
                     <a href="{{ route('admin.projects.securityreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/securityforfieted*') ? 'active' : '' }}">Forfieted</a>
                 </div>
+            </div> --}}
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.securityreturned.index') }}"
+                    class="nav-link {{ Request::is('admin/security*') ? 'active' : '' }}">
+                        
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </span>
+
+                        <span class="nav-text">SECURITY</span>
+
+                </a>
             </div>
 
 
-            <div class="nav-item">
+            {{-- <div class="nav-item">
                 <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/withheld*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1179,8 +1240,24 @@
                     <a href="{{ route('admin.projects.withheldreturned.index') }}" class="dropdown-item {{ Request::is('admin/withheldreturned*') ? 'active' : '' }}">Returned</a>
                     <a href="{{ route('admin.projects.withheldreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/withheldforfieted*') ? 'active' : '' }}">Forfieted</a>
                 </div>
-            </div>
+            </div> --}}
+
             
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.withheldreturned.index') }}"
+                    class="nav-link {{ Request::is('admin/withheld*') ? 'active' : '' }}">
+                        
+                        <span class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                            </svg>
+                        </span>
+
+                        <span class="nav-text">WITHHELD</span>
+
+                </a>
+            </div>
                 {{-- <div class="sidebar-dropdown">
                     <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/securityreturned*') ? 'active' : '' }}">Returned</a>
                     <a href="{{ route('admin.projects.securityreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/securityforfieted*') ? 'active' : '' }}">Forfieted</a>
@@ -1265,7 +1342,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">T & P</span>
+                    <span class="nav-text">Material</span>
                 </a>
             </div>
 

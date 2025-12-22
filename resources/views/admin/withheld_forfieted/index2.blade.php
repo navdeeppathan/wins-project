@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+{{-- @extends('layouts.admin')
 
 @section('title','Projects')
 
@@ -7,11 +7,11 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (Withheld Forfieted)</h3>
-</div>
+</div> --}}
 
-@if($withhelds->count() > 0)
+@if($forfieteds->count() > 0)
 <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
+    <table id="withheldforfieted" class="table table-striped nowrap" style="width:100%">
         <thead >
             <tr>
                 <th>#</th>
@@ -31,12 +31,13 @@
                 <!-- NEW COLUMNS -->
                 <th>Forfieted</th>
                 <th>Save</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 {{-- <th width="160">Actions</th> --}}
             </tr>
         </thead>
         <tbody>
-            @forelse($withhelds as $emd)
+            @forelse($forfieteds as $emd)
                 <tr>
                     <td>{{ $emd->id }}</td>
                     <td>{{  $project->name }}</td>
@@ -115,6 +116,16 @@ $(document).on('click', '.saveisForfietedBtn', function () {
     });
 
 });
+new DataTable('#withheldforfieted', {
+    scrollX: true,
+    responsive: false,
+    autoWidth: false,
+    // layout: {
+    //     topStart: {
+    //         buttons: ['copy', 'excel', 'pdf', 'print']
+    //     }
+    // }
+});
 </script>
 @endpush
 
@@ -123,4 +134,4 @@ $(document).on('click', '.saveisForfietedBtn', function () {
 
 
 
-@endsection
+{{-- @endsection --}}

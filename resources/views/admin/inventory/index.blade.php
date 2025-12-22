@@ -14,6 +14,20 @@
             <div class="card-body">
                 <form action="{{ route('admin.inventory.store') }}" method="POST">
                     @csrf
+
+                    <div class="mb-2">
+                        <label class="form-label">Project*</label>
+                        <select name="project_id" class="form-select">
+                            <option value="">Select Project</option>
+                            @foreach($projects as $project)
+                                <option value="{{ $project->id }}"
+                                    {{ old('project_id') == $project->id ? 'selected' : '' }}>
+                                    {{ $project->name ?? 'Project #'.$project->id }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="mb-2">
                         <label class="form-label">Item Name *</label>
                         <input type="text" name="item_name" class="form-control" required>
@@ -26,14 +40,31 @@
                         <label class="form-label">Quantity *</label>
                         <input type="number" step="0.01" name="quantity" class="form-control" required>
                     </div>
-                    <div class="mb-2">
+                    {{-- <div class="mb-2">
                         <label class="form-label">Project ID (optional)</label>
                         <input type="number" name="project_id" class="form-control">
-                    </div>
-                    <div class="mb-2">
+                    </div> --}}
+
+                    
+
+                    {{-- <div class="mb-2">
                         <label class="form-label">Vendor ID (optional)</label>
                         <input type="number" name="vendor_id" class="form-control">
+                    </div> --}}
+                    <div class="mb-2">
+                        <label class="form-label">Vendor</label>
+                        <select name="vendor_id" class="form-select">
+                            <option value="">Select Vendor</option>
+                            @foreach($vendors as $vendor)
+                                <option value="{{ $vendor->id }}"
+                                    {{ old('vendor_id') == $vendor->id ? 'selected' : '' }}>
+                                    {{ $vendor->name ?? 'Vendor #'.$vendor->id }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
+
+
                     <div class="mb-2">
                         <label class="form-label">Remarks</label>
                         <textarea name="remarks" class="form-control" rows="2"></textarea>
@@ -63,8 +94,8 @@
                         <td>{{ $i->id }}</td>
                         <td>{{ $i->item_name }}</td>
                         <td>{{ $i->quantity }}</td>
-                        <td>{{ $i->project_id }}</td>
-                        <td>{{ $i->vendor_id }}</td>
+                        <td>{{ $i->project->name??'-' }}</td>
+                        <td>{{ $i->vendor->name??'-' }}</td>
                         <td>{{ $i->remarks }}</td>
                         <td>
                             {{-- <form action="{{ route('admin.inventory.destroy', $i) }}" method="POST"

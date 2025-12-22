@@ -35,7 +35,8 @@
                 <!-- NEW COLUMNS -->
                 <th>Upload</th>
                 <th>Save</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 <th>PG Details</th>
 
             </tr>
@@ -77,7 +78,8 @@
                         </button>
                     </td>
                     
-                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
+
                     <td>
                     <a href="{{ route('admin.projects.agreementdate.create', $p->id) }}"
                         class="btn btn-sm btn-primary">

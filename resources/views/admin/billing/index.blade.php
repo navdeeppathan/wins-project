@@ -20,7 +20,7 @@
         <div class="col-md-4 mb-3">
             <label>Department</label>
             <input class="form-control"
-                value="{{ $project->department->name ?? '-' }}"
+                value="{{ $project->departments->name ?? '-' }}"
                 disabled>
         </div>
 
@@ -159,7 +159,7 @@
     <h3>Projects (Billings)</h3>
 
 </div>
-@if($project->count() > 0)
+@if($project->billings->count() > 0)
 <div class="table-responsive">
     <table id="example" class="table table-striped nowrap" style="width:100%">
         <thead >

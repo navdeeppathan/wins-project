@@ -396,7 +396,7 @@
         </div>
 
         <h1 class="brand-name">Wins</h1>
-        <p class="brand-description">The best way to manage your expenses.</p>
+        <p class="brand-description">The best way to manage your projects.</p>
 
         {{-- <button class="learn-more-btn">Learn More</button> --}}
       </div>

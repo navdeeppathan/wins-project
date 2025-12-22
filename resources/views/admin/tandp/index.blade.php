@@ -14,10 +14,24 @@
             <div class="card-body">
                 <form action="{{ route('admin.tandp.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-2">
+                    {{-- <div class="mb-2">
                         <label class="form-label">Project ID *</label>
                         <input type="number" name="project_id" class="form-control" required>
+                    </div> --}}
+
+                    <div class="mb-2">
+                        <label class="form-label">Project*</label>
+                        <select name="project_id" class="form-select">
+                            <option value="">Select Project</option>
+                            @foreach($projects as $project)
+                                <option value="{{ $project->id }}"
+                                    {{ old('project_id') == $project->id ? 'selected' : '' }}>
+                                    {{ $project->name ?? 'Project #'.$project->id }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
+
                     <div class="mb-2">
                         <label class="form-label">Date *</label>
                         <input type="date" name="expense_date" class="form-control" required>

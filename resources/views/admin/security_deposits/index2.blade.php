@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+{{-- @extends('layouts.admin')
 
 @section('title','Projects')
 
@@ -7,11 +7,11 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (Security Deposit Returned)</h3>
-</div>
+</div> --}}
 
-@if($securityDeposits->count() > 0)
+@if($returneds->count() > 0)
 <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
+    <table id="securityreturn" class="table table-striped nowrap" style="width:100%">
         <thead >
             <tr>
                 <th>#</th>
@@ -31,12 +31,13 @@
                 <!-- NEW COLUMNS -->
                 <th>Return</th>
                 <th>Save</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 {{-- <th width="160">Actions</th> --}}
             </tr>
         </thead>
         <tbody>
-            @forelse($securityDeposits as $emd)
+            @forelse($returneds as $emd)
                 <tr>
                     <td>{{ $emd->id }}</td>
 
@@ -116,6 +117,17 @@ $(document).on('click', '.saveisReturnedBtn', function () {
     });
 
 });
+
+new DataTable('#securityreturn', {
+    scrollX: true,
+    responsive: false,
+    autoWidth: false,
+    // layout: {
+    //     topStart: {
+    //         buttons: ['copy', 'excel', 'pdf', 'print']
+    //     }
+    // }
+});
 </script>
 @endpush
 
@@ -124,4 +136,4 @@ $(document).on('click', '.saveisReturnedBtn', function () {
 
 
 
-@endsection
+{{-- @endsection --}}

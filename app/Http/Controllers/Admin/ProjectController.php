@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
-use App\Models\departments;
+use App\Models\Department;
 use App\Models\EmdDetail;
 use App\Models\PgDetail;
 use App\Models\Project;
@@ -21,6 +21,14 @@ class ProjectController extends Controller
         $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
        
         return view('admin.projects.index', compact('projects'));
+    }
+
+
+    
+    public function commonIndex()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        return view('admin.common.index', compact('projects'));
     }
 
     public function returnIndex()
@@ -77,39 +85,104 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $departmentss = Departments::where('user_id', auth()->id())->orderBy('name')->get();
+        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
         $states = State::orderBy('name')->get();
-        return view('admin.projects.create', compact('department','states'));
+        return view('admin.projects.create', compact('departments','states'));
     }
 
    
+     public function commonCreate(Project $project)
+        {
+            $emdDetails = $project->emds;
+            $pgDetails = $project->pgDetails;
+            $securityDeposits = $project->securityDeposits;
+            $withhelds = $project->withhelds;
+
+
+            return view('admin.common.indexdetails', compact('project', 'emdDetails', 'pgDetails', 'securityDeposits', 'withhelds'));
+        }
 
         public function returnedCreate(Project $project)
         {
-            $emdDetails = $project->emds;
+            // forfieted (default)
+            $forfieteds = $project->emds;
+                $emdDetails = $project->emds()
+                ->where('isReturned', 1)
+                ->get();
 
-            return view('admin.unqualified.index2', compact('project', 'emdDetails'));
+            // returned (default)
+            $returneds = $project->emds()
+                ->where('isForfieted', 1)
+                ->get();
+
+            // ACTIVE (default)
+            $actives = $project->emds()
+                ->where('isReturned', 0)
+                ->where('isForfieted', 0)
+                ->get();
+            
+            $emdDetails = $project->emds;    
+
+            return view('admin.unqualified.indexdetails', compact('project', 'emdDetails', 'forfieteds', 'returneds', 'actives'));
         }
 
           public function pgreturnedCreate(Project $project)
         {
             $pgDetails = $project->pgDetails;
 
-            return view('admin.pgreturn.index2', compact('project', 'pgDetails'));
+            $actives = $project->pgDetails()
+                ->where('isReturned', 0)
+                ->where('isForfieted', 0)
+                ->get();
+            
+            $returneds = $project->pgDetails()
+                ->where('isReturned', 1)
+                ->get();
+            
+            $forfieteds = $project->pgDetails()
+                ->where('isForfieted', 1)
+                ->get();    
+
+            return view('admin.pgreturn.indexdetails', compact('project', 'pgDetails', 'forfieteds', 'returneds', 'actives'));
         }
 
           public function securityreturnedCreate(Project $project)
         {
             $securityDeposits = $project->securityDeposits;
+            $actives = $project->securityDeposits()
+                ->where('isReturned', 0)
+                ->where('isForfeited', 0)
+                ->get();
+            
+            $returneds = $project->securityDeposits()
+                ->where('isReturned', 1)
+                ->get();
+            
+            $forfieteds = $project->securityDeposits()
+                ->where('isForfeited', 1)
+                ->get();
 
-            return view('admin.security_deposits.index2', compact('project', 'securityDeposits'));
+            return view('admin.security_deposits.indexdetails', compact('project', 'securityDeposits', 'forfieteds', 'returneds', 'actives'));
         }
 
            public function withheldreturnedCreate(Project $project)
         {
             $withhelds = $project->withhelds;
 
-            return view('admin.withheld.index2', compact('project', 'withhelds'));
+            $actives = $project->withhelds()
+                ->where('isReturned', 0)
+                ->where('isForfeited', 0)
+                ->get();
+            
+            $returneds = $project->withhelds()
+                ->where('isReturned', 1)
+                ->get();
+            
+            $forfieteds = $project->withhelds()
+                ->where('isForfeited', 1)
+                ->get();
+
+            return view('admin.withheld.index2', compact('project', 'withhelds', 'forfieteds', 'returneds', 'actives'));
         }
 
 
@@ -456,7 +529,8 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $states = State::orderBy('name')->get();
+        return view('admin.projects.edit', compact('project', 'states'));
     }
 
     public function update(ProjectRequest $request, Project $project)

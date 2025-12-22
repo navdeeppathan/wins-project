@@ -33,6 +33,18 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\ProjectController::class, 'agreementDateCreate']
     )->name('projects.agreementdate.create');
 
+
+    Route::get(
+        '/common',
+        [App\Http\Controllers\Admin\ProjectController::class, 'commonIndex']
+    )->name('projects.common.index');
+
+
+     Route::get(
+        '/common-details/{project}',
+        [App\Http\Controllers\Admin\ProjectController::class, 'commonCreate']
+    )->name('projects.common.create');
+
      Route::get(
         '/emdreturned',
         [App\Http\Controllers\Admin\ProjectController::class, 'returnIndex']
@@ -75,9 +87,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     )->name('projects.withheldreturned.forfieted');
 
     Route::get(
-        '/returned/{project}',
+        '/emdreturned/{project}',
         [App\Http\Controllers\Admin\ProjectController::class, 'returnedCreate']
     )->name('projects.returned.create');
+
+
+
 
      Route::get(
         '/pgreturned/{project}',
@@ -335,10 +350,53 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 /* ========== PROTECTED ADMIN ROUTES ========== */
 Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(function () {
 
+    /* ===================== Dashboard ===================== */
     Route::get('/', function () {
-       return redirect()->route('superadmin.projects.index');
-    })->name('superdashboard');
+    //   return redirect()->route('superadmin.projects.index');
+    return view('superadmin.dashboard');
 
-    // ⬇ YOUR earlier admin routes here (Projects, Billing, Vendor, etc.)
+    })->name('dashboard');
+
+
+    Route::get('users', [RegisterController::class, 'index'])->name('users.index');
+    Route::get('users/create', [RegisterController::class, 'create'])->name('users.create');
+     
+    Route::get('users/{user}/projects',
+        [App\Http\Controllers\SuperAdmin\ProjectController::class, 'index']
+    )->name('users.projects');
+
+     
+    /* ===================== PROJECTS (BIDDING) ===================== */
+    Route::resource('projects', App\Http\Controllers\SuperAdmin\ProjectController::class);
+
+
+
+
+    
+
+    
+
+    /* ===================== VENDORS ===================== */
+    Route::resource('vendors', App\Http\Controllers\SuperAdmin\VendorController::class)->only([
+        'index', 'store', 'destroy'
+    ]);
+
+    /* ===================== INVENTORY ===================== */
+    Route::resource('inventory', App\Http\Controllers\SuperAdmin\InventoryController::class)->only([
+        'index', 'store', 'destroy'
+    ]);
+
+    /* ===================== T & P ===================== */
+    Route::resource('tandp', App\Http\Controllers\SuperAdmin\TAndPController::class)->only([
+        'index', 'store'
+    ]);
+
+
+    
+    /* ===================== Attachments (POLYMORPHIC) ===================== */
+    Route::post('attachments',
+        [App\Http\Controllers\Admin\AttachmentController::class, 'store']
+    )->name('attachments.store');
 });
+
 
