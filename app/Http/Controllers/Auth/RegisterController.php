@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    public function index()
+    {
+        $users = User::all();
+        return view('superadmin.users.index', compact('users'));
+    }
+
+    public function create()
+    {
+        return view('superadmin.users.create');
+    }
+
     public function registerForm()
     {
         return view('auth.register');
@@ -26,9 +37,9 @@ class RegisterController extends Controller
         'gst_number' => [
             'required',
             'string',
-            'size:15',
-            'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
-            'unique:users,gst_number',
+            // 'size:15',
+            // 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+            // 'unique:users,gst_number',
         ],
     ]);
 
@@ -41,6 +52,8 @@ class RegisterController extends Controller
             'role' => 'admin'
         ]);
 
-        return redirect()->route('login.form')->with('success','Account created, please login.');
+        return redirect()->back()->with('success','Account created, please login.');
     }
+
+    
 }

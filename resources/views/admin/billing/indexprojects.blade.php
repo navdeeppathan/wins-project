@@ -19,7 +19,8 @@
                 <th>Location</th>
                 <th>Estimated</th>
                 <th>Date of Opening</th>
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 <th width="160">Actions</th>
             </tr>
         </thead>
@@ -32,7 +33,8 @@
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ $p->date_of_opening }}</td>
-                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
+
                     <td>
                         <a href="{{ route('admin.projects.edit', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                         <a href="{{ route('admin.projects.billing.index', $p) }}" class="btn btn-sm btn-secondary">

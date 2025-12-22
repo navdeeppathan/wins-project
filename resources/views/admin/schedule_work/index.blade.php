@@ -30,7 +30,8 @@
                 <th>EMD Amount</th>
 
             
-                <th>Status</th>
+                {{-- <th>Status</th> --}}
+
                 <th width="160">Actions</th>
             </tr>
         </thead>
@@ -48,7 +49,8 @@
 
 
                     
-                    <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td>
+                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
+
                     <td>
                         <a href="{{ route('admin.schedule-work.index2', $p) }}" class="btn btn-sm btn-warning">Add Schedule</a>
                     </td>

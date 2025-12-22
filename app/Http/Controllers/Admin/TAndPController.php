@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\TAndP;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,9 @@ class TAndPController extends Controller
 {
     public function index()
     {
+        $projects = Project::all();
         $records = TAndP::latest()->paginate(20);
-        return view('admin.tandp.index',compact('records'));
+        return view('admin.tandp.index',compact('records','projects'));
     }
     public function store(Request $request)
     {

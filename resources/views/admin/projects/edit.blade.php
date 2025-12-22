@@ -10,6 +10,25 @@
     @csrf @method('PUT')
 
     <div class="row">
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Project Name *</label>
+            <input type="text" name="name"
+                value="{{ old('name', $project->name) }}"
+                class="form-control" required>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+                @foreach(['pending','active','completed','cancelled'] as $status)
+                    <option value="{{ $status }}" @selected($project->status==$status)>
+                        {{ ucfirst($status) }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number', $project->nit_number) }}" class="form-control" required>
@@ -17,13 +36,23 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Department *</label>
-            <input type="text" name="department" value="{{ old('department', $project->department) }}" class="form-control" required>
+            <input type="text" name="department" value="{{ old('department', $project->departments->name) }}" class="form-control" required>
         </div>
 
+
         <div class="col-md-4 mb-3">
-            <label class="form-label">Location *</label>
-            <input type="text" name="location" value="{{ old('location', $project->location) }}" class="form-control" required>
+            <label class="form-label">State *</label>
+            <select name="location" class="form-select" required>
+                <option value="">Select State</option>
+                @foreach($states as $state)
+                    <option value="{{ $state->id }}"
+                        {{ old('location', $project->location) == $state->id ? 'selected' : '' }}>
+                        {{ $state->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
+
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
@@ -49,9 +78,13 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">EMD Amount</label>
-            <input type="number" step="0.01" name="emd_amount"
-                   value="{{ old('emd_amount', $project->emd_amount) }}" class="form-control">
+            <input type="number"
+                step="0.01"
+                class="form-control"
+                value="{{ number_format($project->emds->sum('amount'), 2) }}"
+                disabled>
         </div>
+
 
         <div class="col-md-4 mb-3">
             <label class="form-label">EMD Type</label>
@@ -86,8 +119,125 @@
         <div class="col-md-4 mb-3">
             <label class="form-label">Stipulated Completion</label>
             <input type="date" name="stipulated_completion"
-                   value="{{ old('stipulated_completion', $project->stipulated_completion) }}" class="form-control">
+                   value="{{ old('stipulated_completion', $project->stipulated_date_ofcompletion) }}" class="form-control">
         </div>
+
+        {{-- //Qualification & Flags --}}
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Qualified</label>
+            <select name="isQualified" class="form-select">
+                <option value="0" @selected(!$project->isQualified)>No</option>
+                <option value="1" @selected($project->isQualified)>Yes</option>
+            </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">EMD Returned</label>
+            <select name="isReturned" class="form-select">
+                <option value="0" @selected(!$project->isReturned)>No</option>
+                <option value="1" @selected($project->isReturned)>Yes</option>
+            </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">EMD Forfeited</label>
+            <select name="isForfitted" class="form-select">
+                <option value="0" @selected(!$project->isForfitted)>No</option>
+                <option value="1" @selected($project->isForfitted)>Yes</option>
+            </select>
+        </div>
+
+        {{-- //Tender / Acceptance Details --}}
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Tendered Amount</label>
+            <input type="number" step="0.01" name="tendered_amount"
+                value="{{ old('tendered_amount', $project->tendered_amount) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Acceptance Letter No</label>
+            <input type="text" name="acceptance_letter_no"
+                value="{{ old('acceptance_letter_no', $project->acceptance_letter_no) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Acceptance Date</label>
+            <input type="date" name="date"
+                value="{{ old('date', $project->date) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Acceptance Upload</label>
+            <input type="file" name="acceptance_upload" class="form-control">
+        </div>
+
+        {{-- //Award Letter --}}
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Award Letter No</label>
+            <input type="text" name="award_letter_no"
+                value="{{ old('award_letter_no', $project->award_letter_no) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Award Date</label>
+            <input type="date" name="award_date"
+                value="{{ old('award_date', $project->award_date) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Award Upload</label>
+            <input type="file" name="award_upload" class="form-control">
+        </div>
+
+        {{-- //Agreement --}}
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Agreement No</label>
+            <input type="text" name="agreement_no"
+                value="{{ old('agreement_no', $project->agreement_no) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Agreement Start Date</label>
+            <input type="date" name="agreement_start_date"
+                value="{{ old('agreement_start_date', $project->agreement_start_date) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Agreement Upload</label>
+            <input type="file" name="agreement_upload" class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Stipulated Completion Date (Agreement)</label>
+            <input type="date" name="stipulated_date_ofcompletion"
+                value="{{ old('stipulated_date_ofcompletion', $project->stipulated_date_ofcompletion) }}"
+                class="form-control">
+        </div>
+
+        {{-- //work progress --}}
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Total Work Done (%)</label>
+            <input type="number" step="0.01" name="total_work_done"
+                value="{{ old('total_work_done', $project->total_work_done) }}"
+                class="form-control">
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Total Work To Be Done (%)</label>
+            <input type="number" step="0.01" name="total_work_tobe_done"
+                value="{{ old('total_work_tobe_done', $project->total_work_tobe_done) }}"
+                class="form-control">
+        </div>
+
     </div>
 
     <button class="btn btn-success">Update Project</button>
@@ -97,8 +247,8 @@
 <hr>
 
 {{-- WORKFLOW CARDS: Acceptance, Award, Agreement --}}
-<div class="row">
-    {{-- Acceptance --}}
+{{-- <div class="row">
+    
     <div class="col-md-4 mb-3">
         <div class="card">
             <div class="card-header bg-light">
@@ -133,7 +283,7 @@
         </div>
     </div>
 
-    {{-- Award --}}
+    
     <div class="col-md-4 mb-3">
         <div class="card">
             <div class="card-header bg-light">
@@ -173,7 +323,7 @@
         </div>
     </div>
 
-    {{-- Agreement --}}
+    
     <div class="col-md-4 mb-3">
         <div class="card">
             <div class="card-header bg-light">
@@ -224,7 +374,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div class="mt-3">
     <a href="{{ route('admin.projects.billing.index', $project) }}" class="btn btn-outline-primary">

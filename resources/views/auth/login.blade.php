@@ -271,7 +271,7 @@
             </div>
             <div class="brand-name">Wins</div>
             <p class="brand-description">
-                The best way to manage your expenses.
+                The best way to manage your projects.
             </p>
         </div>
 
