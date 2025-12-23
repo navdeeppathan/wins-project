@@ -20,10 +20,11 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate Amount</th>
+                
                 <th>Date of Opening</th>
                 <th>Location</th>
                 <th>Department</th>
+                <th>Estimate Amount</th>
                 <th>EMD Amount</th>
                 <th>Qualified</th>
                 <th>Save</th>
@@ -33,17 +34,21 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="text-center">
+            @php
+                $i=1;
+            @endphp
             @foreach($projects as $p)
             <tr>
-                <td>{{ $p->id }}</td>
+                <td>{{ $i }}</td>
                 <td>{{ $p->name }}</td>
-                <td>{{ $p->nit_number }}</td>
-                <td>{{ number_format($p->estimated_amount,2) }}</td>
-                <td>{{ $p->date_of_opening }}</td>
+                <td class="text-center">{{ $p->nit_number }}</td>
+                <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
                 <td>{{ $p->state->name ?? '-' }}</td>
                 <td>{{ $p->departments->name ?? '-' }}</td>
-                <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
+                <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
+
+                <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
 
                 <td class="text-center">
                     <input type="checkbox"
@@ -69,10 +74,16 @@
                     <a href="{{ route('admin.projects.edit', $p) }}"
                        class="btn btn-warning btn-sm">Edit</a>
 
-                    <a href="{{ route('admin.inventory.index', $p) }}"
-                       class="btn btn-secondary btn-sm">Inventory</a>
+                   <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}" 
+                        class="btn btn-secondary btn-sm">
+                        Inventory
+                    </a>
+
                 </td>
             </tr>
+            @php
+                $i++;
+            @endphp
             @endforeach
         </tbody>
     </table>
@@ -110,6 +121,7 @@
             font-size: 14px;
             padding: 14px 16px;
             border: none !important;
+           
 
         }
 
@@ -190,7 +202,6 @@
 </style>
 @endpush
 
-
 {{-- ================= SCRIPTS ================= --}}
 @push('scripts')
 <script>
@@ -220,6 +231,21 @@
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
+        // dom: 'Bfrtip', // Add buttons
+        // buttons: [
+        //     {
+        //         extend: 'excelHtml5',
+        //         text: 'Export Excel',
+        //         className: 'btn btn-success btn-sm mr-2',
+        //     },
+        //     {
+        //         extend: 'pdfHtml5',
+        //         text: 'Export PDF',
+        //         className: 'btn btn-danger btn-sm',
+        //         orientation: 'landscape',
+        //         pageSize: 'A4',
+        //     }
+        // ],
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -235,6 +261,8 @@
                 () => $('td', row).css('background-color', base)
             );
         }
+
+        
     });
 </script>
 @endpush

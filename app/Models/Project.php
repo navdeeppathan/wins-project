@@ -8,6 +8,7 @@ class Project extends Model
 {
     protected $fillable = [
         'nit_number',
+        
         'name',
         'department',
         'location',
@@ -22,6 +23,7 @@ class Project extends Model
         'stipulated_completion',
         'status',
         'created_by',
+        'user_id',
         'isQualified',
         'isReturned',
         'acceptance_upload',

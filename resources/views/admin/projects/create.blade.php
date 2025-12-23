@@ -40,17 +40,36 @@
 
          <div class="col-md-4 mb-3">
             <label class="form-label">Date of Submission</label>
-            <input type="date" name="date_of_start" value="{{ old('date_of_start') }}" class="form-control">
+            <input 
+                type="date" 
+                name="date_of_start" 
+                id="date_of_start"
+                value="{{ old('date_of_start') }}" 
+                class="form-control"
+            >
         </div>
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Opening</label>
-            <input type="date" name="date_of_opening" value="{{ old('date_of_opening') }}" class="form-control">
+            <input 
+                type="date" 
+                name="date_of_opening" 
+                id="date_of_opening"
+                value="{{ old('date_of_opening') }}" 
+                class="form-control"
+            >
         </div>
+
+        
+
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Cost *</label>
-            <input type="number" step="0.01" name="estimated_amount" value="{{ old('estimated_amount') }}" placeholder="Enter Estimated Cost" class="form-control" required>
+           <input type="number" step="0.01" name="estimated_amount" 
+            id="estimated_amount"
+            value="{{ old('estimated_amount') }}" 
+            placeholder="Enter Estimated Cost" 
+            class="form-control" required>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label">Time Allowed (Number) *</label>
@@ -105,31 +124,74 @@
                         <option value="FDR">FDR</option>
                         <option value="DD">DD</option>
                         <option value="BG">BG</option>
+                        <option value="Challan">Challan</option>
                     </select>
                 </td>
 
                 <td><input type="text" name="emd[0][instrument_number]" class="form-control"></td>
                 <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
-                <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control"></td>
+                {{-- <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control"></td> --}}
+                <td>
+                    <input type="number" step="0.01" 
+                        name="emd[0][amount]" 
+                        class="form-control emd-amount">
+                </td>
+
                 <td><input type="text" name="emd[0][remarks]" class="form-control"></td>
                 <td><input type="file" name="emd[0][upload]" class="form-control"></td>
-                <td><button type="button" class="btn btn-danger removeRow">X</button></td>
+                {{-- <td><button type="button" class="btn btn-danger removeRow">X</button></td> --}}
             </tr>
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" id="addEmdRow">+ Add More</button>
+   
+<div class="d-flex flex-column align-items-end">
+    <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
+        + Add More
+    </button>
+<br>
+    <div>
+        <button class="btn btn-success">Save Project</button>
+        <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
 
-    <button class="btn btn-success">Save Project</button>
-    <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
+
 </form>
 
 
 <script>
 let emdIndex = 1;
 
+// Function to calculate and fill EMD amounts
+function updateEmdAmounts() {
+    const estimatedCost = parseFloat(document.getElementById('estimated_amount').value) || 0;
+    const emdInputs = document.querySelectorAll('.emd-amount');
+
+    emdInputs.forEach(input => {
+        // Only set default if empty
+        if (!input.dataset.userChanged) {
+            input.value = (estimatedCost * 0.02).toFixed(2);
+        }
+    });
+}
+
+// Mark manually changed EMD amounts
+document.addEventListener('input', function(e){
+    if(e.target.classList.contains('emd-amount')){
+        e.target.dataset.userChanged = true;
+    }
+});
+
+// On page load
+window.addEventListener('DOMContentLoaded', updateEmdAmounts);
+
+// When estimated cost changes
+document.getElementById('estimated_amount').addEventListener('input', updateEmdAmounts);
+
 // Add Row
 document.getElementById('addEmdRow').addEventListener('click', function () {
+    const estimatedCost = parseFloat(document.getElementById('estimated_amount').value) || 0;
 
     let table = document.querySelector('#emdTable tbody');
 
@@ -137,7 +199,6 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
         <tr>
             <td>${emdIndex + 1}</td>
             <td>
-                
                 <select name="emd[${emdIndex}][instrument_type]" class="form-select">
                     <option value="">Select</option>
                     <option value="FDR">FDR</option>
@@ -145,10 +206,14 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
                     <option value="BG">BG</option>
                 </select>
             </td>
-
             <td><input type="text" name="emd[${emdIndex}][instrument_number]" class="form-control"></td>
             <td><input type="date" name="emd[${emdIndex}][instrument_date]" class="form-control"></td>
-            <td><input type="number" step="0.01" name="emd[${emdIndex}][amount]" class="form-control"></td>
+            <td>
+                <input type="number" step="0.01" 
+                       name="emd[${emdIndex}][amount]" 
+                       class="form-control emd-amount" 
+                       value="${(estimatedCost * 0.02).toFixed(2)}">
+            </td>
             <td><input type="text" name="emd[${emdIndex}][remarks]" class="form-control"></td>
             <td><input type="file" name="emd[${emdIndex}][upload]" class="form-control"></td>
             <td><button type="button" class="btn btn-danger removeRow">X</button></td>
@@ -165,5 +230,7 @@ document.addEventListener('click', function (e) {
         e.target.closest('tr').remove();
     }
 });
+
+
 </script>
 @endsection

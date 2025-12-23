@@ -17,6 +17,7 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $request->validate(['name'=>'required','phone'=>'required']);
+        $request->merge(['user_id' => auth()->user()->id]);
         Vendor::create($request->all());
         return back()->with('success','Vendor added.');
     }

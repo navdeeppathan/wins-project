@@ -3,7 +3,7 @@
 @section('title','Edit Project')
 
 @section('content')
-<h3 class="mb-3">Edit Project #{{ $project->id }}</h3>
+<h3 class="mb-3">Edit Project #{{ $project->name }}</h3>
 
 {{-- Main project edit form --}}
 <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data" class="mb-4">
@@ -76,6 +76,11 @@
             </select>
         </div>
 
+         <div class="col-md-4 mb-3">
+            <label class="form-label">Date of Opening</label>
+            <input type="date" name="date_of_opening" value="{{ old('date_of_opening', $project->date_of_opening) }}" class="form-control">
+        </div>
+        
         <div class="col-md-4 mb-3">
             <label class="form-label">EMD Amount</label>
             <input type="number"
@@ -96,7 +101,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">EMD Document</label>
             <input type="file" name="emd_file" class="form-control">
             @if($project->emd_file)
@@ -104,14 +109,11 @@
                     Current: <a href="{{ asset('storage/'.$project->emd_file) }}" target="_blank">View</a>
                 </small>
             @endif
-        </div>
+        </div> --}}
 
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Date of Opening</label>
-            <input type="date" name="date_of_opening" value="{{ old('date_of_opening', $project->date_of_opening) }}" class="form-control">
-        </div>
+       
 
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Date of Start</label>
             <input type="date" name="date_of_start" value="{{ old('date_of_start', $project->date_of_start) }}" class="form-control">
         </div>
@@ -120,10 +122,10 @@
             <label class="form-label">Stipulated Completion</label>
             <input type="date" name="stipulated_completion"
                    value="{{ old('stipulated_completion', $project->stipulated_date_ofcompletion) }}" class="form-control">
-        </div>
+        </div> --}}
 
         {{-- //Qualification & Flags --}}
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Qualified</label>
             <select name="isQualified" class="form-select">
                 <option value="0" @selected(!$project->isQualified)>No</option>
@@ -145,10 +147,10 @@
                 <option value="0" @selected(!$project->isForfitted)>No</option>
                 <option value="1" @selected($project->isForfitted)>Yes</option>
             </select>
-        </div>
+        </div> --}}
 
         {{-- //Tender / Acceptance Details --}}
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Tendered Amount</label>
             <input type="number" step="0.01" name="tendered_amount"
                 value="{{ old('tendered_amount', $project->tendered_amount) }}"
@@ -172,10 +174,10 @@
         <div class="col-md-4 mb-3">
             <label class="form-label">Acceptance Upload</label>
             <input type="file" name="acceptance_upload" class="form-control">
-        </div>
+        </div> --}}
 
         {{-- //Award Letter --}}
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Award Letter No</label>
             <input type="text" name="award_letter_no"
                 value="{{ old('award_letter_no', $project->award_letter_no) }}"
@@ -192,11 +194,11 @@
         <div class="col-md-4 mb-3">
             <label class="form-label">Award Upload</label>
             <input type="file" name="award_upload" class="form-control">
-        </div>
+        </div> --}}
 
         {{-- //Agreement --}}
 
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Agreement No</label>
             <input type="text" name="agreement_no"
                 value="{{ old('agreement_no', $project->agreement_no) }}"
@@ -220,11 +222,11 @@
             <input type="date" name="stipulated_date_ofcompletion"
                 value="{{ old('stipulated_date_ofcompletion', $project->stipulated_date_ofcompletion) }}"
                 class="form-control">
-        </div>
+        </div> --}}
 
         {{-- //work progress --}}
 
-        <div class="col-md-4 mb-3">
+        {{-- <div class="col-md-4 mb-3">
             <label class="form-label">Total Work Done (%)</label>
             <input type="number" step="0.01" name="total_work_done"
                 value="{{ old('total_work_done', $project->total_work_done) }}"
@@ -236,7 +238,7 @@
             <input type="number" step="0.01" name="total_work_tobe_done"
                 value="{{ old('total_work_tobe_done', $project->total_work_tobe_done) }}"
                 class="form-control">
-        </div>
+        </div> --}}
 
     </div>
 
