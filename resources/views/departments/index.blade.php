@@ -43,6 +43,7 @@
     @endif
 
     {{-- Table --}}
+  @if($departments->count() > 0)
     <div class="card dept-card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-bordered dept-table text-center">
@@ -50,16 +51,19 @@
                     <tr>
                         <th width="80">No.</th>
                         <th>Name</th>
-                        {{-- <th width="150">User ID</th> --}}
+                        <th width="150">Created</th>
                         <th width="180">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $i=1;
+                    @endphp
                     @forelse($departments as $dept)
                     <tr>
-                        <td>{{ $dept->id }}</td>
+                        <td>{{ $i }}</td>
                         <td>{{ $dept->name }}</td>
-                        {{-- <td>{{ $dept->user_id ?? '-' }}</td> --}}
+                        <td>{{ date('d-m-y', strtotime($dept->created_at)) }}</td>
                         <td class="action-btns">
                             <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             {{-- <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline">
@@ -70,15 +74,27 @@
                             </form> --}}
                         </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                     @empty
                     <tr>
                         <td colspan="4" class="text-muted py-3">No departments found.</td>
                     </tr>
+
                     @endforelse
+                    
                 </tbody>
             </table>
         </div>
     </div>
+    @else
+    <div class="alert alert-warning text-center">
+        Data is not available.
+    </div>
+  @endif
+
+
 
 </div>
 @endsection

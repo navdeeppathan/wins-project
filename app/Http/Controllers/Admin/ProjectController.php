@@ -18,7 +18,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
        
         return view('admin.projects.index', compact('projects'));
     }
@@ -27,58 +27,58 @@ class ProjectController extends Controller
     
     public function commonIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.common.index', compact('projects'));
     }
 
     public function returnIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.unqualified.index', compact('projects'));
     }
 
      public function forfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.forfitted.index', compact('projects'));
     }
 
 
      public function pgreturnIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.pgreturn.index', compact('projects'));
     }
 
      public function securityreturnIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.security_deposits.index', compact('projects'));
     }
 
      public function withheldreturnIndex()
     {
-        $projects = Project::with(['departments', 'state','withhelds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.withheld.index', compact('projects'));
     }
     
 
      public function pgforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.pgforfitted.index', compact('projects'));
     }
 
      public function securityforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.securitydeposite_forfieted.index', compact('projects'));
     }
 
     
      public function withheldforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','withhelds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.withheld_forfieted.index', compact('projects'));
     }
 
@@ -218,6 +218,8 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $data['created_by'] = Auth::id();
+
+        $data['user_id'] = Auth::id();
 
         // Store project main file
         if ($request->hasFile('emd_file')) {
@@ -389,6 +391,7 @@ class ProjectController extends Controller
     public function acceptanceIndex()
     {
         $projects = Project::whereIn('status', ['bidding', 'accepted'])
+            ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 
@@ -398,6 +401,7 @@ class ProjectController extends Controller
      public function awardIndex()
     {
         $projects = Project::whereIn('status', ['bidding', 'accepted','awarded'])
+            ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 
@@ -406,7 +410,7 @@ class ProjectController extends Controller
 
       public function agreementIndex()
     {
-        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement'])
+        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement'])->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 

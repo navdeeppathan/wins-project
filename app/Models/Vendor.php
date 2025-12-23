@@ -8,6 +8,7 @@ class Vendor extends Model
 {
     protected $fillable = [
         'name',
+        'user_id',
         'contact_person',
         'phone',
         'email',

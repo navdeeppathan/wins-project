@@ -43,7 +43,7 @@ class RegisterController extends Controller
         ],
     ]);
 
-        User::create([
+      $user =  User::create([
             'name'=> $request->name,
             'email'=> $request->email,
             'auth_person_name'=> $request->auth_person_name,
@@ -52,7 +52,10 @@ class RegisterController extends Controller
             'role' => 'admin'
         ]);
 
-        return redirect()->back()->with('success','Account created, please login.');
+        //also login
+        // auth()->login($user);
+
+        return redirect()->route('/')->with('success','Account created, please login.');
     }
 
     

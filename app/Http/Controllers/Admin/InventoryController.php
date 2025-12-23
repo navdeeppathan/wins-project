@@ -10,13 +10,24 @@ use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
-    public function index()
-    {
-        $items = Inventory::with('project','vendor')->latest()->paginate(20);
-        $projects = Project::all();
-        $vendors = Vendor::all();
-        return view('admin.inventory.index',compact('items','projects','vendors'));
-    }
+public function index(Request $request)
+{
+    $projectId = $request->query('project_id'); // get ?project_id=10
+
+    $items = \App\Models\Inventory::query()
+        ->when($projectId, function($q, $projectId) {
+            $q->where('project_id', $projectId);
+        })
+        ->with(['project', 'vendor'])
+        ->get(); // or ->paginate(10);
+
+    $projects = \App\Models\Project::where('user_id', auth()->user()->id)->get();
+    $vendors = \App\Models\Vendor::where('user_id', auth()->user()->id)->get();
+
+    return view('admin.inventory.index', compact('items', 'projects', 'vendors'));
+}
+
+
     public function store(Request $request)
     {
         $request->validate([
