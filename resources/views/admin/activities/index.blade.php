@@ -9,7 +9,7 @@
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Milestone)</h3>
+    <h3>Projects (Milestone) </h3>
     {{-- <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a> --}}
 </div>
 
@@ -36,9 +36,12 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
@@ -55,6 +58,9 @@
                         <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-warning">Add Milestone</a>
                     </td>
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

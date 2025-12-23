@@ -21,11 +21,12 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate Amount</th>
-                <th>Tendered Amount</th>
+               
                 <th>Location</th>
                 <th>Department</th>
                 <th>EMD Amount</th>
+                 <th>Estimate Amount</th>
+                <th>Tendered Amount</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>
                 <th>Upload</th>
@@ -37,39 +38,42 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
+                    
+                    
+                    <td>{{ $p->state->name ?? '-' }}</td>
+                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
 
                     <td>
                         <input type="number" step="0.01"
                             class="form-control form-control-sm tendered_amount"
-                            value="{{ $p->tendered_amount }}">
+                            value="{{ $p->tendered_amount }}" required>
                     </td>
-                    
-                    <td>{{ $p->state->name ?? '-' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
-                    <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td>
-
 
                     <td>
                         <input type="text"
                             class="form-control form-control-sm acceptance_letter_no"
-                            value="{{ $p->acceptance_letter_no }}">
+                            value="{{ $p->acceptance_letter_no }}" required>
                     </td>
 
                     <td>
                         <input type="date"
                             class="form-control form-control-sm acceptance_date"
-                            value="{{ $p->acceptance_date }}">
+                            value="{{ $p->date }}" required>
                     </td>
 
                     <td>
                         <input type="file"
-                            class="form-control form-control-sm acceptance_upload">
+                            class="form-control form-control-sm acceptance_upload" >
                     </td>
 
                     <td>
@@ -90,6 +94,9 @@
 
                     
                 </tr>
+                 @php
+                    $i++;
+                @endphp
             @empty
                 <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
             @endforelse
@@ -108,6 +115,16 @@ $(document).on('click', '.saveAcceptanceBtn', function () {
 
     let btn = $(this);
     let row = btn.closest('tr');
+
+    let tenderedAmount = row.find('.tendered_amount').val();
+    let letterNo = row.find('.acceptance_letter_no').val();
+    let date = row.find('.acceptance_date').val();
+
+    if (!tenderedAmount || !letterNo || !date) {
+        alert('Please fill all required fields');
+        return;
+    }
+
     let projectId = btn.data('id');
 
     let formData = new FormData();

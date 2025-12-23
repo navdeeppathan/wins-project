@@ -36,13 +36,16 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ $p->date_of_opening }}</td>
+                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
@@ -55,6 +58,9 @@
                         <a href="{{ route('admin.schedule-work.index2', $p) }}" class="btn btn-sm btn-warning">Add Schedule</a>
                     </td>
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

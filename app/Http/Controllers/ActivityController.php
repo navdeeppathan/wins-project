@@ -8,16 +8,31 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
+
+    
     public function index()
     {
         $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        
         return view('admin.activities.index', compact('projects'));
     }
 
      public function index2(Project $project)
     {
         $activities = $project->activities;
-        return view('admin.activities.index2', compact('activities', 'project'));
+       $chartData = $activities->map(function ($a) {
+            return [
+                'name' => \Illuminate\Support\Str::limit($a->activity_name, 30),
+                'progress' => (int) $a->progress,
+                'weightage' => (int) $a->weightage,
+                'remaining' => 100
+            ];
+        });
+
+
+        return view('admin.activities.index2', compact('project','activities','chartData'));
+
+        // return view('admin.activities.index2', compact('activities', 'project'));
     }
 
     public function store(Request $request)

@@ -37,9 +37,12 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($forfieteds as $emd)
                 <tr>
-                    <td>{{ $emd->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{  $project->name }}</td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
@@ -83,6 +86,9 @@
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
                 
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

@@ -63,9 +63,12 @@
                 </tr>
             </thead>
             <tbody>
+                 @php
+                    $i=1;
+                @endphp
                 @forelse($vendors as $v)
                     <tr>
-                        <td>{{ $v->id }}</td>
+                        <td>{{ $i}}</td>
                         <td>{{ $v->name }}</td>
                         <td>{{ $v->contact_person }}</td>
                         <td>{{ $v->phone }}</td>
@@ -78,6 +81,9 @@
                             </form> --}}
                         </td>
                     </tr>
+                     @php
+                        $i++;
+                    @endphp
                 @empty
                     <tr><td colspan="6" class="text-center">No vendors.</td></tr>
                 @endforelse

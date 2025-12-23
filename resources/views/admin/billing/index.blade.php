@@ -177,9 +177,12 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($project->billings as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->bill_number }}</td>
                     <td>{{ $p->bill_type }}</td>
                     <td>{{ $p->bill_date }}</td>
@@ -197,6 +200,9 @@
                     <td>{{ number_format($p->net_payable,2) }}</td>
                     <td>{{ $p->remarks }}</td>
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="13" class="text-center">No Billings yet.</td></tr>
             @endforelse

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h3 class="mb-3">Project – PG Details</h3>
+<h3 class="mb-3">Project – PG Details – #{{ $project->name}}</h3>
 
 <form action="{{ route('admin.projects.pg.store', $project->id) }}" 
       method="POST" enctype="multipart/form-data">
@@ -24,7 +24,7 @@
     <div class="col-md-4 mb-3">
         <label>Department</label>
         <input class="form-control"
-               value="{{ $project->department->name ?? '-' }}"
+               value="{{ $project->departments->name ?? '-' }}"
                disabled>
     </div>
 
@@ -43,12 +43,12 @@
 
     <div class="col-md-4 mb-3">
         <label>Date of Submission</label>
-        <input type="text" class="form-control" value="{{ $project->date_of_start }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_of_start)) ?? '-' }}" disabled>
     </div>
 
     <div class="col-md-4 mb-3">
         <label>Date of Opening</label>
-        <input type="text" class="form-control" value="{{ $project->date_of_opening }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_of_opening)) ?? '-' }}" disabled>
     </div>
 
 
@@ -60,6 +60,11 @@
     </div>
 
     <div class="col-md-4 mb-3">
+        <label>Tender Amount</label>
+        <input type="text" class="form-control" value="{{ $project->tendered_amount }}" disabled>
+    </div>
+
+    <div class="col-md-4 mb-3">
         <label>Time Allowed (Number)</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_number }}" disabled>
     </div>
@@ -68,6 +73,8 @@
         <label>Time Type</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_type }}" disabled>
     </div>
+
+    
 
 
 </div>
@@ -104,7 +111,13 @@
             </td>
             <td><input type="text" name="pg[0][instrument_number]" class="form-control"></td>
             <td><input type="date" name="pg[0][instrument_date]" class="form-control"></td>
-            <td><input type="number" step="0.01" name="pg[0][amount]" class="form-control"></td>
+            <td>
+                <input type="number" step="0.01"
+                    name="pg[0][amount]"
+                    class="form-control"
+                    value="{{ number_format(($project->tendered_amount * 0.05), 2, '.', '') }}">
+            </td>
+
             <td><input type="file" name="pg[0][upload]" class="form-control"></td>
             <td><button type="button" class="btn btn-danger removeRow">X</button></td>
         </tr>
@@ -112,21 +125,23 @@
 </table>
 </div>
 
-<button type="button" class="btn btn-primary mb-3" id="addPgRow">+ Add More</button>
-
-<br>
-<button class="btn btn-success">Save PG Details</button>
-<a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
-
+    <div class="d-flex flex-column align-items-end">
+        <button type="button" class="btn btn-primary mb-3 mt-3" id="addPgRow">+ Add More</button>
+        
+        <button class="btn btn-success mb-3">Save PG Details</button>
+        {{-- <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary ">Back</a> --}}
+    </div>
 </form>
 
 <script>
+
 let pgIndex = 1;
 
 document.getElementById('addPgRow').addEventListener('click', function () {
 
     let table = document.querySelector('[data-pg-table] tbody');
 
+    let defaultAmount = (tenderedAmount * 0.05).toFixed(2);
 
     let row = `
     <tr>
@@ -141,7 +156,12 @@ document.getElementById('addPgRow').addEventListener('click', function () {
         </td>
         <td><input type="text" name="pg[${pgIndex}][instrument_number]" class="form-control"></td>
         <td><input type="date" name="pg[${pgIndex}][instrument_date]" class="form-control"></td>
-        <td><input type="number" step="0.01" name="pg[${pgIndex}][amount]" class="form-control"></td>
+        <td>
+            <input type="number" step="0.01"
+                   name="pg[${pgIndex}][amount]"
+                   class="form-control"
+                   value="${defaultAmount}">
+        </td>
         <td><input type="file" name="pg[${pgIndex}][upload]" class="form-control"></td>
         <td><button type="button" class="btn btn-danger removeRow">X</button></td>
     </tr>`;
@@ -155,6 +175,14 @@ document.addEventListener('click', function (e) {
         e.target.closest('tr').remove();
     }
 });
+
+
+
+
+    const tenderedAmount = {{ $project->tendered_amount ?? 0 }};
+
+
+
 </script>
 
 @endsection
