@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\SecurityDepositController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectPgController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\Admin\DailyNoteController;
 use App\Http\Controllers\Admin\WithheldController;
 use App\Http\Controllers\ScheduleWorkController;
 /*
@@ -18,6 +19,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
       return redirect()->route('admin.projects.index');
 
     })->name('dashboard');
+
+  
+
+       Route::get('daily-notes', [DailyNoteController::class, 'index'])->name('daily-notes.index');
+        Route::post('daily-notes', [DailyNoteController::class, 'store'])->name('daily-notes.store');
+        Route::post('daily-notes/{id}/update', [DailyNoteController::class, 'update']);
+        Route::post('daily-notes/{id}/destroy', [DailyNoteController::class, 'destroy']);
 
       Route::get('/acceptance', [App\Http\Controllers\Admin\ProjectController::class, 'acceptanceIndex'])
     ->name('projects.acceptance');
@@ -310,7 +318,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/activities/{project}', [ActivityController::class, 'index2'])->name('activities.index2');
     Route::post('/activities', [ActivityController::class, 'store'])->name('activities.store');
     Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
-    Route::put('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
+    Route::post('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 
 
     
@@ -319,7 +327,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/schedule-work/{project}', [ScheduleWorkController::class, 'index2'])->name('schedule-work.index2');
     Route::post('/schedule-work', [ScheduleWorkController::class, 'store'])->name('schedule-work.store');
     Route::get('/schedule-work/{scheduleWork}/edit', [ScheduleWorkController::class, 'edit'])->name('schedule-work.edit');
-    Route::put('/schedule-work/{scheduleWork}', [ScheduleWorkController::class, 'update'])->name('schedule-work.update');
+    Route::post('/schedule-work/{scheduleWork}', [ScheduleWorkController::class, 'update'])->name('schedule-work.update');
 
 
 

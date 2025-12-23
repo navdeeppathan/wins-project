@@ -42,9 +42,12 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->award_letter_no }}</td>
                     <td>{{ $p->award_date}}</td>
@@ -89,6 +92,9 @@
 
                     
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

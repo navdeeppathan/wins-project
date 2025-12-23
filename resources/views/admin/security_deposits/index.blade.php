@@ -33,9 +33,12 @@
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
@@ -52,6 +55,9 @@
                         <a href="{{ route('admin.projects.securityreturned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

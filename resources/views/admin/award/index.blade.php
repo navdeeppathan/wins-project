@@ -30,14 +30,17 @@
                 <th>Save</th>
                 {{-- <th>Status</th> --}}
 
-                <th>PG Details</th>
+                {{-- <th>PG Details</th> --}}
 
             </tr>
         </thead>
         <tbody>
+             @php
+                $i=1;
+            @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $p->id }}</td>
+                    <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->acceptance_letter_no }}</td>
                     <td>{{ $p->date}}</td>
@@ -87,15 +90,18 @@
                     
                     {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
 
-                    <td>
+                    {{-- <td>
                         <a href="{{ route('admin.projects.pg.create', $p->id) }}"
                         class="btn btn-sm btn-primary">
                             Add PG
                         </a>
-                    </td>
+                    </td> --}}
 
                     
                 </tr>
+                 @php
+                $i++;
+            @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

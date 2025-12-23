@@ -89,9 +89,12 @@
                 </tr>
             </thead>
             <tbody>
+                 @php
+                    $i=1;
+                @endphp
                 @forelse($records as $r)
                     <tr>
-                        <td>{{ $r->id }}</td>
+                        <td>{{ $i }}</td>
                         <td>{{ $r->project_id }}</td>
                         <td>{{ $r->expense_date }}</td>
                         <td>{{ $r->description }}</td>
@@ -106,6 +109,9 @@
                             {{-- add delete if needed --}}
                         </td>
                     </tr>
+                     @php
+                        $i++;
+                    @endphp
                 @empty
                     <tr><td colspan="8" class="text-center">No T & P records.</td></tr>
                 @endforelse

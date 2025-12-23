@@ -2,128 +2,254 @@
 
 @section('title','Milestones')
 
+
+
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <h4 class="mb-3">Activities #{{ $project->name }}</h4>
 
-            <h4 class="mb-3">Activities</h4>
-
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
-
-            <!-- Create Form -->
-            <div class="card mb-4">
-                <div class="card-header">Add Activity</div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.activities.store') }}">
-                        @csrf
-                        <div class="row g-3">
-                        <input type="hidden" name="project_id" value="{{ $project->id }}">
-
-                           <div class="col-md-12">
-                                <label class="form-label">Activity Name</label>
-                                <textarea 
-                                    name="activity_name" 
-                                    class="form-control" 
-                                    rows="3"
-                                    placeholder="Enter activity name"
-                                    required></textarea>
-                            </div>
-
-
-                            <div class="col-md-4">
-                                <label class="form-label">From Date</label>
-                                <input type="date" name="from_date" class="form-control" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label">To Date</label>
-                                <input type="date" name="to_date" class="form-control" required>
-                            </div>
-
-                            {{-- <div class="col-md-1">
-                                <label class="form-label">Weightage</label>
-                                <input type="number" name="weightage" class="form-control" min="0" max="100">
-                            </div> --}}
-
-                            <div class="col-md-2 mb-3">
-                                <label class="form-label">Weightage</label>
-                                <select name="weightage" class="form-control"  required>
-                                    <option value="">Select</option>
-                                    @for ($i = 1; $i <= 120; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                    
-                                </select>
-                            </div>
-
-                            {{-- <div class="col-md-1">
-                                <label class="form-label">Progress</label>
-                                <input type="number" name="progress" class="form-control" min="0" max="100">
-                            </div> --}}
-
-                            <div class="col-md-2 mb-3">
-                                <label class="form-label">Progress</label>
-                                <select name="progress" class="form-control"  required>
-                                    <option value="">Select</option>
-                                    @for ($i = 1; $i <= 120; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-                                    
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <button class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Table -->
-            <div class="card">
-                <div class="card-header">Activity List</div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>#</th>
-                                <th>Activity</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Weightage</th>
-                                <th>Progress</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($activities as $activity)
-                                <tr>
-                                    <td>{{ $activity->id }}</td>
-                                    <td>{{ $activity->activity_name }}</td>
-                                    <td>{{ $activity->from_date->format('d-m-Y') }}</td>
-                                    <td>{{ $activity->to_date->format('d-m-Y') }}</td>
-                                    <td>{{ $activity->weightage }}</td>
-                                    <td>{{ $activity->progress }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.activities.edit', $activity) }}" 
-                                           class="btn btn-sm btn-warning">Edit</a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center">No records found</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+    <div class="card mb-4">
+        <div class="card-header">Activity Progress Overview</div>
+        <div class="card-body">
+            <canvas id="progressChart" height="120"></canvas>
         </div>
     </div>
+
+    <div class="table-responsive">
+        <table id="activitiesTable" class="table table-sm table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Activity Name *</th>
+                    <th>From Date *</th>
+                    <th>To Date *</th>
+                    <th>Weightage *</th>
+                    <th>Progress *</th>
+                    <th width="100">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($activities as $index => $activity)
+                <tr data-id="{{ $activity->id }}">
+                    <td>{{ $index+1 }}</td>
+                    <td><textarea class="form-control activity_name">{{ $activity->activity_name }}</textarea></td>
+                    <td><input type="date" class="form-control from_date" value="{{ $activity->from_date->format('Y-m-d') }}"></td>
+                    <td><input type="date" class="form-control to_date" value="{{ $activity->to_date->format('Y-m-d') }}"></td>
+                    <td>
+                        {{-- <input type="number" class="form-control weightage" min="1" max="120" value="{{ $activity->weightage }}"> --}}
+                        <select class="form-control weightage">
+                            <option value="">Select</option>
+                            @for ($i = 1; $i <= 100; $i++)
+                                <option value="{{ $i }}" {{ isset($activity) && $activity->weightage == $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </td>
+                    <td>
+                       
+                        <select class="form-control progresss">
+                            <option value="">Select</option>
+                            @for ($i = 1; $i <= 100; $i++)
+                                <option value="{{ $i }}" {{ isset($activity) && $activity->progress == $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                        </select>
+                  
+
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                        @if($index != 0)
+                        <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        @endif
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td>1</td>
+                    <td><textarea class="form-control activity_name"></textarea></td>
+                    <td><input type="date" class="form-control from_date" value="{{ date('Y-m-d') }}"></td>
+                    <td><input type="date" class="form-control to_date" value="{{ date('Y-m-d') }}"></td>
+                   
+                    <td>
+                        <select class="form-control weightage">
+                            <option value="">Select</option>
+                            @for ($i = 1; $i <= 100; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </td>
+
+                    <td>
+                        <select class="form-control progresss">
+                            <option value="">Select</option>
+                            @for ($i = 1; $i <= 100; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+    </div>
 </div>
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+
+    // Add new empty row
+    $('#addRow').click(function() {
+        let index = $('#activitiesTable tbody tr').length + 1;
+        let newRow = `<tr>
+            <td>${index}</td>
+            <td><textarea class="form-control activity_name"></textarea></td>
+            <td><input type="date" class="form-control from_date" value="{{ date('Y-m-d') }}"></td>
+            <td><input type="date" class="form-control to_date" value="{{ date('Y-m-d') }}"></td>
+            
+            <td>
+                <select class="form-control weightage">
+                    <option value="">Select</option>
+                    @for ($i = 1; $i <= 100; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </td>
+
+            <td>
+                <select class="form-control progresss">
+                    <option value="">Select</option>
+                    @for ($i = 1; $i <= 100; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+            </td>
+
+            <td>
+                <button class="btn btn-success btn-sm saveRow">Save</button>
+                <button class="btn btn-danger btn-sm removeRow">Del</button>
+            </td>
+        </tr>`;
+        $('#activitiesTable tbody').append(newRow);
+    });
+
+    // Save row via AJAX
+    $(document).on('click', '.saveRow', function() {
+        let row = $(this).closest('tr');
+        let id = row.data('id') || null;
+
+        let data = {
+            _token: "{{ csrf_token() }}",
+            project_id: "{{ $project->id }}",
+            activity_name: row.find('.activity_name').val(),
+            from_date: row.find('.from_date').val(),
+            to_date: row.find('.to_date').val(),
+            weightage: row.find('.weightage').val(),
+            progress: row.find('.progresss').val()
+        };
+
+        $.post(id ? `/admin/activities/${id}` : "{{ route('admin.activities.store') }}", data, function(res){
+            if(!id) {
+                location.reload(); // reload to get new id
+            } else {
+                alert('Updated successfully');
+            }
+        });
+    });
+
+    // Remove row
+    $(document).on('click', '.removeRow', function() {
+        let row = $(this).closest('tr');
+        let id = row.data('id');
+        if(id) {
+            if(confirm('Delete this activity?')) {
+                $.ajax({
+                    url: `/admin/activities/${id}/destroy`,
+                    type: 'POST',
+                    data: {_token: "{{ csrf_token() }}"},
+                    success: function() { row.remove(); }
+                });
+            }
+        } else {
+            row.remove(); // just remove unsaved row
+        }
+    });
+
+});
+</script>
+<script>
+const chartData = @json($chartData);
+
+const labels = chartData.map(i => i.name);
+const total = chartData.map(() => 100);
+const weightage = chartData.map(i => i.weightage);
+const progress = chartData.map(i => i.progress);
+
+new Chart(document.getElementById('progressChart'), {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [
+            
+
+            // WEIGHTAGE
+            {
+                label: 'Weightage',
+                data: weightage,
+                backgroundColor: '#3B82F6',
+                barThickness: 20,
+                borderRadius: 6,
+                stack: 'combined'
+            },
+
+            // PROGRESS (inside weightage)
+            {
+                label: 'Progress',
+                data: progress,
+                backgroundColor: '#22C55E',
+                barThickness: 20,
+                borderRadius: 6,
+                stack: 'combined'
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            },
+            tooltip: {
+                callbacks: {
+                    label: ctx => `${ctx.dataset.label}: ${ctx.raw}%`
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                max: 100,
+                ticks: {
+                    callback: value => value + '%'
+                }
+            },
+            y: {
+                stacked: true
+            }
+        }
+    }
+});
+</script>
+
+
+@endpush
+
+
+
 @endsection

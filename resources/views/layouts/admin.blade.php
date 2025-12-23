@@ -1331,6 +1331,21 @@
                     <span class="nav-text">Inventory</span>
                 </a>
             </div>
+
+            <div class="nav-item">
+                <a href="{{ route('admin.daily-notes.index') }}"
+                class="nav-link {{ Request::is('admin/daily-notes*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">Daily Notes</span>
+                </a>
+            </div>
             <div class="nav-item">
                 <a href="{{ route('admin.tandp.index') }}"
                 class="nav-link {{ Request::is('admin/tandp*') ? 'active' : '' }}">
@@ -1356,58 +1371,7 @@
                 <div class="user-details">
                     <div class="user-name">{{ auth()->user()->name ?? 'Admin User' }}</div>
                 </div>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    <i class="fas fa-sign-out-alt me-2"></i>Logout
-                </button>
-                <style>
-                    .logout-btn {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 0px;
-
-                            padding: 6px 10px;
-                            font-size: 10px;
-                            font-weight: 600;
-
-                            color: #000000;
-                            
-
-                            border: none;
-                            border-radius: 6px;
-                            cursor: pointer;
-
-                            transition: all 0.25s ease;
-                            
-                        }
-
-                        .logout-btn i {
-                            font-size: 10px;
-                        }
-
-                        /* Hover */
-                        .logout-btn:hover {
-                            color: #ffffff;
-                            background: linear-gradient(135deg, #c82333, #9f1d2d);
-                            box-shadow: 0 6px 14px rgba(220, 53, 69, 0.35);
-                            transform: translateY(-1px);
-                        }
-
-                        /* Active (click) */
-                        .logout-btn:active {
-                            transform: scale(0.97);
-                            box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
-                        }
-
-                        /* Focus (accessibility) */
-                        .logout-btn:focus {
-                            outline: none;
-                            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4);
-                        }
-
-                </style>
-            </form>
+            
             </div>
             
         </div>
@@ -1442,8 +1406,60 @@
 
                     </div>
                     <span class="user-profile-text">{{ auth()->user()->name ?? 'Admin User' }}</span>
-                    <span class="status-badge">Active</span>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </button>
+                        <style>
+                            .logout-btn {
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 0px;
+
+                                    padding: 6px 10px;
+                                    font-size: 10px;
+                                    font-weight: 600;
+
+                                    color: #000000;
+                                    
+
+                                    border: none;
+                                    border-radius: 6px;
+                                    cursor: pointer;
+
+                                    transition: all 0.25s ease;
+                                    
+                                }
+
+                                .logout-btn i {
+                                    font-size: 10px;
+                                }
+
+                                /* Hover */
+                                .logout-btn:hover {
+                                    color: #ffffff;
+                                    background: linear-gradient(135deg, #c82333, #9f1d2d);
+                                    box-shadow: 0 6px 14px rgba(220, 53, 69, 0.35);
+                                    transform: translateY(-1px);
+                                }
+
+                                /* Active (click) */
+                                .logout-btn:active {
+                                    transform: scale(0.97);
+                                    box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+                                }
+
+                                /* Focus (accessibility) */
+                                .logout-btn:focus {
+                                    outline: none;
+                                    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.4);
+                                }
+
+                        </style>
+                    </form>
                 </div>
+
             </div>
         </header>
 
@@ -1779,7 +1795,7 @@
             }
         });
     </script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 

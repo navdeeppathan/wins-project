@@ -23,6 +23,7 @@ class ScheduleWork extends Model
         'unit',
         'rate',
         'amount',
+        'section_name'
     ];
 
     // If you want to disable timestamps

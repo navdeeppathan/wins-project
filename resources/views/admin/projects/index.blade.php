@@ -231,21 +231,11 @@
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        // dom: 'Bfrtip', // Add buttons
-        // buttons: [
-        //     {
-        //         extend: 'excelHtml5',
-        //         text: 'Export Excel',
-        //         className: 'btn btn-success btn-sm mr-2',
-        //     },
-        //     {
-        //         extend: 'pdfHtml5',
-        //         text: 'Export PDF',
-        //         className: 'btn btn-danger btn-sm',
-        //         orientation: 'landscape',
-        //         pageSize: 'A4',
-        //     }
-        // ],
+       layout: {
+        topStart: {
+            buttons: [ 'excel', 'pdf', 'colvis']
+        }
+    },
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
