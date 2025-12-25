@@ -107,6 +107,7 @@
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
+                    <option value="Challan">Challan</option>
                 </select>
             </td>
             <td><input type="text" name="pg[0][instrument_number]" class="form-control"></td>

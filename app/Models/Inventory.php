@@ -12,8 +12,19 @@ class Inventory extends Model
         'vendor_id',
         'item_name',
         'sku',
-        'quantity',
-        'remarks'
+        
+        'remarks',
+
+        'date',
+                'category',
+                'description',
+                'paid_to',
+                'voucher',
+                'quantity',
+                'amount',
+                'deduction',
+                'net_payable',
+                'upload'
     ];
 
     public function project()

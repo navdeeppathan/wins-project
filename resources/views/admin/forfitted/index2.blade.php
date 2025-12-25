@@ -80,8 +80,7 @@
                         </button>
                     </td>
                     
-                    <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
-                
+                   
                 </tr>
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>

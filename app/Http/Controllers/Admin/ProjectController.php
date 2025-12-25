@@ -105,14 +105,14 @@ class ProjectController extends Controller
         public function returnedCreate(Project $project)
         {
             // forfieted (default)
-            $forfieteds = $project->emds;
-                $emdDetails = $project->emds()
-                ->where('isReturned', 1)
+            // $forfieteds = $project->emds;
+            $forfieteds = $project->emds()
+                ->where('isForfieted', 1)
                 ->get();
 
             // returned (default)
             $returneds = $project->emds()
-                ->where('isForfieted', 1)
+                ->where('isReturned', 1)
                 ->get();
 
             // ACTIVE (default)
@@ -479,12 +479,16 @@ class ProjectController extends Controller
         $request->validate([
             
             'agreement_no'  => 'nullable|string|max:255',
+            'agreement_start_date' => 'nullable|date',
+            'stipulated_date_ofcompletion' => 'nullable|date|after_or_equal:agreement_start_date',
             'agreement_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
         ]);
 
         $project->status = 'agreement';
         
         $project->agreement_no = $request->agreement_no;
+        $project->agreement_start_date = $request->agreement_start_date;
+        $project->stipulated_date_ofcompletion = $request->stipulated_date_ofcompletion;
         
         if ($request->hasFile('agreement_upload')) {
             $project->agreement_upload = $request->agreement_upload

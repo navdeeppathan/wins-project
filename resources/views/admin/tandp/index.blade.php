@@ -1,124 +1,252 @@
 @extends('layouts.admin')
 
-@section('title','Tools & Plants')
+@section('title','T & P')
 
 @section('content')
-<h3 class="mb-3">T & P (Tools & Plants Expenses)</h3>
+<h3 class="mb-3">Tools & Plants (T & P)</h3>
 
 <div class="row">
-    <div class="col-md-4 mb-3">
-        <div class="card">
-            <div class="card-header bg-light">
-                <strong>Add T & P Expense</strong>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('admin.tandp.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    {{-- <div class="mb-2">
-                        <label class="form-label">Project ID *</label>
-                        <input type="number" name="project_id" class="form-control" required>
-                    </div> --}}
+<div class="col-md-12">
 
-                    <div class="mb-2">
-                        <label class="form-label">Project*</label>
-                        <select name="project_id" class="form-select">
-                            <option value="">Select Project</option>
-                            @foreach($projects as $project)
-                                <option value="{{ $project->id }}"
-                                    {{ old('project_id') == $project->id ? 'selected' : '' }}>
-                                    {{ $project->name ?? 'Project #'.$project->id }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+<table id="tpTable" class="table table-sm table-bordered">
+<thead class="table-light">
+<tr>
+    <th>#</th>
+    <th>Project *</th>
+    <th>Date</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Paid To</th>
+    <th>Voucher</th>
+    <th>Qty</th>
+    <th>Amount</th>
+    <th>Deduction</th>
+    <th>Net Payable</th>
+    <th>Upload</th>
+    <th width="120">Action</th>
+</tr>
+</thead>
 
-                    <div class="mb-2">
-                        <label class="form-label">Date *</label>
-                        <input type="date" name="expense_date" class="form-control" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Category</label>
-                        <input type="text" name="category" class="form-control">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Paid To</label>
-                        <input type="text" name="paid_to" class="form-control">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Voucher No</label>
-                        <input type="text" name="voucher_no" class="form-control">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Quantity</label>
-                        <input type="number" step="0.01" name="quantity" class="form-control">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Amount *</label>
-                        <input type="number" step="0.01" name="amount" class="form-control" required>
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Deduction</label>
-                        <input type="number" step="0.01" name="deduction" class="form-control">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label">Upload Voucher</label>
-                        <input type="file" name="file" class="form-control">
-                    </div>
-                    <button class="btn btn-primary btn-sm">Save</button>
-                </form>
-            </div>
-        </div>
-    </div>
+<tbody>
+@forelse($items as $index => $item)
+<tr data-id="{{ $item->id }}">
+<td>{{ $index+1 }}</td>
 
-    <div class="col-md-8 mb-3">
-        <table class="table table-sm table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>#</th>
-                    <th>Project</th>
-                    <th>Date</th>
-                    <th>Desc</th>
-                    <th>Amount</th>
-                    <th>Net</th>
-                    <th>Voucher</th>
-                    <th width="80">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                 @php
-                    $i=1;
-                @endphp
-                @forelse($records as $r)
-                    <tr>
-                        <td>{{ $i }}</td>
-                        <td>{{ $r->project_id }}</td>
-                        <td>{{ $r->expense_date }}</td>
-                        <td>{{ $r->description }}</td>
-                        <td>{{ number_format($r->amount,2) }}</td>
-                        <td>{{ number_format($r->net_payable,2) }}</td>
-                        <td>
-                            @if($r->file)
-                                <a href="{{ asset('storage/'.$r->file) }}" target="_blank">View</a>
-                            @endif
-                        </td>
-                        <td>
-                            {{-- add delete if needed --}}
-                        </td>
-                    </tr>
-                     @php
-                        $i++;
-                    @endphp
-                @empty
-                    <tr><td colspan="8" class="text-center">No T & P records.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
+<td>
+<select class="form-select project_id">
+    <option value="">Select</option>
+    @foreach($projects as $p)
+        <option value="{{ $p->id }}" {{ $item->project_id==$p->id?'selected':'' }}>
+            {{ $p->name }}
+        </option>
+    @endforeach
+</select>
+</td>
 
-        {{ $records->links() }}
-    </div>
+<td><input type="date" class="form-control date" value="{{ $item->date }}"></td>
+<td>
+    <select class="form-select category">
+        @php
+            $categories = ['Material','Wages','Logistic','Maintenance','T&P','Fee','Tours','Others'];
+            $selected = $item->category ?? 'T&P';
+        @endphp
+
+        @foreach($categories as $cat)
+            <option value="{{ $cat }}" {{ $selected == $cat ? 'selected' : '' }}>
+                {{ $cat }}
+            </option>
+        @endforeach
+    </select>
+</td>
+
+<td><input type="text" class="form-control description" value="{{ $item->description }}"></td>
+<td><input type="text" class="form-control paid_to" value="{{ $item->paid_to }}"></td>
+<td><input type="text" class="form-control voucher" value="{{ $item->voucher }}"></td>
+
+<td><input type="number" step="0.01" class="form-control quantity" value="{{ $item->quantity }}"></td>
+<td><input type="number" step="0.01" class="form-control amount" value="{{ $item->amount }}"></td>
+<td><input type="number" step="0.01" class="form-control deduction" value="{{ $item->deduction }}"></td>
+
+<td class="net_payable">{{ number_format($item->net_payable,2) }}</td>
+
+<td>
+@if($item->upload)
+    <a href="{{ asset($item->upload) }}" target="_blank" class="btn btn-sm btn-outline-primary mb-1">
+        View
+    </a>
+@endif
+<input type="file" class="form-control upload">
+</td>
+
+<td>
+<button class="btn btn-success btn-sm saveRow">Save</button>
+<button class="btn btn-danger btn-sm removeRow">Del</button>
+</td>
+</tr>
+@empty
+<tr>
+<td>1</td>
+
+<td>
+<select class="form-select project_id">
+    <option value="">Select</option>
+    @foreach($projects as $p)
+        <option value="{{ $p->id }}">{{ $p->name }}</option>
+    @endforeach
+</select>
+</td>
+
+<td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+<td>
+    <select class="form-select category">
+        <option value="Material">Material</option>
+        <option value="Wages">Wages</option>
+        <option value="Logistic">Logistic</option>
+        <option value="Maintenance">Maintenance</option>
+        <option value="T&P" selected>T&P</option>
+        <option value="Fee">Fee</option>
+        <option value="Tours">Tours</option>
+        <option value="Others">Others</option>
+    </select>
+</td>
+
+<td><input type="text" class="form-control description"></td>
+<td><input type="text" class="form-control paid_to"></td>
+<td><input type="text" class="form-control voucher"></td>
+<td><input type="number" step="0.01" class="form-control quantity"></td>
+<td><input type="number" step="0.01" class="form-control amount"></td>
+<td><input type="number" step="0.01" class="form-control deduction"></td>
+<td class="net_payable">0.00</td>
+<td><input type="file" class="form-control upload"></td>
+<td>
+<button class="btn btn-success btn-sm saveRow">Save</button>
+</td>
+</tr>
+@endforelse
+</tbody>
+</table>
+
+<button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+
+</div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function(){
+
+// ➕ ADD ROW
+$('#addRow').click(function(){
+    let index = $('#tpTable tbody tr').length + 1;
+
+    let row = `
+    <tr>
+        <td>${index}</td>
+        <td>
+            <select class="form-select project_id">
+                <option value="">Select</option>
+                @foreach($projects as $p)
+                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                @endforeach
+            </select>
+        </td>
+        <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+        <td>
+    <select class="form-select category">
+        <option value="Material">Material</option>
+        <option value="Wages">Wages</option>
+        <option value="Logistic">Logistic</option>
+        <option value="Maintenance">Maintenance</option>
+        <option value="T&P" selected>T&P</option>
+        <option value="Fee">Fee</option>
+        <option value="Tours">Tours</option>
+        <option value="Others">Others</option>
+    </select>
+</td>
+
+        <td><input type="text" class="form-control description"></td>
+        <td><input type="text" class="form-control paid_to"></td>
+        <td><input type="text" class="form-control voucher"></td>
+        <td><input type="number" step="0.01" class="form-control quantity"></td>
+        <td><input type="number" step="0.01" class="form-control amount"></td>
+        <td><input type="number" step="0.01" class="form-control deduction"></td>
+        <td class="net_payable">0.00</td>
+        <td><input type="file" class="form-control upload"></td>
+        <td>
+            <button class="btn btn-success btn-sm saveRow">Save</button>
+            <button class="btn btn-danger btn-sm removeRow">Del</button>
+        </td>
+    </tr>`;
+    $('#tpTable tbody').append(row);
+});
+
+// 🧮 NET PAYABLE
+$(document).on('input','.amount,.deduction',function(){
+    let row=$(this).closest('tr');
+    let a=parseFloat(row.find('.amount').val())||0;
+    let d=parseFloat(row.find('.deduction').val())||0;
+    row.find('.net_payable').text((a-d).toFixed(2));
+});
+
+// 💾 SAVE
+$(document).on('click','.saveRow',function(){
+    let row=$(this).closest('tr');
+    let id=row.data('id')||null;
+
+    let fd=new FormData();
+    fd.append('_token',"{{ csrf_token() }}");
+    fd.append('project_id', row.find('.project_id').val());
+    fd.append('date', row.find('.date').val());
+    fd.append('category', row.find('.category').val());
+    fd.append('description', row.find('.description').val());
+    fd.append('paid_to', row.find('.paid_to').val());
+    fd.append('voucher', row.find('.voucher').val());
+    fd.append('quantity', row.find('.quantity').val());
+    fd.append('amount', row.find('.amount').val());
+    fd.append('deduction', row.find('.deduction').val());
+
+    if(row.find('.upload')[0].files.length){
+        fd.append('upload', row.find('.upload')[0].files[0]);
+    }
+
+    $.ajax({
+        url: id ? `/admin/t-and-p/${id}/update` : "{{ route('admin.t-and-p.store') }}",
+        type:'POST',
+        data:fd,
+        processData:false,
+        contentType:false,
+        success:function(){
+            if(!id) location.reload();
+            else alert('Updated successfully');
+        }
+    });
+});
+
+// ❌ DELETE
+$(document).on('click','.removeRow',function(){
+    let row=$(this).closest('tr');
+    let id=row.data('id');
+
+    if(id){
+        if(confirm('Delete this entry?')){
+            $.post(`/admin/t-and-p/${id}/destroy`,
+                {_token:"{{ csrf_token() }}"},
+                function(){ row.remove(); reindex(); }
+            );
+        }
+    } else {
+        row.remove();
+        reindex();
+    }
+});
+
+function reindex(){
+    $('#tpTable tbody tr').each(function(i){
+        $(this).find('td:first').text(i+1);
+    });
+}
+
+});
+</script>
+@endpush

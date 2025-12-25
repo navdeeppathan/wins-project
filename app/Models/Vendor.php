@@ -7,18 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Vendor extends Model
 {
     protected $fillable = [
-        'name',
-        'user_id',
-        'contact_person',
-        'phone',
-        'email',
-        'address',
-        'gst_number',
-        'pan_number'
+                'user_id',
+               
+                'date',
+                'category',
+                'description',
+                'delivered_to',
+                'voucher',
+                'quantity',
+                'amount',
+                'deduction',
+                'net_payable',
+                'upload'
     ];
 
-    public function inventory()
-    {
-        return $this->hasMany(Inventory::class);
-    }
+    
 }

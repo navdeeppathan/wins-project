@@ -26,18 +26,17 @@
                 <th>Name</th>
                 <th>Award Letter No.</th>
                 <th>Award Date</th>
-                <th>Estimate Amount</th>
-                <th>Tendered Amount</th>
                 <th>Location</th>
                 <th>Department</th>
+                <th>Estimate Amount</th>
+                <th>Tendered Amount</th>
+                
                 <th>Agreement No.</th>
                 <th>Agreement Start Date</th>
+                <th>Stipulated Date of Completion</th>
                 <!-- NEW COLUMNS -->
                 <th>Upload</th>
                 <th>Save</th>
-                {{-- <th>Status</th> --}}
-
-                <th>PG Details</th>
 
             </tr>
         </thead>
@@ -46,34 +45,38 @@
                 $i=1;
             @endphp
             @forelse($projects as $p)
+            @if (!empty($p->award_letter_no))
+                
+            
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->award_letter_no }}</td>
-                    <td>{{ $p->award_date}}</td>
-
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ number_format($p->tendered_amount,2) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
-                    {{-- Acceptance Letter No --}}
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
+                    <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>
                         <input type="text"
                             class="form-control form-control-sm agreement_no"
                             value="{{ $p->agreement_no }}">
                     </td>
-
-                    <td>{{ $p->agreement_start_date ?? '-' }}</td> 
-
-
-                    {{-- Upload --}}
+                    <td>
+                        <input type="date"
+                            class="form-control form-control-sm agreement_start_date"
+                            value="{{ $p->agreement_start_date }}">
+                    </td>
+                    <td>
+                        <input type="date"
+                                
+                            class="form-control form-control-sm stipulated_date_ofcompletion"
+                                value="{{ $p->stipulated_date_ofcompletion }}">
+                    </td>
                     <td>
                         <input type="file"
                             class="form-control form-control-sm agreement_upload">
                     </td>
-                    
-
-                {{-- Save --}}
                     <td>
                         <button class="btn btn-sm btn-success saveAgreementBtn"
                                 data-id="{{ $p->id }}">
@@ -81,17 +84,9 @@
                         </button>
                     </td>
                     
-                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
-
-                    <td>
-                    <a href="{{ route('admin.projects.agreementdate.create', $p->id) }}"
-                        class="btn btn-sm btn-primary">
-                            Agreement Date
-                        </a>
-                    </td>
-
                     
                 </tr>
+                @endif
                  @php
                 $i++;
             @endphp
@@ -125,6 +120,16 @@ $(document).on('click', '.saveAgreementBtn', function () {
     formData.append(
         'agreement_no',
         row.find('.agreement_no').val()
+    );
+
+    formData.append(
+        'agreement_start_date',
+        row.find('.agreement_start_date').val()
+    );
+
+    formData.append(
+        'stipulated_date_ofcompletion',
+        row.find('.stipulated_date_ofcompletion').val()
     );
 
     let fileInput = row.find('.agreement_upload')[0];
