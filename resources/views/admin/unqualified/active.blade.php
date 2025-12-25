@@ -1,3 +1,6 @@
+
+    {{-- {{dd($actives)}} --}}
+
 @if($actives->count() > 0)
 <div class="table-responsive">
     <table id="emdactive" class="table table-striped nowrap" style="width:100%">
@@ -14,8 +17,14 @@
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
-                
-                {{-- <th>Status</th> --}}
+
+                <th>Return</th>
+                <th>Save</th>
+
+                <th>Forfieted</th>
+                <th>Save</th>
+
+                <th>Status</th>
 
                 {{-- <th width="160">Actions</th> --}}
             </tr>
@@ -45,8 +54,38 @@
 
                     <td>
                     
-                            {{ $emd->instrument_date }}<br>
+                            {{ date('d-m-Y', strtotime($emd->instrument_date)) }}
                     
+                    </td>
+
+                    <td style="background:yellow;">
+                            <input type="checkbox"
+                                class="form-check-input isReturnedBox"
+                                data-id="{{ $emd->id }}"
+                                {{ $emd->isReturned ? 'checked' : '' }}>
+                        </td>
+
+                    <!-- SAVE BUTTON -->
+                    <td style="background:yellow;">
+                        <button class="btn btn-sm btn-success saveisReturnedBtn"
+                                data-id="{{ $emd->id }}">
+                            Save
+                        </button>
+                    </td>
+
+                    <td style="background:yellow;">
+                            <input type="checkbox"
+                                class="form-check-input isForfietedBox"
+                                data-id="{{ $emd->id }}"
+                                {{ $emd->isForfieted ? 'checked' : '' }}>
+                    </td>
+
+                    <!-- SAVE BUTTON -->
+                    <td style="background:yellow;">
+                        <button class="btn btn-sm btn-success saveisForfietedBtn"
+                                data-id="{{ $emd->id }}">
+                            Save
+                        </button>
                     </td>
                     
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
@@ -67,6 +106,44 @@
 
 @push('scripts')
 <script>
+
+$(document).on('click', '.saveisReturnedBtn', function () {
+
+    let id = $(this).data('id');
+    let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
+
+    $.ajax({
+        url: "/admin/projects/update-returned/" + id,
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            isReturned: isReturned,
+        },
+        success: function (response) {
+            alert("Updated Successfully");
+        }
+    });
+
+});
+
+$(document).on('click', '.saveisForfietedBtn', function () {
+
+    let id = $(this).data('id');
+    let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;
+
+    $.ajax({
+        url: "/admin/projects/update-forfieted/" + id,
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            isForfieted: isForfieted,
+        },
+        success: function (response) {
+            alert("Updated Successfully");
+        }
+    });
+
+});
 new DataTable('#emdactive', {
     scrollX: true,
     responsive: false,

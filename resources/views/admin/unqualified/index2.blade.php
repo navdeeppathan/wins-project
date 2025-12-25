@@ -31,7 +31,7 @@
                 <!-- NEW COLUMNS -->
                 <th>Return</th>
                 <th>Save</th>
-                {{-- <th>Status</th> --}}
+             
 
                 {{-- <th width="160">Actions</th> --}}
             </tr>
@@ -83,7 +83,7 @@
                         </button>
                     </td>
                     
-                    <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
+                    
                 
                 </tr>
                  @php

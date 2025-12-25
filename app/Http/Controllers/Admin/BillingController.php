@@ -18,7 +18,10 @@ class BillingController extends Controller
 
      public function indexprojects()
     {
-        $projects = Project::where('status', 'billing')->latest()->paginate(20);
+        $projects = Project::
+        where('status', 'agreement')
+        ->orWhere('status', 'billing')
+        ->latest()->paginate(20);
         return view('admin.billing.indexprojects', compact('projects'));
     }
     
@@ -55,6 +58,29 @@ class BillingController extends Controller
         $project->update(['status' => 'billing']);
 
         return back()->with('success','Bill created, add items.');
+    }
+
+    public function update(Request $request, Billing $billing)
+    {
+        $data = $request->validate([
+            'bill_number' => 'required',
+            'bill_type' => 'required',
+            'bill_date' => 'required|date',
+            'mb_number' => 'required',
+            'page_number' => 'required',
+            'gross_amount' => 'nullable|numeric',
+            'net_payable' => 'nullable|numeric',
+            'remarks' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png'
+        ]);
+
+        if ($request->hasFile('file')) {
+            $data['file'] = $request->file('file')->store('billings');
+        }
+
+        $billing->update($data);
+
+        return response()->json(['success' => true]);
     }
 
     public function approve(Billing $billing)

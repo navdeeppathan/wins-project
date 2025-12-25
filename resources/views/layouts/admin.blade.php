@@ -1347,8 +1347,8 @@
                 </a>
             </div>
             <div class="nav-item">
-                <a href="{{ route('admin.tandp.index') }}"
-                class="nav-link {{ Request::is('admin/tandp*') ? 'active' : '' }}">
+                <a href="{{ route('admin.t-and-p.index') }}"
+                class="nav-link {{ Request::is('admin/t-and-p*') ? 'active' : '' }}">
                     
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1363,18 +1363,7 @@
 
         </nav>
 
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <div class="user-avatar-small">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'Admin', 0, 1)) }}
-                </div>
-                <div class="user-details">
-                    <div class="user-name">{{ auth()->user()->name ?? 'Admin User' }}</div>
-                </div>
-            
-            </div>
-            
-        </div>
+       
     </aside>
 
     <div class="main-wrapper">
@@ -1825,8 +1814,6 @@ new DataTable('#example', {
 });
 
 </script>
-
-  
     @stack('scripts')
 </body>
 </html>

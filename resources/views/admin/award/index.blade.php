@@ -39,6 +39,11 @@
                 $i=1;
             @endphp
             @forelse($projects as $p)
+               @if (!empty($p->acceptance_letter_no))
+                   
+               
+                   
+               
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
@@ -57,30 +62,23 @@
                             value="{{ $p->tendered_amount }}">
                     </td>
                     --}}
-                
 
-                    {{-- Acceptance Letter No --}}
                     <td>
                         <input type="text"
                             class="form-control form-control-sm award_letter_no"
                             value="{{ $p->award_letter_no }}">
                     </td>
 
-                    {{-- Acceptance Date --}}
                     <td>
                         <input type="date"
                             class="form-control form-control-sm award_date"
                             value="{{ $p->award_date }}">
                     </td>
-
-                    {{-- Upload --}}
                     <td>
                         <input type="file"
                             class="form-control form-control-sm award_upload">
                     </td>
-                    
-
-                {{-- Save --}}
+              
                     <td>
                         <button class="btn btn-sm btn-success saveAwardBtn"
                                 data-id="{{ $p->id }}">
@@ -88,18 +86,11 @@
                         </button>
                     </td>
                     
-                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
-
-                    {{-- <td>
-                        <a href="{{ route('admin.projects.pg.create', $p->id) }}"
-                        class="btn btn-sm btn-primary">
-                            Add PG
-                        </a>
-                    </td> --}}
-
+                    
                     
                 </tr>
-                 @php
+                @endif
+            @php
                 $i++;
             @endphp
             @empty

@@ -42,6 +42,8 @@
                 $i=1;
             @endphp
             @forelse($projects as $p)
+           
+            @if ($p->isQualified == 1)
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
@@ -94,6 +96,7 @@
 
                     
                 </tr>
+                @endif
                  @php
                     $i++;
                 @endphp

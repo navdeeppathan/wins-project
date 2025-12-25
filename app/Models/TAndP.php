@@ -9,17 +9,18 @@ class TAndP extends Model
     protected $table = 't_and_p';
 
     protected $fillable = [
-        'project_id',
-        'expense_date',
-        'category',
-        'description',
-        'paid_to',
-        'voucher_no',
-        'quantity',
-        'amount',
-        'deduction',
-        'net_payable',
-        'file'
+       
+         'project_id',
+    'date',
+    'category',
+    'description',
+    'paid_to',
+    'voucher',
+    'quantity',
+    'amount',
+    'deduction',
+    'net_payable',
+    'upload',
     ];
 
     public function project()

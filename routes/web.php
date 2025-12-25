@@ -273,6 +273,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\BillingController::class, 'store']
     )->name('projects.billing.store');
 
+    
+    Route::post(
+        'projects/billing/{billing}/update',
+        [App\Http\Controllers\Admin\BillingController::class, 'update']
+    )->name('projects.billing.update');
+
     /* ---- Approve + Delete Bill ---- */
     Route::post('billing/{billing}/approve',
         [App\Http\Controllers\Admin\BillingController::class, 'approve']
@@ -296,20 +302,54 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\RecoveryController::class, 'store']
     )->name('billing.recovery.store');
 
+
     /* ===================== VENDORS ===================== */
-    Route::resource('vendors', App\Http\Controllers\Admin\VendorController::class)->only([
-        'index', 'store', 'destroy'
-    ]);
+    // Route::resource('vendors', App\Http\Controllers\Admin\VendorController::class)->only([
+    //     'index', 'store', 'destroy'
+    // ]);
+
+    Route::get('vendors', [App\Http\Controllers\Admin\VendorController::class, 'index'])->name('vendors.index');
+    Route::post('vendors', [App\Http\Controllers\Admin\VendorController::class, 'store'])->name('vendors.store');
+    Route::post('vendors/{vendor}/update', [App\Http\Controllers\Admin\VendorController::class, 'update'])->name('vendors.update');
+    Route::post('vendors/{vendor}/destroy', [App\Http\Controllers\Admin\VendorController::class, 'destroy'])->name('vendors.destroy');
+
+
+     Route::get('t-and-p', [App\Http\Controllers\Admin\TAndPController::class, 'index'])
+        ->name('t-and-p.index');
+
+    Route::post('t-and-p/store', [App\Http\Controllers\Admin\TAndPController::class, 'store'])
+        ->name('t-and-p.store');
+
+    Route::post('t-and-p/{tAndP}/update', [App\Http\Controllers\Admin\TAndPController::class, 'update'])
+        ->name('t-and-p.update');
+
+    Route::post('t-and-p/{tAndP}/destroy', [App\Http\Controllers\Admin\TAndPController::class, 'destroy'])
+        ->name('t-and-p.destroy');
 
     /* ===================== INVENTORY ===================== */
-    Route::resource('inventory', App\Http\Controllers\Admin\InventoryController::class)->only([
-        'index', 'store', 'destroy'
-    ]);
+    // Route::resource('inventory', App\Http\Controllers\Admin\InventoryController::class)->only([
+    //     'index', 'store', 'destroy'
+    // ]);
+
+     Route::get('inventory', [App\Http\Controllers\Admin\InventoryController::class, 'index'])
+            ->name('inventory.index');
+
+        // ➕ Create Inventory (AJAX)
+        Route::post('inventory', [App\Http\Controllers\Admin\InventoryController::class, 'store'])
+            ->name('inventory.store');
+
+        // ✏️ Update Inventory (AJAX inline save)
+        Route::post('inventory/{inventory}/update', [App\Http\Controllers\Admin\InventoryController::class, 'update'])
+            ->name('inventory.update');
+
+        // ❌ Delete Inventory
+        Route::post('inventory/{inventory}/destroy', [App\Http\Controllers\Admin\InventoryController::class, 'destroy'])
+            ->name('inventory.destroy');
 
     /* ===================== T & P ===================== */
-    Route::resource('tandp', App\Http\Controllers\Admin\TAndPController::class)->only([
-        'index', 'store'
-    ]);
+    // Route::resource('tandp', App\Http\Controllers\Admin\TAndPController::class)->only([
+    //     'index', 'store'
+    // ]);
 
 
     
