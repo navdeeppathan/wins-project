@@ -12,24 +12,18 @@
 
 @if($projects->count() > 0)
 <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
+    <table id="example" class="table class-table nowrap" style="width:100%">
         <thead >
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate Amount</th>
-                <th>Date of Opening</th>
                 <th>Location</th>
-
                 <th>Department</th>
-                
+                <th>Estimate Amount</th>
                 <th>EMD Amount</th>
-
-            
-                {{-- <th>Status</th> --}}
-
-                <th width="160">Actions</th>
+                <th>Date of Opening</th>
+                <th width="">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -41,16 +35,11 @@
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ $p->date_of_opening }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td> 
+                    <td>{{  $p->departments->name ?? '-' }}</td>
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-
-
-                    
-                    {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
-
+                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? "-" }}</td>
                     <td>
                         <a href="{{ route('admin.projects.securityreturned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                     </td>

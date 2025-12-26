@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DailyNote;
 use App\Models\Inventory;
 use App\Models\Project;
 use App\Models\Vendor;
@@ -23,8 +24,9 @@ class InventoryController extends Controller
 
         $projects = Project::where('user_id', auth()->id())->get();
         $vendors  = Vendor::where('user_id', auth()->id())->get();
+        $notes = DailyNote::orderBy('note_date', 'desc')->get();
 
-        return view('admin.inventory.index', compact('items', 'projects', 'vendors'));
+        return view('admin.inventory.indexdetails', compact('items', 'projects', 'vendors', 'notes'));
     }
 
     // ✅ STORE (Create new row)

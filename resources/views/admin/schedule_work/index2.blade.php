@@ -1,156 +1,131 @@
 @extends('layouts.admin')
-
-@section('title','Schedule of Work')
+@section('title','Schedule Of Work')
 
 @section('content')
-<div class="container">
-    <h4 class="mb-3">Schedule of Work #{{ $project->name }}</h4>
 
-    <div class="table-responsive">
-        <table id="workTable" class="table table-sm table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Description *</th>
-                    <th>Qty *</th>
-                    <th>Unit *</th>
-                    <th>Rate *</th>
-                    <th>Amount</th>
-                    <th width="120">Action</th>
-                </tr>
-            </thead>
-            <tbody>
+<h4>Schedule Of Work – {{ $project->name }}</h4>
 
-@foreach($works as $section => $items)
+@include("admin.projects.commonprojectdetail")
 
-{{-- SECTION HEADER --}}
-<tr class="table-secondary fw-bold">
-    <td colspan="7">{{ strtoupper($section ?? 'GENERAL WORK') }}</td>
+<form method="POST"
+      action="{{ route('admin.projects.schedule-work.save',$project) }}">
+@csrf
+<div class="table-responsive">
+    <table id="example" class="table class-table nowrap" style="width:100%">
+
+<thead class="">
+<tr>
+    <th>#</th>
+    <th>Section</th>
+    <th>Description</th>
+    <th>Qty</th>
+    <th>Unit</th>
+    <th>Rate</th>
+    <th>Amount</th>
+    <th>Action</th>
 </tr>
+</thead>
 
-@foreach($items as $index => $work)
-<tr data-id="{{ $work->id }}">
-    <td>{{ $loop->iteration }}</td>
-    <td><textarea class="form-control description">{{ $work->description }}</textarea></td>
-    <td><input type="number" class="form-control quantity" value="{{ $work->quantity }}"></td>
-    <td><input type="number" class="form-control unit" value="{{ $work->unit }}"></td>
-    <td><input type="number" class="form-control rate" value="{{ $work->rate }}"></td>
-    <td class="amount">₹ {{ number_format($work->amount,2) }}</td>
+<tbody id="workTable">
+@forelse($works as $i => $w)
+<tr>
+    <td>{{ $i+1 }}</td>
+
+    <input type="hidden" name="work[{{ $i }}][id]" value="{{ $w->id }}">
+
     <td>
-        <button class="btn btn-success btn-sm saveRow">Save</button>
+        <input name="work[{{ $i }}][section_name]"
+               value="{{ $w->section_name }}"
+               class="form-control">
     </td>
+
+    <td>
+        <textarea name="work[{{ $i }}][description]"
+                  class="form-control">{{ $w->description }}</textarea>
+    </td>
+
+    <td><input name="work[{{ $i }}][quantity]"
+               value="{{ $w->quantity }}"
+               class="form-control qty"></td>
+
+    <td><input name="work[{{ $i }}][unit]"
+               value="{{ $w->unit }}"
+               class="form-control unit"></td>
+
+    <td><input name="work[{{ $i }}][rate]"
+               value="{{ $w->rate }}"
+               class="form-control rate"></td>
+
+    <td class="amount">{{ number_format($w->amount,2) }}</td>
+
+    <td><button type="button" class="btn btn-danger removeRow">X</button></td>
 </tr>
-@endforeach
-
-{{-- SUBTOTAL --}}
-<tr class="table-warning fw-bold">
-    <td colspan="5" class="text-end">Subtotal ({{ $section }})</td>
-    <td colspan="2">₹ {{ number_format($subtotals[$section],2) }}</td>
+@empty
+<tr>
+<td>1</td>
+<td><input name="work[0][section_name]" value="GENERAL" class="form-control"></td>
+<td><textarea name="work[0][description]" class="form-control"></textarea></td>
+<td><input name="work[0][quantity]" class="form-control qty"></td>
+<td><input name="work[0][unit]" value="1" class="form-control unit"></td>
+<td><input name="work[0][rate]" class="form-control rate"></td>
+<td class="amount">0.00</td>
+<td></td>
 </tr>
-
-@endforeach
-
-{{-- GRAND TOTAL --}}
-<tr class="table-dark fw-bold">
-    <td colspan="5" class="text-end">GRAND TOTAL</td>
-    <td colspan="2">₹ {{ number_format($grandTotal,2) }}</td>
-</tr>
-
+@endforelse
 </tbody>
-
-        </table>
-
-        <button id="addRow" class="btn btn-primary btn-sm mt-2">
-            + Add New Row
-        </button>
-    </div>
+</table>
 </div>
 
-@push('scripts')
+<div class="d-flex align-items-center justify-content-end mt-3 mb-3">
+<button type="button" class="btn btn-primary" id="addRow">+ Add More</button>
+</div>
+<div class="d-flex align-items-center justify-content-end mt-2">
+<button class="btn btn-success float-end">Save Schedule</button>
+</div>
+
+</form>
+
+
 <script>
-$(document).ready(function(){
+let index = {{ $works->count() ?? 1 }};
 
-    // ➕ Add Row
-    $('#addRow').click(function(){
-        let index = $('#workTable tbody tr').length + 1;
+document.getElementById('addRow').addEventListener('click', function () {
 
-        let row = `
-        <tr>
-            <td>${index}</td>
-            <td><textarea class="form-control description"></textarea></td>
-            <td><input type="number" step="0.01" class="form-control quantity"></td>
-            <td><input type="number" step="0.01" class="form-control unit" value="1"></td>
-            <td><input type="number" step="0.01" class="form-control rate"></td>
-            <td class="amount">₹ 0.00</td>
-            <td>
-                <button class="btn btn-success btn-sm saveRow">Save</button>
-                <button class="btn btn-danger btn-sm removeRow">Del</button>
-            </td>
-        </tr>`;
-        $('#workTable tbody').append(row);
-    });
+let row = `
+<tr>
+<td>${index+1}</td>
+<td><input name="work[${index}][section_name]" value="GENERAL" class="form-control"></td>
+<td><textarea name="work[${index}][description]" class="form-control"></textarea></td>
+<td><input name="work[${index}][quantity]" class="form-control qty"></td>
+<td><input name="work[${index}][unit]" value="1" class="form-control unit"></td>
+<td><input name="work[${index}][rate]" class="form-control rate"></td>
+<td class="amount">0.00</td>
+<td><button type="button" class="btn btn-danger removeRow">X</button></td>
+</tr>`;
 
-    // 🧮 Auto calculate amount (Qty × Rate × Unit)
-    $(document).on('input', '.quantity, .rate, .unit', function(){
-        let row = $(this).closest('tr');
+document.getElementById('workTable')
+        .insertAdjacentHTML('beforeend', row);
+index++;
+});
 
-        let qty  = parseFloat(row.find('.quantity').val()) || 0;
-        let rate = parseFloat(row.find('.rate').val()) || 0;
-        let unit = parseFloat(row.find('.unit').val()) || 1;
+document.addEventListener('input',function(e){
+if(e.target.classList.contains('qty') ||
+   e.target.classList.contains('rate') ||
+   e.target.classList.contains('unit')){
 
-        let amount = qty * rate * unit;
-        row.find('.amount').text('₹ ' + amount.toFixed(2));
-    });
+    let row = e.target.closest('tr');
+    let q = parseFloat(row.querySelector('.qty').value)||0;
+    let r = parseFloat(row.querySelector('.rate').value)||0;
+    let u = parseFloat(row.querySelector('.unit').value)||1;
+    row.querySelector('.amount').innerText = (q*r*u).toFixed(2);
+}
+});
 
-    // 💾 Save Row (AJAX)
-    $(document).on('click','.saveRow',function(){
-        let row = $(this).closest('tr');
-        let id = row.data('id') || null;
-
-        let data = {
-            _token: "{{ csrf_token() }}",
-            project_id: "{{ $project->id }}",
-            description: row.find('.description').val(),
-            quantity: row.find('.quantity').val(),
-            unit: row.find('.unit').val(),
-            rate: row.find('.rate').val()
-        };
-
-        $.post(
-            id ? `/admin/schedule-work/${id}`
-               : "{{ route('admin.schedule-work.store') }}",
-            data,
-            function(){
-                if(!id){
-                    location.reload();
-                } else {
-                    alert('Updated successfully');
-                }
-            }
-        );
-    });
-
-    // ❌ Delete Row
-    $(document).on('click','.removeRow',function(){
-        let row = $(this).closest('tr');
-        let id = row.data('id');
-
-        if(id){
-            if(confirm('Delete this item?')){
-                $.post(`/admin/schedule-work/${id}/destroy`,
-                    {_token:"{{ csrf_token() }}"},
-                    function(){
-                        row.remove();
-                    }
-                );
-            }
-        } else {
-            row.remove();
-        }
-    });
-
+document.addEventListener('click',function(e){
+if(e.target.classList.contains('removeRow')){
+    e.target.closest('tr').remove();
+}
 });
 </script>
-@endpush
 
 @endsection

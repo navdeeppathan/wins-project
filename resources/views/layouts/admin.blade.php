@@ -207,7 +207,7 @@
             border-radius: 8px;
             transition: all 0.15s ease;
             cursor: pointer;
-            font-size: 0.875rem;
+            font-size: 0.7rem;
             font-weight: 500;
         }
 
@@ -296,7 +296,7 @@
             border-radius: 6px;
             transition: all 0.15s ease;
             margin: 0.125rem 0;
-            font-size: 0.8125rem;
+            font-size: 0.7rem;
         }
 
         .dropdown-item:hover {
@@ -886,6 +886,109 @@
         }
     </style>
 
+
+    <style>
+
+
+            /* ================= WRAPPER ================= */
+            .table-responsive {
+                border-radius: 14px;
+                overflow: hidden;
+                background: #fff;
+                padding: 10px;
+                cursor: pointer;
+            }
+
+            /* ================= HEADER ================= */
+            .dataTables_scrollHead thead th,
+            .class-table thead th {
+                background: #6f7ae0 !important;
+                color: #ffffff !important;
+                font-weight: 600;
+                font-size: 14px;
+                padding: 14px 16px;
+                border: none !important;
+            
+
+            }
+
+            /* ================= CRITICAL FIX ================= */
+            /* OVERRIDE BOOTSTRAP 5 TABLE BACKGROUND */
+            .table.class-table > :not(caption) > tbody > tr:nth-child(odd) > * {
+                background-color: #f7f8ff !important;
+            }
+
+            .table.class-table > :not(caption) > tbody > tr:nth-child(even) > * {
+                background-color: #ffffff !important;
+            }
+
+            .table.class-table > :not(caption) > tbody > tr:hover > * {
+                background-color: #c6ccfd !important;
+            }
+
+            /* ================= BODY CELLS ================= */
+            .table.class-table tbody td {
+                padding: 14px 16px;
+                font-size: 13px;
+                color: #555;
+                border: none !important;
+                vertical-align: middle;
+            }
+
+            /* ================= BUTTON ================= */
+            .class-table .btn-success {
+                border-radius: 20px;
+                padding: 4px 14px;
+                font-size: 12px;
+            }
+
+            /* ================= BADGE ================= */
+            .class-table .badge {
+                border-radius: 12px;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            /* ================= PAGINATION ================= */
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                background: #f0f2ff !important;
+                border: none !important;
+                border-radius: 6px !important;
+                margin: 0 3px;
+                padding: 6px 12px !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                background: #6f7ae0 !important;
+                color: #fff !important;
+            }
+
+            /* ================= SEARCH ================= */
+            .dataTables_filter input {
+                border-radius: 20px;
+                padding: 6px 12px;
+                border: 1px solid #ddd;
+            }
+
+            /* ================= SCROLL ================= */
+            .dataTables_scrollBody {
+                max-height: 420px;
+            }
+
+            /* ================= OPTIONAL: ROUNDED ROWS ================= */
+            .table.class-table tbody tr td:first-child {
+                border-top-left-radius: 8px;
+                border-bottom-left-radius: 8px;
+            }
+
+            .table.class-table tbody tr td:last-child {
+                border-top-right-radius: 8px;
+                border-bottom-right-radius: 8px;
+            }
+
+    </style>
+
+
   @stack('styles')
 </head>
 <body class="mode-dark">
@@ -903,7 +1006,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
-            <span class="brand-name">Wins</span>
+            <span class="brand-name">WINS</span>
             <button class="collapse-btn" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -920,24 +1023,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
                     </span>
-                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-text">DASHBOARD</span>
                 </a>
             </div>
 
-             <div class="nav-item">
-                <a href="{{ route('departments.index') }}"
-                class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Departments</span>
-                </a>
-            </div>
+             
 
 
             <div class="nav-item">
@@ -951,7 +1041,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Projects (Bidding)</span>
+                    <span class="nav-text">PROJECTS (BIDDING)</span>
                 </a>
             </div>
 
@@ -967,7 +1057,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Projects (Acceptance)</span>
+                    <span class="nav-text">PROJECTS (ACCEPTANCE)</span>
                 </a>
             </div>
 
@@ -982,7 +1072,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Projects (Award)</span>
+                    <span class="nav-text">PROJECTS (AWARD)</span>
                 </a>
             </div>
 
@@ -1000,7 +1090,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Milestone</span>
+                    <span class="nav-text">MILSTONE</span>
 
                 </a>
             </div>
@@ -1016,12 +1106,58 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Schedule Work</span>
+                    <span class="nav-text">BILL OF QUANTITY</span>
 
                 </a>
             </div>
+{{-- 
+            <div class="nav-item">
+                <a href="{{ route('admin.schedule-work.index') }}"
+                class="nav-link {{ Request::is('admin/schedule-work*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
 
+                    <span class="nav-text">ANALYSE OF RATE</span>
 
+                </a>
+            </div> --}}
+
+            {{-- <div class="nav-item">
+                <a href="{{ route('admin.schedule-work.index') }}"
+                class="nav-link {{ Request::is('admin/schedule-work*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">ESTIMATION</span>
+
+                </a>
+            </div> --}}
+
+            {{-- <div class="nav-item">
+                <a href="{{ route('admin.schedule-work.index') }}"
+                class="nav-link {{ Request::is('admin/schedule-work*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">BILL OF QUANTITY</span>
+
+                </a>
+            </div> --}}
 
             <div class="nav-item">
                 <a href="{{ route('admin.projects.agreement') }}"
@@ -1034,257 +1170,9 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Projects (Agreement)</span>
+                    <span class="nav-text">PROJECTS (AGREEMENT)</span>
                 </a>
             </div>
-
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.returned.index') }}"
-                class="nav-link {{ Request::is('admin/returned*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">EMD Returned</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.returned.forfieted') }}"
-                class="nav-link {{ Request::is('admin/forfieted*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">EMD Returned (Forfieted)</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.common.index') }}"
-                class="nav-link {{ Request::is('admin/common*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Common</span>
-
-                </a>
-            </div> --}}
-
-             {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.returned.index') }}" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">EMD</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item {{ Request::is('admin/emdreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.returned.forfieted') }}" class="dropdown-item {{ Request::is('admin/emdforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div>
-            </div> --}}
-            <div class="nav-item">
-             <a href="{{ route('admin.projects.returned.index') }}"
-                class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">EMD</span>
-
-                </a>
-
-            </div>    
-
-             {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.pgreturned.index') }}"
-                class="nav-link {{ Request::is('admin/pgreturned*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">PG Returned</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="{{ route('admin.projects.pgreturned.forfieted') }}"
-                class="nav-link {{ Request::is('admin/pgforfieted*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">PG Returned (Forfieted)</span>
-                </a>
-            </div> --}}
-
-            {{-- <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/pg*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">PG</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('admin/pgreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.pgreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/pgforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div>
-            </div> --}}
-            <div class="nav-item">
-                <a href="{{ route('admin.projects.pgreturned.index') }}"
-                    class="nav-link {{ Request::is('admin/pg*') ? 'active' : '' }}">
-                        
-                        <span class="nav-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
-                        </span>
-
-                        <span class="nav-text">PG</span>
-
-                </a>
-            </div>
-
-            {{-- <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/security*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">SECURITY</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/securityreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.securityreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/securityforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div>
-            </div> --}}
-            <div class="nav-item">
-                <a href="{{ route('admin.projects.securityreturned.index') }}"
-                    class="nav-link {{ Request::is('admin/security*') ? 'active' : '' }}">
-                        
-                        <span class="nav-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
-                        </span>
-
-                        <span class="nav-text">SECURITY</span>
-
-                </a>
-            </div>
-
-
-            {{-- <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/withheld*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Withheld</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.withheldreturned.index') }}" class="dropdown-item {{ Request::is('admin/withheldreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.withheldreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/withheldforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div>
-            </div> --}}
-
-            
-            <div class="nav-item">
-                <a href="{{ route('admin.projects.withheldreturned.index') }}"
-                    class="nav-link {{ Request::is('admin/withheld*') ? 'active' : '' }}">
-                        
-                        <span class="nav-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
-                        </span>
-
-                        <span class="nav-text">WITHHELD</span>
-
-                </a>
-            </div>
-                {{-- <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/securityreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.securityreturned.forfieted') }}" class="dropdown-item {{ Request::is('admin/securityforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div> --}}
-           
-
-            {{-- <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">WITH HELD</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item {{ Request::is('admin/emdreturned*') ? 'active' : '' }}">Returned</a>
-                    <a href="{{ route('admin.projects.returned.forfieted') }}" class="dropdown-item {{ Request::is('admin/emdforfieted*') ? 'active' : '' }}">Forfieted</a>
-                </div>
-            </div> --}}
-
-
 
             <div class="nav-item">
                 <a href="{{url('/admin/bill')}}"
@@ -1297,14 +1185,13 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Billing</span>
+                    <span class="nav-text">BILLING</span>
                 </a>
             </div>
 
-
-             <div class="nav-item">
-                <a href="{{ route('admin.vendors.index') }}"
-                class="nav-link {{ Request::is('admin/vendors*') ? 'active' : '' }}">
+            <div class="nav-item">
+                <a href="{{ route('admin.projects.correspondence.index') }}"
+                class="nav-link {{ Request::is('admin/correspondence*') ? 'active' : '' }}">
                     
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1313,9 +1200,25 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Vendors</span>
+                    <span class="nav-text">CORRESPONDENCE</span>
                 </a>
             </div>
+
+            <div class="nav-item">
+                <a href=""
+                class="nav-link ">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">COMPLETION</span>
+                </a>
+            </div>
+             
 
             <div class="nav-item">
                 <a href="{{ route('admin.inventory.index') }}"
@@ -1328,8 +1231,94 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Inventory</span>
+                    <span class="nav-text">INVENTORY</span>
                 </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">SECURITIES</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="sidebar-dropdown">
+                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">EMD</a>
+
+                    <a href="{{ route('admin.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('admin/pg*') ? 'active' : '' }}">PG</a>
+
+                    <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/security*') ? 'active' : '' }}">SECURITY DEPOSIT</a>
+                    
+                    <a href="{{ route('admin.projects.withheldreturned.index') }}" class="dropdown-item {{ Request::is('admin/withheld*') ? 'active' : '' }}">WITHHELD</a>
+                </div>
+            </div>
+
+             <div class="nav-item">
+                <a href="{{ route('admin.t-and-p.index') }}"
+                class="nav-link {{ Request::is('admin/t-and-p*') ? 'active' : '' }}">
+                    
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                    </span>
+
+                    <span class="nav-text">MATERIAL</span>
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">ESTABLISHMENT</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="sidebar-dropdown">
+                    <a href="{{ route('departments.index') }}" class="dropdown-item {{ Request::is('departments*') ? 'active' : '' }}">DEPARTMENTS</a>
+                    <a href="{{ route('admin.vendors.index') }}" class="dropdown-item {{ Request::is('admin/vendors*') ? 'active' : '' }}">VENDORS</a>
+                    <a href="" class="dropdown-item ">STAFF</a>
+                </div>
+            </div>
+
+            
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">ESTIMATOIN</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="sidebar-dropdown">
+                    {{-- <a href="" class="dropdown-item nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">ESTIMATION</a> --}}
+
+                    <a href="{{ route('admin.schedule-work.index') }}" class="dropdown-item {{ Request::is('admin/schedule-work*') ? 'active' : '' }}">SCHEDULE MAKER</a>
+
+                    {{-- <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/security*') ? 'active' : '' }}">ANALYSIS OF RATES</a> --}}
+                
+                </div>
             </div>
 
             <div class="nav-item">
@@ -1343,23 +1332,10 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">Daily Notes</span>
+                    <span class="nav-text">DAILY BOOK</span>
                 </a>
             </div>
-            <div class="nav-item">
-                <a href="{{ route('admin.t-and-p.index') }}"
-                class="nav-link {{ Request::is('admin/t-and-p*') ? 'active' : '' }}">
-                    
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">Material</span>
-                </a>
-            </div>
+           
 
         </nav>
 
@@ -1373,6 +1349,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
                 <input type="text" placeholder="Search campaigns, customers, or templates...">
+            </div>
+            <div>
+                
+                    <span style="color: red;" class="topbar-title text-center text-red">YOUR P.O.V. TRIAL PERIOD IS VALID UPTO 31/03/2026</span>
+                    
+                
             </div>
             <div class="topbar-actions">
                 <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">

@@ -5,40 +5,73 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\PgDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectPgController extends Controller
 {
-    // Show PG form (project already exists)
     public function create(Project $project)
     {
-        return view('admin.projects.createpg', compact('project'));
+        $pgs = $project->pgDetails;
+        return view('admin.projects.createpg', compact('project', 'pgs'));
     }
 
-    // Store multiple PG rows
-    public function store(Request $request, Project $project)
+    public function save(Request $request, Project $project)
     {
-        if ($request->has('pg')) {
+        $request->validate([
+            'pg.*.id'                    => 'nullable|exists:pg_details,id',
+            'pg.*.instrument_type'       => 'nullable|string|max:50',
+            'pg.*.instrument_number'     => 'nullable|string|max:100',
+            'pg.*.instrument_date'       => 'nullable|date',
+            'pg.*.instrument_valid_upto' => 'nullable|date',
+            'pg.*.amount'                => 'required|numeric|min:0',
+            'pg.*.upload'                => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+        ]);
 
-            foreach ($request->pg as $row) {
+        $existingIds  = $project->pgDetails()->pluck('id')->toArray();
+        $submittedIds = [];
 
-                $pgData = [
-                    'project_id'        => $project->id,
-                    'instrument_type'   => $row['instrument_type'] ?? null,
-                    'instrument_number' => $row['instrument_number'] ?? null,
-                    'instrument_date'   => $row['instrument_date'] ?? null,
-                    'amount'            => $row['amount'] ?? null,
-                ];
+        foreach ($request->pg as $row) {
 
-                if (isset($row['upload']) && $row['upload'] instanceof \Illuminate\Http\UploadedFile) {
-                    $pgData['upload'] = $row['upload']->store('pg_docs', 'public');
+            // UPDATE or CREATE
+            if (!empty($row['id'])) {
+                $pg = $project->pgDetails()->where('id', $row['id'])->firstOrFail();
+                $submittedIds[] = $pg->id;
+            } else {
+                $pg = new PgDetail();
+                $pg->project_id = $project->id;
+            }
+
+            $pg->instrument_type       = $row['instrument_type'] ?? null;
+            $pg->instrument_number     = $row['instrument_number'] ?? null;
+            $pg->instrument_date       = $row['instrument_date'] ?? null;
+            $pg->instrument_valid_upto = $row['instrument_valid_upto'] ?? null;
+            $pg->amount                = $row['amount'];
+
+            // FILE REPLACE
+            if (!empty($row['upload'])) {
+                if ($pg->upload && Storage::disk('public')->exists($pg->upload)) {
+                    Storage::disk('public')->delete($pg->upload);
                 }
+                $pg->upload = $row['upload']->store('pg_docs', 'public');
+            }
 
-                PgDetail::create($pgData);
+            $pg->save();
+        }
+
+        // DELETE REMOVED ROWS
+        $toDelete = array_diff($existingIds, $submittedIds);
+
+        foreach ($toDelete as $id) {
+            $pg = PgDetail::find($id);
+            if ($pg) {
+                if ($pg->upload && Storage::disk('public')->exists($pg->upload)) {
+                    Storage::disk('public')->delete($pg->upload);
+                }
+                $pg->delete();
             }
         }
 
-        return redirect()
-            ->route('admin.projects.acceptance')
-            ->with('success', 'PG Details added successfully');
+        return back()->with('success', 'PG Details saved successfully');
     }
 }
+

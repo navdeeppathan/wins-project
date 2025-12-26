@@ -11,27 +11,25 @@
 </div>
 @if($projects->count() > 0)
 <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
+    <table id="example" class="table class-table nowrap" style="width:100%">
 
         <thead >
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Acceptance Letter No.</th>
-                <th>Date</th>
-                <th>Estimate Amount</th>
-                <th>Tendered Amount</th>
+                <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
+                <th>Date of Opening</th>
+                <th>Estimate Amount</th>
+                <th>Tendered Amount</th>
+                <th>Acceptance Letter No.</th>
+                <th>Date</th>
                 <th>Award Letter No.</th>
                 <th>Award Date</th>
-                <!-- NEW COLUMNS -->
+                <th>Date of Start of Work</th>
                 <th>Upload</th>
                 <th>Save</th>
-                {{-- <th>Status</th> --}}
-
-                {{-- <th>PG Details</th> --}}
-
             </tr>
         </thead>
         <tbody>
@@ -40,54 +38,48 @@
             @endphp
             @forelse($projects as $p)
                @if (!empty($p->acceptance_letter_no))
-                   
-               
-                   
-               
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
-                    <td>{{ $p->acceptance_letter_no }}</td>
-                    <td>{{ $p->date}}</td>
-
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ number_format($p->tendered_amount,2) }}</td>
+                    <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
-
-                    {{-- Tendered Amount --}}
-                    {{-- <td>
-                        <input type="number" step="0.01"
-                            class="form-control form-control-sm tendered_amount"
-                            value="{{ $p->tendered_amount }}">
-                    </td>
-                    --}}
-
+                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
+                    <td>{{ number_format($p->tendered_amount,2) }}</td>
+                    <td>{{ $p->acceptance_letter_no }}</td>
+                    <td>{{ date('d-m-y', strtotime($p->date)) ?? '-' }}</td>
                     <td>
                         <input type="text"
                             class="form-control form-control-sm award_letter_no"
                             value="{{ $p->award_letter_no }}">
                     </td>
-
                     <td>
                         <input type="date"
                             class="form-control form-control-sm award_date"
                             value="{{ $p->award_date }}">
                     </td>
                     <td>
+                        <input type="date"
+                            class="form-control form-control-sm date_ofstartof_work"
+                            value="{{ $p->date_ofstartof_work }}">
+                    </td>
+                    <td>
                         <input type="file"
                             class="form-control form-control-sm award_upload">
                     </td>
-              
+                    
                     <td>
-                        <button class="btn btn-sm btn-success saveAwardBtn"
+                        @if (empty($p->award_letter_no))
+                             <button class="btn btn-sm btn-success saveAwardBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
+                        @else
+                        <span class="badge bg-success">Saved</span>
+                        @endif
+                       
                     </td>
-                    
-                    
-                    
                 </tr>
                 @endif
             @php
@@ -127,6 +119,11 @@ $(document).on('click', '.saveAwardBtn', function () {
     formData.append(
         'award_date',
         row.find('.award_date').val()
+    );
+
+    formData.append(
+        'date_ofstartof_work',
+        row.find('.date_ofstartof_work').val()
     );
 
     let fileInput = row.find('.award_upload')[0];

@@ -10,100 +10,48 @@ class ScheduleWorkController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['departments','state','emds'])->where('user_id', auth()->user()->id)
-            ->latest()
-            ->paginate(20);
-
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+        
         return view('admin.schedule_work.index', compact('projects'));
     }
 
     public function index2(Project $project)
     {
-        $works = ScheduleWork::where('project_id', $project->id)
-            ->orderBy('section_name')
-            ->get()
-            ->groupBy('section_name');
+        $works = $project->scheduleWorks; // relation
+        return view('admin.schedule_work.index2', compact('project','works'));
+    }
 
-        // SECTION SUBTOTALS
-        $subtotals = [];
-        foreach ($works as $section => $items) {
-            $subtotals[$section] = $items->sum('amount');
+    public function save(Request $request, Project $project)
+    {
+        if (!$request->has('work')) return back();
+
+        foreach ($request->work as $row) {
+
+            $amount = ($row['quantity'] ?? 0)
+                    * ($row['unit'] ?? 1)
+                    * ($row['rate'] ?? 0);
+
+            $data = [
+                'project_id'   => $project->id,
+                'section_name' => $row['section_name'] ?? 'GENERAL',
+                'description'  => $row['description'] ?? null,
+                'quantity'     => $row['quantity'] ?? 0,
+                'unit'         => $row['unit'] ?? 1,
+                'rate'         => $row['rate'] ?? 0,
+                'amount'       => $amount,
+            ];
+
+            // UPDATE
+            if (!empty($row['id'])) {
+                ScheduleWork::where('id',$row['id'])->update($data);
+            }
+            // CREATE
+            else {
+                ScheduleWork::create($data);
+            }
         }
 
-        // GRAND TOTAL
-        $grandTotal = array_sum($subtotals);
-
-        return view('admin.schedule_work.index2', compact(
-            'project',
-            'works',
-            'subtotals',
-            'grandTotal'
-        ));
-    }
-
-    // ✅ STORE (AJAX SAFE)
-    public function store(Request $request)
-    {
-        $request->validate([
-            'project_id'   => 'required|exists:projects,id',
-            'section_name' => 'nullable|string|max:100',
-            'description'  => 'required|string',
-            'quantity'     => 'required|numeric|min:0',
-            'unit'         => 'required|numeric|min:0.01',
-            'rate'         => 'required|numeric|min:0',
-        ]);
-
-        $amount = $request->quantity * $request->rate * $request->unit;
-
-        $work = ScheduleWork::create([
-            'project_id'   => $request->project_id,
-            'section_name' => $request->section_name ?? 'GENERAL',
-            'description'  => $request->description,
-            'quantity'     => $request->quantity,
-            'unit'         => $request->unit,
-            'rate'         => $request->rate,
-            'amount'       => $amount,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data'    => $work
-        ]);
-    }
-
-    // ✅ UPDATE (AJAX SAFE)
-    public function update(Request $request, ScheduleWork $scheduleWork)
-    {
-        $request->validate([
-            'section_name' => 'nullable|string|max:100',
-            'description'  => 'required|string',
-            'quantity'     => 'required|numeric|min:0',
-            'unit'         => 'required|numeric|min:0.01',
-            'rate'         => 'required|numeric|min:0',
-        ]);
-
-        $amount = $request->quantity * $request->rate * $request->unit;
-
-        $scheduleWork->update([
-            'section_name' => $request->section_name ?? $scheduleWork->section_name,
-            'description'  => $request->description,
-            'quantity'     => $request->quantity,
-            'unit'         => $request->unit,
-            'rate'         => $request->rate,
-            'amount'       => $amount,
-        ]);
-
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    public function destroy(ScheduleWork $scheduleWork)
-    {
-        $scheduleWork->delete();
-
-        return response()->json([
-            'success' => true
-        ]);
+        return back()->with('success','Schedule of Work saved successfully');
     }
 }
+

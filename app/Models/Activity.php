@@ -15,6 +15,7 @@ class Activity extends Model
         'to_date',
         'weightage',
         'progress',
+        'user_id'
     ];
 
     protected $casts = [

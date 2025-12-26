@@ -272,6 +272,10 @@
             <div class="brand-name">Wins</div>
             <p class="brand-description">
                 The best way to manage your projects.
+                <br>
+                We are deeply grateful to Shri Sanjeev Kumar, Assistant Engineer (Civil), whose expert
+                guidance and shared knowledge were instrumental in the successful completion of this
+                project.
             </p>
         </div>
 
@@ -334,9 +338,11 @@
                     <span class="btn-text">Login</span>
                     <span class="btn-loader"></span>
                 </button>
-  <div class="login-link">
+                <div class="login-link">
                     Create a new account?
                     <a href="{{ route('register') }}">Register</a>
+                    <br>
+                    <span class="small mt-2">© 2025 Developed by solutions <br>( email – solutions1401@gmail.com )</span>
                 </div>
 
             </form>

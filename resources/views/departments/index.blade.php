@@ -45,14 +45,14 @@
     {{-- Table --}}
   @if($departments->count() > 0)
     <div class="card dept-card shadow-sm">
-        <div class="card-body table-responsive">
-            <table class="table table-bordered dept-table text-center">
+        <div class="table-responsive">
+            <table id="example" class="table class-table nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th width="80">No.</th>
+                        <th width="">No.</th>
                         <th>Name</th>
-                        <th width="150">Created</th>
-                        <th width="180">Action</th>
+                        <th width="">Created</th>
+                        <th width="">Action</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -140,6 +140,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     /* ===================== PROJECTS (BIDDING) ===================== */
     Route::resource('projects', App\Http\Controllers\Admin\ProjectController::class);
 
+    Route::post(
+        'projects/{project}/emd/save',
+        [App\Http\Controllers\Admin\ProjectController::class, 'saveEmd']
+    )->name('projects.emd.save');
 
 
     Route::get(
@@ -148,9 +152,25 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     )->name('projects.pg.create');
 
     Route::post(
-        '/projects/{project}/pg',
-        [ProjectPgController::class, 'store']
-    )->name('projects.pg.store');
+        'projects/{project}/pg/save',
+        [ProjectPgController::class, 'save']
+    )->name('projects.pg.save');
+
+    Route::get('correspondence',
+        [App\Http\Controllers\Admin\CorrespondenceController::class, 'index']
+    )->name('projects.correspondence.index');
+
+    Route::get('correspondence/{project}',
+        [App\Http\Controllers\Admin\CorrespondenceController::class, 'index2']
+    )->name('projects.correspondence');
+
+    Route::post('projects/{project}/correspondence/save',
+        [App\Http\Controllers\Admin\CorrespondenceController::class, 'save']
+    )->name('projects.correspondence.save');
+
+    Route::post('correspondence/{correspondence}/destroy',
+        [App\Http\Controllers\Admin\CorrespondenceController::class, 'destroy']
+    )->name('correspondence.destroy');
 
   
 
@@ -236,7 +256,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
 
     /* ===================== BILLING (PROJECT WISE) ===================== */
-    Route::get('projects/{project}/billing',
+    Route::get('bill/{project}/billing',
         [App\Http\Controllers\Admin\BillingController::class, 'index']
     )->name('projects.billing.index');
 
@@ -352,6 +372,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // ]);
 
 
+
     
 
     Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
@@ -364,10 +385,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
 
     Route::get('/schedule-work', [ScheduleWorkController::class, 'index'])->name('schedule-work.index');
-    Route::get('/schedule-work/{project}', [ScheduleWorkController::class, 'index2'])->name('schedule-work.index2');
-    Route::post('/schedule-work', [ScheduleWorkController::class, 'store'])->name('schedule-work.store');
-    Route::get('/schedule-work/{scheduleWork}/edit', [ScheduleWorkController::class, 'edit'])->name('schedule-work.edit');
-    Route::post('/schedule-work/{scheduleWork}', [ScheduleWorkController::class, 'update'])->name('schedule-work.update');
+    Route::get('schedule-work/{project}',
+        [ScheduleWorkController::class,'index2']
+        )->name('projects.schedule-work');
+
+    Route::post('projects/{project}/schedule-work/save',
+        [ScheduleWorkController::class,'save']
+    )->name('projects.schedule-work.save');
 
 
 

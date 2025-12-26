@@ -12,7 +12,9 @@ use App\Models\SecurityDeposit;
 use App\Models\State;
 use App\Models\Withheld;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Request;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -258,6 +260,37 @@ class ProjectController extends Controller
 
 
    
+
+
+    public function saveEmd(Request $request, Project $project)
+    {
+        foreach ($request->emd as $row) {
+
+            $emd = !empty($row['id'])
+                ? EmdDetail::findOrFail($row['id'])
+                : new EmdDetail(['project_id' => $project->id]);
+
+            $emd->fill([
+                'instrument_type'   => $row['instrument_type'] ?? null,
+                'instrument_number' => $row['instrument_number'] ?? null,
+                'instrument_date'   => $row['instrument_date'] ?? null,
+                'amount'            => $row['amount'],
+                'remarks'           => $row['remarks'] ?? null,
+            ]);
+
+            if (!empty($row['upload'])) {
+                if ($emd->upload && Storage::disk('public')->exists($emd->upload)) {
+                    Storage::disk('public')->delete($emd->upload);
+                }
+                $emd->upload = $row['upload']->store('emd_docs','public');
+            }
+
+            $emd->save();
+        }
+
+        return back()->with('success','EMD saved successfully');
+    }
+
 
 
 
@@ -538,20 +571,34 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $states = State::orderBy('name')->get();
-        return view('admin.projects.edit', compact('project', 'states'));
+        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
+        return view('admin.projects.edit', compact('project', 'states', 'departments'));
     }
 
-    public function update(ProjectRequest $request, Project $project)
+    public function update(Request $request, Project $project)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'name'                => 'required|string|max:255',
+            'nit_number'          => 'required|string|max:255',
+            'department'          => 'required|exists:departments,id',
+            'location'            => 'required|exists:states,id',
+            'estimated_amount'    => 'required|numeric|min:0',
+            'time_allowed_number' => 'required|numeric|min:1',
+            'time_allowed_type'   => 'required|in:Days,Weeks,Months',
+            'date_of_start'       => 'nullable|date',
+            'date_of_opening'     => 'nullable|date',
+            'emd_amount'          => 'nullable|numeric|min:0',
+        ]);
 
-        if ($request->hasFile('emd_file')) {
-            $data['emd_file'] = $request->emd_file->store('emd_docs', 'public');
-        }
+        
 
         $project->update($data);
-        return redirect()->route('admin.projects.index')->with('success','Project updated.');
+
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project updated successfully.');
     }
+
 
     public function destroy(Project $project)
     {

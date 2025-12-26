@@ -523,6 +523,8 @@
           <div class="login-link">
                     Already have an account?
                     <a href="{{ route('login.form') }}">Login</a>
+                    <br>
+                    <span class="small mt-2">© 2025 Developed by solutions <br>( email – solutions1401@gmail.com )</span>
                 </div>
         </form>
       </div>

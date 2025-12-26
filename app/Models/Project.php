@@ -30,6 +30,7 @@ class Project extends Model
         'tendered_amount',
         'acceptance_letter_no',
         'date',
+        'pg_submission_date',
         'award_letter_no',
         'award_date',
         'award_upload',
@@ -39,7 +40,8 @@ class Project extends Model
         'stipulated_date_ofcompletion',
         'isForfitted',
         'total_work_done',
-        'total_work_tobe_done'
+        'total_work_tobe_done',
+        'date_ofstartof_work'
         
     ];
 
@@ -131,6 +133,10 @@ class Project extends Model
         return $this->hasMany(Withheld::class);
     }
 
+    public function correspondences()
+    {
+        return $this->hasMany(Correspondence::class);
+    }
 
 
 }

@@ -7,9 +7,9 @@
 
 <div class="row">
 <div class="col-md-12">
-
-<table id="vendorTable" class="table table-sm table-bordered">
-    <thead class="table-light">
+<div class="table-responsive">
+<table id="vendorTable" class="table class-table nowrap" style="width:100%">
+    <thead>
         <tr>
             <th>#</th>
             <th>Date</th>
@@ -205,6 +205,32 @@ $(document).ready(function(){
     }
 
 });
+
+
+new DataTable('#vendorTable', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+        
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+        
+    });
 </script>
 @endpush
 

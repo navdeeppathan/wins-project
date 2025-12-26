@@ -13,31 +13,28 @@
 
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Award)</h3>
+    <h3>Projects (Agreement)</h3>
 
 </div>
 @if($projects->count() > 0)
 <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
+    <table id="example" class="table class-table nowrap" style="width:100%">
 
         <thead >
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Award Letter No.</th>
-                <th>Award Date</th>
                 <th>Location</th>
                 <th>Department</th>
+                <th>Award Letter No.</th>
+                <th>Award Date</th>
                 <th>Estimate Amount</th>
                 <th>Tendered Amount</th>
-                
                 <th>Agreement No.</th>
                 <th>Agreement Start Date</th>
                 <th>Stipulated Date of Completion</th>
-                <!-- NEW COLUMNS -->
                 <th>Upload</th>
                 <th>Save</th>
-
             </tr>
         </thead>
         <tbody>
@@ -46,15 +43,13 @@
             @endphp
             @forelse($projects as $p)
             @if (!empty($p->award_letter_no))
-                
-            
                 <tr>
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
-                    <td>{{ $p->award_letter_no }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->award_letter_no }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>
@@ -78,13 +73,16 @@
                             class="form-control form-control-sm agreement_upload">
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-success saveAgreementBtn"
+                        @if (empty($p->agreement_no))
+                             <button class="btn btn-sm btn-success saveAgreementBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
+                        @else
+                        <span class="badge bg-success">Saved</span>
+                        @endif
+                       
                     </td>
-                    
-                    
                 </tr>
                 @endif
                  @php
@@ -169,8 +167,6 @@ $(document).on('click', '.saveAgreementBtn', function () {
 });
 </script>
 @endpush
-
-
 
 {{ $projects->links() }}
 

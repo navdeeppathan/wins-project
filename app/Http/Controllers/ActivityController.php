@@ -12,7 +12,7 @@ class ActivityController extends Controller
     
     public function index()
     {
-        $projects = Project::with(['departments', 'state','emds'])->latest()->paginate(20);
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
         
         return view('admin.activities.index', compact('projects'));
     }
@@ -45,6 +45,8 @@ class ActivityController extends Controller
             'weightage'     => 'nullable|integer|min:0|max:100',
             'progress'      => 'nullable|integer|min:0|max:100',
         ]);
+
+        $request['user_id'] = auth()->id();
 
         Activity::create($request->all());
 

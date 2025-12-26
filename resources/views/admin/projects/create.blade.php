@@ -9,14 +9,15 @@
     @csrf
 
     <div class="row">
-        <div class="col-md-6 mb-3">
-            <label class="form-label">State *</label>
-            <select name="location" class="form-select" required>
-                <option value="">Select State</option>
-                @foreach($states as $state)
-                    <option value="{{ $state->id }}">{{ $state->name }}</option>
-                @endforeach
-            </select>
+
+        <div class="col-md-12 mb-3">
+            <label class="form-label">Project Name *</label>
+            <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter Project Name" class="form-control" required>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">NIT Number *</label>
+            <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
         </div>
 
         <div class="col-md-6 mb-3">
@@ -28,17 +29,49 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-12 mb-3">
-            <label class="form-label">Project Name *</label>
-            <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter Project Name" class="form-control" required>
+
+        <div class="col-md-6 mb-3">
+            <label class="form-label">State *</label>
+            <select name="location" class="form-select" required>
+                <option value="">Select State</option>
+                @foreach($states as $state)
+                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">NIT Number *</label>
-            <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
+            <label class="form-label">Estimated Amount *</label>
+           <input type="number" step="0.01" name="estimated_amount" 
+            id="estimated_amount"
+            value="{{ old('estimated_amount') }}" 
+            placeholder="Enter Estimated Cost" 
+            class="form-control" required>
         </div>
 
-         <div class="col-md-4 mb-3">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Time Allowed (Number) *</label>
+            <select name="time_allowed_number" class="form-select"  required>
+                <option value="">Select</option>
+                @for ($i = 1; $i <= 120; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+        </div>
+
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Time Type *</label>
+            <select name="time_allowed_type" class="form-select" required>
+                <option value="">Select</option>
+                <option value="Days">Days</option>
+                <option value="Weeks">Weeks</option>
+                <option value="Months">Months</option>
+                <option value="Months">Years</option>
+            </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
             <label class="form-label">Date of Submission</label>
             <input 
                 type="date" 
@@ -59,41 +92,6 @@
                 class="form-control"
             >
         </div>
-
-        
-
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Estimated Cost *</label>
-           <input type="number" step="0.01" name="estimated_amount" 
-            id="estimated_amount"
-            value="{{ old('estimated_amount') }}" 
-            placeholder="Enter Estimated Cost" 
-            class="form-control" required>
-        </div>
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Time Allowed (Number) *</label>
-            <select name="time_allowed_number" class="form-select"  required>
-                <option value="">Select</option>
-                @for ($i = 1; $i <= 120; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-                
-            </select>
-        </div>
-
-
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Time Type *</label>
-            <select name="time_allowed_type" class="form-select" required>
-                <option value="">Select</option>
-                <option value="Days">Days</option>
-                <option value="Weeks">Weeks</option>
-                <option value="Months">Months</option>
-                <option value="Months">Years</option>
-            </select>
-        </div>
-
         
     </div>
 

@@ -5,9 +5,9 @@
 @section('content')
 
 
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Wetheld Returned)</h3>
-    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a>
+    <h3>Projects (Correspondence) </h3>
 </div>
 
 @if($projects->count() > 0)
@@ -23,7 +23,7 @@
                 <th>Estimate Amount</th>
                 <th>EMD Amount</th>
                 <th>Date of Opening</th>
-                <th width="">Actions</th>
+                <th width="160">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -35,13 +35,13 @@
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
-                    <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td>
+                     <td>{{  $p->state->name ?? '-' }}</td>
+                    <td>{{  $p->departments->name ?? '-' }}</td> 
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('admin.projects.withheldreturned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-warning">Add Correspondence</a>
                     </td>
                 </tr>
                  @php
@@ -58,8 +58,6 @@
         Data is not available.
     </div>
 @endif
-
-
 
 @push('scripts')
 <script>

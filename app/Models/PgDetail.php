@@ -16,7 +16,8 @@ class PgDetail extends Model
         'amount',
         'upload',
         'isReturned',
-        'isForfieted'
+        'isForfieted',
+        'instrument_valid_upto'
     ];
 
     // Laravel will manage these automatically
