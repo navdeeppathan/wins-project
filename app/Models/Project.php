@@ -41,7 +41,8 @@ class Project extends Model
         'isForfitted',
         'total_work_done',
         'total_work_tobe_done',
-        'date_ofstartof_work'
+        'date_ofstartof_work',
+        'pg_submission_date'
         
     ];
 

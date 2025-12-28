@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers\Staff;
+
+use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\ScheduleWork;
+use Illuminate\Http\Request;
+
+class ScheduleWorkController extends Controller
+{
+    public function index()
+    {
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+        
+        return view('staff.schedule_work.index', compact('projects'));
+    }
+
+    public function index2(Project $project)
+    {
+        $works = $project->scheduleWorks; // relation
+        return view('staff.schedule_work.index2', compact('project','works'));
+    }
+
+    public function save(Request $request, Project $project)
+    {
+        if (!$request->has('work')) return back();
+
+        foreach ($request->work as $row) {
+
+            $amount = ($row['quantity'] ?? 0)
+                    * ($row['unit'] ?? 1)
+                    * ($row['rate'] ?? 0);
+
+            $data = [
+                'project_id'   => $project->id,
+                'section_name' => $row['section_name'] ?? 'GENERAL',
+                'description'  => $row['description'] ?? null,
+                'quantity'     => $row['quantity'] ?? 0,
+                'unit'         => $row['unit'] ?? 1,
+                'rate'         => $row['rate'] ?? 0,
+                'amount'       => $amount,
+            ];
+
+            // UPDATE
+            if (!empty($row['id'])) {
+                ScheduleWork::where('id',$row['id'])->update($data);
+            }
+            // CREATE
+            else {
+                ScheduleWork::create($data);
+            }
+        }
+
+        return back()->with('success','Schedule of Work saved successfully');
+    }
+}
+

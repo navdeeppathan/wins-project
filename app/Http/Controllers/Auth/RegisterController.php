@@ -11,13 +11,25 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where('parent_id', auth()->user()->id)->get();
         return view('superadmin.users.index', compact('users'));
+    }
+
+
+     public function adminIndex()
+    {
+        $users = User::where('parent_id', auth()->user()->id)->get();
+        return view('admin.users.index', compact('users'));
     }
 
     public function create()
     {
         return view('superadmin.users.create');
+    }
+
+    public function adminCreate()
+    {
+        return view('admin.users.create');
     }
 
     public function registerForm()
@@ -28,20 +40,23 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
        $request->validate([
-        'name' => 'required|string|max:50',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6|confirmed',
-        'auth_person_name' => 'required|string|max:50',
+            'name' => 'required|string|max:50',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'auth_person_name' => 'required|string|max:50',
+            
 
-        // GST validation
-        'gst_number' => [
-            'required',
-            'string',
-            // 'size:15',
-            // 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
-            // 'unique:users,gst_number',
-        ],
-    ]);
+            // GST validation
+            'gst_number' => [
+                'required',
+                'string',
+                // 'size:15',
+                // 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+                // 'unique:users,gst_number',
+            ],
+        ]);
+
+
 
       $user =  User::create([
             'name'=> $request->name,
@@ -49,14 +64,51 @@ class RegisterController extends Controller
             'auth_person_name'=> $request->auth_person_name,
             'gst_number' => strtoupper($request->gst_number),
             'password'=> Hash::make($request->password),
-            'role' => 'admin'
+            'role' => 'admin',
+            
         ]);
 
         //also login
         // auth()->login($user);
 
-        return redirect()->route('/')->with('success','Account created, please login.');
+        return redirect()->route('/login')->with('success','Account created, please login.');
     }
 
+    public function userCreate(Request $request)
+    {
+       $request->validate([
+            'name' => 'required|string|max:50',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'auth_person_name' => 'required|string|max:50',
+            
+
+            // GST validation
+            'gst_number' => [
+                'required',
+                'string',
+                // 'size:15',
+                // 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+                // 'unique:users,gst_number',
+            ],
+        ]);
+
+
+
+      $user =  User::create([
+            'name'=> $request->name,
+            'email'=> $request->email,
+            'auth_person_name'=> $request->auth_person_name,
+            'gst_number' => strtoupper($request->gst_number),
+            'password'=> Hash::make($request->password),
+            'role' => 'staff',
+            'parent_id' => auth()->user()->id,
+        ]);
+
+        //also login
+        // auth()->login($user);
+
+        return redirect()->back()->with('success','Account created, please login.');
+    }
     
 }

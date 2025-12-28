@@ -229,7 +229,7 @@
 }
 
 /* 5 images × 5 seconds = 25 seconds total loop */
-@keyframes bgChange {
+/* @keyframes bgChange {
     0%   { background-image: url('/s1.jpg'); }
     20%  { background-image: url('/s1.jpg'); }
 
@@ -243,7 +243,7 @@
     80%    { background-image: url('/s4.jpg'); }
 
    
-}
+} */
 
     </style>
 </head>
@@ -269,7 +269,7 @@
             <div class="brand-logo">
                 <i class="fas fa-crown crown-icon"></i>
             </div>
-            <div class="brand-name">Wins</div>
+            <div class="brand-name text-center">Project OverView (P.O.V.)</div>
             <p class="brand-description">
                 The best way to manage your projects.
                 <br>

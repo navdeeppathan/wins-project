@@ -6,7 +6,23 @@ use App\Http\Controllers\ProjectPgController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Admin\DailyNoteController;
 use App\Http\Controllers\Admin\WithheldController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ScheduleWorkController;
+use App\Http\Controllers\Staff\ActivityController as StaffActivityController;
+use App\Http\Controllers\Staff\AttachmentController;
+use App\Http\Controllers\Staff\BillingController;
+use App\Http\Controllers\Staff\BillingItemController;
+use App\Http\Controllers\Staff\CorrespondenceController;
+use App\Http\Controllers\Staff\DepartmentController as StaffDepartmentController;
+use App\Http\Controllers\Staff\InventoryController;
+use App\Http\Controllers\Staff\ProjectController;
+use App\Http\Controllers\Staff\ProjectPgController as StaffProjectPgController;
+use App\Http\Controllers\Staff\RecoveryController;
+use App\Http\Controllers\Staff\ScheduleWorkController as StaffScheduleWorkController;
+use App\Http\Controllers\Staff\SecurityDepositController as StaffSecurityDepositController;
+use App\Http\Controllers\Staff\TAndPController;
+use App\Http\Controllers\Staff\VendorController;
+
 /*
 |--------------------------------------------------------------------------
 | AUTH PROTECTED ADMIN ROUTES
@@ -21,6 +37,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     })->name('dashboard');
 
   
+    Route::get('users', [RegisterController::class, 'adminIndex'])->name('users.index');
+    Route::get('users/create', [RegisterController::class, 'adminCreate'])->name('users.create');
+    Route::post('users', [RegisterController::class, 'userCreate'])->name('users.store');
+     
 
        Route::get('daily-notes', [DailyNoteController::class, 'index'])->name('daily-notes.index');
         Route::post('daily-notes', [DailyNoteController::class, 'store'])->name('daily-notes.store');
@@ -401,6 +421,399 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     )->name('attachments.store');
 });
 
+
+Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () {
+
+    /* ===================== Dashboard ===================== */
+    Route::get('/', function () {
+      return redirect()->route('staff.projects.index');
+
+    })->name('dashboard');
+
+    Route::resource('departments', StaffDepartmentController::class);
+
+  
+    Route::get('users', [RegisterController::class, 'adminIndex'])->name('users.index');
+    Route::get('users/create', [RegisterController::class, 'adminCreate'])->name('users.create');
+    Route::post('users', [RegisterController::class, 'userCreate'])->name('users.store');
+     
+
+       Route::get('daily-notes', [DailyNoteController::class, 'index'])->name('daily-notes.index');
+        Route::post('daily-notes', [DailyNoteController::class, 'store'])->name('daily-notes.store');
+        Route::post('daily-notes/{id}/update', [DailyNoteController::class, 'update']);
+        Route::post('daily-notes/{id}/destroy', [DailyNoteController::class, 'destroy']);
+
+      Route::get('/acceptance', [ProjectController::class, 'acceptanceIndex'])
+    ->name('projects.acceptance');
+
+     Route::get('/award', [ProjectController::class, 'awardIndex'])
+    ->name('projects.award');
+
+     Route::get('/agreement', [ProjectController::class, 'agreementIndex'])
+    ->name('projects.agreement');
+
+    Route::get(
+        '/projects/{project}/agreement-date',
+        [ProjectController::class, 'agreementDateCreate']
+    )->name('projects.agreementdate.create');
+
+
+    Route::get(
+        '/common',
+        [ProjectController::class, 'commonIndex']
+    )->name('projects.common.index');
+
+
+     Route::get(
+        '/common-details/{project}',
+        [ProjectController::class, 'commonCreate']
+    )->name('projects.common.create');
+
+     Route::get(
+        '/emdreturned',
+        [ProjectController::class, 'returnIndex']
+    )->name('projects.returned.index');
+
+     Route::get(
+        '/emdforfieted',
+        [ProjectController::class, 'forfietedIndex']
+    )->name('projects.returned.forfieted');
+
+
+     Route::get(
+        '/pgreturned',
+        [ProjectController::class, 'pgreturnIndex']
+    )->name('projects.pgreturned.index');
+
+     Route::get(
+        '/securityreturned',
+        [ProjectController::class, 'securityreturnIndex']
+    )->name('projects.securityreturned.index');
+
+    Route::get(
+        '/withheldreturned',
+        [ProjectController::class, 'withheldreturnIndex']
+    )->name('projects.withheldreturned.index');
+
+     Route::get(
+        '/pgforfieted',
+        [ProjectController::class, 'pgforfietedIndex']
+    )->name('projects.pgreturned.forfieted');
+
+    Route::get(
+        '/securityforfieted',
+        [ProjectController::class, 'securityforfietedIndex']
+    )->name('projects.securityreturned.forfieted');
+
+     Route::get(
+        '/withheldforfieted',
+        [ProjectController::class, 'withheldforfietedIndex']
+    )->name('projects.withheldreturned.forfieted');
+
+    Route::get(
+        '/emdreturned/{project}',
+        [ProjectController::class, 'returnedCreate']
+    )->name('projects.returned.create');
+
+     Route::get(
+        '/pgreturned/{project}',
+        [ProjectController::class, 'pgreturnedCreate']
+    )->name('projects.pgreturned.create');
+
+     Route::get(
+        '/securityreturned/{project}',
+        [ProjectController::class, 'securityreturnedCreate']
+    )->name('projects.securityreturned.create');
+
+      Route::get(
+        '/withheldreturned/{project}',
+        [ProjectController::class, 'withheldreturnedCreate']
+    )->name('projects.withheldreturned.create');
+
+    Route::get(
+        '/forfieted/{project}',
+        [ProjectController::class, 'forfietedCreate']
+    )->name('projects.forfieted.create');
+
+    Route::get(
+        '/pgforfieted/{project}',
+        [ProjectController::class, 'pgforfietedCreate']
+    )->name('projects.pgforfieted.create');
+
+     Route::get(
+        '/securityforfieted/{project}',
+        [ProjectController::class, 'securityforfietedCreate']
+    )->name('projects.securityforfieted.create');
+
+     Route::get(
+        '/withheldforfieted/{project}',
+        [ProjectController::class, 'withheldforfietedCreate']
+    )->name('projects.withheldforfieted.create');
+
+    /* ===================== PROJECTS (BIDDING) ===================== */
+    Route::resource('projects', ProjectController::class);
+
+    Route::post(
+        'projects/{project}/emd/save',
+        [ProjectController::class, 'saveEmd']
+    )->name('projects.emd.save');
+
+
+    Route::get(
+        '/projects/{project}/pg',
+        [StaffProjectPgController::class, 'create']
+    )->name('projects.pg.create');
+
+    Route::post(
+        'projects/{project}/pg/save',
+        [StaffProjectPgController::class, 'save']
+    )->name('projects.pg.save');
+
+    Route::get('correspondence',
+        [CorrespondenceController::class, 'index']
+    )->name('projects.correspondence.index');
+
+    Route::get('correspondence/{project}',
+        [CorrespondenceController::class, 'index2']
+    )->name('projects.correspondence');
+
+    Route::post('projects/{project}/correspondence/save',
+        [CorrespondenceController::class, 'save']
+    )->name('projects.correspondence.save');
+
+    Route::post('correspondence/{correspondence}/destroy',
+        [CorrespondenceController::class, 'destroy']
+    )->name('correspondence.destroy');
+
+  
+
+    Route::post('/projects/update-qualified/{project}', 
+    [ProjectController::class, 'updateQualified'])
+    ->name('projects.updateQualified');
+
+    Route::post('/projects/update-returned/{emdDetail}', 
+    [ProjectController::class, 'updateReturned'])
+    ->name('projects.updateReturned');
+
+    Route::post('/projects/update-pgreturned/{pgDetail}', 
+    [ProjectController::class, 'updatePgReturned'])
+    ->name('projects.updatePgReturned');
+
+     Route::post('/projects/update-securityreturned/{securityDeposit}', 
+    [ProjectController::class, 'updateSecurityReturned'])
+    ->name('projects.updateSecurityReturned');
+
+    Route::post('/projects/update-withheldreturned/{withheldDetail}', 
+    [ProjectController::class, 'updateWithheldReturned'])
+    ->name('projects.updateWithheldReturned');
+
+     Route::post('/projects/update-forfieted/{emdDetail}', 
+    [ProjectController::class, 'updateforfittedReturned'])
+    ->name('projects.updateForfieted');
+
+     Route::post('/projects/update-pgforfieted/{pgDetail}', 
+    [ProjectController::class, 'updateforfittedPgReturned'])
+    ->name('projects.updatePgForfieted');
+
+     Route::post('/projects/update-securityforfieted/{securityDeposit}', 
+    [ProjectController::class, 'updateforfittedSecurityReturned'])
+    ->name('projects.updateSecurityForfieted');
+
+     Route::post('/projects/update-withheldforfieted/{withheldDetail}', 
+    [ProjectController::class, 'updateforfittedWithheldReturned'])
+    ->name('projects.updateWithheldForfieted');
+
+
+
+    // routes/web.php
+    Route::put(
+        '/projects/{project}/acceptance-update',
+        [ProjectController::class, 'updateDocAndStatus']
+    )->name('projects.acceptance.update');
+
+    Route::put(
+        '/projects/{project}/award-update',
+        [ProjectController::class, 'updateDocAndStatus2']
+    )->name('projects.award.update');
+
+     Route::put(
+        '/projects/{project}/agreement-update',
+        [ProjectController::class, 'updateDocAndStatus3']
+    )->name('projects.agreement.update');
+
+
+     Route::put(
+        '/projects/{project}/agreement-date-update',
+        [ProjectController::class, 'updateDocAndStatus4']
+    )->name('projects.agreementdate.update');
+
+
+     Route::post('/projects/update-returned/{project}', 
+    [ProjectController::class, 'updateReturned'])
+    ->name('projects.updateReturned');
+
+
+    /* ---- Project Workflow: Acceptance + Award + Agreement ---- */
+    // Route::post('projects/{project}/acceptance',
+    //     [App\Http\Controllers\Staff\AcceptanceController::class, 'store']
+    // )->name('projects.acceptance.store');
+
+    // Route::post('projects/{project}/award',
+    //     [App\Http\Controllers\Staff\AwardController::class, 'store']
+    // )->name('projects.award.store');
+
+    // Route::post('projects/{project}/agreement',
+    //     [App\Http\Controllers\Staff\AgreementController::class, 'store']
+    // )->name('projects.agreement.store');
+
+    
+
+    /* ===================== BILLING (PROJECT WISE) ===================== */
+    Route::get('bill/{project}/billing',
+        [BillingController::class, 'index']
+    )->name('projects.billing.index');
+
+     Route::get('projects/{project}/{billing}/recoveries',
+        [RecoveryController::class, 'index']
+    )->name('projects.recoveries.index');
+
+    Route::get(
+        'projects/{project}/{billing}/security-deposits/create',
+        [StaffSecurityDepositController::class, 'create']
+    )->name('security-deposits.create');
+
+    Route::post(
+        'projects/{project}/{billing}/security-deposits',
+        [StaffSecurityDepositController::class, 'store']
+    )->name('security-deposits.store');
+
+    
+     Route::get(
+        'projects/{project}/{billing}/withheld-deposits/create',
+        [WithheldController::class, 'create']
+    )->name('withheld-deposits.create');
+
+    Route::post(
+        'projects/{project}/{billing}/withheld-deposits',
+        [WithheldController::class, 'store']
+    )->name('withheld-deposits.store');
+    
+     Route::get('bill',
+        [BillingController::class, 'indexprojects']
+    )->name('indexprojects');
+
+    Route::post('projects/{project}/billing',
+        [BillingController::class, 'store']
+    )->name('projects.billing.store');
+
+    
+    Route::post(
+        'projects/billing/{billing}/update',
+        [BillingController::class, 'update']
+    )->name('projects.billing.update');
+
+    /* ---- Approve + Delete Bill ---- */
+    Route::post('billing/{billing}/approve',
+        [BillingController::class, 'approve']
+    )->name('billing.approve');
+
+    Route::delete('billing/{billing}',
+        [BillingController::class, 'destroy']
+    )->name('billing.destroy');
+
+    /* ---- Billing Items ---- */
+    Route::post('billing/{billing}/items',
+        [BillingItemController::class, 'store']
+    )->name('billing.items.store');
+
+    Route::delete('billing/items/{billingItem}',
+        [BillingItemController::class, 'destroy']
+    )->name('billing.items.destroy');
+
+    /* ---- Billing Recoveries ---- */
+    Route::post('billing/{billing}/recovery',
+        [RecoveryController::class, 'store']
+    )->name('billing.recovery.store');
+
+
+    /* ===================== VENDORS ===================== */
+    // Route::resource('vendors', App\Http\Controllers\Admin\VendorController::class)->only([
+    //     'index', 'store', 'destroy'
+    // ]);
+
+    Route::get('vendors', [VendorController::class, 'index'])->name('vendors.index');
+    Route::post('vendors', [VendorController::class, 'store'])->name('vendors.store');
+    Route::post('vendors/{vendor}/update', [VendorController::class, 'update'])->name('vendors.update');
+    Route::post('vendors/{vendor}/destroy', [VendorController::class, 'destroy'])->name('vendors.destroy');
+
+
+     Route::get('t-and-p', [TAndPController::class, 'index'])
+        ->name('t-and-p.index');
+
+    Route::post('t-and-p/store', [TAndPController::class, 'store'])
+        ->name('t-and-p.store');
+
+    Route::post('t-and-p/{tAndP}/update', [TAndPController::class, 'update'])
+        ->name('t-and-p.update');
+
+    Route::post('t-and-p/{tAndP}/destroy', [TAndPController::class, 'destroy'])
+        ->name('t-and-p.destroy');
+
+    /* ===================== INVENTORY ===================== */
+    // Route::resource('inventory', App\Http\Controllers\Admin\InventoryController::class)->only([
+    //     'index', 'store', 'destroy'
+    // ]);
+
+     Route::get('inventory', [InventoryController::class, 'index'])
+            ->name('inventory.index');
+
+        // ➕ Create Inventory (AJAX)
+        Route::post('inventory', [InventoryController::class, 'store'])
+            ->name('inventory.store');
+
+        // ✏️ Update Inventory (AJAX inline save)
+        Route::post('inventory/{inventory}/update', [InventoryController::class, 'update'])
+            ->name('inventory.update');
+
+        // ❌ Delete Inventory
+        Route::post('inventory/{inventory}/destroy', [InventoryController::class, 'destroy'])
+            ->name('inventory.destroy');
+
+    /* ===================== T & P ===================== */
+    // Route::resource('tandp', App\Http\Controllers\Admin\TAndPController::class)->only([
+    //     'index', 'store'
+    // ]);
+
+
+
+    
+
+    Route::get('/activities', [StaffActivityController::class, 'index'])->name('activities.index');
+    Route::get('/activities/{project}', [StaffActivityController::class, 'index2'])->name('activities.index2');
+    Route::post('/activities', [StaffActivityController::class, 'store'])->name('activities.store');
+    Route::get('/activities/{activity}/edit', [StaffActivityController::class, 'edit'])->name('activities.edit');
+    Route::post('/activities/{activity}', [StaffActivityController::class, 'update'])->name('activities.update');
+
+
+    
+
+    Route::get('/schedule-work', [StaffScheduleWorkController::class, 'index'])->name('schedule-work.index');
+    Route::get('schedule-work/{project}',
+        [StaffScheduleWorkController::class,'index2']
+        )->name('projects.schedule-work');
+
+    Route::post('projects/{project}/schedule-work/save',
+        [StaffScheduleWorkController::class,'save']
+    )->name('projects.schedule-work.save');
+
+
+
+    /* ===================== Attachments (POLYMORPHIC) ===================== */
+    Route::post('attachments',
+        [AttachmentController::class, 'store']
+    )->name('attachments.store');
+});
+
 use App\Http\Controllers\Admin\DepartmentController;
 
 Route::resource('departments', DepartmentController::class);
@@ -408,10 +821,13 @@ Route::resource('departments', DepartmentController::class);
 
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+
 
 /* ========== AUTH ROUTES (NO UI) ========== */
-Route::get('/', [LoginController::class, 'loginForm'])->name('login.form');
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/login', [LoginController::class, 'loginForm'])->name('login.form');
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::get('register', [RegisterController::class, 'registerForm'])->name('register.form');

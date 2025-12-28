@@ -12,9 +12,7 @@ class Inventory extends Model
         'vendor_id',
         'item_name',
         'sku',
-        
         'remarks',
-
         'date',
                 'category',
                 'description',
@@ -24,7 +22,8 @@ class Inventory extends Model
                 'amount',
                 'deduction',
                 'net_payable',
-                'upload'
+                'upload',
+                'user_id'
     ];
 
     public function project()

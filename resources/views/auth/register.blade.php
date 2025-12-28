@@ -36,7 +36,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Register - Wins</title>
+    <title>Register - Project OverView (P.O.V.)</title>
 
     <!-- Bootstrap + Font Awesome -->
     <link
@@ -357,7 +357,7 @@
 }
 
 /* 5 images × 5 seconds = 25 seconds total loop */
-@keyframes bgChange {
+/* @keyframes bgChange {
     0%   { background-image: url('/s1.jpg'); }
     20%  { background-image: url('/s1.jpg'); }
 
@@ -371,7 +371,7 @@
     80%    { background-image: url('/s4.jpg'); }
 
    
-}
+} */
     </style>
   </head>
 
@@ -395,7 +395,7 @@
           <i class="fas fa-crown crown-icon"></i>
         </div>
 
-        <h1 class="brand-name">Wins</h1>
+        <h1 class="brand-name text-center">Project OverView (P.O.V.)</h1>
         <p class="brand-description">The best way to manage your projects.</p>
 
         {{-- <button class="learn-more-btn">Learn More</button> --}}
