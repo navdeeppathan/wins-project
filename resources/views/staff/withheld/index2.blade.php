@@ -128,11 +128,7 @@ new DataTable('#withheldreturn', {
     scrollX: true,
     responsive: false,
     autoWidth: false,
-    // layout: {
-    //     topStart: {
-    //         buttons: ['copy', 'excel', 'pdf', 'print']
-    //     }
-    // }
+    
 });
 </script>
 @endpush
