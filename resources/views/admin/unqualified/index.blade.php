@@ -34,7 +34,7 @@
              @php
                 $i=1;
             @endphp
-           
+
             @forelse($projects as $p)
                 <tr>
                     <td>{{$i}}</td>
@@ -46,15 +46,16 @@
                     </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td> 
+                    <td>{{  $p->departments->name ?? '-' }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>
+
                         <a href="{{ route('admin.projects.returned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
                     </td>
                 </tr>
-                 @php
+                @php
                     $i++;
                 @endphp
             @empty

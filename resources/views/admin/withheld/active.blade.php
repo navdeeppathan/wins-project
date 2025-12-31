@@ -14,7 +14,7 @@
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
-                
+
                 {{-- <th>Status</th> --}}
 
                 {{-- <th width="160">Actions</th> --}}
@@ -24,33 +24,38 @@
             @forelse($actives as $emd)
                 <tr>
                     <td>{{ $project->id }}</td>
-                    <td>{{  $project->name }}</td>
+                      <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $project->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
                     {{-- <td>{{ $p->date_of_opening }}</td> --}}
                     <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->departments->name ?? '-' }}</td> 
+                    <td>{{  $project->departments->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
                     <td>
-                    
+
                             {{ $emd->instrument_type }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_number }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_date }}<br>
-                    
+
                     </td>
-                    
+
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
-                
+
                 </tr>
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>

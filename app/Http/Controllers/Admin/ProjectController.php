@@ -23,18 +23,18 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-       
+
         return view('admin.projects.index', compact('projects'));
     }
 
     public function indexUser(User $user)
     {
         $projects = Project::with(['departments', 'state','emds'])->where('user_id', $user->id)->latest()->paginate(20);
-       
+
         return view('admin.users.projects', compact('projects', 'user'));
     }
 
-    
+
     public function commonIndex()
     {
         $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
@@ -71,7 +71,7 @@ class ProjectController extends Controller
         $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
         return view('admin.withheld.index', compact('projects'));
     }
-    
+
 
      public function pgforfietedIndex()
     {
@@ -85,7 +85,7 @@ class ProjectController extends Controller
         return view('admin.securitydeposite_forfieted.index', compact('projects'));
     }
 
-    
+
      public function withheldforfietedIndex()
     {
         $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
@@ -100,7 +100,7 @@ class ProjectController extends Controller
         return view('admin.projects.create', compact('departments','states'));
     }
 
-   
+
      public function commonCreate(Project $project)
         {
             $emdDetails = $project->emds;
@@ -114,24 +114,20 @@ class ProjectController extends Controller
 
         public function returnedCreate(Project $project)
         {
-            // forfieted (default)
-            // $forfieteds = $project->emds;
             $forfieteds = $project->emds()
                 ->where('isForfieted', 1)
                 ->get();
 
-            // returned (default)
             $returneds = $project->emds()
                 ->where('isReturned', 1)
                 ->get();
 
-            // ACTIVE (default)
             $actives = $project->emds()
                 ->where('isReturned', 0)
                 ->where('isForfieted', 0)
                 ->get();
-            
-            $emdDetails = $project->emds;    
+
+            $emdDetails = $project->emds;
 
             return view('admin.unqualified.indexdetails', compact('project', 'emdDetails', 'forfieteds', 'returneds', 'actives'));
         }
@@ -144,14 +140,14 @@ class ProjectController extends Controller
                 ->where('isReturned', 0)
                 ->where('isForfieted', 0)
                 ->get();
-            
+
             $returneds = $project->pgDetails()
                 ->where('isReturned', 1)
                 ->get();
-            
+
             $forfieteds = $project->pgDetails()
                 ->where('isForfieted', 1)
-                ->get();    
+                ->get();
 
             return view('admin.pgreturn.indexdetails', compact('project', 'pgDetails', 'forfieteds', 'returneds', 'actives'));
         }
@@ -163,11 +159,11 @@ class ProjectController extends Controller
                 ->where('isReturned', 0)
                 ->where('isForfeited', 0)
                 ->get();
-            
+
             $returneds = $project->securityDeposits()
                 ->where('isReturned', 1)
                 ->get();
-            
+
             $forfieteds = $project->securityDeposits()
                 ->where('isForfeited', 1)
                 ->get();
@@ -183,11 +179,11 @@ class ProjectController extends Controller
                 ->where('isReturned', 0)
                 ->where('isForfeited', 0)
                 ->get();
-            
+
             $returneds = $project->withhelds()
                 ->where('isReturned', 1)
                 ->get();
-            
+
             $forfieteds = $project->withhelds()
                 ->where('isForfeited', 1)
                 ->get();
@@ -267,7 +263,7 @@ class ProjectController extends Controller
     }
 
 
-   
+
 
 
     // public function saveEmd(Request $request, Project $project)
@@ -340,7 +336,7 @@ class ProjectController extends Controller
 
     public function updateQualified(Request $request, Project $project)
     {
-        
+
         $project->isQualified = $request->isQualified;
         $project->save();
 
@@ -352,7 +348,7 @@ class ProjectController extends Controller
 
     //  public function updateReturned(Request $request, Project $project)
     // {
-        
+
     //     $project->isReturned = $request->isReturned;
     //     $project->save();
 
@@ -409,7 +405,7 @@ class ProjectController extends Controller
 
     //  public function updateforfittedReturned(Request $request, Project $project)
     // {
-        
+
     //     $project->isForfieted = $request->isForfitted;
     //     $project->save();
 
@@ -529,7 +525,7 @@ class ProjectController extends Controller
      public function updateDocAndStatus2(Request $request, Project $project)
     {
         $request->validate([
-            
+
             'award_letter_no'  => 'nullable|string|max:255',
             'award_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
             'award_date'       => 'nullable|date',
@@ -537,7 +533,7 @@ class ProjectController extends Controller
         ]);
 
         $project->status = 'awarded';
-        
+
         $project->award_letter_no = $request->award_letter_no;
         $project->award_date = $request->award_date;
         $project->date_ofstartof_work = $request->date_ofstartof_work;
@@ -588,19 +584,19 @@ class ProjectController extends Controller
      public function updateDocAndStatus3(Request $request, Project $project)
     {
         $request->validate([
-            
+
             'agreement_no'  => 'nullable|string|max:255',
-            
+
             'stipulated_date_ofcompletion' => 'nullable|date',
             'agreement_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
         ]);
 
         $project->status = 'agreement';
-        
+
         $project->agreement_no = $request->agreement_no;
-        
+
         $project->stipulated_date_ofcompletion = $request->stipulated_date_ofcompletion;
-        
+
         if ($request->hasFile('agreement_upload')) {
             $project->agreement_upload = $request->agreement_upload
                 ->store('project_docs', 'public');
@@ -668,7 +664,7 @@ class ProjectController extends Controller
             'emd_amount'          => 'nullable|numeric|min:0',
         ]);
 
-        
+
 
         $project->update($data);
 

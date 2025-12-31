@@ -33,29 +33,34 @@
             @forelse($actives as $emd)
                 <tr>
                     <td>{{ $project->id }}</td>
-                    <td>{{  $project->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $project->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
                     {{-- <td>{{ $p->date_of_opening }}</td> --}}
                     <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->department->name ?? '-' }}</td> 
+                    <td>{{  $project->department->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
                     <td>
-                    
+
                             {{ $emd->instrument_type }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_number }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ date('d-m-Y', strtotime($emd->instrument_date)) }}
-                    
+
                     </td>
 
                     <td style="background:yellow;">
@@ -87,9 +92,9 @@
                             Save
                         </button>
                     </td>
-                    
+
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
-                
+
                 </tr>
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
@@ -121,6 +126,7 @@ $(document).on('click', '.saveisReturnedBtn', function () {
         },
         success: function (response) {
             alert("Updated Successfully");
+            location.reload();
         }
     });
 
@@ -140,6 +146,7 @@ $(document).on('click', '.saveisForfietedBtn', function () {
         },
         success: function (response) {
             alert("Updated Successfully");
+             location.reload();
         }
     });
 

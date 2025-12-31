@@ -25,13 +25,13 @@
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
-                
+
 
 
                 <!-- NEW COLUMNS -->
                 <th>Return</th>
                 <th>Save</th>
-             
+
 
                 {{-- <th width="160">Actions</th> --}}
             </tr>
@@ -43,29 +43,34 @@
             @forelse($returneds as $emd)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{  $project->name }}</td>
+                      <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $project->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
                     {{-- <td>{{ $p->date_of_opening }}</td> --}}
                     <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->department->name ?? '-' }}</td> 
+                    <td>{{  $project->department->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
                 <td>
-                    
+
                             {{ $emd->instrument_type }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_number }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_date }}<br>
-                    
+
                     </td>
 
                     <td style="background:yellow;">
@@ -82,9 +87,9 @@
                             Save
                         </button>
                     </td>
-                    
-                    
-                
+
+
+
                 </tr>
                  @php
                 $i++;
@@ -118,6 +123,7 @@ $(document).on('click', '.saveisReturnedBtn', function () {
         },
         success: function (response) {
             alert("Updated Successfully");
+            location.reload();
         }
     });
 

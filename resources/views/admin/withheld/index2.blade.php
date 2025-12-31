@@ -25,7 +25,7 @@
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
-                
+
 
 
                 <!-- NEW COLUMNS -->
@@ -44,29 +44,34 @@
                 <tr>
                     <td>{{ $i}}</td>
 
-                    <td>{{  $project->name }}</td>
+                      <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $project->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
                     {{-- <td>{{ $p->date_of_opening }}</td> --}}
                     <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->departments->name ?? '-' }}</td> 
+                    <td>{{  $project->departments->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
                     <td>
-                    
+
                             {{ $emd->instrument_type }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_number }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_date }}<br>
-                    
+
                     </td>
 
                     <td style="background:yellow;">
@@ -83,9 +88,9 @@
                             Save
                         </button>
                     </td>
-                    
+
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
-                
+
                 </tr>
                  @php
                 $i++;

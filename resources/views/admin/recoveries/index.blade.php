@@ -231,7 +231,7 @@ $('#addRecoveryRow').on('click', function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -248,7 +248,7 @@ $('#addRecoveryRow').on('click', function () {
             );
         }
 
-        
+
     });
 </script>
 @endpush
