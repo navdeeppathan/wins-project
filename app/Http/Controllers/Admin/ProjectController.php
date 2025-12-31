@@ -43,8 +43,54 @@ class ProjectController extends Controller
 
     public function returnIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        return view('admin.unqualified.index', compact('projects'));
+        $userId = auth()->id();
+
+        // Base query to avoid repetition
+        $baseQuery = Project::with(['departments', 'state', 'emds'])
+            ->where('user_id', $userId);
+
+        // All projects (paginated)
+        $projects = (clone $baseQuery)
+            ->latest()
+            ->paginate(20);
+
+        // Forfeited EMD projects
+        $forfieteds = (clone $baseQuery)
+            ->whereHas('emds', function ($q) {
+                $q->where('isForfieted', 1);
+            })
+            ->latest()
+            ->get();
+
+        // Returned EMD projects
+        $returneds = (clone $baseQuery)
+            ->whereHas('emds', function ($q) {
+                $q->where('isReturned', 1);
+            })
+            ->latest()
+            ->get();
+
+        // Active EMD projects (not returned & not forfeited)
+        $actives = (clone $baseQuery)
+            ->whereHas('emds', function ($q) {
+                $q->where('isReturned', 0)
+                ->where('isForfieted', 0);
+            })
+            ->latest()
+            ->get();
+
+        // All EMD-related project details
+        $emdDetails = (clone $baseQuery)
+            ->latest()
+            ->get();
+
+        return view('admin.unqualified.index', compact(
+            'projects',
+            'emdDetails',
+            'forfieteds',
+            'returneds',
+            'actives'
+        ));
     }
 
      public function forfietedIndex()
@@ -101,16 +147,16 @@ class ProjectController extends Controller
     }
 
 
-     public function commonCreate(Project $project)
-        {
-            $emdDetails = $project->emds;
-            $pgDetails = $project->pgDetails;
-            $securityDeposits = $project->securityDeposits;
-            $withhelds = $project->withhelds;
+    public function commonCreate(Project $project)
+    {
+        $emdDetails = $project->emds;
+        $pgDetails = $project->pgDetails;
+        $securityDeposits = $project->securityDeposits;
+        $withhelds = $project->withhelds;
 
 
-            return view('admin.common.indexdetails', compact('project', 'emdDetails', 'pgDetails', 'securityDeposits', 'withhelds'));
-        }
+        return view('admin.common.indexdetails', compact('project', 'emdDetails', 'pgDetails', 'securityDeposits', 'withhelds'));
+    }
 
         public function returnedCreate(Project $project)
         {

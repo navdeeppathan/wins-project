@@ -4,99 +4,183 @@
 
 @section('content')
 
-
-
-
-
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (EMD)</h3>
-    {{-- <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a> --}}
 </div>
 
-@if($projects->count() > 0)
 
-<div class="table-responsive">
-    <table id="example" class="table class-table nowrap" style="width:100%">
-        <thead >
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>NIT No</th>
-                <th>Location</th>
-                <th>Department</th>
-                <th>Estimate Amount</th>
-                <th>EMD Amount</th>
-                <th>Date of Opening</th>
-                <th width="">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-             @php
-                $i=1;
-            @endphp
 
-            @forelse($projects as $p)
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>
-                        {!! implode('<br>', array_map(
-                            fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
-                        )) !!}
-                    </td>
-                    <td>{{ $p->nit_number }}</td>
-                    <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td>
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
-                    <td>
-
-                        <a href="{{ route('admin.projects.returned.create', $p) }}" class="btn btn-sm btn-warning">Edit</a>
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-            @empty
-                <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
-@else
-    <div class="alert alert-warning text-center">
-        Data is not available.
+{{-- ================= TABS ================= --}}
+<div class="tabs-wrapper">
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('tab-active', this)">Active</button>
+        <button class="tab" onclick="switchTab('tab-returned', this)">Returned</button>
+        <button class="tab" onclick="switchTab('tab-forfeited', this)">Forfeited</button>
     </div>
-@endif
 
+
+    <div class="tab-content">
+
+        {{-- ================= EMD ================= --}}
+
+        <div class="content2 emd tab-active">
+            @include('admin.unqualified.active')
+        </div>
+
+        <div class="content2 emd tab-returned">
+            @include('admin.unqualified.index2')
+        </div>
+
+        <div class="content2 emd tab-forfeited">
+            @include('admin.forfitted.index2')
+        </div>
+
+    </div>
+</div>
+
+{{-- ================= STYLES ================= --}}
+<style>
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-btn {
+            padding: 10px 18px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .top-btn.active {
+            background: #0d6efd;
+            color: #fff;
+            border-color: #0d6efd;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            background: transparent;
+            border: 1px solid transparent;
+            border-bottom: none;
+        }
+
+        .tab.active {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-bottom: 1px solid #fff;
+            color: #0d6efd;
+            font-weight: 600;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-content {
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .content2 {
+            display: none;
+        }
+
+        .content2.show {
+            display: block;
+        }
+</style>
+
+@endsection
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveQualifiedBtn', function () {
+let currentType = 'emd';
+let currentTab  = 'tab-active';
+
+function switchType(type, btn) {
+    currentType = type;
+    currentTab  = 'tab-active';
+
+    document.querySelectorAll('.top-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.tab').classList.add('active');
+
+    showContent();
+}
+
+function switchTab(tab, btn) {
+    currentTab = tab;
+
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    showContent();
+}
+
+function showContent() {
+    document.querySelectorAll('.content2').forEach(c => c.classList.remove('show'));
+
+    const selector = `.content2.${currentType}.${currentTab}`;
+    const el = document.querySelector(selector);
+
+    if (el) el.classList.add('show');
+}
+
+document.addEventListener('DOMContentLoaded', showContent);
+</script>
+
+
+{{-- ================= AJAX SAVE ================= --}}
+{{-- <script>
+$(document).on('click', '.saveisReturnedBtn', function () {
 
     let id = $(this).data('id');
-    let isQualified = $(this).closest('tr').find('.isQualifiedBox').is(':checked') ? 1 : 0;
+    let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
 
     $.ajax({
-        url: "/admin/projects/update-qualified/" + id,
+        url: "/admin/projects/update-pgreturned/" + id,
         type: "POST",
         data: {
             _token: "{{ csrf_token() }}",
-            isQualified: isQualified,
+            isReturned: isReturned,
         },
-        success: function (response) {
+        success: function () {
             alert("Updated Successfully");
         }
     });
-
 });
+</script> --}}
+
+
+<script>
+    $(document).on('click', '.saveisReturnedBtn', function () {
+
+        let id = $(this).data('id');
+        let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
+
+        $.ajax({
+            url: "/admin/projects/update-returned/" + id,
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                isReturned: isReturned,
+            },
+            success: function (response) {
+                alert("Updated Successfully");
+            }
+        });
+
+    });
 </script>
 @endpush
 
-{{ $projects->links() }}
 
 
-
-
-@endsection
