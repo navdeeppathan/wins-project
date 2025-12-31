@@ -43,8 +43,10 @@ class SecurityDepositController extends Controller
             'upload'            => $filePath,
         ]);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Security Deposit added successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Security Deposit saved successfully.'
+        ]);
+
     }
 }

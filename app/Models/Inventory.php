@@ -23,7 +23,8 @@ class Inventory extends Model
                 'deduction',
                 'net_payable',
                 'upload',
-                'user_id'
+                'user_id',
+                'dismantals'
     ];
 
     public function project()
@@ -35,4 +36,9 @@ class Inventory extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+
+   public function scheduleOfWorks()
+   {
+     return $this->hasMany(ScheduleWork::class);
+   }
 }

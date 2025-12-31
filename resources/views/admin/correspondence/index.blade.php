@@ -33,7 +33,12 @@
             @forelse($projects as $p)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $p->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                      <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 

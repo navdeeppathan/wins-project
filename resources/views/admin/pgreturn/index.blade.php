@@ -10,7 +10,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (PG Returned)</h3>
-    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a>
+    {{-- <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a> --}}
 </div>
 
 @if($projects->count() > 0)

@@ -23,13 +23,13 @@
                 <th>Date of Opening</th>
                 <th>Estimate Amount</th>
                 <th>EMD Amount</th>
-                <th>Tendered Amount</th>
+                <th>Tendered Amount*</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>
                 <th>PG Submission By Date</th>
                 <th>Upload</th>
                 <th>Save</th>
-                <th>PG Details</th>
+                <th>Add PG</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +41,12 @@
             @if ($p->isQualified == 1)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $p->name }}</td>
+                   <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '-' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
@@ -68,19 +73,33 @@
                             class="form-control form-control-sm pg_submission_date"
                             value="{{ $p->pg_submission_date }}" required>
                     </td>
-                    <td>
+                   <td>
+                        @if($p->acceptance_upload)
+                            <a href="{{ Storage::url($p->acceptance_upload) }}"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                                View
+                            </a>
+                        @endif
+
                         <input type="file"
-                            class="form-control form-control-sm acceptance_upload" >
+                            class="form-control form-control-sm acceptance_upload">
                     </td>
+
                     <td>
+                        {{-- @if (empty($p->pg_submission_date ) && empty($p->tendered_amount) && empty($p->acceptance_letter_no) && empty($p->date)) --}}
                         <button class="btn btn-sm btn-success saveAcceptanceBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
+                        {{-- @else
+                        <span class="badge bg-success">Saved</span>
+                        @endif --}}
+                        
                     </td>
                     <td>
                         <a href="{{ route('admin.projects.pg.create', $p->id) }}"
-                        class="btn btn-sm btn-primary">
+                        class="btn btn-sm btn-primary addPgBtn">
                             Add PG
                         </a>
                     </td>  
@@ -160,6 +179,7 @@ $(document).on('click', '.saveAcceptanceBtn', function () {
             btn.prop('disabled', false).text('Save');
 
             if (response.success) {
+                window.location.reload();
                 alert(response.message);
 
                 // OPTIONAL: update status text without reload
@@ -178,6 +198,63 @@ $(document).on('click', '.saveAcceptanceBtn', function () {
         }
     });
 });
+
+
+document.addEventListener('change', function (e) {
+    if (e.target.classList.contains('acceptance_date')) {
+
+        const acceptanceDate = new Date(e.target.value);
+        if (isNaN(acceptanceDate)) return;
+
+        // Add 5 days
+        acceptanceDate.setDate(acceptanceDate.getDate() + 5);
+
+        // Format to YYYY-MM-DD
+        const yyyy = acceptanceDate.getFullYear();
+        const mm = String(acceptanceDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(acceptanceDate.getDate()).padStart(2, '0');
+
+        // Find PG submission date in same row
+        const row = e.target.closest('tr');
+        const pgDateInput = row.querySelector('.pg_submission_date');
+
+        if (pgDateInput) {
+            pgDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+    }
+});
+
+
+
+document.addEventListener('input', function (e) {
+
+    if (e.target.classList.contains('tendered_amount')) {
+
+        const row = e.target.closest('tr');
+        const addPgBtn = row.querySelector('.addPgBtn');
+
+        const value = parseFloat(e.target.value);
+
+        if (!value || value <= 0) {
+            addPgBtn.classList.add('disabled');
+            addPgBtn.style.pointerEvents = 'none';
+            addPgBtn.style.opacity = '0.5';
+        } else {
+            addPgBtn.classList.remove('disabled');
+            addPgBtn.style.pointerEvents = 'auto';
+            addPgBtn.style.opacity = '1';
+        }
+    }
+});
+
+// Initial check on page load
+document.querySelectorAll('.tendered_amount').forEach(input => {
+    const event = new Event('input');
+    input.dispatchEvent(event);
+});
+
+
+
 </script>
 @endpush
 

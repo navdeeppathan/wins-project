@@ -10,7 +10,9 @@ use App\Models\PgDetail;
 use App\Models\Project;
 use App\Models\SecurityDeposit;
 use App\Models\State;
+use App\Models\User;
 use App\Models\Withheld;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -25,6 +27,12 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+    public function indexUser(User $user)
+    {
+        $projects = Project::with(['departments', 'state','emds'])->where('user_id', $user->id)->latest()->paginate(20);
+       
+        return view('admin.users.projects', compact('projects', 'user'));
+    }
 
     
     public function commonIndex()
@@ -262,9 +270,45 @@ class ProjectController extends Controller
    
 
 
+    // public function saveEmd(Request $request, Project $project)
+    // {
+    //     foreach ($request->emd as $row) {
+
+    //         $emd = !empty($row['id'])
+    //             ? EmdDetail::findOrFail($row['id'])
+    //             : new EmdDetail(['project_id' => $project->id]);
+
+    //         $emd->fill([
+    //             'instrument_type'   => $row['instrument_type'] ?? null,
+    //             'instrument_number' => $row['instrument_number'] ?? null,
+    //             'instrument_date'   => $row['instrument_date'] ?? null,
+    //             'amount'            => $row['amount'],
+    //             'remarks'           => $row['remarks'] ?? null,
+    //         ]);
+
+    //         if (!empty($row['upload'])) {
+    //             if ($emd->upload && Storage::disk('public')->exists($emd->upload)) {
+    //                 Storage::disk('public')->delete($emd->upload);
+    //             }
+    //             $emd->upload = $row['upload']->store('emd_docs','public');
+    //         }
+
+    //         $emd->save();
+    //     }
+
+    //     return back()->with('success','EMD saved successfully');
+    // }
+
     public function saveEmd(Request $request, Project $project)
     {
-        foreach ($request->emd as $row) {
+        $rows = $request->emd;
+
+        // 🔹 If row-wise save
+        if ($request->has('row_index')) {
+            $rows = [$request->emd[$request->row_index]];
+        }
+
+        foreach ($rows as $row) {
 
             $emd = !empty($row['id'])
                 ? EmdDetail::findOrFail($row['id'])
@@ -282,13 +326,13 @@ class ProjectController extends Controller
                 if ($emd->upload && Storage::disk('public')->exists($emd->upload)) {
                     Storage::disk('public')->delete($emd->upload);
                 }
-                $emd->upload = $row['upload']->store('emd_docs','public');
+                $emd->upload = $row['upload']->store('emd_docs', 'public');
             }
 
             $emd->save();
         }
 
-        return back()->with('success','EMD saved successfully');
+        return back()->with('success', 'EMD saved successfully');
     }
 
 
@@ -459,12 +503,14 @@ class ProjectController extends Controller
             'acceptance_letter_no'  => 'nullable|string|max:255',
             'acceptance_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
             'date'                  => 'nullable|date',
+            'pg_submission_date'    => 'nullable|date',
         ]);
 
         $project->status = 'accepted';
         $project->tendered_amount = $request->tendered_amount;
         $project->acceptance_letter_no = $request->acceptance_letter_no;
         $project->date = $request->date;
+        $project->pg_submission_date = $request->pg_submission_date;
 
         if ($request->hasFile('acceptance_upload')) {
             $project->acceptance_upload = $request->acceptance_upload
@@ -487,14 +533,46 @@ class ProjectController extends Controller
             'award_letter_no'  => 'nullable|string|max:255',
             'award_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
             'award_date'       => 'nullable|date',
+            'date_ofstartof_work'       => 'nullable|date',
         ]);
 
         $project->status = 'awarded';
         
         $project->award_letter_no = $request->award_letter_no;
         $project->award_date = $request->award_date;
+        $project->date_ofstartof_work = $request->date_ofstartof_work;
 
-        if ($request->hasFile('acceptance_upload')) {
+         // ✅ BACKEND DATE CALCULATION
+    if ($request->award_date && $project->time_allowed_number && $project->time_allowed_type) {
+
+        $awardDate = Carbon::parse($request->award_date);
+        $number    = (int) $project->time_allowed_number;
+        $type      = strtolower(trim($project->time_allowed_type));
+
+        // normalize plural (Days → day)
+        if (str_ends_with($type, 's')) {
+            $type = rtrim($type, 's');
+        }
+
+        switch ($type) {
+            case 'day':
+                $awardDate->addDays($number);
+                break;
+
+            case 'month':
+                $awardDate->addMonths($number);
+                break;
+
+            case 'year':
+                $awardDate->addYears($number);
+                break;
+        }
+
+        $project->stipulated_date_ofcompletion = $awardDate->format('Y-m-d');
+    }
+
+
+        if ($request->hasFile('award_upload')) {
             $project->award_upload = $request->award_upload
                 ->store('project_docs', 'public');
         }
@@ -512,15 +590,15 @@ class ProjectController extends Controller
         $request->validate([
             
             'agreement_no'  => 'nullable|string|max:255',
-            'agreement_start_date' => 'nullable|date',
-            'stipulated_date_ofcompletion' => 'nullable|date|after_or_equal:agreement_start_date',
+            
+            'stipulated_date_ofcompletion' => 'nullable|date',
             'agreement_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
         ]);
 
         $project->status = 'agreement';
         
         $project->agreement_no = $request->agreement_no;
-        $project->agreement_start_date = $request->agreement_start_date;
+        
         $project->stipulated_date_ofcompletion = $request->stipulated_date_ofcompletion;
         
         if ($request->hasFile('agreement_upload')) {

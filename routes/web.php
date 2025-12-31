@@ -28,6 +28,16 @@ use App\Http\Controllers\Staff\VendorController;
 | AUTH PROTECTED ADMIN ROUTES
 |--------------------------------------------------------------------------
 */
+
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/run-storage-link', function () {
+    Artisan::call('storage:link');
+
+    return 'Storage link created successfully';
+});
+
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
     /* ===================== Dashboard ===================== */
@@ -36,6 +46,23 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     })->name('dashboard');
 
+    Route::get('materials', [App\Http\Controllers\Admin\InventoryController::class, 'materialTabs'])->name('materialTabs.index');
+
+    // routes/web.php
+    Route::put(
+        'projects/{inventory}/inventory-update',
+        [App\Http\Controllers\Admin\InventoryController::class, 'updateInventoryDismantal']
+    )->name('projects.inventory.update');
+
+       // routes/web.php
+    Route::put(
+        'projects/{schedule}/schedule-update',
+        [App\Http\Controllers\ScheduleWorkController::class, 'updateScheduleDismantal']
+    )->name('projects.schedule.update');
+
+    
+    Route::get('users/{user}/projects', [App\Http\Controllers\Admin\ProjectController::class, 'indexUser'])
+     ->name('users.projects');
   
     Route::get('users', [RegisterController::class, 'adminIndex'])->name('users.index');
     Route::get('users/create', [RegisterController::class, 'adminCreate'])->name('users.create');
@@ -167,7 +194,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
 
     Route::get(
-        '/projects/{project}/pg',
+        '/acceptance/projects/{project}/pg',
         [ProjectPgController::class, 'create']
     )->name('projects.pg.create');
 
@@ -374,6 +401,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
      Route::get('inventory', [App\Http\Controllers\Admin\InventoryController::class, 'index'])
             ->name('inventory.index');
 
+            
+     Route::get('inventory/tab', [App\Http\Controllers\Admin\InventoryController::class, 'tabindex'])
+            ->name('inventory.tabindex');
+
         // ➕ Create Inventory (AJAX)
         Route::post('inventory', [App\Http\Controllers\Admin\InventoryController::class, 'store'])
             ->name('inventory.store');
@@ -413,6 +444,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [ScheduleWorkController::class,'save']
     )->name('projects.schedule-work.save');
 
+    Route::post('projects/schedule-work/delete',
+        [ScheduleWorkController::class, 'delete']
+    )->name('projects.schedule-work.delete');
 
 
     /* ===================== Attachments (POLYMORPHIC) ===================== */
@@ -764,8 +798,11 @@ Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () 
     //     'index', 'store', 'destroy'
     // ]);
 
-     Route::get('inventory', [InventoryController::class, 'index'])
+    Route::get('inventory', [InventoryController::class, 'index'])
             ->name('inventory.index');
+
+    Route::get('inventory/tab', [InventoryController::class, 'tabindex'])
+            ->name('inventory.tabindex');
 
         // ➕ Create Inventory (AJAX)
         Route::post('inventory', [InventoryController::class, 'store'])

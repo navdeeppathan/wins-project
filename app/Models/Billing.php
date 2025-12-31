@@ -20,7 +20,8 @@ class Billing extends Model
         'approved_by',
         'approved_at',
         'bill_file',
-        'remarks'
+        'remarks',
+        'completion_date'
     ];
 
     public function project()

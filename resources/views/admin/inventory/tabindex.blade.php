@@ -8,7 +8,7 @@
 @endphp
 
 <h3 class="mb-3">
-    Inventory
+    Inventory (Office Contingency)
     @if($selectedProjectId)
         — <strong>{{ $projects->firstWhere('id', $selectedProjectId)->name }}</strong>
     @endif
@@ -36,10 +36,10 @@
         <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
     </div>
 
-     {{-- <div class="col-md-12 mb-3">
+     <div class="col-md-12 mb-3">
         <label>Project Name</label>
         <input type="text" class="form-control" value="{{ $project->name }}" disabled>
-    </div> --}}
+    </div>
 
 </div>    
     
@@ -94,19 +94,18 @@
     }
 </style>
 
-
 <div class="table-responsive">
 <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
     <thead class="table-light">
     <tr>
         <th>#</th>
-        {{-- <th>Project</th> --}}
+        <th>Project</th>
         <th>Date</th>
-        <th width="200px">Paid To</th>
+        <th>Paid To</th>
         <th>Category</th>
-        
+       
         <th>Voucher Number</th>
-        <th>Voucher Narration</th>
+         <th>Voucher Narration</th>
         <th>Quantity</th>
         <th>Amount</th>
         <th>Deduction</th>
@@ -122,11 +121,11 @@
                 <td>{{ $index + 1 }}</td>
 
                 {{-- PROJECT --}}
-                {{-- <td>
+                <td>
                     @if($selectedProjectId)
-                        <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong> --}}
+                        <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong>
                         <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
-                    {{-- @else
+                    @else
                         <select class="form-select project_select">
                             <option value="">Select Project</option>
                             @foreach($projects as $project)
@@ -137,12 +136,12 @@
                             @endforeach
                         </select>
                     @endif
-                </td> --}}
+                </td>
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
                 
-                <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
+                <td><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -154,9 +153,9 @@
                     </select>
                 </td>
                 
+                
                 <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
-
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
                 <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
                 <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td>
@@ -181,8 +180,14 @@
             <tr>
                 <td>1</td>
 
-                
-                <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
+                <td>
+                    <select class="form-select project_select">
+                        <option value="">Select Project</option>
+                        @foreach($projects as $project)
+                            <option value="{{ $project->id }}">{{ $project->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
                 <td><input type="text" class="form-control paid_to"></td>
@@ -216,7 +221,9 @@
 </div>
 
 <div class="d-flex align-items-center justify-content-end">
+
 <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+
 </div>
 @endsection
 
@@ -231,13 +238,20 @@ $(function () {
 
         let index = $('#inventoryTable tbody tr').length + 1;
 
-        
-            
+        let projectCell = selectedProjectId
+            ? `<strong>{{ $selectedProjectId ? $projects->firstWhere('id',$selectedProjectId)->name : '' }}</strong>
+               <input type="hidden" class="project_id" value="${selectedProjectId}">`
+            : `<select class="form-select project_select">
+                    <option value="">Select Project</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+               </select>`;
 
         let row = `
         <tr>
             <td>${index}</td>
-            <input type="hidden" class="project_id" value="${selectedProjectId}">
+            <td>${projectCell}</td>
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
             <td><input type="text" class="form-control paid_to"></td>
             <td>

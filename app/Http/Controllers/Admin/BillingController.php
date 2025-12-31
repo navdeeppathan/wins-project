@@ -30,16 +30,18 @@ class BillingController extends Controller
         $request->validate([
             'bill_number' => 'required',
             'bill_date' => 'required|date',
-            'bill_type' => 'required|in:running,final',
+            'bill_type' => 'required|in:running,final,rescind',
             'mb_number' => 'required',
             'page_number' => 'required',
             'gross_amount' => 'required|numeric',
             'net_payable' => 'required|numeric',
             'remarks' => 'required|string',
-            'bill_file' => 'nullable|mimes:pdf,jpg,png|max:4096'
+            'bill_file' => 'nullable|mimes:pdf,jpg,png|max:4096',
+            
+            'completion_date' => 'nullable|date'
         ]);
 
-        $data = $request->only('bill_number','bill_date','bill_type','mb_number','page_number');
+        $data = $request->only('bill_number','bill_date','bill_type','mb_number','page_number','completion_date');
         $data['project_id'] = $project->id;
 
         if ($request->hasFile('bill_file')) {
@@ -50,6 +52,7 @@ class BillingController extends Controller
         $data['gross_amount'] = $request->gross_amount;
         $data['net_payable'] = $request->net_payable;
         $data['remarks'] = $request->remarks;
+
         
         $data['approved_at'] = now();
 
@@ -71,11 +74,13 @@ class BillingController extends Controller
             'gross_amount' => 'nullable|numeric',
             'net_payable' => 'nullable|numeric',
             'remarks' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png'
+            'bill_file' => 'nullable|mimes:pdf,jpg,jpeg,png',
+           
+            'completion_date' => 'nullable|date'
         ]);
 
-        if ($request->hasFile('file')) {
-            $data['file'] = $request->file('file')->store('billings');
+        if ($request->hasFile('bill_file')) {
+            $data['bill_file'] = $request->file('bill_file')->store('billings');
         }
 
         $billing->update($data);

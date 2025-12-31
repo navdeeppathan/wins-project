@@ -325,7 +325,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#features">Features</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            {{-- <li><a href="#testimonials">Testimonials</a></li> --}}
             {{-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
@@ -343,7 +343,7 @@
                 <li><a href="#">Dropdown 4</a></li>
               </ul>
             </li> --}}
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#call-to-action">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -632,7 +632,7 @@
                       <i class="bi bi-shield-check"></i>
                       <div class="text">
                         <h6>Reliable Delivery</h6>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.</p>
+                        {{-- <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.</p> --}}
                       </div>
                     </div>
                   </div>
@@ -641,7 +641,7 @@
                       <i class="bi bi-palette2"></i>
                       <div class="text">
                         <h6>Human-Centered Design</h6>
-                        <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus.</p>
+                        {{-- <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus.</p> --}}
                       </div>
                     </div>
                   </div>
@@ -649,7 +649,7 @@
 
                 <div class="metric-band" data-aos="fade-up" data-aos-delay="350">
                   <div class="metric">
-                    <span class="value">9+</span>
+                    <span class="value">15+</span>
                     <span class="label">Years</span>
                   </div>
                   <div class="divider"></div>
@@ -931,22 +931,42 @@
                   <i class="bi bi-globe"></i>
                 </div>
               </div>
+              
                <div class="service-content">
                 <h4>Project OverView (P.O.V.) Pricing</h4>
-                <p>No hidden fees, no surprises. Scale as you grow with confidence. At Rs.7,200/- excluding GST annual pricing for First Year (Rs.14,400/- excluding GST from second year) to ensure P.O.V. aligns with your needs, </p>
-                <ul class="service-list">
+                <p>We believe in the power of our platform Project OverView (P.O.V.), which is why we invite you to 
+              experience it firsthand - completely risk-free. No hidden fees, no surprises. Annual price starting at 
+              Rs.7,200/- plus GST for Basic Plan and Rs.10,800/- plus GST for Advance Plan, to ensure Project 
+              OverView (P.O.V.) aligns with your needs, we offer a FREE trial for first 3 months. Additionally, you 
+              can book a demo to get a hands-on feel of its functionalities. Project OverView (P.O.V.) prides itself 
+              on robust technical support. Whether you prefer email, chat, or phone, our team is ready to assist, 
+              ensuring a seamless user experience.</p>
+                {{-- <ul class="service-list">
                   <li>We offer a FREE trial for first 3 months</li>
                   <li>Additionally, you can book a demo to get a hands-on feel of its functionalities</li>
                   <li>Project OverView (P.O.V.) prides itself on robust technical support</li>
                   <li>Whether you prefer email, chat, or phone, our team is ready to assist, ensuring a seamless user experience.</li>
                   <li>Start Your Project OverView (P.O.V.) Journey Today!</li>
-                </ul>
+                </ul> --}}
                 <div class="service-pricing">
+                  
                   <span class="price-tag">₹ 7,200/-</span>
-                  <a href="#" class="service-btn">
+                  
+                  
+                  {{-- <a href="#" class="service-btn">
                     <span>Learn More</span>
                     <i class="bi bi-arrow-right"></i>
-                  </a>
+                  </a> --}}
+                </div>
+                <div class="service-pricing">
+                  
+                  
+                  
+                  <span class="price-tag">₹ 10,800/- with GST</span>
+                  {{-- <a href="#" class="service-btn">
+                    <span>Learn More</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a> --}}
                 </div>
               </div>
             </div>
@@ -1225,13 +1245,12 @@
                   </div>
 
                   <h2 data-aos="fade-up" data-aos-delay="300">
-                    Begin Your Project overView (P.O.V) Journey.  
+                    Begin Your Project OverView (P.O.V) Journey.  
                     <span class="accent-text">No Pre-payment required</span>
                   </h2>
 
                   <p data-aos="fade-up" data-aos-delay="350">We believe in the power of our platform, which is why we invite you to experience it firsthand— completely risk-free.
                     <br>
-                    
                     Dedicated Support: Access our robust technical support via email, chat, or phone. 
                   </p>
                   

@@ -4,130 +4,213 @@
 
 @section('content')
 
-<div class="container-fluid">
-<h3 class="mb-2">Security Deposit – Project #{{ $project->id }} ({{ $project->nit_number }})</h3>
-<p class="text-muted mb-3">Status: <strong>{{ ucfirst($project->status) }}</strong></p>
+<style>
+    /* 🔥 Allow full width inputs */
+    #securityTable input.form-control,
+    #securityTable select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
 
-    <div class="row justify-content-center">
-        <div class="col-md-12">
+    /* 🔥 Paid To & Narration extra wide */
+    #securityTable td:nth-child(3) input,
+    #securityTable td:nth-child(5) input {
+        min-width: 250px;
+    }
 
-            <div class="card shadow-sm">
-                <div class="card-header bg-light">
-                    <strong>Security Deposit Details</strong>
-                </div>
+    /* 🔥 Disable text cutting */
+    #securityTable input,
+    #securityTable select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
 
-              <form
-                action="{{ route('admin.security-deposits.store', [
-                    'project' => $project->id,
-                    'billing' => $billing->id
-                ]) }}"
-                method="POST"
-                enctype="multipart/form-data">
+    /* 🔥 Horizontal scroll inside input */
+    #securityTable input {
+        text-overflow: clip;
+    }
 
+    /* Optional: show scrollbar only when needed */
+    #securityTable input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
+<div class="table-responsive">
+<table class="table table-bordered nowrap class-table" id="securityTable" style="width:100%">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Instrument Type</th>
+            <th>Instrument Number</th>
+            <th>Instrument Date</th>
+            <th>Amount</th>
+            <th>Upload</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
-                    @csrf
+    <tbody id="securityBody">
+    @forelse($securityDeposits as $index => $p)
+        <tr>
+            <td>{{ $index+1 }}</td>
 
-                    <div class="card-body">
-                        <div class="row g-3">
+            <td>
+                <select class="form-select form-select-sm instrument_type">
+                    <option value="">Select</option>
+                    <option value="FDR" {{ $p->instrument_type=='FDR'?'selected':'' }}>FDR</option>
+                    <option value="BG" {{ $p->instrument_type=='BG'?'selected':'' }}>BG</option>
+                    <option value="DD" {{ $p->instrument_type=='DD'?'selected':'' }}>DD</option>
+                    <option value="Challan" {{ $p->instrument_type=='Challan'?'selected':'' }}>Challan</option>
+                    <option value="Cash" {{ $p->instrument_type=='Cash'?'selected':'' }}>Cash</option>
+                </select>
+            </td>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Instrument Type *</label>
-                                <select name="instrument_type" class="form-select form-select-sm" required>
-                                    <option value="">Select</option>
-                                    <option value="FDR">FDR</option>
-                                    <option value="BG">BG</option>
-                                    <option value="DD">DD</option>
-                                    <option value="Cheque">Challan</option>
-                                    <option value="Cheque">Cash</option>
-                                </select>
-                            </div>
+            <td><input class="form-control form-control-sm instrument_number" value="{{ $p->instrument_number }}"></td>
+           <td>
+                <input type="date"
+                    class="form-control form-control-sm instrument_date"
+                    value="{{ $p->instrument_date ? \Carbon\Carbon::parse($p->instrument_date)->format('Y-m-d') : '' }}">
+            </td>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Instrument Number *</label>
-                                <input type="text"
-                                       name="instrument_number"
-                                       class="form-control form-control-sm"
-                                       required>
-                            </div>
+            <td><input type="number" step="0.01" class="form-control form-control-sm amount" value="{{ $p->amount }}"></td>
 
-                            <div class="col-md-6">
-                                <label class="form-label">Instrument Date *</label>
-                                <input type="date"
-                                       name="instrument_date"
-                                       class="form-control form-control-sm"
-                                       required>
-                            </div>
+            <td>
+                @if($p->upload)
+                    <a href="{{ Storage::url($p->upload) }}"
+                    target="_blank"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                        View
+                    </a>
+                @endif
 
-                            <div class="col-md-6">
-                                <label class="form-label">Amount *</label>
-                                <input type="number"
-                                       step="0.01"
-                                       name="amount"
-                                       class="form-control form-control-sm"
-                                       required>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label class="form-label">Upload (PDF / Image)</label>
-                                <input type="file"
-                                       name="upload"
-                                       class="form-control form-control-sm">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Save Security Deposit
-                        </button>
-                        <a href="{{ url()->previous() }}" class="btn btn-sm btn-secondary">
-                            Back
-                        </a>
-                    </div>
-
-                </form>
-            </div>
-
-        </div>
-    </div>
+                <input type="file" class="form-control form-control-sm upload">
+            </td>
 
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Projects (Security Deposits)</h3>
-
-    </div>
-
-    <div class="table-responsive">
-    <table id="example" class="table table-striped nowrap" style="width:100%">
-
-        <thead >
-            <tr>
-                <th>#</th>
-                <th>Instrument Type</th>
-                <th>Instrument Number</th>
-                <th>Instrument Date</th>
-                <th>Amount</th>
-                <th>Upload</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($securityDeposits as $p)
-                <tr>
-                    <td>{{ $p->id }}</td>
-                    <td>{{ $p->instrument_type }}</td>
-                    <td>{{ $p->instrument_number }}</td>
-                    <td>{{ $p->instrument_date }}</td>
-                    <td>{{ $p->amount }}</td>
-                    <td>{{ $p->upload }}</td>
-                    
-                </tr>
-            @empty
-                <tr><td colspan="13" class="text-center">No Security Deposits yet.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
-    </div>
+            <td>
+                <button class="btn btn-sm btn-success saveSecurity">
+                    Save
+                </button>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td>1</td>
+            <td>
+                <select class="form-select form-select-sm instrument_type">
+                    <option value="">Select</option>
+                    <option value="FDR">FDR</option>
+                    <option value="BG">BG</option>
+                    <option value="DD">DD</option>
+                    <option value="Challan">Challan</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </td>
+            <td><input class="form-control form-control-sm instrument_number"></td>
+            <td><input type="date" class="form-control form-control-sm instrument_date"></td>
+            <td><input type="number" step="0.01" class="form-control form-control-sm amount"></td>
+            <td><input type="file" class="form-control form-control-sm upload"></td>
+            <td><button class="btn btn-sm btn-success saveSecurity">Save</button></td>
+        </tr>
+    @endforelse
+    </tbody>
+</table>
 </div>
 
+<button id="addSecurityRow" class="btn btn-sm btn-primary mt-2">
+    + Add More Security Deposit
+</button>
+
+@push('scripts')
+<script>
+let securityTable = $('#securityTable').DataTable({
+    scrollX: true,
+    responsive: false,
+    autoWidth: false
+});
+
+// ADD MORE ROW
+$('#addSecurityRow').on('click', function () {
+
+    let index = securityTable.rows().count() + 1;
+
+    securityTable.row.add([
+        index,
+
+        `<select class="form-select form-select-sm instrument_type">
+            <option value="">Select</option>
+            <option value="FDR">FDR</option>
+            <option value="BG">BG</option>
+            <option value="DD">DD</option>
+            <option value="Challan">Challan</option>
+            <option value="Cash">Cash</option>
+        </select>`,
+
+        `<input class="form-control form-control-sm instrument_number">`,
+        `<input type="date" class="form-control form-control-sm instrument_date">`,
+        `<input type="number" step="0.01" class="form-control form-control-sm amount">`,
+        `<input type="file" class="form-control form-control-sm upload">`,
+        `<button class="btn btn-sm btn-success saveSecurity">Save</button>`
+    ]).draw(false);
+});
+
+// SAVE ROW
+$(document).on('click', '.saveSecurity', function () {
+
+    let row = $(this).closest('tr');
+
+    let formData = new FormData();
+    formData.append('_token', "{{ csrf_token() }}");
+    formData.append('instrument_type', row.find('.instrument_type').val());
+    formData.append('instrument_number', row.find('.instrument_number').val());
+    formData.append('instrument_date', row.find('.instrument_date').val());
+    formData.append('amount', row.find('.amount').val());
+
+    let file = row.find('.upload')[0];
+    if (file && file.files.length) {
+        formData.append('upload', file.files[0]);
+    }
+
+    $.ajax({
+        url: "{{ route('admin.security-deposits.store', [$project->id, $billing->id]) }}",
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            alert('Security Deposit saved');
+        }
+    });
+});
+</script>
+
+<script>
+    new DataTable('#recoveryTable', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+        
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+        
+    });
+</script>
+@endpush
+
 @endsection
+

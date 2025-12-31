@@ -19,7 +19,8 @@
             <th>Amount *</th>
             <th>Remarks</th>
             <th>Upload</th>
-            
+            <th>Action</th>
+
         </tr>
     </thead>
 
@@ -84,6 +85,16 @@
                 name="emd[{{ $i }}][upload]"
                 class="form-control">
         </td>
+        <td>
+            <button
+                type="submit"
+                name="row_index"
+                value="{{ $i }}"
+                class="btn btn-success btn-sm">
+                Save
+            </button>
+        </td>
+
 
         {{-- <td>
             <button type="button" class="btn btn-danger btn-sm removeRow">
@@ -101,6 +112,8 @@
                 <option value="FDR">FDR</option>
                 <option value="DD">DD</option>
                 <option value="BG">BG</option>
+                <option value="Challan">CHALLAN</option>
+                <option value="EXEMPTED">EXEMPTED</option>
             </select>
         </td>
 
@@ -109,20 +122,31 @@
         <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control" required></td>
         <td><input type="text" name="emd[0][remarks]" class="form-control"></td>
         <td><input type="file" name="emd[0][upload]" class="form-control"></td>
-        <td></td>
+        <td>
+            <button
+                type="submit"
+                name="row_index"
+                value="0"
+                class="btn btn-success btn-sm">
+                Save
+            </button>
+        </td>
+
     </tr>
     @endforelse
     </tbody>
 </table>
 </div>
 
-<button type="button" id="addRow" class="btn btn-primary btn-sm mt-2">
+<div class="d-flex flex-column align-items-end justify-content-end gap-4">
+    <button type="button" id="addRow" class="btn btn-primary btn-sm mt-2 ">
     + Add Row
 </button>
 
-<button class="btn btn-success mt-2 float-end">
+{{-- <button class="btn btn-success mt-2 float-end">
     Save EMD Details
-</button>
+</button> --}}
+</div>
 
 </form>
 
@@ -141,6 +165,8 @@ $('#addRow').click(function(){
                 <option value="FDR">FDR</option>
                 <option value="DD">DD</option>
                 <option value="BG">BG</option>
+                <option value="Challan">CHALLAN</option>
+                <option value="EXEMPTED">EXEMPTED</option>
             </select>
         </td>
 
@@ -149,6 +175,16 @@ $('#addRow').click(function(){
         <td><input type="number" step="0.01" name="emd[${index}][amount]" class="form-control" required></td>
         <td><input type="text" name="emd[${index}][remarks]" class="form-control"></td>
         <td><input type="file" name="emd[${index}][upload]" class="form-control"></td>
+        <td>
+            <button
+                type="submit"
+                name="row_index"
+                value="${index}"
+                class="btn btn-success btn-sm">
+                Save
+            </button>
+        </td>
+
         
     </tr>`;
     $('#emdTable tbody').append(row);

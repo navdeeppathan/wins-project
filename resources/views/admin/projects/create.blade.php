@@ -12,15 +12,20 @@
 
         <div class="col-md-12 mb-3">
             <label class="form-label">Project Name *</label>
-            <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter Project Name" class="form-control" required>
+            <textarea name="name"
+                    class="form-control"
+                    placeholder="Enter Project Name"
+                    rows="3"
+                    required>{{ old('name') }}</textarea>
         </div>
+
 
         <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
         </div>
 
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Department *</label>
             <select name="department" class="form-select" required>
                 <option value="">Select Department</option>
@@ -30,7 +35,8 @@
             </select>
         </div>
 
-        <div class="col-md-6 mb-3">
+        
+        <div class="col-md-4 mb-3">
             <label class="form-label">State *</label>
             <select name="location" class="form-select" required>
                 <option value="">Select State</option>
@@ -97,8 +103,9 @@
 
     <!-- ---------------- EMD DETAILS MULTIPLE ROW SECTION ---------------- -->
     <h4 class="mt-4">EMD Details (Multiple)</h4>
-
-    <table class="table table-bordered" id="emdTable">
+    
+<div class="table-responsive">
+    <table class="table class-table example table-bordered" id="emdTable" style="width:100%">
         <thead class="table-dark">
             <tr>
                 <th>No.</th>
@@ -122,7 +129,8 @@
                         <option value="FDR">FDR</option>
                         <option value="DD">DD</option>
                         <option value="BG">BG</option>
-                        <option value="Challan">Challan</option>
+                        <option value="Challan">CHALLAN</option>
+                        <option value="EXEMPTED">EXEMPTED</option>
                     </select>
                 </td>
 
@@ -137,11 +145,11 @@
 
                 <td><input type="text" name="emd[0][remarks]" class="form-control"></td>
                 <td><input type="file" name="emd[0][upload]" class="form-control"></td>
-                {{-- <td><button type="button" class="btn btn-danger removeRow">X</button></td> --}}
+                <td></td>
             </tr>
         </tbody>
     </table>
-
+</div>
    
 <div class="d-flex flex-column align-items-end">
     <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
@@ -202,6 +210,8 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
+                    <option value="Challan">CHALLAN</option>
+                    <option value="EXEMPTED">EXEMPTED</option>
                 </select>
             </td>
             <td><input type="text" name="emd[${emdIndex}][instrument_number]" class="form-control"></td>
@@ -229,6 +239,53 @@ document.addEventListener('click', function (e) {
     }
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const submission = document.getElementById('date_of_start');
+    const opening    = document.getElementById('date_of_opening');
+
+    let manuallyChanged = false;
+
+    // detect manual change
+    opening.addEventListener('input', function () {
+        manuallyChanged = true;
+    });
+
+    // auto fill on submission date change
+    submission.addEventListener('change', function () {
+        if (!manuallyChanged || opening.value === '') {
+            opening.value = submission.value;
+        }
+    });
+
+});
+
+
+ new DataTable('.emdClass', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+        
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+        
+    });
 
 </script>
 @endsection

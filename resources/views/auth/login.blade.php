@@ -272,10 +272,10 @@
             <div class="brand-name text-center">Project OverView (P.O.V.)</div>
             <p class="brand-description">
                 The best way to manage your projects.
-                <br>
+                {{-- <br>
                 We are deeply grateful to Shri Sanjeev Kumar, Assistant Engineer (Civil), whose expert
                 guidance and shared knowledge were instrumental in the successful completion of this
-                project.
+                project. --}}
             </p>
         </div>
 

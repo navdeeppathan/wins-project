@@ -35,7 +35,12 @@
             @forelse($projects as $p)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $p->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 
@@ -43,7 +48,7 @@
                     <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>
-                        <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-warning">Add Schedule</a>
+                        <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-warning">Add SOW</a>
                     </td>
                 </tr>
                  @php

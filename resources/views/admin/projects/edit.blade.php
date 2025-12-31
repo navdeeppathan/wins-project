@@ -3,7 +3,7 @@
 @section('title','Edit Project')
 
 @section('content')
-<h3 class="mb-3">Edit Project #{{ $project->name }}</h3>
+<h3 class="mb-3">Edit Project</h3>
 
 {{-- Main project edit form --}}
 <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data" class="mb-4">
@@ -11,12 +11,14 @@
 
     <div class="row">
 
-        <div class="col-12 mb-3">
-            <label class="form-label">Project Name *</label>
-            <input type="text" name="name"
-                value="{{ old('name', $project->name) }}"
-                class="form-control" required>
+       <div class="col-12 mb-3">
+        <label class="form-label">Project Name *</label>
+        <textarea name="name"
+                class="form-control"
+                rows="3"
+                required>{{ old('name', $project->name) }}</textarea>
         </div>
+
         <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number', $project->nit_number) }}" class="form-control" required>

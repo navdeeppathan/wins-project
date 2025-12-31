@@ -7,15 +7,31 @@
 <h3 class="mb-3">Project – PG Details – #{{ $project->name}}</h3>
 
 
+@php
+    $estimated = (float) $project->estimated_amount;
+    $tendered  = (float) $project->tendered_amount;
+
+    $percentageText = '-';
+
+    if ($estimated > 0 && $tendered > 0) {
+        $percentage = (($estimated - $tendered) / $estimated) * -100;
+        $percentage = round($percentage, 2);
+
+        if ($percentage < 0) {
+            $percentageText = abs($percentage) . ' % BELOW';
+        } else {
+            $percentageText = $percentage . ' % ABOVE';
+        }
+    }
+@endphp
 
 
 {{-- PROJECT INFO (DISABLED) --}}
 <div class="row">
-
-     <div class="col-md-12 mb-3">
+     {{-- <div class="col-md-12 mb-3">
         <label>Project Name</label>
         <input type="text" class="form-control" value="{{ $project->name }}" disabled>
-    </div>
+    </div> --}}
 
     <div class="col-md-4 mb-3">
         <label>NIT Number</label>
@@ -46,9 +62,6 @@
         <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_of_opening)) ?? '-' }}" disabled>
     </div>
 
-
-    
-
     <div class="col-md-4 mb-3">
         <label>Estimated Amount</label>
         <input type="text" class="form-control" value="{{ $project->estimated_amount }}" disabled>
@@ -60,12 +73,18 @@
  
     </div>
 
-
     <div class="col-md-4 mb-3">
         <label>Tender Amount</label>
         <input type="text" class="form-control" value="{{ $project->tendered_amount }}" disabled>
     </div>
 
+    <div class="col-md-4 mb-3">
+        <label>Percentage</label>
+        <input type="text"
+            class="form-control {{ str_contains($percentageText, 'BELOW') ? 'text-danger' : 'text-success' }}"
+            value="{{ $percentageText }}"
+            disabled>
+    </div>
 </div>
 
 <hr>
@@ -81,13 +100,13 @@
 <thead>
 <tr>
     <th>#</th>
-    <th>Type</th>
-    <th>No</th>
-    <th>Date</th>
-    <th>Valid Upto</th>
-    <th>Amount</th>
-    <th>Upload</th>
-    <th>Action</th>
+    <th>INSTRUMENT TYPE</th>
+    <th>INSTRUMENT NUMBER</th>
+    <th>INSTRUMENT DATE</th>
+    <th>INSTRUMENT VALID UPTO</th>
+    <th>INSTRUMENT AMOUNT</th>
+    <th>UPLOAD</th>
+    <th>ACTION</th>
 </tr>
 </thead>
 
@@ -100,7 +119,7 @@
 
     <td>
         <select name="pg[{{ $i }}][instrument_type]" class="form-select">
-            @foreach(['FDR','DD','BG','Challan'] as $t)
+            @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED'] as $t)
                 <option value="{{ $t }}" @selected($pg->instrument_type==$t)>{{ $t }}</option>
             @endforeach
         </select>
@@ -118,14 +137,26 @@
         <input type="file" name="pg[{{ $i }}][upload]" class="form-control">
     </td>
 
-    <td><button type="button" class="btn btn-danger removeRow">X</button></td>
+    <td>
+       
+        <button
+            type="submit"
+            name="row_index"
+            value="{{ $i }}"
+            class="btn btn-success btn-sm">
+            Save
+        </button>
+
+
+        {{-- <button type="button" class="btn btn-danger removeRow">X</button> --}}
+    </td>
 </tr>
 @empty
 <tr>
 <td>1</td>
 <td>
 <select name="pg[0][instrument_type]" class="form-select">
-    @foreach(['FDR','DD','BG','Challan'] as $t)
+    @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED'] as $t)
         <option value="{{ $t }}">{{ $t }}</option>
     @endforeach
 </select>
@@ -140,7 +171,19 @@
        class="form-control">
 </td>
 <td><input type="file" name="pg[0][upload]" class="form-control"></td>
-<td></td>
+<td>
+
+    <button
+        type="submit"
+        name="row_index"
+        value="0"
+        class="btn btn-success btn-sm">
+        Save
+    </button>
+
+
+
+</td>
 </tr>
 @endforelse
 </tbody>
@@ -153,9 +196,9 @@
 </div>
 <div class="d-flex  align-items-center justify-content-end">
 
-<button type="submit" class="btn btn-success">
+{{-- <button type="submit" class="btn btn-success">
     Save PG Details
-</button>
+</button> --}}
 </div>
 
 </form>
@@ -181,7 +224,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
-                    <option value="Challan">Challan</option>
+                    <option value="Challan">CHALLAN</option>
+                    <option value="EXEMPTED">EXEMPTED</option>
                 </select>
             </td>
 
@@ -218,10 +262,21 @@ document.addEventListener('DOMContentLoaded', function () {
             </td>
 
             <td>
+                
+                <button
+                    type="submit"
+                    name="row_index"
+                    value="${pgIndex}"
+                    class="btn btn-success btn-sm">
+                    Save
+                </button>
+
                 <button type="button"
-                        class="btn btn-danger removeRow">
+                        class="btn btn-danger removeRow ms-1">
                     X
                 </button>
+
+
             </td>
         </tr>`;
 

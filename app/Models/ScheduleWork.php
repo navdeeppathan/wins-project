@@ -23,7 +23,11 @@ class ScheduleWork extends Model
         'unit',
         'rate',
         'amount',
-        'section_name'
+        'section_name',
+        'measured_quantity',
+        'category',
+        'inventory_id',
+        'dismantals'
     ];
 
     // If you want to disable timestamps
@@ -39,5 +43,10 @@ class ScheduleWork extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class);
     }
 }

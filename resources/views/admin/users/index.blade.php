@@ -6,7 +6,7 @@
 
 <style>
     .gradient-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background:  #667eea ;
     }
     
     .card-elegant {
@@ -38,7 +38,7 @@
     }
     
     .btn-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background:  #667eea;
         border: none;
         border-radius: 12px;
         padding: 14px 30px;
@@ -204,16 +204,19 @@
 
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-elegant mb-0">
+                        <table id="example" class="table class-table nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width: 80px;">#</th>
-                                    <th>Agency Name</th>
-                                    <th>GST Number</th>
-                                    <th>Authorized Person</th>
-                                    <th>Email Address</th>
-                                    <th>Registration Date</th>
-                                    <th>Actions</th>
+                                    <th>#</th>
+                                    <th>NAME OF THE PERSON</th>
+                                    <th>STATE</th>
+                                    <th>DATE OF JOINING</th>
+                                    <th>DATE OF LEAVING</th>
+                                    <th>CONTACT NUMBER</th>
+                                    <th>EMAIL ID</th>
+                                    <th>CREATED AT</th>
+
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,24 +230,36 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-building"></i>
+                                                    <i class="fas fa-user"></i>
                                                 </div>
                                                 <span class="fw-semibold">{{ $user->name }}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            @if($user->gst_number)
+                                            @if($user->state)
                                                 <span class="badge bg-success bg-opacity-10 text-success">
-                                                    {{ $user->gst_number }}
+                                                    {{ $user->state }}
                                                 </span>
                                             @else
                                                 <span class="text-muted fst-italic">Not provided</span>
                                             @endif
                                         </td>
                                         <td>
+                                             <span class="badge bg-light text-dark">
+                                                <i class="far fa-calendar me-1"></i>
+                                                {{ date('d M Y', strtotime($user->date_of_joining)) ?? '-' }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-light text-dark">
+                                                <i class="far fa-calendar me-1"></i>
+                                                {{ date('d M Y', strtotime($user->date_of_leaving)) ?? '-' }}
+                                            </div>
+                                        </td>
+                                        <td>
                                             <div class="d-flex align-items-center">
-                                                <i class="fas fa-user-circle text-primary me-2"></i>
-                                                {{ $user->auth_person_name }}
+                                                <i class="fas fa-user-phone text-primary me-2"></i>
+                                                {{ $user->phone ?? '-' }}
                                             </div>
                                         </td>
                                         <td>
@@ -272,7 +287,7 @@
                                                     </button>
                                                 </form> --}}
 
-                                                <a href="{{ route('superadmin.users.projects', $user->id) }}"
+                                                <a href="{{ route('admin.users.projects', $user->id) }}"
                                                     class="btn btn-sm btn-primary me-2">
                                                     <i class="fas fa-project-diagram"></i> Projects
                                                 </a>

@@ -3,190 +3,186 @@
 @section('title','Vendor Expenses')
 
 @section('content')
-<h3 class="mb-3">Vendor Expenses</h3>
+
+<h3 class="mb-3">Vendors</h3>
 
 <div class="row">
-<div class="col-md-12">
-<div class="table-responsive">
-<table id="vendorTable" class="table class-table nowrap" style="width:100%">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Delivered To</th>
-            <th>Voucher</th>
-            <th>Qty</th>
-            <th>Amount</th>
-            <th>Deduction</th>
-            <th>Net Payable</th>
-            <th>Upload</th>
-            <th width="120">Action</th>
-        </tr>
-    </thead>
+    <div class="col-md-12">
+        <div class="table-responsive">
 
-    <tbody>
-    @forelse($vendors as $index => $v)
-        <tr data-id="{{ $v->id }}">
-            <td>{{ $index+1 }}</td>
+            <table id="vendorTable" class="table class-table nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>State</th>
+                        <th>Vendor Agency Name</th>
+                        <th>Contact Person</th>
+                        <th>Contact Number</th>
+                        <th>Email ID</th>
+                        <th width="120">Action</th>
+                    </tr>
+                </thead>
 
-            <td><input type="date" class="form-control date" value="{{ $v->date }}"></td>
+                <tbody>
+                @forelse($vendors as $index => $v)
+                    <tr data-id="{{ $v->id }}">
+                        <td>{{ $index + 1 }}</td>
 
-            <td>
-                <select class="form-select category">
-                    @foreach(['Material','Wages','Logistic','Maintenance','T&P','Fee','Tours','Others'] as $cat)
-                        <option value="{{ $cat }}" {{ $v->category == $cat ? 'selected' : '' }}>
-                            {{ $cat }}
-                        </option>
-                    @endforeach
-                </select>
-            </td>
+                        {{-- State --}}
+                        <td>
+                            <select class="form-select state">
+                                <option value="">Select State</option>
+                                @foreach($states as $state)
+                                    <option value="{{ $state->name }}"
+                                        {{ $v->state == $state->name ? 'selected' : '' }}>
+                                        {{ $state->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </td>
 
-            <td><input type="text" class="form-control description" value="{{ $v->description }}"></td>
-            <td><input type="text" class="form-control delivered_to" value="{{ $v->delivered_to }}"></td>
-            <td><input type="text" class="form-control voucher" value="{{ $v->voucher }}"></td>
+                        {{-- Vendor Agency --}}
+                        <td>
+                            <input type="text"
+                                   class="form-control vendor_agency_name"
+                                   value="{{ $v->vendor_agency_name }}">
+                        </td>
 
-            <td><input type="number" step="0.01" class="form-control quantity" value="{{ $v->quantity }}"></td>
-            <td><input type="number" step="0.01" class="form-control amount" value="{{ $v->amount }}"></td>
-            <td><input type="number" step="0.01" class="form-control deduction" value="{{ $v->deduction }}"></td>
+                        {{-- Contact Person --}}
+                        <td>
+                            <input type="text"
+                                   class="form-control contact_person"
+                                   value="{{ $v->contact_person }}">
+                        </td>
 
-            <td class="net_payable">{{ number_format($v->net_payable,2) }}</td>
+                        {{-- Contact Number --}}
+                        <td>
+                            <input type="text"
+                                   class="form-control contact_number"
+                                   value="{{ $v->contact_number }}">
+                        </td>
 
-            <td>
-                @if($v->upload)
-                    <a href="{{ asset($v->upload) }}" target="_blank"
-                       class="btn btn-outline-primary btn-sm mb-1">View</a>
-                @endif
-                <input type="file" class="form-control upload">
-            </td>
+                        {{-- Email --}}
+                        <td>
+                            <input type="email"
+                                   class="form-control email_id"
+                                   value="{{ $v->email_id }}">
+                        </td>
 
-            <td>
-                <button class="btn btn-success btn-sm saveRow">Save</button>
-                <button class="btn btn-danger btn-sm removeRow">Del</button>
-            </td>
-        </tr>
-    @empty
-        <tr>
-            <td>1</td>
-            <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-            <td>
-                <select class="form-select category">
-                    @foreach(['Material','Wages','Logistic','Maintenance','T&P','Fee','Tours','Others'] as $cat)
-                        <option value="{{ $cat }}">{{ $cat }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td><input type="text" class="form-control description"></td>
-            <td><input type="text" class="form-control delivered_to"></td>
-            <td><input type="text" class="form-control voucher"></td>
-            <td><input type="number" step="0.01" class="form-control quantity"></td>
-            <td><input type="number" step="0.01" class="form-control amount"></td>
-            <td><input type="number" step="0.01" class="form-control deduction"></td>
-            <td class="net_payable">0.00</td>
-            <td><input type="file" class="form-control upload"></td>
-            <td>
-                <button class="btn btn-success btn-sm saveRow">Save</button>
-            </td>
-        </tr>
-    @endforelse
-    </tbody>
-</table>
+                        {{-- Actions --}}
+                        <td>
+                            <button class="btn btn-success btn-sm saveRow">Save</button>
+                            <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">
+                            No vendors found.
+                        </td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
 
-<button id="addRow" class="btn btn-primary btn-sm mt-2">
-    + Add New Row
-</button>
+            <button id="addRow" class="btn btn-primary btn-sm mt-2 float-end">
+                + Add New Vendor
+            </button>
 
+        </div>
+    </div>
 </div>
-</div>
+
+@endsection
 
 @push('scripts')
 <script>
 $(document).ready(function(){
 
-    // ADD ROW
-    $('#addRow').click(function(){
+    // ADD NEW ROW
+    $('#addRow').on('click', function () {
         let index = $('#vendorTable tbody tr').length + 1;
 
         let row = `
         <tr>
             <td>${index}</td>
-            <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+
             <td>
-                <select class="form-select category">
-                    @foreach(['Material','Wages','Logistic','Maintenance','T&P','Fee','Tours','Others'] as $cat)
-                        <option value="{{ $cat }}">{{ $cat }}</option>
+                <select class="form-select state">
+                    <option value="">Select State</option>
+                    @foreach($states as $state)
+                        <option value="{{ $state->name }}">{{ $state->name }}</option>
                     @endforeach
                 </select>
             </td>
-            <td><input type="text" class="form-control description"></td>
-            <td><input type="text" class="form-control delivered_to"></td>
-            <td><input type="text" class="form-control voucher"></td>
-            <td><input type="number" step="0.01" class="form-control quantity"></td>
-            <td><input type="number" step="0.01" class="form-control amount"></td>
-            <td><input type="number" step="0.01" class="form-control deduction"></td>
-            <td class="net_payable">0.00</td>
-            <td><input type="file" class="form-control upload"></td>
+
+            <td>
+                <input type="text" class="form-control vendor_agency_name">
+            </td>
+
+            <td>
+                <input type="text" class="form-control contact_person">
+            </td>
+
+            <td>
+                <input type="text" class="form-control contact_number">
+            </td>
+
+            <td>
+                <input type="email" class="form-control email_id">
+            </td>
+
             <td>
                 <button class="btn btn-success btn-sm saveRow">Save</button>
                 <button class="btn btn-danger btn-sm removeRow">Del</button>
             </td>
-        </tr>`;
+        </tr>
+        `;
+
         $('#vendorTable tbody').append(row);
     });
 
-    // NET PAYABLE
-    $(document).on('input','.amount,.deduction',function(){
+    // SAVE ROW
+    $(document).on('click', '.saveRow', function () {
         let row = $(this).closest('tr');
-        let amount = parseFloat(row.find('.amount').val()) || 0;
-        let deduction = parseFloat(row.find('.deduction').val()) || 0;
-        row.find('.net_payable').text((amount - deduction).toFixed(2));
-    });
-
-    // SAVE
-    $(document).on('click','.saveRow',function(){
-        let row = $(this).closest('tr');
-        let id = row.data('id') || null;
+        let id  = row.data('id') || null;
 
         let formData = new FormData();
-        formData.append('_token',"{{ csrf_token() }}");
-        formData.append('date', row.find('.date').val());
-        formData.append('category', row.find('.category').val());
-        formData.append('description', row.find('.description').val());
-        formData.append('delivered_to', row.find('.delivered_to').val());
-        formData.append('voucher', row.find('.voucher').val());
-        formData.append('quantity', row.find('.quantity').val());
-        formData.append('amount', row.find('.amount').val());
-        formData.append('deduction', row.find('.deduction').val());
-
-        let file = row.find('.upload')[0];
-        if(file && file.files.length){
-            formData.append('upload', file.files[0]);
-        }
+        formData.append('_token', "{{ csrf_token() }}");
+        formData.append('state', row.find('.state').val());
+        formData.append('vendor_agency_name', row.find('.vendor_agency_name').val());
+        formData.append('contact_person', row.find('.contact_person').val());
+        formData.append('contact_number', row.find('.contact_number').val());
+        formData.append('email_id', row.find('.email_id').val());
 
         $.ajax({
             url: id ? `/admin/vendors/${id}/update` : "{{ route('admin.vendors.store') }}",
-            type:'POST',
-            data:formData,
-            processData:false,
-            contentType:false,
-            success:function(){
-                if(!id) location.reload();
-                else alert('Saved successfully');
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                
+                alert('Saved successfully');
+                window.location.reload()
+                // if (!id) window.location.reload();
+            },
+            error: function () {
+                alert('Error saving vendor');
             }
         });
     });
 
-    // DELETE
-    $(document).on('click','.removeRow',function(){
+    // DELETE ROW
+    $(document).on('click', '.removeRow', function () {
         let row = $(this).closest('tr');
-        let id = row.data('id');
+        let id  = row.data('id');
 
-        if(id){
-            if(confirm('Delete this entry?')){
+        if (id) {
+            if (confirm('Delete this vendor?')) {
                 $.post(`/admin/vendors/${id}/destroy`,
-                    {_token:"{{ csrf_token() }}"},
-                    function(){
+                    {_token: "{{ csrf_token() }}"},
+                    function () {
                         row.remove();
                         reindex();
                     }
@@ -198,40 +194,19 @@ $(document).ready(function(){
         }
     });
 
-    function reindex(){
-        $('#vendorTable tbody tr').each(function(i){
-            $(this).find('td:first').text(i+1);
+    function reindex() {
+        $('#vendorTable tbody tr').each(function (i) {
+            $(this).find('td:first').text(i + 1);
         });
     }
 
-});
-
-
-new DataTable('#vendorTable', {
+    // DATATABLE
+    new DataTable('#vendorTable', {
         scrollX: true,
-        scrollCollapse: true,
         responsive: false,
-        autoWidth: false,
-        
-
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
-
-        
+        autoWidth: false
     });
+
+});
 </script>
 @endpush
-
-@endsection

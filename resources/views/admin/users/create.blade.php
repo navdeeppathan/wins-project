@@ -207,10 +207,12 @@
                 <div class="card-body  p-4 p-md-5">
                     <form action="{{ route('admin.users.store') }}" method="POST">
                         @csrf
+
                     <div class="row">
-                        <div class="mb-4 col-md-6">
+
+                        <div class="mb-4 col-md-12">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Agency Name
+                                <i class="fas fa-building me-2"></i>Name of the Person
                             </label>
                             <input type="text"
                                    name="name"
@@ -220,28 +222,67 @@
                                    required>
                         </div>
 
-                        <div class="mb-4 col-md-6">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">State *</label>
+                        <select name="state" class="form-select form-control-elegant" required>
+                            <option value="">Select State</option>
+                            @foreach($states as $state)
+                                <option value="{{ $state->name }}">{{ $state->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-4 col-md-12">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-file-invoice me-2"></i>GST Number
+                                <i class="fas fa-building me-2"></i>Designation
                             </label>
                             <input type="text"
-                                   name="gst_number"
+                                   name="designation"
                                    class="form-control form-control-elegant"
-                                   placeholder="Enter GST number (optional)"
-                                   value="{{ old('gst_number') }}">
+                                   placeholder="Enter Designation"
+                                   value="{{ old('designation') }}"
+                                   >
+                    </div>
+
+                         <div class="mb-4 col-md-6">
+                            <label class="form-label fw-semibold text-muted mb-2">
+                                <i class="fas fa-building me-2"></i>Date of Joining
+                            </label>
+                            <input type="date"
+                                   name="date_of_joining"
+                                   class="form-control form-control-elegant"
+                                   placeholder="Enter date of joining"
+                                   value="{{ old('date_of_joining') }}"
+                                   required>
+                            
+                        </div>
+
+                          <div class="mb-4 col-md-6">
+                            <label class="form-label fw-semibold text-muted mb-2">
+                                <i class="fas fa-building me-2"></i>Date of Leaving
+                            </label>
+                            <input type="date"
+                                   name="date_of_leaving"
+                                   class="form-control form-control-elegant"
+                                   placeholder="Enter date of joining"
+                                   value="{{ old('date_of_leaving') }}"
+                                   >
+                            
                         </div>
 
                         <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-user-tie me-2"></i>Authorized Person
+                                <i class="fas fa-phone me-2"></i>Contact Number
                             </label>
+
                             <input type="text"
-                                   name="auth_person_name"
-                                   class="form-control form-control-elegant"
-                                   placeholder="Enter authorized person name"
-                                   value="{{ old('auth_person_name') }}"
-                                   required>
+                                id="phone"
+                                name="phone"
+                                class="form-control form-control-elegant"
+                                placeholder="Enter contact number"
+                                required>
                         </div>
+
 
                         <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
@@ -255,7 +296,9 @@
                                    required>
                         </div>
 
-                        <div class="mb-4 col-md-6">
+  
+
+                       <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 <i class="fas fa-lock me-2"></i>Password
                             </label>
@@ -265,7 +308,7 @@
                                     id="password"
                                     name="password"
                                     class="form-control form-control-elegant"
-                                    placeholder="Enter secure password"
+                                    placeholder="Password (same as contact)"
                                     required>
 
                                 <i class="fas fa-eye password-toggle"
@@ -273,24 +316,21 @@
                             </div>
                         </div>
 
+                    <div class="form-check mt-2">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="usePhoneAsPassword"
+                            checked
+                        >
+                        <label class="form-check-label text-muted" for="usePhoneAsPassword">
+                            Use contact number as password
+                        </label>
+                    </div>
 
-                        <div class="mb-5 col-md-6">
-                            <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-check-circle me-2"></i>Confirm Password
-                            </label>
 
-                            <div class="position-relative">
-                                <input type="password"
-                                    id="password_confirmation"
-                                    name="password_confirmation"
-                                    class="form-control form-control-elegant"
-                                    placeholder="Re-enter password"
-                                    required>
 
-                                <i class="fas fa-eye password-toggle"
-                                onclick="togglePassword('password_confirmation', this)"></i>
-                            </div>
-                        </div>
+                       
 
                         
                     </div>
@@ -352,6 +392,49 @@
         '<i class="fas fa-spinner fa-spin me-2"></i> Creating...';
     });
   });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const phoneInput = document.getElementById('phone');
+    const passwordInput = document.getElementById('password');
+    const checkbox = document.getElementById('usePhoneAsPassword');
+
+    // Clear browser autofill
+    passwordInput.value = '';
+
+    // Sync password from phone
+    function syncPassword() {
+        if (checkbox.checked) {
+            passwordInput.value = phoneInput.value;
+        }
+    }
+
+    // Phone input changes
+    phoneInput.addEventListener('input', syncPassword);
+    phoneInput.addEventListener('focus', syncPassword);
+
+    // Checkbox toggle
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            passwordInput.value = phoneInput.value;
+            passwordInput.setAttribute('readonly', true);
+        } else {
+            passwordInput.removeAttribute('readonly');
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    });
+
+    // Initial state
+    if (checkbox.checked) {
+        passwordInput.setAttribute('readonly', true);
+    }
+});
+
+
+
 </script>
 
 

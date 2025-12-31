@@ -39,8 +39,14 @@
             @forelse($projects as $p)
                @if (!empty($p->acceptance_letter_no))
                 <tr>
+                   
                     <td>{{ $i }}</td>
-                    <td>{{ $p->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
@@ -59,25 +65,34 @@
                             class="form-control form-control-sm award_date"
                             value="{{ $p->award_date }}">
                     </td>
+
                     <td>
                         <input type="date"
                             class="form-control form-control-sm date_ofstartof_work"
                             value="{{ $p->date_ofstartof_work }}">
                     </td>
+                    
                     <td>
+                         @if($p->award_upload)
+                            <a href="{{ Storage::url($p->award_upload) }}"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                                View
+                            </a>
+                        @endif
                         <input type="file"
                             class="form-control form-control-sm award_upload">
                     </td>
                     
                     <td>
-                        @if (empty($p->award_letter_no))
+                        {{-- @if (empty($p->award_letter_no)) --}}
                              <button class="btn btn-sm btn-success saveAwardBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
-                        @else
+                        {{-- @else
                         <span class="badge bg-success">Saved</span>
-                        @endif
+                        @endif --}}
                        
                     </td>
                 </tr>
@@ -143,6 +158,7 @@ $(document).on('click', '.saveAwardBtn', function () {
             btn.prop('disabled', false).text('Save');
 
             if (response.success) {
+                window.location.reload();
                 alert(response.message);
 
                 // OPTIONAL: update status text without reload
@@ -161,7 +177,39 @@ $(document).on('click', '.saveAwardBtn', function () {
         }
     });
 });
+
+
+
+$(document).on('change', '.award_date', function () {
+
+    let awardDateInput = $(this);
+    let row = awardDateInput.closest('tr');
+    let startDateInput = row.find('.date_ofstartof_work');
+
+    if (!awardDateInput.val()) return;
+
+    let awardDate = new Date(awardDateInput.val());
+    awardDate.setDate(awardDate.getDate() + 1); // +1 day
+
+    let yyyy = awardDate.getFullYear();
+    let mm = String(awardDate.getMonth() + 1).padStart(2, '0');
+    let dd = String(awardDate.getDate()).padStart(2, '0');
+
+    let nextDay = `${yyyy}-${mm}-${dd}`;
+
+    // set value + minimum selectable date
+    startDateInput.val(nextDay);
+    startDateInput.attr('min', nextDay);
+});
+
+
+
+
 </script>
+
+
+
+
 @endpush
 
 

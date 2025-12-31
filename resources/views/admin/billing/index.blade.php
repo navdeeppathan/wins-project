@@ -3,93 +3,47 @@
 @section('title','Billing')
 
 @section('content')
-<h3 class="mb-2">Billing – Project #{{ $project->name}}</h3>
+<h3 class="mb-2">Billing – Project #{{ $project->name }}</h3>
 <p class="text-muted mb-3">Status: <strong>{{ ucfirst($project->status) }}</strong></p>
 
 <div class="row">
-
-    <div class="row">
-
-
-         <div class="col-md-4 mb-3">
-            <label>Department</label>
-            <input class="form-control"
-                value="{{ $project->departments->name ?? '-' }}"
-                disabled>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label>State</label>
-            <input class="form-control"
-                value="{{ $project->state->name ?? '-' }}"
-                disabled>
-        </div>
-
-       
-
-        <div class="col-md-4 mb-3">
-            <label>NIT Number</label>
-            <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
-        </div>
-
-        
-         <div class="col-md-12 mb-3">
-            <label>Project Name</label>
-            <input type="text" class="form-control" value="{{ $project->name }}" disabled>
-        </div>
-        <div class="col-md-12 mb-3">
-            <label>Agreement Number</label>
-            <input type="text" class="form-control" value="{{ $project->agreement_no }}" disabled>
-        </div>
+    @include('admin.projects.commonprojectdetail')
+</div>
 
 
-        <div class="col-md-4 mb-3">
-            <label>Date of Submission</label>
-            <input type="text" class="form-control" value="{{ $project->date_of_start }}" disabled>
-        </div>
+<style>
+    /* 🔥 Allow full width inputs */
+    #billingTable input.form-control,
+    #billingTable select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
 
-        <div class="col-md-4 mb-3">
-            <label>Date of Opening</label>
-            <input type="text" class="form-control" value="{{ $project->date_of_opening }}" disabled>
-        </div>
+    /* 🔥 Paid To & Narration extra wide */
+    #billingTable td:nth-child(3) input,
+    #billingTable td:nth-child(5) input {
+        min-width: 250px;
+    }
 
-        <div class="col-md-4 mb-3">
-            <label>Estimated Amount</label>
-            <input type="text" class="form-control" value="{{ $project->estimated_amount }}" disabled>
-        </div>
+    /* 🔥 Disable text cutting */
+    #billingTable input,
+    #billingTable select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
 
-        <div class="col-md-4 mb-3">
-            <label>Time</label>
-            <input type="text" class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
-    
-            {{-- <input type="text" class="form-control" value="{{ $project->time_allowed_type }}" disabled> --}}
-        </div>
+    /* 🔥 Horizontal scroll inside input */
+    #billingTable input {
+        text-overflow: clip;
+    }
 
-        <div class="col-md-4 mb-3">
-            <label>Tender Amount</label>
-            <input type="text" class="form-control" value="{{ $project->tendered_amount }}" disabled>
-        </div>
-        <div class="col-md-4 mb-3">
-            <label>Date of Completion(Stipulated)</label>
-            <input type="text" class="form-control" value="{{ $project->stipulated_date_ofcompletion }}" disabled>
-        </div>
+    /* Optional: show scrollbar only when needed */
+    #billingTable input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
 
-       
-{{-- 
-        <div class="col-md-4 mb-3">
-            <label>Total Work Done</label>
-            <input type="text" class="form-control" value="{{ $project->total_work_done  ?? 0 }}" disabled>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <label>Total Work To Be Done</label>
-            <input type="text" class="form-control" value="{{$project->tendered_amount - $project->total_work_tobe_done ?? 0 }}" disabled>
-        </div> --}}
-
-    </div> 
-
-
-<div class="container">
+<div class="container mt-3">
     <h3 class="mb-3">Project Billings</h3>
 
     <div class="table-responsive">
@@ -97,88 +51,70 @@
             <thead class="table-dark">
                 <tr>
                     <th>#</th>
-                    <th>Bill No *</th>
-                    <th>Type *</th>
-                    <th>Date *</th>
-                    <th>MB No *</th>
-                    <th>Page *</th>
-                    <th>Gross Amt</th>
-                    <th>Recoveries</th>
-                    <th>Net Payable</th>
-                    <th>Remarks</th>
-                    <th>File</th>
-                    <th width="90">Action</th>
+                    <th>BILL NUMBER</th>
+                    <th>BILL TYPE</th>
+                    <th>BILL DATE</th>
+                    <th>MB NO</th>
+                    <th>PAGE</th>
+                    <th>GROSS AMOUNT</th>
+                    <th>RECOVERIES</th>
+                    <th>NET PAYABLE</th>
+                    <th>REMARKS</th>
+                    <th>FILE</th>
+                    <th>ACTION</th>
+                    <th >COMPLETION DATE</th>
                 </tr>
             </thead>
 
             <tbody>
-                @forelse($project->billings as $index => $bill)
+            @forelse($project->billings as $index => $bill)
                 <tr data-id="{{ $bill->id }}">
                     <td>{{ $index+1 }}</td>
 
-                    <td>
-                        <input type="text" class="form-control bill_number"
-                               value="{{ $bill->bill_number }}">
-                    </td>
+                    <td><input type="text" class="form-control bill_number" value="{{ $bill->bill_number }}"></td>
 
                     <td>
                         <select class="form-control bill_type">
                             <option value="running" {{ $bill->bill_type=='running'?'selected':'' }}>Running</option>
                             <option value="final" {{ $bill->bill_type=='final'?'selected':'' }}>Final</option>
+                            <option value="rescind" {{ $bill->bill_type=='rescind'?'selected':'' }}>Rescind</option>
                         </select>
                     </td>
 
-                    <td>
-                        <input type="date" class="form-control bill_date"
-                               value="{{ $bill->bill_date }}">
-                    </td>
+                    <td><input type="date" class="form-control bill_date" value="{{ $bill->bill_date }}"></td>
+                    <td><input type="text" class="form-control mb_number" value="{{ $bill->mb_number }}"></td>
+                    <td><input type="text" class="form-control page_number" value="{{ $bill->page_number }}"></td>
+                    <td><input type="number" step="0.01" class="form-control gross_amount" value="{{ $bill->gross_amount }}"></td>
 
                     <td>
-                        <input type="text" class="form-control mb_number"
-                               value="{{ $bill->mb_number }}">
-                    </td>
-
-                    <td>
-                        <input type="text" class="form-control page_number"
-                               value="{{ $bill->page_number }}">
-                    </td>
-
-                    <td>
-                        <input type="number" step="0.01"
-                               class="form-control gross_amount"
-                               value="{{ $bill->gross_amount }}">
-                    </td>
-
-                    <td>
-                        <a href="{{ route('admin.projects.recoveries.index', [
-                            'project' => $project->id,
-                            'billing' => $bill->id
-                        ]) }}">
+                        <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}">
                             {{ number_format($bill->recoveries?->sum('amount') ?? 0, 2) }}
                         </a>
                     </td>
 
+                    <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
+                    <td><input type="text" class="form-control remarks" value="{{ $bill->remarks }}"></td>
                     <td>
-                        <input type="number" step="0.01"
-                               class="form-control net_payable"
-                               value="{{ $bill->net_payable }}">
+                        @if($bill->bill_file)
+                            <a href="{{ Storage::url($bill->bill_file) }}"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                                View
+                            </a>
+                        @endif
+
+                        <input type="file" class="form-control bill_file">
                     </td>
 
-                    <td>
-                        <input type="text" class="form-control remarks"
-                               value="{{ $bill->remarks }}">
-                    </td>
 
-                    <td>
-                        <input type="file" class="form-control file">
-                    </td>
+                    <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
 
-                    <td>
-                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                    <td class="completionCell" style="display:none;">
+                        <input type="date" class="form-control completion_date"
+                               value="{{ $bill->completion_date ?? '' }}">
                     </td>
                 </tr>
-                @empty
-                {{-- Default empty row --}}
+            @empty
                 <tr>
                     <td>1</td>
                     <td><input type="text" class="form-control bill_number"></td>
@@ -187,6 +123,7 @@
                             <option value="">Select</option>
                             <option value="running">Running</option>
                             <option value="final">Final</option>
+                            <option value="rescind">Rescind</option>
                         </select>
                     </td>
                     <td><input type="date" class="form-control bill_date"></td>
@@ -196,12 +133,15 @@
                     <td>0.00</td>
                     <td><input type="number" step="0.01" class="form-control net_payable"></td>
                     <td><input type="text" class="form-control remarks"></td>
-                    <td><input type="file" class="form-control file"></td>
-                    <td>
-                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                    <td><input type="file" class="form-control bill_file"></td>
+                    <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
+                    <td >
+                        <div class="completionCell" style="display:none;">
+                            <input type="date" class="form-control completion_date">
+                        </div>
                     </td>
                 </tr>
-                @endforelse
+            @endforelse
             </tbody>
         </table>
 
@@ -211,11 +151,12 @@
     </div>
 </div>
 
+<a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mt-3">Back to Home</a>
+@endsection
 
 @push('scripts')
 <script>
 $(document).on('click', '.saveRow', function () {
-
     let row = $(this).closest('tr');
     let id = row.data('id') || null;
 
@@ -223,31 +164,29 @@ $(document).on('click', '.saveRow', function () {
     formData.append('_token', "{{ csrf_token() }}");
     formData.append('project_id', "{{ $project->id }}");
 
-    formData.append('bill_number', row.find('.bill_number').val());
-    formData.append('bill_type', row.find('.bill_type').val());
-    formData.append('bill_date', row.find('.bill_date').val());
-    formData.append('mb_number', row.find('.mb_number').val());
-    formData.append('page_number', row.find('.page_number').val());
-    formData.append('gross_amount', row.find('.gross_amount').val());
-    formData.append('net_payable', row.find('.net_payable').val());
-    formData.append('remarks', row.find('.remarks').val());
+    row.find('input, select').each(function () {
+        if (this.type !== 'file') {
+            formData.append(this.className.split(' ')[1], this.value);
+        }
+    });
 
-    let fileInput = row.find('.file')[0];
-    if (fileInput.files.length > 0) {
-        formData.append('file', fileInput.files[0]);
+    let file = row.find('.bill_file')[0];
+    if (file && file.files.length) {
+        formData.append('bill_file', file.files[0]);
     }
 
     $.ajax({
-        url: id
-            ? `/admin/projects/billing/${id}/update`
-            : "{{ route('admin.projects.billing.store', $project) }}",
+        url: id ? `/admin/projects/billing/${id}/update`
+                : "{{ route('admin.projects.billing.store', $project) }}",
         method: 'POST',
         data: formData,
         processData: false,
         contentType: false,
-        success: function () {
+        success: () => {
+            row.find('.saveRow').text('saved');
+            window.location.reload();
             alert('Saved successfully');
-            if(!id) location.reload();
+            if (!id) location.reload();
         }
     });
 });
@@ -255,7 +194,7 @@ $(document).on('click', '.saveRow', function () {
 $('#addBillRow').click(function () {
     let index = $('#billingTable tbody tr').length + 1;
 
-    let row = `
+    $('#billingTable tbody').append(`
     <tr>
         <td>${index}</td>
         <td><input type="text" class="form-control bill_number"></td>
@@ -264,6 +203,7 @@ $('#addBillRow').click(function () {
                 <option value="">Select</option>
                 <option value="running">Running</option>
                 <option value="final">Final</option>
+                <option value="rescind">Rescind</option>
             </select>
         </td>
         <td><input type="date" class="form-control bill_date"></td>
@@ -273,19 +213,46 @@ $('#addBillRow').click(function () {
         <td>0.00</td>
         <td><input type="number" step="0.01" class="form-control net_payable"></td>
         <td><input type="text" class="form-control remarks"></td>
-        <td><input type="file" class="form-control file"></td>
+        <td><input type="file" class="form-control bill_file"></td>
         <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
-    </tr>`;
-    $('#billingTable tbody').append(row);
+        <td class="completionCell" style="display:none;">
+            <input type="date" class="form-control completion_date">
+        </td>
+    </tr>`);
 });
 
+function updateCompletionVisibility() {
+    let show = false;
 
-  new DataTable('#billingTable', {
+    $('.bill_type').each(function () {
+        let row = $(this).closest('tr');
+        let cell = row.find('.completionCell');
+        let input = row.find('.completion_date');
+
+        if (this.value === 'final' || this.value === 'rescind') {
+            show = true;
+            cell.show();
+            input.prop({disabled:false, required:true});
+        } else {
+            cell.hide();
+            input.prop({disabled:true, required:false}).val('');
+        }
+    });
+
+    $('#completionHeader').toggle(show);
+    $('#addBillRow').prop('disabled', show).toggleClass('disabled', show);
+}
+
+$(document).on('change', '.bill_type', updateCompletionVisibility);
+$(document).ready(updateCompletionVisibility);
+</script>
+<script>
+    new DataTable('#billingTable', {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-       
+        
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -304,13 +271,37 @@ $('#addBillRow').click(function () {
 
         
     });
+    
+</script>
+<script>
+function calculateNetPayable(row) {
+    const gross = parseFloat(row.querySelector('.gross_amount')?.value) || 0;
+    const recovery = parseFloat(row.querySelector('.total_recovery')?.value) || 0;
+    const netInput = row.querySelector('.net_payable');
+
+    if (!netInput) return;
+
+    const netPayable = gross - recovery;
+    netInput.value = netPayable.toFixed(2);
+}
+
+// Listen for input changes
+document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('gross_amount') ||
+        e.target.classList.contains('total_recovery')) {
+
+        const row = e.target.closest('tr');
+        if (row) calculateNetPayable(row);
+    }
+});
+
+// Calculate on page load
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('tr').forEach(row => {
+        if (row.querySelector('.gross_amount')) {
+            calculateNetPayable(row);
+        }
+    });
+});
 </script>
 @endpush
-
-
-
-   
-</div>
-
-<a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mt-2">Back to Projects</a>
-@endsection

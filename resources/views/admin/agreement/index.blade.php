@@ -27,12 +27,14 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Award Letter No.</th>
-                <th>Award Date</th>
+                <th>Award Letter Date</th>
+                <th>Stipulated Date of Completion</th>
                 <th>Estimate Amount</th>
                 <th>Tendered Amount</th>
-                <th>Agreement No.</th>
-                <th>Agreement Start Date</th>
-                <th>Stipulated Date of Completion</th>
+                <th>Agreement Number</th>
+                <th>Date of Start of Work</th>
+                {{-- <th>Agreement Start Date</th> --}}
+                
                 <th>Upload</th>
                 <th>Save</th>
             </tr>
@@ -45,42 +47,60 @@
             @if (!empty($p->award_letter_no))
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ $p->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
                     <td>{{ $p->award_letter_no }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
+                    <td>
+                        {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
+                       
+                    </td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
+
                     <td>
                         <input type="text"
                             class="form-control form-control-sm agreement_no"
                             value="{{ $p->agreement_no }}">
                     </td>
-                    <td>
+                    <td>{{ date('d-m-Y', strtotime($p->date_ofstartof_work)) ?? '-' }}</td>
+
+
+                    {{-- <td>
                         <input type="date"
                             class="form-control form-control-sm agreement_start_date"
                             value="{{ $p->agreement_start_date }}">
-                    </td>
+                    </td> --}}
+                    {{-- <td>
+                        {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
+                       
+                    </td> --}}
                     <td>
-                        <input type="date"
-                                
-                            class="form-control form-control-sm stipulated_date_ofcompletion"
-                                value="{{ $p->stipulated_date_ofcompletion }}">
-                    </td>
-                    <td>
+                        @if($p->agreement_upload)
+                            <a href="{{ Storage::url($p->agreement_upload) }}"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                                View
+                            </a>
+                        @endif
                         <input type="file"
                             class="form-control form-control-sm agreement_upload">
                     </td>
                     <td>
-                        @if (empty($p->agreement_no))
-                             <button class="btn btn-sm btn-success saveAgreementBtn"
+                        {{-- @if (empty($p->agreement_no)) --}}
+                        <button class="btn btn-sm btn-success saveAgreementBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
-                        @else
+                        {{-- @else
                         <span class="badge bg-success">Saved</span>
-                        @endif
+                        @endif --}}
                        
                     </td>
                 </tr>
@@ -120,15 +140,12 @@ $(document).on('click', '.saveAgreementBtn', function () {
         row.find('.agreement_no').val()
     );
 
-    formData.append(
-        'agreement_start_date',
-        row.find('.agreement_start_date').val()
-    );
+    // formData.append(
+    //     'agreement_start_date',
+    //     row.find('.agreement_start_date').val()
+    // );
 
-    formData.append(
-        'stipulated_date_ofcompletion',
-        row.find('.stipulated_date_ofcompletion').val()
-    );
+    
 
     let fileInput = row.find('.agreement_upload')[0];
     if (fileInput.files.length > 0) {
@@ -147,6 +164,7 @@ $(document).on('click', '.saveAgreementBtn', function () {
             btn.prop('disabled', false).text('Save');
 
             if (response.success) {
+                window.location.reload();
                 alert(response.message);
 
                 // OPTIONAL: update status text without reload

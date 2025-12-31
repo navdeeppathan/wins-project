@@ -49,10 +49,14 @@
             <table id="example" class="table class-table nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th width="">No.</th>
-                        <th>Name</th>
-                        <th width="">Created</th>
-                        <th width="">Action</th>
+                        <th>No.</th>
+                        <th>Department</th>
+                        <th>Contact Person</th>
+                        <th>Designation</th>
+                        <th>Contact No.</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +67,21 @@
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $dept->name }}</td>
+                        <td>
+                            {{ $dept->contact_person_name }}
+                        </td>
+
+                        <td>
+                            {{ $dept->contact_person_designation }}
+                        </td>
+
+                        <td>
+                            {{ $dept->contact_number }}
+                        </td>
+
+                        <td>
+                            {{ $dept->email_id ?? '-' }}
+                        </td>
                         <td>{{ date('d-m-y', strtotime($dept->created_at)) }}</td>
                         <td class="action-btns">
                             <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-warning btn-sm">Edit</a>

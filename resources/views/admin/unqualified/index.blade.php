@@ -10,7 +10,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (EMD)</h3>
-    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a>
+    {{-- <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">+ Create Project</a> --}}
 </div>
 
 @if($projects->count() > 0)
@@ -38,7 +38,12 @@
             @forelse($projects as $p)
                 <tr>
                     <td>{{$i}}</td>
-                    <td style="">{{ $p->name }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{  $p->departments->name ?? '-' }}</td> 

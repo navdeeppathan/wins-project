@@ -61,7 +61,11 @@ class CorrespondenceController extends Controller
             }
         }
 
-        return back()->with('success', 'Correspondence saved successfully.');
+        return response()->json([
+            'success' => true
+            
+        ]);
+
     }
 
     // Delete row

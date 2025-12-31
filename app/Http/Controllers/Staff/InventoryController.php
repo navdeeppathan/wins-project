@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DailyNote;
 use App\Models\Inventory;
 use App\Models\Project;
+use App\Models\ScheduleWork;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -17,24 +18,58 @@ class InventoryController extends Controller
     {
         $projectId = $request->query('project_id');
 
-        $items = Inventory::where('user_id', auth()->id())
-            ->when($projectId, function ($q) use ($projectId) {
-                $q->where('project_id', $projectId);
-            })
-            ->with('project')
+        $items = Inventory::query()
+            ->when($projectId, fn($q) => $q->where('project_id', $projectId))
+            ->with(['project'])
             ->get();
 
-        $projects = Project::where('user_id', auth()->id())
-        ->get();
+        $projects = Project::where('user_id', auth()->id())->get();
+        $project= Project::where('id', $projectId)->first();
         $vendors  = Vendor::where('user_id', auth()->id())->get();
-        $notes    = DailyNote::orderBy('note_date', 'desc')->get();
+        $notes = DailyNote::orderBy('note_date', 'desc')->get();
 
-        return view('staff.inventory.indexdetails', compact(
-            'items', 'projects', 'vendors', 'notes'
-        ));
+        return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project'));
     }
 
 
+     public function materialTabs()
+    {
+        
+
+        $items = Inventory::query()
+            ->where('user_id', auth()->id())
+            ->where('category', 'Material')
+            ->with(['project'])
+            ->get();
+
+        $schedules = ScheduleWork::where('category', 'Material')
+                    ->whereHas('project', function ($q) {
+                        $q->where('user_id', auth()->id());
+                    })
+                    ->with('project')
+                    ->get();
+
+
+        return view('admin.material.index', compact('items', 'schedules'));
+    }
+
+
+    public function tabindex(Request $request)
+    {
+        $projectId = $request->query('project_id');
+
+        $items = Inventory::query()
+            ->when($projectId, fn($q) => $q->where('project_id', $projectId))
+            ->with(['project'])
+            ->get();
+
+        $projects = Project::where('user_id', auth()->id())->get();
+        $project= Project::where('id', $projectId)->first();
+        $vendors  = Vendor::where('user_id', auth()->id())->get();
+        $notes = DailyNote::orderBy('note_date', 'desc')->get();
+
+        return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project'));
+    }
     // ✅ STORE (Create new row)
     
 
@@ -56,7 +91,6 @@ class InventoryController extends Controller
 
         // 🧮 Net Payable
         $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
-
         $data['user_id'] = auth()->id();
 
         // 📎 Save directly to public folder
@@ -134,6 +168,22 @@ class InventoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Inventory item removed'
+        ]);
+    }
+
+
+     public function updateInventoryDismantal(Request $request, Inventory $inventory)
+    {
+        $request->validate([
+            'dismantals'       => 'nullable|numeric', 
+        ]);
+
+        $inventory->dismantals = $request->dismantals;
+        $inventory->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Inventory details updated successfully.'
         ]);
     }
 }

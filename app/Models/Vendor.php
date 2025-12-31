@@ -18,7 +18,13 @@ class Vendor extends Model
                 'amount',
                 'deduction',
                 'net_payable',
-                'upload'
+                'upload',
+                'state',
+                'contact_person',
+                'vendor_agency_name',
+                'contact_number',
+                'email_id',
+
     ];
 
     

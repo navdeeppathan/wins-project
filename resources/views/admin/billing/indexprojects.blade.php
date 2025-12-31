@@ -13,6 +13,7 @@
         <thead class="table-light">
             <tr>
                 <th>#</th>
+                <th>Name</th>
                 <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
@@ -28,6 +29,12 @@
             @forelse($projects as $p)
                 <tr>
                     <td>{{ $i }}</td>
+                    <td>
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
                     <td>{{ $p->departments->name }}</td>

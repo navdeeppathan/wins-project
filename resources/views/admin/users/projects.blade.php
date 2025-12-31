@@ -1,14 +1,12 @@
-@extends('layouts.staff')
+@extends('layouts.admin')
 
 @section('title','Projects')
 
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (Bidding)</h3>
-    <a href="{{ route('staff.projects.create') }}" class="btn btn-primary">
-        + Create Project
-    </a>
+    <h3>Users Projects {{$user->name}}</h3>
+    
 </div>
 
 @if($projects->count() > 0)
@@ -45,7 +43,7 @@
                 <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
                 <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                 <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
-                @if ($p->isQualified==0)
+                {{-- @if ($p->isQualified==0) --}}
                 <td class="text-center">
                    
                     <input type="checkbox"
@@ -58,21 +56,21 @@
                         Save
                     </button>
                 </td>
-                @else
+                {{-- @else
                 <td  class="text-center ">
                     <span class="badge bg-success">Qualified</span>
                 </td>
                 
-                @endif
+                @endif --}}
                
                 <td>
-                    {{-- <a href="{{ route('staff.projects.edit', $p) }}"
-                       class="btn btn-warning btn-sm">Edit</a> --}}
+                    <a href="{{ route('admin.projects.edit', $p) }}"
+                       class="btn btn-warning btn-sm">Edit</a>
 
-                   <a href="{{ route('staff.inventory.index') }}?project_id={{ $p->id }}" 
+                   {{-- <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}" 
                         class="btn btn-secondary btn-sm">
                         Inventory
-                    </a>
+                    </a> --}}
 
                 </td>
             </tr>
@@ -108,14 +106,16 @@
             .is(':checked') ? 1 : 0;
 
         $.ajax({
-            url: "/staff/projects/update-qualified/" + id,
+            url: "/admin/projects/update-qualified/" + id,
             type: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
                 isQualified: isQualified,
             },
             success: function () {
+                window.location.reload();
                 alert("Updated Successfully");
+
             }
         });
     });

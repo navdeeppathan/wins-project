@@ -988,6 +988,69 @@
 
     </style>
 
+<style>
+    /* 🔥 Allow full width inputs */
+    #example input.form-control,
+    #example select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
+
+    /* 🔥 Paid To & Narration extra wide */
+    #example td:nth-child(3) input,
+    #example td:nth-child(5) input {
+        min-width: 250px;
+    }
+
+    /* 🔥 Disable text cutting */
+    #example input,
+    #example select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    /* 🔥 Horizontal scroll inside input */
+    #example input {
+        text-overflow: clip;
+    }
+
+    /* Optional: show scrollbar only when needed */
+    #example input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
+
+<style>
+    /* 🔥 Allow full width inputs */
+    .example input.form-control,
+    .example select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
+
+    /* 🔥 Paid To & Narration extra wide */
+    .example td:nth-child(3) input,
+    .example td:nth-child(5) input {
+        min-width: 250px;
+    }
+
+    /* 🔥 Disable text cutting */
+    .example input,
+    .example select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    /* 🔥 Horizontal scroll inside input */
+    .example input {
+        text-overflow: clip;
+    }
+
+    /* Optional: show scrollbar only when needed */
+    .example input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
 
   @stack('styles')
 </head>
@@ -1204,7 +1267,7 @@
                 </a>
             </div>
 
-            <div class="nav-item">
+            {{-- <div class="nav-item">
                 <a href=""
                 class="nav-link ">
                     
@@ -1217,12 +1280,12 @@
 
                     <span class="nav-text">COMPLETION</span>
                 </a>
-            </div>
+            </div> --}}
              
 
             <div class="nav-item">
-                <a href="{{ route('admin.inventory.index') }}"
-                class="nav-link {{ Request::is('admin/inventory*') ? 'active' : '' }}">
+                <a href="{{ route('admin.inventory.tabindex') }}"
+                class="nav-link {{ Request::is('admin/inventory/tab') ? 'active' : '' }}">
                     
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1261,7 +1324,9 @@
             </div>
 
              <div class="nav-item">
-                <a href="{{ route('admin.t-and-p.index') }}"
+                {{-- <a href="{{ route('admin.t-and-p.index') }}" --}}
+                <a href="{{ route('admin.materialTabs.index') }}"
+
                 class="nav-link {{ Request::is('admin/t-and-p*') ? 'active' : '' }}">
                     
                     <span class="nav-icon">
@@ -1304,7 +1369,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </span>
-                    <span class="nav-text">ESTIMATOIN</span>
+                    <span class="nav-text">ESTIMATE</span>
                     <span class="dropdown-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -1784,16 +1849,56 @@
 <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.js"></script>
 
 <script>
-new DataTable('#example', {
-    scrollX: true,
-    responsive: false,
-    autoWidth: false,
-    // layout: {
-    //     topStart: {
-    //         buttons: ['copy', 'excel', 'pdf', 'print']
-    //     }
-    // }
-});
+ new DataTable('#example', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+        
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+        
+    });
+
+
+     new DataTable('.example', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+        
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+        
+    });
 
 </script>
     @stack('scripts')

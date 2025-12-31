@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\State;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,7 +19,9 @@ class VendorController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('admin.vendors.index', compact('vendors'));
+        $states = State::all();    
+
+        return view('admin.vendors.index', compact('vendors', 'states'));
     }
 
     /**
@@ -34,9 +37,14 @@ class VendorController extends Controller
             'delivered_to'  => 'nullable|string|max:255',
             'voucher'       => 'nullable|string|max:100',
             'quantity'      => 'nullable|numeric|min:0',
-            'amount'        => 'required|numeric|min:0',
+            'amount'        => 'nullable|numeric|min:0',
             'deduction'     => 'nullable|numeric|min:0',
             'upload'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'state'         => 'nullable',
+            'vendor_agency_name'    => 'nullable|string|max:255',
+            'contact_number'=> 'nullable|string|max:20',
+            'email_id'=>'nullable|string',
+            'contact_person'=>'nullable|string',
         ]);
 
         // attach user
@@ -74,9 +82,14 @@ class VendorController extends Controller
             'delivered_to'  => 'nullable|string|max:255',
             'voucher'       => 'nullable|string|max:100',
             'quantity'      => 'nullable|numeric|min:0',
-            'amount'        => 'required|numeric|min:0',
+            'amount'        => 'nullable|numeric|min:0',
             'deduction'     => 'nullable|numeric|min:0',
             'upload'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'state'         => 'nullable',
+            'vendor_agency_name'    => 'nullable|string|max:255',
+            'contact_number'=> 'nullable|string|max:20',
+            'email_id'=>'nullable|string',
+            'contact_person'=>'nullable|string',
         ]);
 
         // recalc net payable

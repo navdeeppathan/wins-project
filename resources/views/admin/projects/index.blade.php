@@ -38,14 +38,23 @@
             @foreach($projects as $p)
             <tr>
                 <td>{{ $i }}</td>
-                <td>{{ $p->name }}</td>
+               <td>
+                    {!! implode('<br>', array_map(
+                        fn($chunk) => implode(' ', $chunk),
+                        array_chunk(explode(' ', $p->name), 10)
+                    )) !!}
+                </td>
+
+
+
+
                 <td class="text-center">{{ $p->nit_number }}</td>
                 <td>{{ $p->state->name ?? '-' }}</td>
                 <td>{{ $p->departments->name ?? '-' }}</td>
                 <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
                 <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                 <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
-                @if ($p->isQualified==0)
+                {{-- @if ($p->isQualified==0) --}}
                 <td class="text-center">
                    
                     <input type="checkbox"
@@ -58,12 +67,12 @@
                         Save
                     </button>
                 </td>
-                @else
+                {{-- @else
                 <td  class="text-center ">
                     <span class="badge bg-success">Qualified</span>
                 </td>
                 
-                @endif
+                @endif --}}
                
                 <td>
                     <a href="{{ route('admin.projects.edit', $p) }}"
@@ -115,7 +124,9 @@
                 isQualified: isQualified,
             },
             success: function () {
+                window.location.reload();
                 alert("Updated Successfully");
+
             }
         });
     });

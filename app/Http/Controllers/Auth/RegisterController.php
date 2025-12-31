@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,9 @@ class RegisterController extends Controller
 
     public function adminCreate()
     {
-        return view('admin.users.create');
+        $states = State::orderBy('name')->get();
+
+        return view('admin.users.create', compact('states'));
     }
 
     public function registerForm()
@@ -79,18 +82,14 @@ class RegisterController extends Controller
        $request->validate([
             'name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            'auth_person_name' => 'required|string|max:50',
+            'password' => 'required',
+            'state' => 'nullable|string',
             
-
-            // GST validation
-            'gst_number' => [
-                'required',
-                'string',
-                // 'size:15',
-                // 'regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
-                // 'unique:users,gst_number',
-            ],
+            'date_of_joining' => 'required|date',
+            'date_of_leaving' => 'nullable|date',
+            'phone' => 'required|numeric',
+            'designation' => 'nullable|string',
+            
         ]);
 
 
@@ -98,9 +97,13 @@ class RegisterController extends Controller
       $user =  User::create([
             'name'=> $request->name,
             'email'=> $request->email,
-            'auth_person_name'=> $request->auth_person_name,
-            'gst_number' => strtoupper($request->gst_number),
             'password'=> Hash::make($request->password),
+            'state' => $request->state,
+            'date_of_joining' => $request->date_of_joining,
+            'date_of_leaving' => $request->date_of_leaving,
+            'phone' => $request->phone,
+            'designation' => $request->designation,
+
             'role' => 'staff',
             'parent_id' => auth()->user()->id,
         ]);
@@ -108,7 +111,7 @@ class RegisterController extends Controller
         //also login
         // auth()->login($user);
 
-        return redirect()->back()->with('success','Account created, please login.');
+        return redirect()->back()->with('success','Account created successfully.');
     }
     
 }

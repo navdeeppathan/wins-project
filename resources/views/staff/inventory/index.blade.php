@@ -14,6 +14,37 @@
     @endif
 </h3>
 
+@if ($selectedProjectId)
+<div class="row">
+
+    <div class="col-md-4 mb-3">
+        <label>Department</label>
+        <input class="form-control"
+               value="{{ $project->departments->name ?? '-' }}"
+               disabled>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label>State</label>
+        <input class="form-control"
+               value="{{ $project->state->name ?? '-' }}"
+               disabled>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <label>NIT Number</label>
+        <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
+    </div>
+
+     <div class="col-md-12 mb-3">
+        <label>Project Name</label>
+        <input type="text" class="form-control" value="{{ $project->name }}" disabled>
+    </div>
+
+</div>    
+    
+@endif
+
 @php
     // $selectedProjectId = request('project_id');
 
@@ -22,28 +53,63 @@
         'WAGES',
         'LOGISTIC',
         'MAINTENANCE',
+        'OFFICE',
         'T&P',
         'FEE',
         'TOURS',
-        'OTHERS'
+        'OTHERS',
+
     ];
 @endphp
+
+<style>
+    /* 🔥 Allow full width inputs */
+    #inventoryTable input.form-control,
+    #inventoryTable select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
+
+    /* 🔥 Paid To & Narration extra wide */
+    #inventoryTable td:nth-child(3) input,
+    #inventoryTable td:nth-child(5) input {
+        min-width: 250px;
+    }
+
+    /* 🔥 Disable text cutting */
+    #inventoryTable input,
+    #inventoryTable select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    /* 🔥 Horizontal scroll inside input */
+    #inventoryTable input {
+        text-overflow: clip;
+    }
+
+    /* Optional: show scrollbar only when needed */
+    #inventoryTable input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
+
 
 <div class="table-responsive">
 <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
     <thead class="table-light">
     <tr>
         <th>#</th>
-        <th>Project</th>
+        {{-- <th>Project</th> --}}
         <th>Date</th>
-        <th>Paid To</th>
+        <th width="200px">Paid To</th>
         <th>Category</th>
-        <th>VOUCHER NARRATION</th>
+        <th>Voucher Narration</th>
         <th>Voucher Number</th>
-        <th>Qty</th>
+        <th>Quantity</th>
         <th>Amount</th>
         <th>Deduction</th>
-        <th>Net Payable</th>
+        <th>Net Payment</th>
         <th>Upload</th>
         <th width="">Action</th>
     </tr>
@@ -55,11 +121,11 @@
                 <td>{{ $index + 1 }}</td>
 
                 {{-- PROJECT --}}
-                <td>
+                {{-- <td>
                     @if($selectedProjectId)
-                        <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong>
+                        <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong> --}}
                         <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
-                    @else
+                    {{-- @else
                         <select class="form-select project_select">
                             <option value="">Select Project</option>
                             @foreach($projects as $project)
@@ -70,12 +136,12 @@
                             @endforeach
                         </select>
                     @endif
-                </td>
+                </td> --}}
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
                 
-                <td><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
+                <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -86,7 +152,6 @@
                         @endforeach
                     </select>
                 </td>
-
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
                 
                 <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
@@ -105,27 +170,21 @@
                     <input type="file" class="form-control upload">
                 </td>
 
-                <td >
+                <td>
                     
-                    {{-- <button class="btn btn-success btn-sm saveRow">Save</button> --}}
-                    {{-- <button class="btn btn-danger btn-sm removeRow">Del</button> --}}
+                    <button class="btn btn-success btn-sm">Saved</button>
+                    <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
             </tr>
         @empty
             <tr>
                 <td>1</td>
 
-                <td>
-                    <select class="form-select project_select">
-                        <option value="">Select Project</option>
-                        @foreach($projects as $project)
-                            <option value="{{ $project->id }}">{{ $project->name }}</option>
-                        @endforeach
-                    </select>
-                </td>
+                
+                <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-
+                <td><input type="text" class="form-control paid_to"></td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -138,7 +197,7 @@
                 </td>
 
                 <td><input type="text" class="form-control description"></td>
-                <td><input type="text" class="form-control paid_to"></td>
+                
                 <td><input type="text" class="form-control voucher"></td>
                 <td><input type="number" class="form-control quantity"></td>
                 <td><input type="number" class="form-control amount"></td>
@@ -170,21 +229,15 @@ $(function () {
 
         let index = $('#inventoryTable tbody tr').length + 1;
 
-        let projectCell = selectedProjectId
-            ? `<strong>{{ $selectedProjectId ? $projects->firstWhere('id',$selectedProjectId)->name : '' }}</strong>
-               <input type="hidden" class="project_id" value="${selectedProjectId}">`
-            : `<select class="form-select project_select">
-                    <option value="">Select Project</option>
-                    @foreach($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                    @endforeach
-               </select>`;
+        
+            
 
         let row = `
         <tr>
             <td>${index}</td>
-            <td>${projectCell}</td>
+            <input type="hidden" class="project_id" value="${selectedProjectId}">
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+            <td><input type="text" class="form-control paid_to"></td>
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -194,7 +247,7 @@ $(function () {
                 </select>
             </td>
             <td><input type="text" class="form-control description"></td>
-            <td><input type="text" class="form-control paid_to"></td>
+            
             <td><input type="text" class="form-control voucher"></td>
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
@@ -238,7 +291,6 @@ $(function () {
         formData.append('description', row.find('.description').val());
         formData.append('paid_to', row.find('.paid_to').val());
         formData.append('voucher', row.find('.voucher').val());
-
         formData.append('quantity', row.find('.quantity').val());
         formData.append('amount', row.find('.amount').val());
         formData.append('deduction', row.find('.deduction').val());
@@ -251,7 +303,7 @@ $(function () {
         $.ajax({
             url: id
                 ? `/staff/inventory/${id}/update`
-                : "{{ route('staff.inventory.store') }}",
+                : "{{ route('admin.inventory.store') }}",
             type: 'POST',
             data: formData,
             processData: false,
