@@ -78,47 +78,47 @@
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveisReturnedBtn', function () {
+    $(document).on('click', '.saveisReturnedBtn', function () {
 
-    let id = $(this).data('id');
-    let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
+        let id = $(this).data('id');
+        let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
 
-    $.ajax({
-        url: "/admin/projects/update-returned/" + id,
-        type: "POST",
-        data: {
-            _token: "{{ csrf_token() }}",
-            isReturned: isReturned,
-        },
-        success: function (response) {
-            alert("Updated Successfully");
-            location.reload();
-        }
+        $.ajax({
+            url: "/admin/projects/update-returned/" + id,
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                isReturned: isReturned,
+            },
+            success: function (response) {
+                alert("Updated Successfully");
+                location.reload();
+            }
+        });
+
     });
 
-});
-
-new DataTable('#emdreturned', {
-        scrollX: true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: false,
+    new DataTable('#emdreturned', {
+            scrollX: true,
+            scrollCollapse: true,
+            responsive: false,
+            autoWidth: false,
 
 
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
-            $('td', row).css('background-color', bg);
-        },
+            /* 🔥 GUARANTEED ROW COLOR FIX */
+            createdRow: function (row, data, index) {
+                let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+                $('td', row).css('background-color', bg);
+            },
 
-        rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            rowCallback: function (row, data, index) {
+                let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
 
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
-});
+                $(row).off('mouseenter mouseleave').hover(
+                    () => $('td', row).css('background-color', '#e9ecff'),
+                    () => $('td', row).css('background-color', base)
+                );
+            }
+    });
 </script>
 @endpush

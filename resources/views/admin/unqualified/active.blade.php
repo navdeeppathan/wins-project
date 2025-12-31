@@ -1,4 +1,36 @@
 
+<style>
+    /* 🔥 Allow full width inputs */
+    #emdactive input.form-control,
+    #emdactive select.form-select {
+        min-width: 180px;
+        width: 100%;
+    }
+
+    /* 🔥 Paid To & Narration extra wide */
+    #emdactive td:nth-child(3) input,
+    #emdactive td:nth-child(5) input {
+        min-width: 250px;
+    }
+
+    /* 🔥 Disable text cutting */
+    #emdactive input,
+    #emdactive select {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    /* 🔥 Horizontal scroll inside input */
+    #emdactive input {
+        text-overflow: clip;
+    }
+
+    /* Optional: show scrollbar only when needed */
+    #emdactive input::-webkit-scrollbar {
+        height: 6px;
+    }
+</style>
+
 @if($actives->count() > 0)
     <div class="table-responsive">
         <table id="emdactive" class="table table-striped nowrap" style="width:100%">

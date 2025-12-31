@@ -79,25 +79,25 @@
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveisForfietedBtn', function () {
+    $(document).on('click', '.saveisForfietedBtn', function () {
 
-    let id = $(this).data('id');
-    let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;
+        let id = $(this).data('id');
+        let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;
 
-    $.ajax({
-        url: "/admin/projects/update-forfieted/" + id,
-        type: "POST",
-        data: {
-            _token: "{{ csrf_token() }}",
-            isForfieted: isForfieted,
-        },
-        success: function (response) {
-            alert("Updated Successfully");
-            location.reload();
-        }
+        $.ajax({
+            url: "/admin/projects/update-forfieted/" + id,
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                isForfieted: isForfieted,
+            },
+            success: function (response) {
+                alert("Updated Successfully");
+                location.reload();
+            }
+        });
+
     });
-
-});
 
     new DataTable('#emdforfieted', {
         scrollX: true,
