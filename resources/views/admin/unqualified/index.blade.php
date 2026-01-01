@@ -40,15 +40,16 @@
         <div class="content2 emd tab-active">
             @if($actives->count() > 0)
                 <div class="table-responsive">
-                    <table id="emdactive" class="table table-striped nowrap" style="width:100%">
+                    <table id="emdactive" class="table table-striped class-table nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>NIT No</th>
-                                <th>Estimate Amount</th>
+                                
                                 <th>Location</th>
                                 <th>Department</th>
+                                <th>Estimate Amount</th>
                                 <th>EMD Amount</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
@@ -57,7 +58,7 @@
                                 <th>Save</th>
                                 <th>Forfeited</th>
                                 <th>Save</th>
-                                <th>Status</th>
+                                {{-- <th>Status</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -76,9 +77,9 @@
                                     </td>
 
                                     <td>{{ $project->nit_number }}</td>
-                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
                                     <td>{{ $project->state->name ?? '-' }}</td>
-                                    <td>{{ $project->department->name ?? '-' }}</td>
+                                    <td>{{ $project->departments->name ?? '-' }}</td>
+                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
 
                                     <td>{{ number_format($emd->amount, 2) }}</td>
                                     <td>{{ $emd->instrument_type }}</td>
@@ -115,11 +116,11 @@
                                         </button>
                                     </td>
 
-                                    <td>
+                                    {{-- <td>
                                         <span class="badge bg-info">
                                             {{ ucfirst($project->status) }}
                                         </span>
-                                    </td>
+                                    </td> --}}
                                 </tr>
 
                             @endforeach
@@ -142,15 +143,16 @@
         <div class="content2 emd tab-returned">
             @if($returneds->count() > 0)
                 <div class="table-responsive">
-                    <table id="emdreturned" class="table table-striped nowrap" style="width:100%">
+                    <table id="emdreturned" class="table table-striped class-table nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>NIT No</th>
-                                <th>Estimate Amount</th>
+                                
                                 <th>Location</th>
                                 <th>Department</th>
+                                <th>Estimate Amount</th>
                                 <th>EMD Amount</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
@@ -177,9 +179,9 @@
                                     </td>
 
                                     <td>{{ $project->nit_number }}</td>
-                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
                                     <td>{{ $project->state->name ?? '-' }}</td>
-                                    <td>{{ $project->department->name ?? '-' }}</td>
+                                    <td>{{ $project->departments->name ?? '-' }}</td>
+                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
 
                                     <td>{{ number_format($emd->amount, 2) }}</td>
                                     <td>{{ $emd->instrument_type }}</td>
@@ -221,15 +223,16 @@
         <div class="content2 emd tab-forfeited">
             @if($forfieteds->count() > 0)
                 <div class="table-responsive">
-                    <table id="emdforfieted" class="table table-striped nowrap" style="width:100%">
+                    <table id="emdforfieted" class="table table-striped class-table nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>NIT No</th>
-                                <th>Estimate Amount</th>
                                 <th>Location</th>
                                 <th>Department</th>
+                                <th>Estimate Amount</th>
+
                                 <th>EMD Amount</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
@@ -256,9 +259,9 @@
                                     </td>
 
                                     <td>{{ $project->nit_number }}</td>
-                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
                                     <td>{{ $project->state->name ?? '-' }}</td>
-                                    <td>{{ $project->department->name ?? '-' }}</td>
+                                    <td>{{ $project->departments->name ?? '-' }}</td>
+                                    <td>{{ number_format($project->estimated_amount, 2) }}</td>
 
                                     <td>{{ number_format($emd->amount, 2) }}</td>
                                     <td>{{ $emd->instrument_type }}</td>

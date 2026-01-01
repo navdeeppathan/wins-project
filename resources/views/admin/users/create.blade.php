@@ -232,7 +232,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-4 col-md-12">
+                    <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 <i class="fas fa-building me-2"></i>Designation
                             </label>

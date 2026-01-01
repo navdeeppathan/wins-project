@@ -102,20 +102,199 @@ class ProjectController extends Controller
 
      public function pgreturnIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        return view('admin.pgreturn.index', compact('projects'));
+        // $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+
+        $userId = auth()->id();
+
+        // Base query to avoid repetition
+        $baseQuery = Project::with(['departments', 'state', 'pgDetails'])
+            ->where('user_id', $userId);
+        
+        
+
+        // All projects (paginated)
+        $projects = (clone $baseQuery)
+            ->latest()
+            ->paginate(20);
+
+        // Forfeited EMD projects
+        $forfieteds = (clone $baseQuery)
+            ->whereHas('pgDetails', function ($q) {
+                $q->where('isForfieted', 1);
+            })
+            ->latest()
+            ->get();
+        
+               
+
+        // Returned EMD projects
+        $returneds = (clone $baseQuery)
+            ->whereHas('pgDetails', function ($q) {
+                $q->where('isReturned', 1);
+            })
+            ->latest()
+            ->get();
+
+             
+
+        // Active EMD projects (not returned & not forfeited)
+        $actives = (clone $baseQuery)
+            ->whereHas('pgDetails', function ($q) {
+                $q->where('isReturned', 0)
+                ->where('isForfieted', 0);
+            })
+            ->latest()
+            ->get();
+
+            // dd($actives);
+
+        // All EMD-related project details
+        $pgDetails = (clone $baseQuery)
+            ->latest()
+            ->get();
+
+            // dd($pgDetails);
+
+
+        return view('admin.pgreturn.index', compact(
+            'projects',
+            'pgDetails',
+            'forfieteds',
+            'returneds',
+            'actives'
+        ));
+        // return view('admin.pgreturn.index', compact('projects'));
     }
 
      public function securityreturnIndex()
+
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        return view('admin.security_deposits.index', compact('projects'));
+        // $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+        $userId = auth()->id();
+
+        // Base query to avoid repetition
+        $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
+            ->where('user_id', $userId);
+        
+        
+
+        // All projects (paginated)
+        $projects = (clone $baseQuery)
+            ->latest()
+            ->paginate(20);
+
+        // Forfeited EMD projects
+        $forfieteds = (clone $baseQuery)
+            ->whereHas('securityDeposits', function ($q) {
+                $q->where('isForfieted', 1);
+            })
+            ->latest()
+            ->get();
+        
+               
+
+        // Returned EMD projects
+        $returneds = (clone $baseQuery)
+            ->whereHas('securityDeposits', function ($q) {
+                $q->where('isReturned', 1);
+            })
+            ->latest()
+            ->get();
+
+             
+
+        // Active EMD projects (not returned & not forfeited)
+        $actives = (clone $baseQuery)
+            ->whereHas('securityDeposits', function ($q) {
+                $q->where('isReturned', 0)
+                ->where('isForfieted', 0);
+            })
+            ->latest()
+            ->get();
+
+            // dd($actives);
+
+        // All EMD-related project details
+        $securityDeposits = (clone $baseQuery)
+            ->latest()
+            ->get();
+
+            // dd($pgDetails);
+
+
+        return view('admin.security_deposits.index', compact(
+            'projects',
+            'securityDeposits',
+            'forfieteds',
+            'returneds',
+            'actives'
+        ));
+        // return view('admin.security_deposits.index', compact('projects'));
     }
 
      public function withheldreturnIndex()
     {
-        $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        return view('admin.withheld.index', compact('projects'));
+        // $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $userId = auth()->id();
+
+        // Base query to avoid repetition
+        $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
+            ->where('user_id', $userId);
+        
+        
+
+        // All projects (paginated)
+        $projects = (clone $baseQuery)
+            ->latest()
+            ->paginate(20);
+
+        // Forfeited EMD projects
+        $forfieteds = (clone $baseQuery)
+            ->whereHas('withhelds', function ($q) {
+                $q->where('isForfieted', 1);
+            })
+            ->latest()
+            ->get();
+        
+               
+
+        // Returned EMD projects
+        $returneds = (clone $baseQuery)
+            ->whereHas('withhelds', function ($q) {
+                $q->where('isReturned', 1);
+            })
+            ->latest()
+            ->get();
+
+             
+
+        // Active EMD projects (not returned & not forfeited)
+        $actives = (clone $baseQuery)
+            ->whereHas('withhelds', function ($q) {
+                $q->where('isReturned', 0)
+                ->where('isForfieted', 0);
+            })
+            ->latest()
+            ->get();
+
+            // dd($actives);
+
+        // All EMD-related project details
+        $withhelds = (clone $baseQuery)
+            ->latest()
+            ->get();
+
+            // dd($pgDetails);
+
+
+        return view('admin.withheld.index', compact(
+            'projects',
+            'withhelds',
+            'forfieteds',
+            'returneds',
+            'actives'
+        ));
+        // return view('admin.withheld.index', compact('projects'));
     }
 
 
@@ -487,7 +666,7 @@ class ProjectController extends Controller
 
         public function updateforfittedSecurityReturned(Request $request, SecurityDeposit $securityDeposit)
     {
-        $securityDeposit->isForfeited = $request->isForfieted;
+        $securityDeposit->isForfieted = $request->isForfieted;
         $securityDeposit->save();
 
         return response()->json([
@@ -498,7 +677,7 @@ class ProjectController extends Controller
 
          public function updateforfittedWithheldReturned(Request $request, Withheld $withheld)
     {
-        $withheld->isForfeited = $request->isForfieted;
+        $withheld->isForfieted = $request->isForfieted;
         $withheld->save();
 
         return response()->json([

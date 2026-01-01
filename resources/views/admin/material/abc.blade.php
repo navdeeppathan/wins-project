@@ -139,6 +139,8 @@
                             <th class="text-center">Stores</th>
                             <th class="text-center">Measured</th>
                             <th class="text-center">Dismantals</th>
+                            <th class="text-center">Rate</th>
+                            <th class="text-center">Amount</th>
                             <th class="text-center" width="">Action</th>
                         </tr>
                     </thead>
@@ -159,6 +161,15 @@
                                                             class="form-control form-control-sm dismantals"
                                                             value="{{ $i->dismantals }}" required>
                                             </td>
+
+                                            <td>
+                                                <input type="number" step="0.01"
+                                                    class="form-control form-control-sm dismantal_rate"
+                                                    value="{{ $i->dismantal_rate }}" required>
+                                            </td>
+                                            <td class="dismantal_amount">0.00</td>
+
+
                                             <td>
                                                         <button class="btn btn-sm btn-success saveDismantalBtn1"
                                                                 data-id="{{ $i->id }}">
@@ -189,6 +200,8 @@
                             <th class="text-center">Description</th>
                             <th class="text-center">T&P</th>
                             <th class="text-center">Dismantals</th>
+                            <th class="text-center">Rate</th>
+                            <th class="text-center">Amount</th>
                             <th class="text-center" width="">Action</th>
                         </tr>
                     </thead>
@@ -208,6 +221,13 @@
                                                     class="form-control form-control-sm dismantals"
                                                     value="{{ $i->dismantals }}" required>
                                     </td>
+                                    
+                                    <td>
+                                                <input type="number" step="0.01"
+                                                    class="form-control form-control-sm dismantal_rate"
+                                                    value="{{ $i->dismantal_rate }}" required>
+                                    </td>
+                                    <td class="dismantal_amount">0.00</td>
 
                                     <td>
                                                 <button class="btn btn-sm btn-success saveDismantalBtn2"
@@ -311,6 +331,16 @@ $(document).on('click', '.saveDismantalBtn1', function () {
         row.find('.dismantals').val()
     );
 
+    formData.append(
+        'dismantal_rate',
+        row.find('.dismantal_rate').val()
+    )
+
+    formData.append(
+        'dismantal_amount',
+        row.find('.dismantal_amount').text()
+    )
+
     
 
     btn.prop('disabled', true).text('Saving...');
@@ -365,6 +395,16 @@ $(document).on('click', '.saveDismantalBtn2', function () {
         row.find('.dismantals').val()
     );
 
+    formData.append(
+        'dismantal_rate',
+        row.find('.dismantal_rate').val()
+    )
+
+    formData.append(
+        'dismantal_amount',
+        row.find('.dismantal_amount').text()
+    )
+
     
 
     btn.prop('disabled', true).text('Saving...');
@@ -394,5 +434,26 @@ $(document).on('click', '.saveDismantalBtn2', function () {
         }
     });
 });
+
+
+document.addEventListener('input', function (e) {
+    if (
+        e.target.classList.contains('dismantals') ||
+        e.target.classList.contains('dismantal_rate')
+    ) {
+        let row = e.target.closest('tr');
+
+        let dismantals = parseFloat(row.querySelector('.dismantals')?.value) || 0;
+        let rate = parseFloat(row.querySelector('.dismantal_rate')?.value) || 0;
+
+        let amount = dismantals * rate;
+
+        row.querySelector('.dismantal_amount').innerText = amount.toFixed(2);
+    }
+});
+
+
+
+
 </script>
 @endsection

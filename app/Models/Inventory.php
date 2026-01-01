@@ -24,7 +24,10 @@ class Inventory extends Model
                 'net_payable',
                 'upload',
                 'user_id',
-                'dismantals'
+                'dismantals',
+                'dismantal_amount',
+                'dismantal_rate',
+            
     ];
 
     public function project()

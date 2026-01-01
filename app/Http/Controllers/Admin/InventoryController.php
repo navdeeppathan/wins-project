@@ -176,9 +176,13 @@ class InventoryController extends Controller
     {
         $request->validate([
             'dismantals'       => 'nullable|numeric', 
+            'dismantal_rate'   => 'nullable|numeric',
+            'dismantal_amount' => 'nullable|numeric',
         ]);
 
         $inventory->dismantals = $request->dismantals;
+        $inventory->dismantal_rate = $request->dismantal_rate;
+        $inventory->dismantal_amount = $request->dismantal_amount;
         $inventory->save();
 
         return response()->json([
