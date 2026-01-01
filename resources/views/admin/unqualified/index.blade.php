@@ -64,6 +64,7 @@
 
                         @forelse($actives as $project)
                             @foreach($project->emds as $emd)
+                                @if($emd->isReturned || $emd->isForfeited) @continue @endif
                                 <tr>
                                     <td>{{ $project->id }}</td>
 
@@ -120,6 +121,7 @@
                                         </span>
                                     </td>
                                 </tr>
+
                             @endforeach
                         @empty
                             <tr>
@@ -298,60 +300,60 @@
 </div>
 
 <style>
-        .top-buttons {
-            display: flex;
-            gap: 10px;
-        }
+    .top-buttons {
+        display: flex;
+        gap: 10px;
+    }
 
-        .top-btn {
-            padding: 10px 18px;
-            border: 1px solid #ddd;
-            background: #f8f9fa;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    .top-btn {
+        padding: 10px 18px;
+        border: 1px solid #ddd;
+        background: #f8f9fa;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+    }
 
-        .top-btn.active {
-            background: #0d6efd;
-            color: #fff;
-            border-color: #0d6efd;
-        }
+    .top-btn.active {
+        background: #0d6efd;
+        color: #fff;
+        border-color: #0d6efd;
+    }
 
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #ddd;
-        }
+    .tabs {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+    }
 
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            background: transparent;
-            border: 1px solid transparent;
-            border-bottom: none;
-        }
+    .tab {
+        padding: 12px 24px;
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid transparent;
+        border-bottom: none;
+    }
 
-        .tab.active {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-bottom: 1px solid #fff;
-            color: #0d6efd;
-            font-weight: 600;
-            border-radius: 6px 6px 0 0;
-        }
+    .tab.active {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-bottom: 1px solid #fff;
+        color: #0d6efd;
+        font-weight: 600;
+        border-radius: 6px 6px 0 0;
+    }
 
-        .tab-content {
-            border: 1px solid #ddd;
-            padding: 20px;
-        }
+    .tab-content {
+        border: 1px solid #ddd;
+        padding: 20px;
+    }
 
-        .content2 {
-            display: none;
-        }
+    .content2 {
+        display: none;
+    }
 
-        .content2.show {
-            display: block;
-        }
+    .content2.show {
+        display: block;
+    }
 </style>
 
 @endsection
@@ -362,6 +364,7 @@
         let currentTab  = 'tab-active';
 
         function switchType(type, btn) {
+
             currentType = type;
             currentTab  = 'tab-active';
 
