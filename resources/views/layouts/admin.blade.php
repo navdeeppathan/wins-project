@@ -1849,7 +1849,7 @@
 <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.js"></script>
 
 <script>
- new DataTable('#example', {
+    new DataTable('#example', {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
