@@ -397,26 +397,7 @@
 
         document.addEventListener('DOMContentLoaded', showContent);
     </script>
-    <script>
-        $(document).on('click', '.saveisReturnedBtn', function () {
 
-            let id = $(this).data('id');
-            let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
-
-            $.ajax({
-                url: "/admin/projects/update-returned/" + id,
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    isReturned: isReturned,
-                },
-                success: function (response) {
-                    alert("Updated Successfully");
-                }
-            });
-
-        });
-    </script>
 
     <script>
 
@@ -436,26 +417,6 @@
                     location.reload();
                 }
             });
-        });
-
-        $(document).on('click', '.saveisForfietedBtn', function () {
-
-            let id = $(this).data('id');
-            let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;
-
-            $.ajax({
-                url: "/admin/projects/update-forfieted/" + id,
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    isForfieted: isForfieted,
-                },
-                success: function (response) {
-                    alert("Updated Successfully");
-                    location.reload();
-                }
-            });
-
         });
 
     </script>
@@ -483,28 +444,6 @@
 
     </script>
 
-    <script>
-        $(document).on('click', '.saveisReturnedBtn', function () {
-
-            let id = $(this).data('id');
-            let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
-
-            $.ajax({
-                url: "/admin/projects/update-returned/" + id,
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    isReturned: isReturned,
-                },
-                success: function (response) {
-                    alert("Updated Successfully");
-                    location.reload();
-                }
-            });
-
-        });
-
-    </script>
 
     <script>
     let tableActive, tableReturned, tableForfeited;
