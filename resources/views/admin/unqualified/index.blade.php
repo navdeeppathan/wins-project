@@ -40,13 +40,12 @@
         <div class="content2 emd tab-active">
             @if($actives->count() > 0)
                 <div class="table-responsive">
-                    <table id="emdactive" class="table table-striped class-table nowrap" style="width:100%">
+                    <table id="emdactive" class="table  cell-border class-table nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>NIT No</th>
-                                
                                 <th>Location</th>
                                 <th>Department</th>
                                 <th>Estimate Amount</th>

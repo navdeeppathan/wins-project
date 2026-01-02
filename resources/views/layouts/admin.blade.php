@@ -907,7 +907,8 @@
                 font-weight: 600;
                 font-size: 14px;
                 padding: 14px 16px;
-                border: none !important;
+                border: 1px solid #9a9b9f !important;
+               
 
 
             }
@@ -915,7 +916,7 @@
             /* ================= CRITICAL FIX ================= */
             /* OVERRIDE BOOTSTRAP 5 TABLE BACKGROUND */
             .table.class-table > :not(caption) > tbody > tr:nth-child(odd) > * {
-                background-color: #f7f8ff !important;
+                background-color: #a0a9ec !important;
             }
 
             .table.class-table > :not(caption) > tbody > tr:nth-child(even) > * {
@@ -931,7 +932,7 @@
                 padding: 14px 16px;
                 font-size: 13px;
                 color: #555;
-                border: none !important;
+                border: 1px solid #9a9b9f !important;
                 vertical-align: middle;
             }
 

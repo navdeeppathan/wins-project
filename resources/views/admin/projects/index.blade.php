@@ -14,7 +14,7 @@
 @if($projects->count() > 0)
 
 <div class="table-responsive">
-    <table id="projectTable" class="table class-table nowrap" style="width:100%">
+    <table id="projectTable" class="table table-bordered class-table nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>#</th>

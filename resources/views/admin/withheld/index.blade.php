@@ -223,7 +223,7 @@
         <div class="content2 emd tab-forfeited">
             @if($forfieteds->count() > 0)
                 <div class="table-responsive">
-                    <table id="emdforfieted" class="table table-striped class-table nowrap" style="width:100%">
+                    <table id="emdforfieted" class="table table-striped cell-border class-table nowrap" style="width:100%">
                         <thead>
                             <tr>
                                 <th>#</th>
