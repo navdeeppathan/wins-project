@@ -49,6 +49,7 @@
     <div class="table-responsive">
         <table id="billingTable" class="table class-table nowrap" style="width:100%">
             <thead class="table-dark">
+
                 <tr>
                     <th>#</th>
                     <th>BILL NUMBER</th>
@@ -67,7 +68,8 @@
             </thead>
 
             <tbody>
-            @forelse($project->billings as $index => $bill)
+            @forelse($billings as $index => $bill)
+           
                 <tr data-id="{{ $bill->id }}">
                     <td>{{ $index+1 }}</td>
 
@@ -87,9 +89,9 @@
                     <td><input type="number" step="0.01" class="form-control gross_amount" value="{{ $bill->gross_amount }}"></td>
 
                     <td>
-                        <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}">
-                            {{ number_format($bill->recoveries?->sum('amount') ?? 0, 2) }}
-                        </a>
+                       
+                            {{ number_format($bill->recoveries_sum_total ?? 0, 2) }}
+                       
                     </td>
 
                     <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
@@ -107,7 +109,10 @@
                     </td>
 
 
-                    <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
+                    <td>
+                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                         <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Add Recoveries</a>
+                    </td>
 
                     <td class="completionCell" style="display:none;">
                         <input type="date" class="form-control completion_date"
@@ -145,13 +150,16 @@
             </tbody>
         </table>
 
-        <button id="addBillRow" class="btn btn-primary btn-sm mt-2">
-            + Add New Bill
-        </button>
+        
     </div>
 </div>
 
-<a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mt-3">Back to Home</a>
+<div class="d-flex align-items-center justify-content-end gap-2">
+    <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-3">Back to Home</a>
+    <button id="addBillRow" class="btn btn-primary btn-sm mt-3">
+                + Add New Bill
+    </button>
+</div>
 @endsection
 
 @push('scripts')

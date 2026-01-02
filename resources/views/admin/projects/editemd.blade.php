@@ -91,7 +91,7 @@
                 name="row_index"
                 value="{{ $i }}"
                 class="btn btn-success btn-sm">
-                Save
+                Update
             </button>
         </td>
 

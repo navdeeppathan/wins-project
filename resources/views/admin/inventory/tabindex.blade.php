@@ -352,9 +352,13 @@ $(function () {
 
  new DataTable('#inventoryTable', {
         scrollX: true,
+        scrollY:        400,
+        deferRender:    true,
+        scroller:       true,
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
+        fixedHeader: true,
         
 
         /* 🔥 GUARANTEED ROW COLOR FIX */

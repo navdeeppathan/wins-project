@@ -50,7 +50,7 @@
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '-' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
-                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td>
                     <td>

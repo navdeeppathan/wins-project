@@ -60,12 +60,12 @@
     </div>
 
     <div class="col-md-4 mb-3">
-        <label>Time Allowed (Number)</label>
+        <label>Time Allowed</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_number }}" disabled>
     </div>
 
     <div class="col-md-4 mb-3">
-        <label>Time Type</label>
+        <label>Temporal</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_type }}" disabled>
     </div>
 

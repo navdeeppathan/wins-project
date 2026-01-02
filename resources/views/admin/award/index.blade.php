@@ -28,6 +28,8 @@
                 <th>Award Letter No.</th>
                 <th>Award Date</th>
                 <th>Date of Start of Work</th>
+                <th>Agreement Number</th>
+
                 <th>Upload</th>
                 <th>Save</th>
             </tr>
@@ -50,11 +52,11 @@
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
-                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>{{ $p->acceptance_letter_no }}</td>
-                    <td>{{ date('d-m-y', strtotime($p->date)) ?? '-' }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date)) ?? '-' }}</td>
                     <td>
                         <input type="text"
                             class="form-control form-control-sm award_letter_no"
@@ -71,6 +73,12 @@
                             class="form-control form-control-sm date_ofstartof_work"
                             value="{{ $p->date_ofstartof_work }}">
                     </td>
+
+                    <td>
+                        <input type="text"
+                            class="form-control form-control-sm agreement_no"
+                            value="{{ $p->agreement_no }}">
+                    </td>
                     
                     <td>
                          @if($p->award_upload)
@@ -83,6 +91,7 @@
                         <input type="file"
                             class="form-control form-control-sm award_upload">
                     </td>
+
                     
                     <td>
                         {{-- @if (empty($p->award_letter_no)) --}}
@@ -139,6 +148,11 @@ $(document).on('click', '.saveAwardBtn', function () {
     formData.append(
         'date_ofstartof_work',
         row.find('.date_ofstartof_work').val()
+    );
+
+    formData.append(
+        'agreement_no',
+        row.find('.agreement_no').val()
     );
 
     let fileInput = row.find('.award_upload')[0];

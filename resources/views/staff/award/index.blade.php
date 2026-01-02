@@ -44,11 +44,11 @@
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> 
-                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>{{ $p->acceptance_letter_no }}</td>
-                    <td>{{ date('d-m-y', strtotime($p->date)) ?? '-' }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date)) ?? '-' }}</td>
                     <td>
                         <input type="text"
                             class="form-control form-control-sm award_letter_no"

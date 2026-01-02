@@ -38,12 +38,12 @@
 
     <div class="col-md-4 mb-3">
         <label>Date of Submission</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_of_start)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->date_of_start)) ?? '-' }}" disabled>
     </div>
 
     <div class="col-md-4 mb-3">
         <label>Date of Opening</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_of_opening)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->date_of_opening)) ?? '-' }}" disabled>
     </div>
 
 

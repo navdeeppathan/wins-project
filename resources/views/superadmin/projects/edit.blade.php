@@ -46,13 +46,13 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Time Allowed (Number) *</label>
+            <label class="form-label">Time Allowed *</label>
             <input type="number" name="time_allowed_number"
                    value="{{ old('time_allowed_number', $project->time_allowed_number) }}" class="form-control" required>
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Time Type *</label>
+            <label class="form-label">Temporal *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
                 @foreach(['Days','Weeks','Months'] as $t)
@@ -217,11 +217,11 @@
                             <input type="date" name="start_date" class="form-control" required>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label">Time Allowed (Number) *</label>
+                            <label class="form-label">Time Allowed *</label>
                             <input type="number" name="time_allowed_number" class="form-control" required>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label">Time Type *</label>
+                            <label class="form-label">Temporal *</label>
                             <select name="time_allowed_type" class="form-select" required>
                                 <option value="Days">Days</option>
                                 <option value="Weeks">Weeks</option>

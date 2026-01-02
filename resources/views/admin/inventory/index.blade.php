@@ -215,7 +215,8 @@
 </table>
 </div>
 
-<div class="d-flex align-items-center justify-content-end">
+<div class="d-flex align-items-center justify-content-end gap-4">
+ <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>   
 <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
 </div>
 @endsection
@@ -338,9 +339,13 @@ $(function () {
 
  new DataTable('#inventoryTable', {
         scrollX: true,
+        scrollY: true,
         scrollCollapse: true,
-        responsive: false,
+        responsive: true,
         autoWidth: false,
+        fixedHeader: true,
+        
+        
         
 
         /* 🔥 GUARANTEED ROW COLOR FIX */

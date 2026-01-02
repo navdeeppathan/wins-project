@@ -49,4 +49,6 @@ class ScheduleWork extends Model
     {
         return $this->belongsTo(Inventory::class);
     }
+
+    
 }

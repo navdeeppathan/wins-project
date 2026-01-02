@@ -325,24 +325,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#features">Features</a></li>
-            {{-- <li><a href="#testimonials">Testimonials</a></li> --}}
-            {{-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li> --}}
+            
             <li><a href="#call-to-action">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -354,10 +337,7 @@
                 Login <i class="bi bi-arrow-right"></i>
               </a>
 
-              {{-- <a href="#" class="btn-contact">
-                <i class="bi bi-telephone"></i>
-                Contact Us
-              </a> --}}
+              
             </div>
         </div>
       </div>
@@ -430,8 +410,7 @@
                 <div class="media-stack" data-aos="zoom-in" data-aos-delay="200">
                 <figure class="media primary shadow-sm">
                     <p class="lead p-4">
-                The best way to manage your projects.
-                <br>
+                
                 We are deeply grateful to Shri Sanjeev Kumar, Assistant Engineer (Civil), whose expert
                 guidance and shared knowledge were instrumental in the successful completion of this
                 project.
@@ -895,33 +874,7 @@
 
         <!-- Services Grid -->
         <div class="row gy-5 d-flex align-items-center justify-content-center">
-          {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-card">
-              <div class="service-number">01</div>
-              <div class="service-icon-wrapper">
-                <div class="service-icon">
-                  <i class="bi bi-laptop"></i>
-                </div>
-              </div>
-              <div class="service-content">
-                <h4>Wins Pricing</h4>
-                <p>No hidden fees, no surprises. Scale as you grow with confidence. At Rs.7,200/- excluding GST annual pricing for First Year (Rs.14,400/- excluding GST from second year) to ensure P.O.V. aligns with your needs, </p>
-                <ul class="service-list">
-                  <li>We offer a FREE trial for first 3 months</li>
-                  <li>Additionally, you can book a demo to get a hands-on feel of its functionalities</li>
-                  <li>P.O.V. prides itself on robust technical support</li>
-                  <li>Whether you prefer email, chat, or phone, our team is ready to assist, ensuring a seamless user experience.</li>
-                </ul>
-                <div class="service-pricing">
-                  <span class="price-tag">₹ 7,200/-</span>
-                  <a href="#" class="service-btn">
-                    <span>Learn More</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div> --}}
+         
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-card featured">
@@ -934,40 +887,29 @@
               
                <div class="service-content">
                 <h4>Project OverView (P.O.V.) Pricing</h4>
-                <p>We believe in the power of our platform Project OverView (P.O.V.), which is why we invite you to 
-              experience it firsthand - completely risk-free. No hidden fees, no surprises. Annual price starting at 
-              Rs.7,200/- plus GST for Basic Plan and Rs.10,800/- plus GST for Advance Plan, to ensure Project 
-              OverView (P.O.V.) aligns with your needs, we offer a FREE trial for first 3 months. Additionally, you 
-              can book a demo to get a hands-on feel of its functionalities. Project OverView (P.O.V.) prides itself 
-              on robust technical support. Whether you prefer email, chat, or phone, our team is ready to assist, 
-              ensuring a seamless user experience.</p>
-                {{-- <ul class="service-list">
-                  <li>We offer a FREE trial for first 3 months</li>
-                  <li>Additionally, you can book a demo to get a hands-on feel of its functionalities</li>
-                  <li>Project OverView (P.O.V.) prides itself on robust technical support</li>
-                  <li>Whether you prefer email, chat, or phone, our team is ready to assist, ensuring a seamless user experience.</li>
-                  <li>Start Your Project OverView (P.O.V.) Journey Today!</li>
-                </ul> --}}
+                <p>
+                  We believe in the power of our platform Project
+                  OverView (P.O.V.), which is why we invite you to
+                  experience it firsthand - completely risk-free. No
+                  hidden fees, No surprises, Annual price starting
+                  at Rs.7,200/- plus GST for Basic Plan and
+                  Rs.10,800/- plus GST for Advance Plan to ensure
+                  Project OverView (P.O.V.) aligns with your needs.
+                  We offer a FREE trial for first 3 months,
+                  additionally, you can book a demo to get a
+                  hands-on feel of its functionalities. Project
+                  OverView (P.O.V.) prides itself on robust technical
+                  support, whether you prefer email, chat or
+                  phone, our team is ready to assist and ensuring a
+                  seamless user experience.
+                </p>
+                
                 <div class="service-pricing">
                   
-                  <span class="price-tag">₹ 7,200/-</span>
-                  
-                  
-                  {{-- <a href="#" class="service-btn">
-                    <span>Learn More</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a> --}}
+                  <span style="color: #fff; font-weight:500;">Price Starting @ ₹ 7,200/- plus GST annually</span>
+                
                 </div>
-                <div class="service-pricing">
-                  
-                  
-                  
-                  <span class="price-tag">₹ 10,800/- with GST</span>
-                  {{-- <a href="#" class="service-btn">
-                    <span>Learn More</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a> --}}
-                </div>
+               
               </div>
             </div>
           </div>

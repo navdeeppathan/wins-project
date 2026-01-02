@@ -23,7 +23,7 @@ class Recovery extends Model
 
     public function billing()
     {
-        return $this->belongsTo(Billing::class);
+        return $this->belongsTo(Billing::class, 'billing_id', 'id');
     }
     
 }

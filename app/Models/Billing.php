@@ -34,10 +34,7 @@ class Billing extends Model
         return $this->hasMany(BillingItem::class);
     }
 
-    public function recovery()
-    {
-        return $this->hasOne(Recovery::class);
-    }
+    
     public function recoveries()
     {
         return $this->hasMany(Recovery::class);

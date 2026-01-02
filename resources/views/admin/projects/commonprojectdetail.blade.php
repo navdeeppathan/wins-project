@@ -66,12 +66,12 @@
 
     <div class="col-md-4 mb-3">
         <label>Date Of Start Of Work</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_ofstartof_work)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->date_ofstartof_work)) ?? '-' }}" disabled>
     </div>
 
      <div class="col-md-4 mb-3">
         <label>DATE OF COMPLETION (STIPULATED)</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->stipulated_date_ofcompletion)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->stipulated_date_ofcompletion)) ?? '-' }}" disabled>
     </div>
 
     <div class="col-md-4 mb-3">

@@ -698,7 +698,7 @@ class ProjectController extends Controller
 
      public function awardIndex()
     {
-        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded'])
+        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement'])
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
@@ -755,13 +755,15 @@ class ProjectController extends Controller
             'award_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
             'award_date'       => 'nullable|date',
             'date_ofstartof_work'       => 'nullable|date',
+            'agreement_no'  => 'nullable|string',
         ]);
 
-        $project->status = 'awarded';
+        $project->status = 'agreement';
 
         $project->award_letter_no = $request->award_letter_no;
         $project->award_date = $request->award_date;
         $project->date_ofstartof_work = $request->date_ofstartof_work;
+        $project->agreement_no = $request->agreement_no;
 
          // ✅ BACKEND DATE CALCULATION
     if ($request->award_date && $project->time_allowed_number && $project->time_allowed_type) {

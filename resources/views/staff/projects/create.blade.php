@@ -50,7 +50,7 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Time Allowed (Number) *</label>
+            <label class="form-label">Time Allowed *</label>
             <select name="time_allowed_number" class="form-select"  required>
                 <option value="">Select</option>
                 @for ($i = 1; $i <= 120; $i++)
@@ -61,7 +61,7 @@
 
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Time Type *</label>
+            <label class="form-label">Temporal *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
                 <option value="Days">Days</option>

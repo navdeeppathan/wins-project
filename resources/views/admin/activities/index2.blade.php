@@ -75,12 +75,12 @@
 
     <div class="col-md-4 mb-3">
         <label>Date Of Start Of Work</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->date_ofstartof_work)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->date_ofstartof_work)) ?? '-' }}" disabled>
     </div>
 
      <div class="col-md-4 mb-3">
         <label>DATE OF COMPLETION (STIPULATED)</label>
-        <input type="text" class="form-control" value="{{ date('d-m-y', strtotime($project->stipulated_date_ofcompletion)) ?? '-' }}" disabled>
+        <input type="text" class="form-control" value="{{ date('d-m-Y', strtotime($project->stipulated_date_ofcompletion)) ?? '-' }}" disabled>
     </div>
 
     <div class="col-md-4 mb-3">
@@ -132,11 +132,11 @@
                   
 
                     </td>
-                    <td>
-                        <button class="btn btn-success btn-sm saveRow">Save</button>
-                        @if($index != 0)
+                    <td class="d-flex gap-2">
+                        <button class="btn btn-success btn-sm saveRow">Update</button>
+                       
                         <button class="btn btn-danger btn-sm removeRow">Del</button>
-                        @endif
+                      
                     </td>
                 </tr>
                 @empty
@@ -266,6 +266,40 @@ $(document).ready(function() {
 
 });
 </script>
+<script>
+$(document).on('change', '.weightage, .progresss', function () {
+
+    let row = $(this).closest('tr');
+
+    let weightage = parseInt(row.find('.weightage').val()) || 0;
+    let progress  = parseInt(row.find('.progresss').val()) || 0;
+
+    // ❌ Weightage > 100
+    if (weightage > 100) {
+        alert('Weightage cannot be greater than 100');
+        row.find('.weightage').val(100);
+        weightage = 100;
+    }
+
+    // ❌ Progress > Weightage
+    if (progress > weightage) {
+        alert('Progress cannot exceed Weightage');
+        row.find('.progresss').val(weightage);
+        progress = weightage;
+    }
+
+    // ❌ Weightage + Progress > 100
+    if ((weightage + progress) > 100) {
+        alert('Weightage + Progress cannot exceed 100');
+
+        let allowedProgress = 100 - weightage;
+        row.find('.progresss').val(allowedProgress > 0 ? allowedProgress : 0);
+    }
+
+});
+</script>
+
+
 <script>
 const chartData = @json($chartData);
 

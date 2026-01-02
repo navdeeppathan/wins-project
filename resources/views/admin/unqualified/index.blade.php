@@ -51,9 +51,7 @@
                                 <th>Department</th>
                                 <th>Estimate Amount</th>
                                 <th>EMD Amount</th>
-                                <th>Instrument Type</th>
-                                <th>Instrument Number</th>
-                                <th>Instrument Date</th>
+                                <th>Instrument Type/ Number/ Date</th>
                                 <th>Return</th>
                                 <th>Save</th>
                                 <th>Forfeited</th>
@@ -82,9 +80,7 @@
                                     <td>{{ number_format($project->estimated_amount, 2) }}</td>
 
                                     <td>{{ number_format($emd->amount, 2) }}</td>
-                                    <td>{{ $emd->instrument_type }}</td>
-                                    <td>{{ $emd->instrument_number }}</td>
-                                    <td>{{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
+                                    <td>{{ $emd->instrument_type }}/ {{ $emd->instrument_number }}/ {{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
 
                                     {{-- Returned --}}
                                     <td style="background:yellow;">

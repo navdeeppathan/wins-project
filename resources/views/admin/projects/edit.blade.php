@@ -57,17 +57,26 @@
                    value="{{ old('estimated_amount', $project->estimated_amount) }}" class="form-control" required>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <label class="form-label">Time Allowed (Number) *</label>
-            <input type="number" name="time_allowed_number"
-                   value="{{ old('time_allowed_number', $project->time_allowed_number) }}" class="form-control" required>
+       <div class="col-md-4 mb-3">
+            <label class="form-label">Time Allowed *</label>
+            <select name="time_allowed_number" class="form-select" required>
+                <option value="">Select</option>
+
+                @for ($i = 1; $i <= 120; $i++)
+                    <option value="{{ $i }}"
+                        {{ old('time_allowed_number', $project->time_allowed_number) == $i ? 'selected' : '' }}>
+                        {{ $i }}
+                    </option>
+                @endfor
+            </select>
         </div>
 
+
         <div class="col-md-4 mb-3">
-            <label class="form-label">Time Type *</label>
+            <label class="form-label">Temporal *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
-                @foreach(['Days','Weeks','Months'] as $t)
+                @foreach(['Days','Weeks','Months','Years'] as $t)
                     <option value="{{ $t }}" @selected($project->time_allowed_type==$t)>{{ $t }}</option>
                 @endforeach
             </select>

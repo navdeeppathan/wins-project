@@ -12,7 +12,15 @@ class BillingController extends Controller
 {
     public function index(Project $project)
     {
-        $billings = $project->billings()->latest()->get();
+         $billings = $project->billings()
+        ->withSum('recoveries','total')   // ✅ correct eager loading
+        ->latest()
+        ->get();
+
+      
+
+
+        // dd($billings);
         return view('admin.billing.index', compact('project','billings'));
     }
 

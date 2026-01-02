@@ -37,7 +37,7 @@
                     <td>{{  $p->departments->name ?? '-' }}</td> 
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
-                    <td>{{ date('d-m-y', strtotime($p->date_of_opening)) ?? '-' }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>
                         <a href="{{ route('staff.activities.index2', $p) }}" class="btn btn-sm btn-warning">Add Milestone</a>
                     </td>

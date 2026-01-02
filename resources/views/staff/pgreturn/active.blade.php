@@ -29,7 +29,7 @@
                     <td>{{  $project->name }}</td>
                     <td>{{  $project->nit_number }}</td>
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
-                    <td>{{ date('d-m-y', strtotime($project->date_of_opening)) ?? "-" }}</td>
+                    <td>{{ date('d-m-Y', strtotime($project->date_of_opening)) ?? "-" }}</td>
                     <td>{{  $project->state->name ?? '-' }}</td>
                     <td>{{  $project->departments->name ?? '-' }}</td> 
                     <td>{{  number_format( $emd->amount,2) }}</td>
