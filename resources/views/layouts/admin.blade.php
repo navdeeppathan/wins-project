@@ -989,16 +989,26 @@
 
 <style>
     /* 🔥 Allow full width inputs */
-    #example input.form-control,
+    
     #example select.form-select {
         min-width: 180px;
+        width: 100%;
+    }
+
+    #example input.form-control {
+        min-width: 100px;
+        width: 100%;
+    }
+
+    #example textarea.form-control {
+        min-width: 350px;
         width: 100%;
     }
 
     /* 🔥 Paid To & Narration extra wide */
     #example td:nth-child(3) input,
     #example td:nth-child(5) input {
-        min-width: 250px;
+        min-width: 100px;
     }
 
     /* 🔥 Disable text cutting */

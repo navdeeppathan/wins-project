@@ -81,7 +81,7 @@
             <th>Rate</th>
             <th>Amount</th>
              
-            <th>Measured Quantity</th>
+            <th>Measured Qty</th>
             {{-- <th>Category</th> --}}
             <th>Add Inventory</th>
             <th >Action</th>
@@ -129,7 +129,7 @@
                 <td>
                     <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
                     class="btn btn-primary btn-sm">
-                        Add
+                        Add Inventory
                     </a>
                 </td>
 
@@ -168,18 +168,11 @@ document.getElementById('addRow').onclick = () => {
         <td><input class="form-control unit" value="1"></td>
         <td><input class="form-control rate"></td>
         <td class="amount">0.00</td>
-        <td>
-            <select class="form-select inventory_select">
-                <option value="">Select Inventory</option>
-                @foreach($inventories as $inventory)
-                    <option value="{{ $inventory->id }}">
-                        {{ $inventory->description }}
-                    </option>
-                @endforeach
-            </select>
-        </td>
-        <td><input class="form-control measured_quantity"></td>
         
+        <td><input class="form-control measured_quantity"></td>
+        <td>
+            
+        </td>
         <td>
             <button type="button" class="btn btn-success btn-sm saveRow">save</button>
             <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>

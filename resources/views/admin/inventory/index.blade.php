@@ -49,12 +49,10 @@
     // $selectedProjectId = request('project_id');
 
     $categories = [
-        'MATERIAL',
+       
         'WAGES',
         'LOGISTIC',
-        'MAINTENANCE',
-        'OFFICE',
-        'T&P',
+        
         'FEE',
         'TOURS',
         'OTHERS',

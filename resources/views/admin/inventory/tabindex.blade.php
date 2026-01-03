@@ -63,27 +63,27 @@
 @endphp
 
 <style>
-    /* 🔥 Allow full width inputs */
+    /* ðŸ”¥ Allow full width inputs */
     #inventoryTable input.form-control,
     #inventoryTable select.form-select {
-        min-width: 180px;
+        min-width: 120px;
         width: 100%;
     }
 
-    /* 🔥 Paid To & Narration extra wide */
+    /* ðŸ”¥ Paid To & Narration extra wide */
     #inventoryTable td:nth-child(3) input,
     #inventoryTable td:nth-child(5) input {
-        min-width: 250px;
+        min-width: 140px;
     }
 
-    /* 🔥 Disable text cutting */
+    /* ðŸ”¥ Disable text cutting */
     #inventoryTable input,
     #inventoryTable select {
         white-space: nowrap;
         overflow-x: auto;
     }
 
-    /* 🔥 Horizontal scroll inside input */
+    /* ðŸ”¥ Horizontal scroll inside input */
     #inventoryTable input {
         text-overflow: clip;
     }
@@ -99,7 +99,7 @@
     <thead class="table-light">
     <tr>
         <th>#</th>
-        <th>Project</th>
+        {{-- <th>Project</th> --}}
         <th>Date</th>
         <th>Paid To</th>
         <th>Category</th>
@@ -121,7 +121,7 @@
                 <td>{{ $index + 1 }}</td>
 
                 {{-- PROJECT --}}
-                <td>
+                {{-- <td>
                     @if($selectedProjectId)
                         <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong>
                         <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
@@ -136,7 +136,7 @@
                             @endforeach
                         </select>
                     @endif
-                </td>
+                </td> --}}
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
@@ -180,14 +180,14 @@
             <tr>
                 <td>1</td>
 
-                <td>
+                {{-- <td>
                     <select class="form-select project_select">
                         <option value="">Select Project</option>
                         @foreach($projects as $project)
                             <option value="{{ $project->id }}">{{ $project->name }}</option>
                         @endforeach
                     </select>
-                </td>
+                </td> --}}
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
                 <td><input type="text" class="form-control paid_to"></td>
@@ -251,7 +251,7 @@ $(function () {
         let row = `
         <tr>
             <td>${index}</td>
-            <td>${projectCell}</td>
+            
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
             <td><input type="text" class="form-control paid_to"></td>
             <td>
@@ -301,7 +301,7 @@ $(function () {
             ? row.find('.project_id').val()
             : row.find('.project_select').val();
 
-        formData.append('project_id', projectId);
+        // formData.append('project_id', projectId);
         formData.append('date', row.find('.date').val());
         formData.append('category', row.find('.category').val());
         formData.append('description', row.find('.description').val());
