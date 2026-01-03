@@ -22,7 +22,7 @@
                 <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
-                <th>Estimate Amount</th>
+                <th>Estimate AMT</th>
                 <th>Tendered Amount</th>
                 <th>Date of Opening</th>
                 <th width="160">Actions</th>

@@ -27,6 +27,8 @@ class Inventory extends Model
                 'dismantals',
                 'dismantal_amount',
                 'dismantal_rate',
+                'schedule_work_id'
+
             
     ];
 
@@ -43,5 +45,11 @@ class Inventory extends Model
    public function scheduleOfWorks()
    {
      return $this->hasMany(ScheduleWork::class);
+   }
+
+   public function schedule()
+   {
+     return $this->belongsTo(ScheduleWork::class, 'schedule_work_id', 'id');
+
    }
 }

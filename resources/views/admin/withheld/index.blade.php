@@ -49,8 +49,8 @@
                                 
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate Amount</th>
-                                <th>EMD Amount</th>
+                                <th>Estimate AMT</th>
+                                <th>EMD AMT</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>
@@ -152,8 +152,8 @@
                                 
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate Amount</th>
-                                <th>EMD Amount</th>
+                                <th>Estimate AMT</th>
+                                <th>EMD AMT</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>
@@ -231,9 +231,9 @@
                                 <th>NIT No</th>
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate Amount</th>
+                                <th>Estimate AMT</th>
 
-                                <th>EMD Amount</th>
+                                <th>EMD AMT</th>
                                 <th>Instrument Type/ Number/ Date</th>
                                 <th>Forfeited</th>
                                 <th>Save</th>

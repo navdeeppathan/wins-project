@@ -24,73 +24,99 @@
                 </thead>
 
                 <tbody>
-                @forelse($vendors as $index => $v)
-                    <tr data-id="{{ $v->id }}">
-                        <td>{{ $index + 1 }}</td>
+                @if($vendors->count())
+    @foreach($vendors as $index => $v)
+        <tr data-id="{{ $v->id }}">
+            <td>{{ $index + 1 }}</td>
 
-                        {{-- State --}}
-                        <td>
-                            <select class="form-select state">
-                                <option value="">Select State</option>
-                                @foreach($states as $state)
-                                    <option value="{{ $state->name }}"
-                                        {{ $v->state == $state->name ? 'selected' : '' }}>
-                                        {{ $state->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </td>
+            <td>
+                <select class="form-select state">
+                    <option value="">Select State</option>
+                    @foreach($states as $state)
+                        <option value="{{ $state->name }}"
+                            {{ $v->state == $state->name ? 'selected' : '' }}>
+                            {{ $state->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
 
-                        {{-- Vendor Agency --}}
-                        <td>
-                            <input type="text"
-                                   class="form-control vendor_agency_name"
-                                   value="{{ $v->vendor_agency_name }}">
-                        </td>
+            <td>
+                <input type="text"
+                       class="form-control vendor_agency_name"
+                       value="{{ $v->vendor_agency_name }}">
+            </td>
 
-                        {{-- Contact Person --}}
-                        <td>
-                            <input type="text"
-                                   class="form-control contact_person"
-                                   value="{{ $v->contact_person }}">
-                        </td>
+            <td>
+                <input type="text"
+                       class="form-control contact_person"
+                       value="{{ $v->contact_person }}">
+            </td>
 
-                        {{-- Contact Number --}}
-                        <td>
-                            <input type="text"
-                                   class="form-control contact_number"
-                                   value="{{ $v->contact_number }}">
-                        </td>
+            <td>
+                <input type="text"
+                       class="form-control contact_number"
+                       value="{{ $v->contact_number }}">
+            </td>
 
-                        {{-- Email --}}
-                        <td>
-                            <input type="email"
-                                   class="form-control email_id"
-                                   value="{{ $v->email_id }}">
-                        </td>
+            <td>
+                <input type="email"
+                       class="form-control email_id"
+                       value="{{ $v->email_id }}">
+            </td>
 
-                        {{-- Actions --}}
-                        <td>
-                            <button class="btn btn-success btn-sm saveRow">Update</button>
-                            <button class="btn btn-danger btn-sm removeRow">Del</button>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" class="text-center text-muted">
-                            No vendors found.
-                        </td>
-                    </tr>
-                @endforelse
-                </tbody>
-            </table>
+            <td>
+                <button class="btn btn-success btn-sm saveRow">Update</button>
+                <button class="btn btn-danger btn-sm removeRow">Del</button>
+            </td>
+        </tr>
+    @endforeach
+    @else
+        {{-- EMPTY EDITABLE ROW --}}
+        <tr>
+            <td>1</td>
 
-            <button id="addRow" class="btn btn-primary btn-sm mt-2 float-end">
-                + Add New Vendor
-            </button>
+            <td>
+                <select class="form-select state">
+                    <option value="">Select State</option>
+                    @foreach($states as $state)
+                        <option value="{{ $state->name }}">{{ $state->name }}</option>
+                    @endforeach
+                </select>
+            </td>
 
+            <td>
+                <input type="text" class="form-control vendor_agency_name">
+            </td>
+
+            <td>
+                <input type="text" class="form-control contact_person">
+            </td>
+
+            <td>
+                <input type="text" class="form-control contact_number">
+            </td>
+
+            <td>
+                <input type="email" class="form-control email_id">
+            </td>
+
+            <td>
+                <button class="btn btn-success btn-sm saveRow">Save</button>
+                <button class="btn btn-danger btn-sm removeRow">Del</button>
+            </td>
+        </tr>
+    @endif
+
+                    </tbody>
+                </table>
+
+                <button id="addRow" class="btn btn-primary btn-sm mt-2 float-end">
+                    + Add New Vendor
+                </button>
+
+            </div>
         </div>
-    </div>
 </div>
 
 @endsection

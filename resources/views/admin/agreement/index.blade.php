@@ -29,7 +29,7 @@
                 <th>Award Letter No.</th>
                 <th>Award Letter Date</th>
                 <th>Stipulated Date of Completion</th>
-                <th>Estimate Amount</th>
+                <th>Estimate AMT</th>
                 <th>Tendered Amount</th>
                 <th>Agreement Number</th>
                 <th>Date of Start of Work</th>

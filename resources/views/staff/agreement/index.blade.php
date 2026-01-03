@@ -23,7 +23,7 @@
                 <th>Department</th>
                 <th>Award Letter No.</th>
                 <th>Award Date</th>
-                <th>Estimate Amount</th>
+                <th>Estimate AMT</th>
                 <th>Tendered Amount</th>
                 <th>Agreement No.</th>
                 <th>Agreement Start Date</th>

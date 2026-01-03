@@ -83,10 +83,12 @@ class InventoryController extends Controller
             'description' => 'nullable|string',
             'paid_to'     => 'nullable|string|max:255',
             'voucher'     => 'nullable|string|max:100',
-            'quantity'    => 'required|numeric|min:0',
-            'amount'      => 'required|numeric|min:0',
+            'quantity'    => 'nullable|numeric|min:0',
+            'amount'      => 'nullable|numeric|min:0',
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'schedule_work_id' => 'nullable',
+
         ]);
 
         // 🧮 Net Payable
@@ -126,10 +128,11 @@ class InventoryController extends Controller
             'description' => 'nullable|string',
             'paid_to'     => 'nullable|string|max:255',
             'voucher'     => 'nullable|string|max:100',
-            'quantity'    => 'required|numeric|min:0',
-            'amount'      => 'required|numeric|min:0',
+            'quantity'    => 'nullable|numeric|min:0',
+            'amount'      => 'nullable|numeric|min:0',
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'schedule_work_id' => 'nullable',
         ]);
 
         // 🧮 Net Payable

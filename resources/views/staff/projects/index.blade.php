@@ -23,8 +23,8 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate Amount</th>
-                <th>EMD Amount</th>
+                <th>Estimate AMT</th>
+                <th>EMD AMT</th>
                 <th>Qualified</th>
                 
                 <th width="160">Actions</th>

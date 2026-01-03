@@ -1,53 +1,110 @@
 @extends('layouts.admin')
-
-@section('title', 'Inventory')
+@section('title','Schedule Of Work')
 
 @section('content')
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<h4 class="mb-3">Schedule Of Work – {{ $project->name }}</h4>
+
 @php
-    $selectedProjectId = request('project_id');
+    $estimated = (float) $project->estimated_amount;
+    $tendered  = (float) $project->tendered_amount;
+
+    $percentageText = '-';
+    if ($estimated > 0 && $tendered > 0) {
+        $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+        $percentageText = $percentage < 0
+            ? abs($percentage).' % BELOW'
+            : $percentage.' % ABOVE';
+    }
 @endphp
 
-<h3 class="mb-3">
-    Inventory
-    @if($selectedProjectId)
-        â€” <strong>{{ $projects->firstWhere('id', $selectedProjectId)->name }}</strong>
-    @endif
-</h3>
-
-@if ($selectedProjectId)
-<div class="row">
-
-    <div class="col-md-4 mb-3">
+{{-- PROJECT INFO --}}
+<div class="row mb-4">
+    <div class="col-md-4 mb-2">
         <label>Department</label>
-        <input class="form-control"
-               value="{{ $project->departments->name ?? '-' }}"
-               disabled>
+        <input class="form-control" value="{{ $project->departments->name ?? '-' }}" disabled>
     </div>
-
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-2">
         <label>State</label>
-        <input class="form-control"
-               value="{{ $project->state->name ?? '-' }}"
-               disabled>
+        <input class="form-control" value="{{ $project->state->name ?? '-' }}" disabled>
     </div>
-
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-2">
         <label>NIT Number</label>
-        <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
+        <input class="form-control" value="{{ $project->nit_number }}" disabled>
     </div>
-
-     {{-- <div class="col-md-12 mb-3">
+{{-- 
+    <div class="col-md-12 mb-2">
         <label>Project Name</label>
-        <input type="text" class="form-control" value="{{ $project->name }}" disabled>
+        <input class="form-control" value="{{ $project->name }}" disabled>
     </div> --}}
 
-</div>    
-    
-@endif
+    <div class="col-md-4 mb-2">
+        <label>Estimated Amount</label>
+        <input class="form-control" value="{{ $project->estimated_amount }}" disabled>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label>Time Allowed</label>
+        <input class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label>Tender Amount</label>
+        <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <label>Date of Start</label>
+        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->date_ofstartof_work)) }}" disabled>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label>Date of Completion</label>
+        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->stipulated_date_ofcompletion)) }}" disabled>
+    </div>
+    <div class="col-md-4 mb-2">
+        <label>Percentage</label>
+        <input class="form-control {{ str_contains($percentageText,'BELOW')?'text-danger':'text-success' }}"
+               value="{{ $percentageText }}" disabled>
+    </div>
+</div>
+
+{{-- TABLE --}}
+<div class="table-responsive">
+<table id="example" class="table class-table nowrap" style="width:100%">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+           
+            <th>DESCRIPTION</th>
+            <th>QUANTITY</th>
+            <th>UNIT</th>
+            <th>RATE</th>
+            <th>AMOUNT</th>
+            <th>MEASURED QUANTITY</th>
+            
+        </tr>
+    </thead>
+
+    <tbody id="workTable">
+         {{-- @foreach($scheduleWork as $w) --}}
+        <tr>
+            <td>1</td>
+            <td>{{ $scheduleWork->description }}</td>
+            <td>{{ $scheduleWork->quantity }}</td>
+            <td>{{ $scheduleWork->unit }}</td>
+            <td>{{ number_format($scheduleWork->rate, 2) }}</td>
+            <td>{{ number_format($scheduleWork->amount, 2) }}</td>
+            <td>{{ $scheduleWork->measured_quantity }}</td>
+        </tr>
+        {{-- @endforeach --}}
+    </tbody>
+</table>
+</div>
+
+
 
 @php
-    // $selectedProjectId = request('project_id');
-
+    
     $categories = [
         'MATERIAL',
         'WAGES',
@@ -94,55 +151,35 @@
 </style>
 
 
-<div class="table-responsive">
+<div class="table-responsive mt-3">
 <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
     <thead class="table-light">
     <tr>
         <th>#</th>
-        {{-- <th>Project</th> --}}
-        <th>Date</th>
-        <th width="">Paid To</th>
-        <th>Category</th>
+       
+        <th>DATE</th>
         
-        <th>Voucher Number</th>
-        <th>Voucher Narration</th>
-        <th>Quantity</th>
-        <th>Amount</th>
-        <th>Deduction</th>
-        <th>Net Payment</th>
-        <th>Upload</th>
-        <th width="">Action</th>
+        <th>CATEGORY</th>
+      
+        <th>DESCRIPTION OF ITEM</th>
+        <th>QUANTITY</th>
+        
+        <th width="">ACTION</th>
     </tr>
     </thead>
 
     <tbody>
-        @forelse($items as $index => $i)
+        @forelse($inventories as $index => $i)
             <tr data-id="{{ $i->id }}">
                 <td>{{ $index + 1 }}</td>
-
-                {{-- PROJECT --}}
-                {{-- <td>
-                    @if($selectedProjectId)
-                        <strong>{{ $projects->firstWhere('id',$selectedProjectId)->name }}</strong> --}}
-                        <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
-                    {{-- @else
-                        <select class="form-select project_select">
-                            <option value="">Select Project</option>
-                            @foreach($projects as $project)
-                                <option value="{{ $project->id }}"
-                                    {{ $i->project_id == $project->id ? 'selected' : '' }}>
-                                    {{ $project->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @endif
-                </td> --}}
-
+                
+                <input type="hidden" class="project_id" value="{{ $project->id }}">
+                <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
+                   
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
                 
-                <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
-                <td>
+               <td>
                     <select class="form-select category">
                         <option value="">Select</option>
                         @foreach($categories as $cat)
@@ -153,26 +190,13 @@
                     </select>
                 </td>
                 
-                <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
-                <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
-                <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td>
-
-                <td class="net_payable">{{ number_format($i->net_payable,2) }}</td>
-
-                <td>
-                    @if($i->upload)
-                        <a href="{{ asset($i->upload) }}" target="_blank"
-                        class="btn btn-sm btn-outline-primary mb-1">View</a>
-                    @endif
-                    <input type="file" class="form-control upload">
-                </td>
-
+              
                 <td>
                     
-                    <button class="btn btn-success btn-sm">Saved</button>
+                    <button class="btn btn-success btn-sm saveRow">Update</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
             </tr>
@@ -181,10 +205,10 @@
                 <td>1</td>
 
                 
-                <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
+                <input type="hidden" class="project_id" value="{{ $project->id }}">
+                <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-                <td><input type="text" class="form-control paid_to"></td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -198,13 +222,9 @@
 
                 <td><input type="text" class="form-control description"></td>
                 
-                <td><input type="text" class="form-control voucher"></td>
+                
                 <td><input type="number" class="form-control quantity"></td>
-                <td><input type="number" class="form-control amount"></td>
-                <td><input type="number" class="form-control deduction"></td>
-                <td class="net_payable">0.00</td>
-                <td><input type="file" class="form-control upload"></td>
-
+                
                 <td>
                     <button class="btn btn-success btn-sm saveRow">Save</button>
                 </td>
@@ -215,31 +235,30 @@
 </div>
 
 <div class="d-flex align-items-center justify-content-end gap-4">
- <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>   
+ <a href="{{ route('admin.schedule-work.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Schedule Work</a>   
 <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
 </div>
-@endsection
+
 
 @push('scripts')
 <script>
 $(function () {
 
-    let selectedProjectId = "{{ $selectedProjectId }}";
+    let selectedProjectId = "{{ $project->id }}";
+    let schedule_workId = "{{ $scheduleWork->id }}";
 
     // ADD ROW
     $('#addRow').click(function () {
 
         let index = $('#inventoryTable tbody tr').length + 1;
 
-        
-            
-
         let row = `
         <tr>
             <td>${index}</td>
             <input type="hidden" class="project_id" value="${selectedProjectId}">
+            <input type="hidden" class="schedule_work_id" value="${schedule_workId}">
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-            <td><input type="text" class="form-control paid_to"></td>
+           
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -250,12 +269,9 @@ $(function () {
             </td>
             <td><input type="text" class="form-control description"></td>
             
-            <td><input type="text" class="form-control voucher"></td>
+           
             <td><input type="number" class="form-control quantity"></td>
-            <td><input type="number" class="form-control amount"></td>
-            <td><input type="number" class="form-control deduction"></td>
-            <td class="net_payable">0.00</td>
-            <td><input type="file" class="form-control upload"></td>
+            
             <td>
                 <button class="btn btn-success btn-sm saveRow">Save</button>
                 <button class="btn btn-danger btn-sm removeRow">Del</button>
@@ -265,13 +281,7 @@ $(function () {
         $('#inventoryTable tbody').append(row);
     });
 
-    // NET PAYABLE
-    $(document).on('input', '.amount, .deduction', function () {
-        let row = $(this).closest('tr');
-        let a = parseFloat(row.find('.amount').val()) || 0;
-        let d = parseFloat(row.find('.deduction').val()) || 0;
-        row.find('.net_payable').text((a - d).toFixed(2));
-    });
+    
 
     // SAVE
     $(document).on('click', '.saveRow', function () {
@@ -287,20 +297,16 @@ $(function () {
             ? row.find('.project_id').val()
             : row.find('.project_select').val();
 
+        let schedule_work_id = row.find('.schedule_work_id').val()
+               
         formData.append('project_id', projectId);
+        formData.append('schedule_work_id', schedule_work_id);
         formData.append('date', row.find('.date').val());
         formData.append('category', row.find('.category').val());
         formData.append('description', row.find('.description').val());
-        formData.append('paid_to', row.find('.paid_to').val());
-        formData.append('voucher', row.find('.voucher').val());
+        
         formData.append('quantity', row.find('.quantity').val());
-        formData.append('amount', row.find('.amount').val());
-        formData.append('deduction', row.find('.deduction').val());
-
-        let file = row.find('.upload')[0];
-        if (file && file.files.length) {
-            formData.append('upload', file.files[0]);
-        }
+        
 
         $.ajax({
             url: id
@@ -364,3 +370,8 @@ $(function () {
     });
 </script>
 @endpush
+
+
+
+
+@endsection

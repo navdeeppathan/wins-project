@@ -83,7 +83,7 @@
         </div>
         
         <div class="col-md-4 mb-3">
-            <label class="form-label">EMD Amount</label>
+            <label class="form-label">EMD AMT</label>
 
             {{-- Visible (readonly, not disabled) --}}
             <input type="text"

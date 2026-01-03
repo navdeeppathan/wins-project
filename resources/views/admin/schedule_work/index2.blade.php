@@ -80,9 +80,10 @@
             <th>Unit</th>
             <th>Rate</th>
             <th>Amount</th>
-             <th>Inventory</th>
+             
             <th>Measured Quantity</th>
             {{-- <th>Category</th> --}}
+            <th>Add Inventory</th>
             <th >Action</th>
         </tr>
     </thead>
@@ -100,7 +101,7 @@
                 <td><input class="form-control unit" value="{{ $w->unit }}"></td>
                 <td><input class="form-control rate" value="{{ $w->rate }}"></td>
                 <td class="amount">{{ number_format($w->amount,2) }}</td>
-                 <td>
+                 {{-- <td>
                     
                     <select class="form-select inventory_select">
                         <option value="">Select Inventory</option>
@@ -113,7 +114,7 @@
                     </select>
 
                    
-                </td>
+                </td> --}}
                 <td><input class="form-control measured_quantity" value="{{ $w->measured_quantity }}"></td>
 
 
@@ -125,6 +126,13 @@
                         @endforeach
                     </select>
                 </td> --}}
+                <td>
+                    <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
+                    class="btn btn-primary btn-sm">
+                        Add
+                    </a>
+                </td>
+
 
                 <td>
                     <button type="button" class="btn btn-success btn-sm saveRow">Update</button>
@@ -140,6 +148,9 @@
 <div class="text-end mt-3">
     <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
 </div>
+
+
+
 
 {{-- SCRIPT --}}
 <script>

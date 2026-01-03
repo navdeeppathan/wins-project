@@ -62,7 +62,7 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">EMD Amount</label>
+            <label class="form-label">EMD AMT</label>
             <input type="number" step="0.01" name="emd_amount"
                    value="{{ old('emd_amount', $project->emd_amount) }}" class="form-control">
         </div>

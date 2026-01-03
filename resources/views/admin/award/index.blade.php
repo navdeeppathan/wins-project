@@ -21,7 +21,7 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate Amount</th>
+                <th>Estimate AMT</th>
                 <th>Tendered Amount</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>

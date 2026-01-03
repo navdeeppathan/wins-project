@@ -27,7 +27,8 @@ class ScheduleWork extends Model
         'measured_quantity',
         'category',
         'inventory_id',
-        'dismantals'
+        'dismantals',
+        
     ];
 
     // If you want to disable timestamps
@@ -50,5 +51,9 @@ class ScheduleWork extends Model
         return $this->belongsTo(Inventory::class);
     }
 
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
     
 }

@@ -22,6 +22,15 @@ class ScheduleWorkController extends Controller
         return view('admin.schedule_work.index2', compact('project','works','inventories'));
     }
 
+
+    public function index3(Project $project,ScheduleWork $scheduleWork)
+    {
+        $inventories = $scheduleWork->inventories;
+
+
+        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories'));
+    }
+
     // public function save(Request $request, Project $project)
     // {
     //     if (!$request->has('work')) return back();

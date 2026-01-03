@@ -22,8 +22,8 @@
                 <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
-                <th>Estimate Amount</th>         
-                <th>EMD Amount</th>
+                <th>Estimate AMT</th>         
+                <th>EMD AMT</th>
                 <th>Date of Opening</th>
                 <th>Actions</th>
             </tr>

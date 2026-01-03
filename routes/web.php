@@ -439,6 +439,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('schedule-work/{project}',
         [ScheduleWorkController::class,'index2']
         )->name('projects.schedule-work');
+    
+    Route::get('schedule-work/{project}/{scheduleWork}',
+        [ScheduleWorkController::class,'index3']
+        )->name('projects.schedule-work.index3');    
 
     Route::post('projects/{project}/schedule-work/save',
         [ScheduleWorkController::class,'save']
