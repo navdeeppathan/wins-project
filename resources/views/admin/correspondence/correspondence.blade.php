@@ -71,7 +71,7 @@
     </td>
 
     <td>
-        <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
+        <button type="button" class="btn btn-success btn-sm saveRow">Update</button>
         <button type="button" class="btn btn-danger btn-sm removeRow">X</button>
     </td>
 </tr>

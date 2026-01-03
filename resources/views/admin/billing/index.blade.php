@@ -110,7 +110,7 @@
 
 
                     <td>
-                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                        <button class="btn btn-success btn-sm saveRow">Update</button>
                          <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Add Recoveries</a>
                     </td>
 

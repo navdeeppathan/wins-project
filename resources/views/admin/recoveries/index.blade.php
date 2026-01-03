@@ -80,7 +80,7 @@
             </td>
 
             <td>
-                <button class="btn btn-sm btn-success saveRecovery">Save</button>
+                <button class="btn btn-sm btn-success saveRecovery">Update</button>
                 <a href="{{ route('admin.security-deposits.create', [
                             'project' => $project->id,
                             'billing' => $billing->id,

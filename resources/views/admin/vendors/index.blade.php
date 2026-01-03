@@ -71,7 +71,7 @@
 
                         {{-- Actions --}}
                         <td>
-                            <button class="btn btn-success btn-sm saveRow">Save</button>
+                            <button class="btn btn-success btn-sm saveRow">Update</button>
                             <button class="btn btn-danger btn-sm removeRow">Del</button>
                         </td>
                     </tr>
