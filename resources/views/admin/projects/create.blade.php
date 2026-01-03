@@ -67,7 +67,7 @@
 
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Temporal *</label>
+            <label class="form-label">Term *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
                 <option value="Days">Days</option>
@@ -271,12 +271,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),

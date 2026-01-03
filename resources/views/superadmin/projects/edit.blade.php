@@ -52,7 +52,7 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Temporal *</label>
+            <label class="form-label">Term *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
                 @foreach(['Days','Weeks','Months'] as $t)
@@ -221,7 +221,7 @@
                             <input type="number" name="time_allowed_number" class="form-control" required>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label">Temporal *</label>
+                            <label class="form-label">Term *</label>
                             <select name="time_allowed_type" class="form-select" required>
                                 <option value="Days">Days</option>
                                 <option value="Weeks">Weeks</option>

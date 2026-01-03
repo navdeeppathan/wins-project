@@ -26,6 +26,7 @@ class Withheld extends Model
         'upload',
         'isReturned',
         'isForfeited',
+        'releaseDueDate'
     ];
 
     /**

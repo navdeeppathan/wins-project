@@ -766,33 +766,33 @@ class ProjectController extends Controller
         $project->agreement_no = $request->agreement_no;
 
          // ✅ BACKEND DATE CALCULATION
-    if ($request->award_date && $project->time_allowed_number && $project->time_allowed_type) {
+        if ($request->award_date && $project->time_allowed_number && $project->time_allowed_type) {
 
-        $awardDate = Carbon::parse($request->award_date);
-        $number    = (int) $project->time_allowed_number;
-        $type      = strtolower(trim($project->time_allowed_type));
+            $awardDate = Carbon::parse($request->award_date);
+            $number    = (int) $project->time_allowed_number;
+            $type      = strtolower(trim($project->time_allowed_type));
 
-        // normalize plural (Days → day)
-        if (str_ends_with($type, 's')) {
-            $type = rtrim($type, 's');
+            // normalize plural (Days → day)
+            if (str_ends_with($type, 's')) {
+                $type = rtrim($type, 's');
+            }
+
+            switch ($type) {
+                case 'day':
+                    $awardDate->addDays($number);
+                    break;
+
+                case 'month':
+                    $awardDate->addMonths($number);
+                    break;
+
+                case 'year':
+                    $awardDate->addYears($number);
+                    break;
+            }
+
+            $project->stipulated_date_ofcompletion = $awardDate->format('Y-m-d');
         }
-
-        switch ($type) {
-            case 'day':
-                $awardDate->addDays($number);
-                break;
-
-            case 'month':
-                $awardDate->addMonths($number);
-                break;
-
-            case 'year':
-                $awardDate->addYears($number);
-                break;
-        }
-
-        $project->stipulated_date_ofcompletion = $awardDate->format('Y-m-d');
-    }
 
 
         if ($request->hasFile('award_upload')) {

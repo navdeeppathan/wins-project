@@ -902,15 +902,13 @@
             /* ================= HEADER ================= */
             .dataTables_scrollHead thead th,
             .class-table thead th {
-                background: #6f7ae0 !important;
+                background: #4672C1 !important;
                 color: #ffffff !important;
                 font-weight: 600;
                 font-size: 14px;
                 padding: 14px 16px;
-                border: 1px solid #9a9b9f !important;
+                border: 2px solid #ffffff !important;
                
-
-
             }
 
             /* ================= CRITICAL FIX ================= */
@@ -932,7 +930,7 @@
                 padding: 14px 16px;
                 font-size: 13px;
                 color: #555;
-                border: 1px solid #9a9b9f !important;
+                border: 2px solid #ffffff !important;
                 vertical-align: middle;
             }
 
@@ -1800,12 +1798,12 @@
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),
@@ -1826,12 +1824,12 @@
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),

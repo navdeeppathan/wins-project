@@ -17,7 +17,8 @@ class SecurityDeposit extends Model
         'amount',
         'upload',
         'isReturned',
-        'isForfieted'
+        'isForfieted',
+        'releaseDueDate'
     ];
 
     protected $casts = [

@@ -914,33 +914,20 @@
             </div>
           </div>
 
-          {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-card">
-              <div class="service-number">03</div>
+              <div class="service-number">02</div>
               <div class="service-icon-wrapper">
                 <div class="service-icon">
-                  <i class="bi bi-phone"></i>
+                  <i class="bi bi-qr-code"></i>
                 </div>
               </div>
               <div class="service-content">
-                <h4>Wins Pricing</h4>
-                <p>No hidden fees, no surprises. Scale as you grow with confidence. At Rs.7,200/- excluding GST annual pricing for First Year (Rs.14,400/- excluding GST from second year) to ensure P.O.V. aligns with your needs, </p>
-                <ul class="service-list">
-                  <li>We offer a FREE trial for first 3 months</li>
-                  <li>Additionally, you can book a demo to get a hands-on feel of its functionalities</li>
-                  <li>P.O.V. prides itself on robust technical support</li>
-                  <li>Whether you prefer email, chat, or phone, our team is ready to assist, ensuring a seamless user experience.</li>
-                </ul>
-                <div class="service-pricing">
-                  <span class="price-tag">₹ 7,200/-</span>
-                  <a href="#" class="service-btn">
-                    <span>Learn More</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
+                
+                <img src="/QR2.jpg" alt="" width="100%" height="100%">
               </div>
             </div>
-          </div> --}}
+          </div>
 
           {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
             <div class="service-card">

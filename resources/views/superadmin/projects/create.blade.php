@@ -65,7 +65,7 @@
 
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Temporal *</label>
+            <label class="form-label">Term *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
                 <option value="Days">Days</option>

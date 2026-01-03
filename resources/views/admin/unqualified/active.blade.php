@@ -177,12 +177,12 @@
         autoWidth: false,
          /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#f7f8ff' : '#ffffff';
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),

@@ -65,7 +65,7 @@
     </div>
 
     <div class="col-md-4 mb-3">
-        <label>Temporal</label>
+        <label>Term</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_type }}" disabled>
     </div>
 
