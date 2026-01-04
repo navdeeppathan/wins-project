@@ -41,8 +41,8 @@
         <input type="text" class="form-control" value="{{ $project->name }}" disabled>
     </div>
 
-</div>    
-    
+</div>
+
 @endif
 
 @php
@@ -104,7 +104,7 @@
         <th>Date</th>
         <th width="200px">Paid To</th>
         <th>Category</th>
-        <th>Voucher Narration</th>
+        <th>Description of Item</th>
         <th>Voucher Number</th>
         <th>Quantity</th>
         <th>Amount</th>
@@ -140,7 +140,7 @@
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
-                
+
                 <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
                 <td>
                     <select class="form-select category">
@@ -153,7 +153,7 @@
                     </select>
                 </td>
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
-                
+
                 <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
@@ -171,7 +171,7 @@
                 </td>
 
                 <td>
-                    
+
                     <button class="btn btn-success btn-sm">Saved</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
@@ -180,7 +180,7 @@
             <tr>
                 <td>1</td>
 
-                
+
                 <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
@@ -197,7 +197,7 @@
                 </td>
 
                 <td><input type="text" class="form-control description"></td>
-                
+
                 <td><input type="text" class="form-control voucher"></td>
                 <td><input type="number" class="form-control quantity"></td>
                 <td><input type="number" class="form-control amount"></td>
@@ -229,8 +229,8 @@ $(function () {
 
         let index = $('#inventoryTable tbody tr').length + 1;
 
-        
-            
+
+
 
         let row = `
         <tr>
@@ -247,7 +247,7 @@ $(function () {
                 </select>
             </td>
             <td><input type="text" class="form-control description"></td>
-            
+
             <td><input type="text" class="form-control voucher"></td>
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
@@ -339,7 +339,7 @@ $(function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -356,7 +356,7 @@ $(function () {
             );
         }
 
-        
+
     });
 </script>
 @endpush

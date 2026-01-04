@@ -41,18 +41,18 @@
         <input type="text" class="form-control" value="{{ $project->name }}" disabled>
     </div> --}}
 
-</div>    
-    
+</div>
+
 @endif
 
 @php
     // $selectedProjectId = request('project_id');
 
     $categories = [
-       
+
         'WAGES',
         'LOGISTIC',
-        
+
         'FEE',
         'TOURS',
         'OTHERS',
@@ -101,9 +101,9 @@
         <th>Date</th>
         <th width="">Paid To</th>
         <th>Category</th>
-        
+
         <th>Voucher Number</th>
-        <th>Voucher Narration</th>
+        <th>Description of Item</th>
         <th>Quantity</th>
         <th>Amount</th>
         <th>Deduction</th>
@@ -138,7 +138,7 @@
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
-                
+
                 <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
                 <td>
                     <select class="form-select category">
@@ -150,7 +150,7 @@
                         @endforeach
                     </select>
                 </td>
-                
+
                 <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
 
@@ -169,7 +169,7 @@
                 </td>
 
                 <td>
-                    
+
                     <button class="btn btn-success btn-sm">Saved</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
@@ -178,7 +178,7 @@
             <tr>
                 <td>1</td>
 
-                
+
                 <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
@@ -195,7 +195,7 @@
                 </td>
 
                 <td><input type="text" class="form-control description"></td>
-                
+
                 <td><input type="text" class="form-control voucher"></td>
                 <td><input type="number" class="form-control quantity"></td>
                 <td><input type="number" class="form-control amount"></td>
@@ -213,7 +213,7 @@
 </div>
 
 <div class="d-flex align-items-center justify-content-end gap-4">
- <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>   
+ <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>
 <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
 </div>
 @endsection
@@ -229,8 +229,8 @@ $(function () {
 
         let index = $('#inventoryTable tbody tr').length + 1;
 
-        
-            
+
+
 
         let row = `
         <tr>
@@ -247,7 +247,7 @@ $(function () {
                 </select>
             </td>
             <td><input type="text" class="form-control description"></td>
-            
+
             <td><input type="text" class="form-control voucher"></td>
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
@@ -339,9 +339,9 @@ $(function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
-        
-        
+
+
+
 
         /* ðŸ”¥ GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -358,7 +358,7 @@ $(function () {
             );
         }
 
-        
+
     });
 </script>
 @endpush

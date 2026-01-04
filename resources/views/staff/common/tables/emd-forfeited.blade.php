@@ -6,15 +6,15 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 {{-- <th>Date of Opening</th> --}}
                 <th>Location</th>
                 <th>Department</th>
-                <th>EMD AMT</th>
+                <th>EMD Amt</th>
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
-                
+
 
 
                 <!-- NEW COLUMNS -->
@@ -34,24 +34,24 @@
                     <td>{{ number_format( $project->estimated_amount,2) }}</td>
                     {{-- <td>{{ $p->date_of_opening }}</td> --}}
                     <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->department->name ?? '-' }}</td>  
+                    <td>{{  $project->department->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
                 <td>
-                    
+
                             {{ $emd->instrument_type }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_number }}<br>
-                    
+
                     </td>
 
                     <td>
-                    
+
                             {{ $emd->instrument_date }}<br>
-                    
+
                     </td>
 
                     <td style="background:yellow;">
@@ -68,9 +68,9 @@
                             Save
                         </button>
                     </td>
-                    
+
                     <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
-                
+
                 </tr>
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>

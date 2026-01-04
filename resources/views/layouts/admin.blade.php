@@ -888,7 +888,16 @@
 
 
     <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0 !important;
+        }
 
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield !important;
+        }
 
             /* ================= WRAPPER ================= */
             .table-responsive {
@@ -908,7 +917,7 @@
                 font-size: 14px;
                 padding: 14px 16px;
                 border: 2px solid #ffffff !important;
-               
+
             }
 
             /* ================= CRITICAL FIX ================= */
@@ -987,79 +996,79 @@
 
     </style>
 
-<style>
-    /* 🔥 Allow full width inputs */
-    
-    #example select.form-select {
-        min-width: 180px;
-        width: 100%;
-    }
+    <style>
+        /* 🔥 Allow full width inputs */
 
-    #example input.form-control {
-        min-width: 100px;
-        width: 100%;
-    }
+        #example select.form-select {
+            min-width: 180px;
+            width: 100%;
+        }
 
-    #example textarea.form-control {
-        min-width: 350px;
-        width: 100%;
-    }
+        #example input.form-control {
+            min-width: 100px;
+            width: 100%;
+        }
 
-    /* 🔥 Paid To & Narration extra wide */
-    #example td:nth-child(3) input,
-    #example td:nth-child(5) input {
-        min-width: 100px;
-    }
+        #example textarea.form-control {
+            min-width: 350px;
+            width: 100%;
+        }
 
-    /* 🔥 Disable text cutting */
-    #example input,
-    #example select {
-        white-space: nowrap;
-        overflow-x: auto;
-    }
+        /* 🔥 Paid To & Narration extra wide */
+        #example td:nth-child(3) input,
+        #example td:nth-child(5) input {
+            min-width: 100px;
+        }
 
-    /* 🔥 Horizontal scroll inside input */
-    #example input {
-        text-overflow: clip;
-    }
+        /* 🔥 Disable text cutting */
+        #example input,
+        #example select {
+            white-space: nowrap;
+            overflow-x: auto;
+        }
 
-    /* Optional: show scrollbar only when needed */
-    #example input::-webkit-scrollbar {
-        height: 6px;
-    }
-</style>
+        /* 🔥 Horizontal scroll inside input */
+        #example input {
+            text-overflow: clip;
+        }
 
-<style>
-    /* 🔥 Allow full width inputs */
-    .example input.form-control,
-    .example select.form-select {
-        min-width: 180px;
-        width: 100%;
-    }
+        /* Optional: show scrollbar only when needed */
+        #example input::-webkit-scrollbar {
+            height: 6px;
+        }
+    </style>
 
-    /* 🔥 Paid To & Narration extra wide */
-    .example td:nth-child(3) input,
-    .example td:nth-child(5) input {
-        min-width: 250px;
-    }
+    <style>
+        /* 🔥 Allow full width inputs */
+        .example input.form-control,
+        .example select.form-select {
+            min-width: 180px;
+            width: 100%;
+        }
 
-    /* 🔥 Disable text cutting */
-    .example input,
-    .example select {
-        white-space: nowrap;
-        overflow-x: auto;
-    }
+        /* 🔥 Paid To & Narration extra wide */
+        .example td:nth-child(3) input,
+        .example td:nth-child(5) input {
+            min-width: 250px;
+        }
 
-    /* 🔥 Horizontal scroll inside input */
-    .example input {
-        text-overflow: clip;
-    }
+        /* 🔥 Disable text cutting */
+        .example input,
+        .example select {
+            white-space: nowrap;
+            overflow-x: auto;
+        }
 
-    /* Optional: show scrollbar only when needed */
-    .example input::-webkit-scrollbar {
-        height: 6px;
-    }
-</style>
+        /* 🔥 Horizontal scroll inside input */
+        .example input {
+            text-overflow: clip;
+        }
+
+        /* Optional: show scrollbar only when needed */
+        .example input::-webkit-scrollbar {
+            height: 6px;
+        }
+    </style>
 
   @stack('styles')
 </head>
@@ -1162,7 +1171,7 @@
                 </a>
             </div> --}}
 
-             <div class="nav-item">
+             {{-- <div class="nav-item">
                 <a href="{{ route('admin.projects.correspondence.index') }}"
                 class="nav-link {{ Request::is('admin/correspondence*') ? 'active' : '' }}">
 
@@ -1175,11 +1184,11 @@
 
                     <span class="nav-text">CORRESPONDENCE</span>
                 </a>
-            </div>
+            </div> --}}
 
 
 
-            <div class="nav-item">
+            {{-- <div class="nav-item">
                 <a href="{{ route('admin.activities.index') }}"
                 class="nav-link {{ Request::is('admin/activities*') ? 'active' : '' }}">
 
@@ -1193,7 +1202,7 @@
                     <span class="nav-text">MILSTONE</span>
 
                 </a>
-            </div>
+            </div> --}}
 
             <div class="nav-item">
                 <a href="{{ route('admin.schedule-work.index') }}"
@@ -1209,9 +1218,9 @@
                     <span class="nav-text">BILL OF QUANTITY</span>
 
                 </a>
-            </div>        
+            </div>
 
-            
+
 
             <div class="nav-item">
                 <a href="{{url('/admin/bill')}}"
@@ -1228,9 +1237,9 @@
                 </a>
             </div>
 
-           
 
-           
+
+
 
 
             <div class="nav-item">

@@ -43,7 +43,6 @@
     }
 </style>
 
-<div class="container mt-3">
     <h3 class="mb-3">Project Billings</h3>
 
     <div class="table-responsive">
@@ -69,7 +68,7 @@
 
             <tbody>
             @forelse($billings as $index => $bill)
-           
+
                 <tr data-id="{{ $bill->id }}">
                     <td>{{ $index+1 }}</td>
 
@@ -89,9 +88,9 @@
                     <td><input type="number" step="0.01" class="form-control gross_amount" value="{{ $bill->gross_amount }}"></td>
 
                     <td>
-                       
+
                             {{ number_format($bill->recoveries_sum_total ?? 0, 2) }}
-                       
+
                     </td>
 
                     <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
@@ -150,9 +149,9 @@
             </tbody>
         </table>
 
-        
+
     </div>
-</div>
+
 
 <div class="d-flex align-items-center justify-content-end gap-2">
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-3">Back to Home</a>
@@ -164,95 +163,95 @@
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveRow', function () {
-    let row = $(this).closest('tr');
-    let id = row.data('id') || null;
+    $(document).on('click', '.saveRow', function () {
+        let row = $(this).closest('tr');
+        let id = row.data('id') || null;
 
-    let formData = new FormData();
-    formData.append('_token', "{{ csrf_token() }}");
-    formData.append('project_id', "{{ $project->id }}");
+        let formData = new FormData();
+        formData.append('_token', "{{ csrf_token() }}");
+        formData.append('project_id', "{{ $project->id }}");
 
-    row.find('input, select').each(function () {
-        if (this.type !== 'file') {
-            formData.append(this.className.split(' ')[1], this.value);
+        row.find('input, select').each(function () {
+            if (this.type !== 'file') {
+                formData.append(this.className.split(' ')[1], this.value);
+            }
+        });
+
+        let file = row.find('.bill_file')[0];
+        if (file && file.files.length) {
+            formData.append('bill_file', file.files[0]);
         }
+
+        $.ajax({
+            url: id ? `/admin/projects/billing/${id}/update`
+                    : "{{ route('admin.projects.billing.store', $project) }}",
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: () => {
+                row.find('.saveRow').text('saved');
+                window.location.reload();
+                alert('Saved successfully');
+                if (!id) location.reload();
+            }
+        });
     });
 
-    let file = row.find('.bill_file')[0];
-    if (file && file.files.length) {
-        formData.append('bill_file', file.files[0]);
+    $('#addBillRow').click(function () {
+        let index = $('#billingTable tbody tr').length + 1;
+
+        $('#billingTable tbody').append(`
+        <tr>
+            <td>${index}</td>
+            <td><input type="text" class="form-control bill_number"></td>
+            <td>
+                <select class="form-control bill_type">
+                    <option value="">Select</option>
+                    <option value="running">Running</option>
+                    <option value="final">Final</option>
+                    <option value="rescind">Rescind</option>
+                </select>
+            </td>
+            <td><input type="date" class="form-control bill_date"></td>
+            <td><input type="text" class="form-control mb_number"></td>
+            <td><input type="text" class="form-control page_number"></td>
+            <td><input type="number" step="0.01" class="form-control gross_amount"></td>
+            <td>0.00</td>
+            <td><input type="number" step="0.01" class="form-control net_payable"></td>
+            <td><input type="text" class="form-control remarks"></td>
+            <td><input type="file" class="form-control bill_file"></td>
+            <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
+            <td class="completionCell" style="display:none;">
+                <input type="date" class="form-control completion_date">
+            </td>
+        </tr>`);
+    });
+
+    function updateCompletionVisibility() {
+        let show = false;
+
+        $('.bill_type').each(function () {
+            let row = $(this).closest('tr');
+            let cell = row.find('.completionCell');
+            let input = row.find('.completion_date');
+
+            if (this.value === 'final' || this.value === 'rescind') {
+                show = true;
+                cell.show();
+                input.prop({disabled:false, required:true});
+            } else {
+                cell.hide();
+                input.prop({disabled:true, required:false}).val('');
+            }
+        });
+
+        $('#completionHeader').toggle(show);
+        $('#addBillRow').prop('disabled', show).toggleClass('disabled', show);
     }
 
-    $.ajax({
-        url: id ? `/admin/projects/billing/${id}/update`
-                : "{{ route('admin.projects.billing.store', $project) }}",
-        method: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: () => {
-            row.find('.saveRow').text('saved');
-            window.location.reload();
-            alert('Saved successfully');
-            if (!id) location.reload();
-        }
-    });
-});
-
-$('#addBillRow').click(function () {
-    let index = $('#billingTable tbody tr').length + 1;
-
-    $('#billingTable tbody').append(`
-    <tr>
-        <td>${index}</td>
-        <td><input type="text" class="form-control bill_number"></td>
-        <td>
-            <select class="form-control bill_type">
-                <option value="">Select</option>
-                <option value="running">Running</option>
-                <option value="final">Final</option>
-                <option value="rescind">Rescind</option>
-            </select>
-        </td>
-        <td><input type="date" class="form-control bill_date"></td>
-        <td><input type="text" class="form-control mb_number"></td>
-        <td><input type="text" class="form-control page_number"></td>
-        <td><input type="number" step="0.01" class="form-control gross_amount"></td>
-        <td>0.00</td>
-        <td><input type="number" step="0.01" class="form-control net_payable"></td>
-        <td><input type="text" class="form-control remarks"></td>
-        <td><input type="file" class="form-control bill_file"></td>
-        <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
-        <td class="completionCell" style="display:none;">
-            <input type="date" class="form-control completion_date">
-        </td>
-    </tr>`);
-});
-
-function updateCompletionVisibility() {
-    let show = false;
-
-    $('.bill_type').each(function () {
-        let row = $(this).closest('tr');
-        let cell = row.find('.completionCell');
-        let input = row.find('.completion_date');
-
-        if (this.value === 'final' || this.value === 'rescind') {
-            show = true;
-            cell.show();
-            input.prop({disabled:false, required:true});
-        } else {
-            cell.hide();
-            input.prop({disabled:true, required:false}).val('');
-        }
-    });
-
-    $('#completionHeader').toggle(show);
-    $('#addBillRow').prop('disabled', show).toggleClass('disabled', show);
-}
-
-$(document).on('change', '.bill_type', updateCompletionVisibility);
-$(document).ready(updateCompletionVisibility);
+    $(document).on('change', '.bill_type', updateCompletionVisibility);
+    $(document).ready(updateCompletionVisibility);
 </script>
 <script>
     new DataTable('#billingTable', {
@@ -260,16 +259,13 @@ $(document).ready(updateCompletionVisibility);
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
-
-        /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),
@@ -277,39 +273,38 @@ $(document).ready(updateCompletionVisibility);
             );
         }
 
-        
     });
-    
+
 </script>
 <script>
-function calculateNetPayable(row) {
-    const gross = parseFloat(row.querySelector('.gross_amount')?.value) || 0;
-    const recovery = parseFloat(row.querySelector('.total_recovery')?.value) || 0;
-    const netInput = row.querySelector('.net_payable');
+    function calculateNetPayable(row) {
+        const gross = parseFloat(row.querySelector('.gross_amount')?.value) || 0;
+        const recovery = parseFloat(row.querySelector('.total_recovery')?.value) || 0;
+        const netInput = row.querySelector('.net_payable');
 
-    if (!netInput) return;
+        if (!netInput) return;
 
-    const netPayable = gross - recovery;
-    netInput.value = netPayable.toFixed(2);
-}
-
-// Listen for input changes
-document.addEventListener('input', function (e) {
-    if (e.target.classList.contains('gross_amount') ||
-        e.target.classList.contains('total_recovery')) {
-
-        const row = e.target.closest('tr');
-        if (row) calculateNetPayable(row);
+        const netPayable = gross - recovery;
+        netInput.value = netPayable.toFixed(2);
     }
-});
 
-// Calculate on page load
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('tr').forEach(row => {
-        if (row.querySelector('.gross_amount')) {
-            calculateNetPayable(row);
+    // Listen for input changes
+    document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('gross_amount') ||
+            e.target.classList.contains('total_recovery')) {
+
+            const row = e.target.closest('tr');
+            if (row) calculateNetPayable(row);
         }
     });
-});
+
+    // Calculate on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('tr').forEach(row => {
+            if (row.querySelector('.gross_amount')) {
+                calculateNetPayable(row);
+            }
+        });
+    });
 </script>
 @endpush

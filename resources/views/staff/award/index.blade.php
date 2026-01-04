@@ -21,7 +21,7 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>
@@ -43,7 +43,7 @@
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->departments->name ?? '-' }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
@@ -68,7 +68,7 @@
                         <input type="file"
                             class="form-control form-control-sm award_upload">
                     </td>
-                    
+
                     <td>
                         @if (empty($p->award_letter_no && $p->award_date && $p->date_ofstartof_work))
                              <button class="btn btn-sm btn-success saveAwardBtn"
@@ -78,7 +78,7 @@
                         @else
                         <span class="badge bg-success">Saved</span>
                         @endif
-                       
+
                     </td>
                 </tr>
                 @endif
@@ -109,7 +109,7 @@ $(document).on('click', '.saveAwardBtn', function () {
     formData.append('_method', 'PUT'); // spoof PUT
     formData.append('_token', "{{ csrf_token() }}");
 
-    
+
 
     formData.append(
         'award_letter_no',

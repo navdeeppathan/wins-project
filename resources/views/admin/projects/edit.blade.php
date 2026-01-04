@@ -81,9 +81,9 @@
                 @endforeach
             </select>
         </div>
-        
+
         <div class="col-md-4 mb-3">
-            <label class="form-label">EMD AMT</label>
+            <label class="form-label">EMD Amt</label>
 
             {{-- Visible (readonly, not disabled) --}}
             <input type="text"
@@ -104,8 +104,8 @@
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Opening</label>
             <input type="date" name="date_of_opening" value="{{ old('date_of_opening', $project->date_of_opening) }}" class="form-control">
-        </div>      
-        
+        </div>
+
     </div>
 
     <button class="btn btn-success">Update Project</button>

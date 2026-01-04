@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title','Projects')
-
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -14,23 +12,13 @@
     <div class="tabs">
         <button class="tab active" onclick="switchTab('tab-stores', this)">MATERIAL</button>
         <button class="tab" onclick="switchTab('tab-measured', this)">TOOLS AND MACHINERY</button>
-      
     </div>
 
 
     <div class="tab-content">
-
-        {{-- ================= EMD ================= --}}
-
-        {{-- <div class="content2 emd tab-stores"> --}}
             @include('admin.material.abc')
-        {{-- </div> --}}
-
-
     </div>
 </div>
-
-{{-- ================= STYLES ================= --}}
 <style>
         .top-buttons {
             display: flex;

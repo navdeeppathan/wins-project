@@ -23,8 +23,8 @@
                 <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
-                <th>Estimate AMT</th>
-                <th>EMD AMT</th>
+                <th>Estimate Amt</th>
+                <th>EMD Amt</th>
                 <th>Date of Opening</th>
                 <th width="">Actions</th>
             </tr>
@@ -39,7 +39,7 @@
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td> 
+                    <td>{{  $p->departments->name ?? '-' }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>

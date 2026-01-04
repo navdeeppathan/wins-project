@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Users Projects {{$user->name}}</h3>
-    
+
 </div>
 
 @if($projects->count() > 0)
@@ -21,10 +21,10 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate AMT</th>
-                <th>EMD AMT</th>
+                <th>Estimate Amt</th>
+                <th>EMD Amt</th>
                 <th>Qualified</th>
-                
+
                 <th width="160">Actions</th>
             </tr>
         </thead>
@@ -45,7 +45,7 @@
                 <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
                 {{-- @if ($p->isQualified==0) --}}
                 <td class="text-center">
-                   
+
                     <input type="checkbox"
                         class="form-check-input isQualifiedBox"
                         data-id="{{ $p->id }}"
@@ -60,14 +60,14 @@
                 <td  class="text-center ">
                     <span class="badge bg-success">Qualified</span>
                 </td>
-                
+
                 @endif --}}
-               
+
                 <td>
                     <a href="{{ route('admin.projects.edit', $p) }}"
                        class="btn btn-warning btn-sm">Edit</a>
 
-                   {{-- <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}" 
+                   {{-- <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
                         class="btn btn-secondary btn-sm">
                         Inventory
                     </a> --}}
@@ -146,7 +146,7 @@
             );
         }
 
-        
+
     });
 </script>
 @endpush

@@ -29,12 +29,12 @@
                 <th>Award Letter No.</th>
                 <th>Award Letter Date</th>
                 <th>Stipulated Date of Completion</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
                 <th>Agreement Number</th>
                 <th>Date of Start of Work</th>
                 {{-- <th>Agreement Start Date</th> --}}
-                
+
                 <th>Upload</th>
                 <th>Save</th>
             </tr>
@@ -54,12 +54,12 @@
                         )) !!}
                     </td>
                     <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->departments->name ?? '-' }}</td>
                     <td>{{ $p->award_letter_no }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
                     <td>
                         {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
-                       
+
                     </td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
@@ -79,7 +79,7 @@
                     </td> --}}
                     {{-- <td>
                         {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
-                       
+
                     </td> --}}
                     <td>
                         @if($p->agreement_upload)
@@ -101,7 +101,7 @@
                         {{-- @else
                         <span class="badge bg-success">Saved</span>
                         @endif --}}
-                       
+
                     </td>
                 </tr>
                 @endif
@@ -133,7 +133,7 @@ $(document).on('click', '.saveAgreementBtn', function () {
     formData.append('_method', 'PUT'); // spoof PUT
     formData.append('_token', "{{ csrf_token() }}");
 
-    
+
 
     formData.append(
         'agreement_no',
@@ -145,7 +145,7 @@ $(document).on('click', '.saveAgreementBtn', function () {
     //     row.find('.agreement_start_date').val()
     // );
 
-    
+
 
     let fileInput = row.find('.agreement_upload')[0];
     if (fileInput.files.length > 0) {

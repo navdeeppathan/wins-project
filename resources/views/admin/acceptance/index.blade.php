@@ -21,8 +21,8 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate AMT</th>
-                <th>EMD AMT</th>
+                <th>Estimate Amt</th>
+                <th>EMD Amt</th>
                 <th>Tendered Amount*</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>
@@ -37,7 +37,7 @@
                 $i=1;
             @endphp
             @forelse($projects as $p)
-           
+
             @if ($p->isQualified == 1)
                 <tr>
                     <td>{{ $i }}</td>
@@ -49,7 +49,7 @@
                     </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '-' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->departments->name ?? '-' }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td>
@@ -95,14 +95,14 @@
                         {{-- @else
                         <span class="badge bg-success">Saved</span>
                         @endif --}}
-                        
+
                     </td>
                     <td>
                         <a href="{{ route('admin.projects.pg.create', $p->id) }}"
                         class="btn btn-sm btn-primary addPgBtn">
                             Add PG
                         </a>
-                    </td>  
+                    </td>
                 </tr>
                 @endif
                  @php

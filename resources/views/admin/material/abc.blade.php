@@ -75,7 +75,7 @@
         .kyc-status-card {
             padding: 1rem;
         }
-        
+
         .kyc-icon {
             width: 40px;
             height: 40px;
@@ -96,32 +96,27 @@
     }
 </style>
 
-
-<div class="container py-4">
-
-    
-
     {{-- Tabs --}}
     <ul class="nav nav-tabs mb-4" id="vmTabs" role="tablist">
-        
-           
-             
+
+
+
             <li class="nav-item" role="presentation">
                  <a class="nav-link active" data-bs-toggle="tab"
                             data-bs-target="#cloud-tab-pane" type="button" role="tab"
                             aria-controls="cloud-tab-pane" aria-selected="true">
- 
+
                     Material
                 </a>
             </li>
               <li class="nav-item" role="presentation">
                 <a class="nav-link" data-bs-toggle="tab"
                         data-bs-target="#purchase-tab-pane" type="button" role="tab"
-                        aria-controls="purchase-tab-pane" aria-selected="false"> 
+                        aria-controls="purchase-tab-pane" aria-selected="false">
                     TOOLS AND MACHINERY
                 </a>
             </li>
-           
+
     </ul>
 
     <div class="tab-content" id="vmTabsContent">
@@ -130,7 +125,7 @@
         <div class="tab-pane fade show active" id="cloud-tab-pane" role="tabpanel">
 
             <div class="table-responsive mt-4">
-                
+
                 <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
                     <thead class="table-light text-center">
                         <tr>
@@ -147,7 +142,7 @@
                     <tbody class="text-center">
                         @if(!empty($items))
                             @foreach($items as $index => $i)
-                                
+
                                         <tr data-id="{{ $i->id }}">
                                             <td>{{ $index + 1 }}</td>
 
@@ -175,9 +170,9 @@
                                                                 data-id="{{ $i->id }}">
                                                             Save
                                                         </button>
-                                            </td>   
+                                            </td>
                                         </tr>
-                                    
+
                             @endforeach
                         @else
                             <tr>
@@ -186,7 +181,7 @@
                         @endif
                     </tbody>
                 </table>
-             
+
             </div>
         </div>
 
@@ -208,7 +203,7 @@
                     <tbody class="text-center">
                         @if(!empty($schedules))
                             @foreach($schedules as $index => $i)
-                                
+
                                 <tr data-id="{{ $i->id }}">
                                     <td>{{ $index + 1 }}</td>
 
@@ -221,7 +216,7 @@
                                                     class="form-control form-control-sm dismantals"
                                                     value="{{ $i->dismantals }}" required>
                                     </td>
-                                    
+
                                     <td>
                                                 <input type="number" step="0.01"
                                                     class="form-control form-control-sm dismantal_rate"
@@ -234,9 +229,9 @@
                                                         data-id="{{ $i->id }}">
                                                     Save
                                                 </button>
-                                    </td>   
+                                    </td>
                                 </tr>
-                             
+
                             @endforeach
                         @else
                             <tr>
@@ -248,7 +243,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 
@@ -274,6 +269,7 @@
         $('#vms-table, #products-table, #example, #quotes-table').each(function() {
             if (!$.fn.DataTable.isDataTable(this)) {
                 $(this).DataTable(options);
+
             }
         });
 
@@ -313,7 +309,7 @@ $(document).on('click', '.saveDismantalBtn1', function () {
     let row = btn.closest('tr');
 
     let dismantals = row.find('.dismantals').val();
-   
+
 
     if (!dismantals) {
         alert('Please fill all required fields');
@@ -341,7 +337,7 @@ $(document).on('click', '.saveDismantalBtn1', function () {
         row.find('.dismantal_amount').text()
     )
 
-    
+
 
     btn.prop('disabled', true).text('Saving...');
 
@@ -358,7 +354,7 @@ $(document).on('click', '.saveDismantalBtn1', function () {
                 window.location.reload();
                 alert(response.message);
 
-                
+
             } else {
                 alert('Update failed');
             }
@@ -377,7 +373,7 @@ $(document).on('click', '.saveDismantalBtn2', function () {
     let row = btn.closest('tr');
 
     let dismantals = row.find('.dismantals').val();
-   
+
 
     if (!dismantals) {
         alert('Please fill all required fields');
@@ -405,7 +401,7 @@ $(document).on('click', '.saveDismantalBtn2', function () {
         row.find('.dismantal_amount').text()
     )
 
-    
+
 
     btn.prop('disabled', true).text('Saving...');
 
@@ -422,7 +418,7 @@ $(document).on('click', '.saveDismantalBtn2', function () {
                 window.location.reload();
                 alert(response.message);
 
-                
+
             } else {
                 alert('Update failed');
             }

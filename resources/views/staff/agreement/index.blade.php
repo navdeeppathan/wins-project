@@ -23,7 +23,7 @@
                 <th>Department</th>
                 <th>Award Letter No.</th>
                 <th>Award Date</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
                 <th>Agreement No.</th>
                 <th>Agreement Start Date</th>
@@ -42,7 +42,7 @@
                     <td>{{ $i }}</td>
                     <td>{{ $p->name }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->departments->name ?? '-' }}</td>
                     <td>{{ $p->award_letter_no }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
@@ -59,7 +59,7 @@
                     </td>
                     <td>
                         <input type="date"
-                                
+
                             class="form-control form-control-sm stipulated_date_ofcompletion"
                                 value="{{ $p->stipulated_date_ofcompletion }}">
                     </td>
@@ -76,7 +76,7 @@
                         @else
                         <span class="badge bg-success">Saved</span>
                         @endif
-                       
+
                     </td>
                 </tr>
                 @endif
@@ -108,7 +108,7 @@ $(document).on('click', '.saveAgreementBtn', function () {
     formData.append('_method', 'PUT'); // spoof PUT
     formData.append('_token', "{{ csrf_token() }}");
 
-    
+
 
     formData.append(
         'agreement_no',

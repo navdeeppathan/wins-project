@@ -21,15 +21,15 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Date of Opening</th>
                 <th>Location</th>
 
                 <th>Department</th>
-                
-                <th>EMD AMT</th>
 
-            
+                <th>EMD Amt</th>
+
+
                 {{-- <th>Status</th> --}}
 
                 <th width="160">Actions</th>
@@ -44,11 +44,11 @@
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ $p->date_of_opening }}</td>
                     <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{  $p->departments->name ?? '-' }}</td> 
+                    <td>{{  $p->departments->name ?? '-' }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
 
 
-                    
+
                     {{-- <td><span class="badge bg-info">{{ ucfirst($p->status) }}</span></td> --}}
 
                     <td>

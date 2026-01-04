@@ -6,10 +6,10 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Location</th>
                 <th>Department</th>
-                <th>EMD AMT</th>
+                <th>EMD Amt</th>
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>

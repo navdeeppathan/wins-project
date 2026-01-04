@@ -21,13 +21,13 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Date of Opening</th>
                 <th>Location</th>
 
                 <th>Department</th>
 
-                <th>EMD AMT</th>
+                <th>EMD Amt</th>
 
 
                 {{-- <th>Status</th> --}}

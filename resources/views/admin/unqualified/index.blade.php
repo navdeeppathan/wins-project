@@ -48,8 +48,8 @@
                                 <th>NIT No</th>
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate AMT</th>
-                                <th>EMD AMT</th>
+                                <th>Estimate Amt</th>
+                                <th>EMD Amt</th>
                                 <th>Instrument Type/ Number/ Date</th>
                                 <th>Return</th>
                                 <th>Save</th>
@@ -144,11 +144,11 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>NIT No</th>
-                                
+
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate AMT</th>
-                                <th>EMD AMT</th>
+                                <th>Estimate Amt</th>
+                                <th>EMD Amt</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>
@@ -226,9 +226,9 @@
                                 <th>NIT No</th>
                                 <th>Location</th>
                                 <th>Department</th>
-                                <th>Estimate AMT</th>
+                                <th>Estimate Amt</th>
 
-                                <th>EMD AMT</th>
+                                <th>EMD Amt</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>

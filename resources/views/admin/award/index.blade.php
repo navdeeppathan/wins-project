@@ -21,7 +21,7 @@
                 <th>Location</th>
                 <th>Department</th>
                 <th>Date of Opening</th>
-                <th>Estimate AMT</th>
+                <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
                 <th>Acceptance Letter No.</th>
                 <th>Date</th>
@@ -29,9 +29,8 @@
                 <th>Award Date</th>
                 <th>Date of Start of Work</th>
                 <th>Agreement Number</th>
-
                 <th>Upload</th>
-                <th>Save</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -41,17 +40,17 @@
             @forelse($projects as $p)
                @if (!empty($p->acceptance_letter_no))
                 <tr>
-                   
+
                     <td>{{ $i }}</td>
                     <td>
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
+                            array_chunk(explode(' ', $p->name), 8)
                         )) !!}
                     </td>
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> 
+                    <td>{{ $p->departments->name ?? '-' }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
@@ -79,7 +78,7 @@
                             class="form-control form-control-sm agreement_no"
                             value="{{ $p->agreement_no }}">
                     </td>
-                    
+
                     <td>
                          @if($p->award_upload)
                             <a href="{{ Storage::url($p->award_upload) }}"
@@ -92,17 +91,23 @@
                             class="form-control form-control-sm award_upload">
                     </td>
 
-                    
+
                     <td>
-                        {{-- @if (empty($p->award_letter_no)) --}}
-                             <button class="btn btn-sm btn-success saveAwardBtn"
-                                data-id="{{ $p->id }}">
-                            Save
-                        </button>
-                        {{-- @else
-                        <span class="badge bg-success">Saved</span>
-                        @endif --}}
-                       
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-success saveAwardBtn"
+                                    data-id="{{ $p->id }}">
+                                Save
+                            </button>
+                            {{-- @else
+                            <span class="badge bg-success">Saved</span>
+                            @endif --}}
+                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-warning">Add Correspondence</a>
+
+                            <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-warning">Add Milestone</a>
+
+                        </div>
+
+
                     </td>
                 </tr>
                 @endif
@@ -133,7 +138,7 @@ $(document).on('click', '.saveAwardBtn', function () {
     formData.append('_method', 'PUT'); // spoof PUT
     formData.append('_token', "{{ csrf_token() }}");
 
-    
+
 
     formData.append(
         'award_letter_no',
