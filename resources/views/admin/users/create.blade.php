@@ -8,19 +8,19 @@
     .gradient-bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
-    
+
     .card-elegant {
         border: none;
         border-radius: 20px;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     .card-elegant:hover {
         transform: translateY(-5px);
         box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
     }
-    
+
     .form-control-elegant {
         border: 2px solid #e8ecf1;
         border-radius: 12px;
@@ -29,14 +29,14 @@
         transition: all 0.3s ease;
         background-color: #f8f9fa;
     }
-    
+
     .form-control-elegant:focus {
         border-color: #667eea;
         box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
         background-color: #fff;
         transform: translateY(-2px);
     }
-    
+
     .btn-gradient {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
@@ -48,12 +48,12 @@
         position: relative;
         overflow: hidden;
     }
-    
+
     .btn-gradient:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
     }
-    
+
     .btn-gradient::before {
         content: '';
         position: absolute;
@@ -64,29 +64,29 @@
         background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
         transition: left 0.5s;
     }
-    
+
     .btn-gradient:hover::before {
         left: 100%;
     }
-    
+
     .header-elegant {
         background:  #667eea;
         color: white;
         padding: 10px 20px;
         border-radius: 20px 20px 0 0;
     }
-    
+
     .header-elegant h5 {
         margin: 0;
         font-weight: 700;
         font-size: 1.4rem;
         text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     .table-elegant {
         margin: 0;
     }
-    
+
     .table-elegant thead th {
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         border: none;
@@ -97,32 +97,32 @@
         font-size: 13px;
         letter-spacing: 0.5px;
     }
-    
+
     .table-elegant tbody tr {
         transition: all 0.3s ease;
         border-bottom: 1px solid #f1f3f5;
     }
-    
+
     .table-elegant tbody tr:hover {
         background: linear-gradient(90deg, #f8f9ff 0%, #fff 100%);
         transform: scale(1.01);
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-    
+
     .table-elegant tbody td {
         padding: 18px 20px;
         vertical-align: middle;
         border: none;
         color: #495057;
     }
-    
+
     .badge-elegant {
         padding: 8px 16px;
         border-radius: 20px;
         font-weight: 500;
         font-size: 13px;
     }
-    
+
     .page-title {
         font-size: 2.5rem;
         font-weight: 800;
@@ -133,7 +133,7 @@
         margin-bottom: 30px;
         text-align: center;
     }
-    
+
     .icon-wrapper {
         width: 50px;
         height: 50px;
@@ -146,24 +146,24 @@
         margin-right: 15px;
         box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
-    
+
     .empty-state {
         padding: 60px 20px;
         text-align: center;
         color: #6c757d;
     }
-    
+
     .empty-state i {
         font-size: 4rem;
         color: #dee2e6;
         margin-bottom: 20px;
     }
-    
+
     @media (max-width: 768px) {
         .page-title {
             font-size: 2rem;
         }
-        
+
         .icon-wrapper {
             display: none;
         }
@@ -254,7 +254,7 @@
                                    placeholder="Enter date of joining"
                                    value="{{ old('date_of_joining') }}"
                                    required>
-                            
+
                         </div>
 
                           <div class="mb-4 col-md-6">
@@ -267,9 +267,20 @@
                                    placeholder="Enter date of joining"
                                    value="{{ old('date_of_leaving') }}"
                                    >
-                            
-                        </div>
 
+                        </div>
+                        <div class="mb-4 col-md-6">
+                            <label class="form-label fw-semibold text-muted mb-2">
+                                <i class="fas fa-building me-2"></i>Monthly Salary
+                            </label>
+                            <input type="text"
+                                name="monthly_salary"
+                                class="form-control form-control-elegant"
+                                placeholder="Enter monthly salary"
+                                value="{{ old('monthly_salary') }}"
+                                required>
+
+                        </div>
                         <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 <i class="fas fa-phone me-2"></i>Contact Number
@@ -296,7 +307,7 @@
                                    required>
                         </div>
 
-  
+
 
                        <div class="mb-4 col-md-6">
                             <label class="form-label fw-semibold text-muted mb-2">
@@ -330,13 +341,13 @@
 
 
 
-                       
 
-                        
+
+
                     </div>
 
                     <div class="d-flex align-items-center justify-content-end">
-                        
+
                        <button type="submit"
                                 id="createUserBtn"
                                 class="btn btn-gradient btn-lg  text-white">
@@ -362,7 +373,7 @@
         </div>
     </div>
 
-    
+
 
 </div>
 

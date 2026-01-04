@@ -35,7 +35,7 @@ class InventoryController extends Controller
 
      public function materialTabs()
     {
-        
+
 
         $items = Inventory::query()
             ->where('user_id', auth()->id())
@@ -61,6 +61,8 @@ class InventoryController extends Controller
         $items = Inventory::query()
             ->when($projectId, fn($q) => $q->where('project_id', $projectId))
             ->with(['project'])
+            ->where('user_id', auth()->id())
+            ->OrderBy('id', 'desc')
             ->get();
 
         $projects = Project::where('user_id', auth()->id())->get();
@@ -71,7 +73,7 @@ class InventoryController extends Controller
         return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project'));
     }
     // ✅ STORE (Create new row)
-    
+
 
     public function store(Request $request)
     {
@@ -92,7 +94,7 @@ class InventoryController extends Controller
         ]);
 
         // 🧮 Net Payable
-        $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
+        $data['net_payable'] = ($data['quantity'] ?? 0) * ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
         $data['user_id'] = auth()->id();
 
         // 📎 Save directly to public folder
@@ -116,7 +118,7 @@ class InventoryController extends Controller
 
 
     // ✅ UPDATE (Inline save)
-   
+
 
     public function update(Request $request, Inventory $inventory)
     {
@@ -178,7 +180,7 @@ class InventoryController extends Controller
      public function updateInventoryDismantal(Request $request, Inventory $inventory)
     {
         $request->validate([
-            'dismantals'       => 'nullable|numeric', 
+            'dismantals'       => 'nullable|numeric',
             'dismantal_rate'   => 'nullable|numeric',
             'dismantal_amount' => 'nullable|numeric',
         ]);

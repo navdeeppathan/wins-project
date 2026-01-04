@@ -18,8 +18,8 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Location</th>
-                <th>Department</th>
+                {{-- <th>Location</th>
+                <th>Department</th> --}}
                 <th>Date of Opening</th>
                 <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
@@ -49,8 +49,8 @@
                         )) !!}
                     </td>
                     <td>{{ $p->nit_number }}</td>
-                    <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td>
+                    {{-- <td>{{ $p->state->name ?? '' }}</td>
+                    <td>{{ $p->departments->name ?? '-' }}</td> --}}
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
@@ -101,9 +101,7 @@
                             {{-- @else
                             <span class="badge bg-success">Saved</span>
                             @endif --}}
-                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-warning">Add Correspondence</a>
 
-                            <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-warning">Add Milestone</a>
 
                         </div>
 
@@ -179,8 +177,6 @@ $(document).on('click', '.saveAwardBtn', function () {
             if (response.success) {
                 window.location.reload();
                 alert(response.message);
-
-                // OPTIONAL: update status text without reload
                 row.find('.badge')
                    .removeClass('bg-info')
                    .addClass('bg-success')
@@ -208,17 +204,27 @@ $(document).on('change', '.award_date', function () {
     if (!awardDateInput.val()) return;
 
     let awardDate = new Date(awardDateInput.val());
-    awardDate.setDate(awardDate.getDate() + 1); // +1 day
 
+    // SAME DAY (minimum allowed)
     let yyyy = awardDate.getFullYear();
     let mm = String(awardDate.getMonth() + 1).padStart(2, '0');
     let dd = String(awardDate.getDate()).padStart(2, '0');
+    let sameDay = `${yyyy}-${mm}-${dd}`;
 
-    let nextDay = `${yyyy}-${mm}-${dd}`;
+    // NEXT DAY (auto-fill value)
+    let nextDayDate = new Date(awardDate);
+    nextDayDate.setDate(nextDayDate.getDate() + 1);
 
-    // set value + minimum selectable date
+    let ny = nextDayDate.getFullYear();
+    let nm = String(nextDayDate.getMonth() + 1).padStart(2, '0');
+    let nd = String(nextDayDate.getDate()).padStart(2, '0');
+    let nextDay = `${ny}-${nm}-${nd}`;
+
+    // Auto-fill → next day
     startDateInput.val(nextDay);
-    startDateInput.attr('min', nextDay);
+
+    // Minimum allowed → same day
+    startDateInput.attr('min', sameDay);
 });
 
 

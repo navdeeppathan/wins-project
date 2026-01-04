@@ -34,7 +34,7 @@
         <label>NIT Number</label>
         <input class="form-control" value="{{ $project->nit_number }}" disabled>
     </div>
-{{-- 
+{{--
     <div class="col-md-12 mb-2">
         <label>Project Name</label>
         <input class="form-control" value="{{ $project->name }}" disabled>
@@ -70,41 +70,41 @@
 
 {{-- TABLE --}}
 <div class="table-responsive">
-<table id="example" class="table class-table nowrap" style="width:100%">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-           
-            <th>DESCRIPTION</th>
-            <th>QUANTITY</th>
-            <th>UNIT</th>
-            <th>RATE</th>
-            <th>AMOUNT</th>
-            <th>MEASURED QUANTITY</th>
-            
-        </tr>
-    </thead>
+    <table id="example" class="table class-table nowrap" style="width:100%">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
 
-    <tbody id="workTable">
-         {{-- @foreach($scheduleWork as $w) --}}
-        <tr>
-            <td>1</td>
-            <td>{{ $scheduleWork->description }}</td>
-            <td>{{ $scheduleWork->quantity }}</td>
-            <td>{{ $scheduleWork->unit }}</td>
-            <td>{{ number_format($scheduleWork->rate, 2) }}</td>
-            <td>{{ number_format($scheduleWork->amount, 2) }}</td>
-            <td>{{ $scheduleWork->measured_quantity }}</td>
-        </tr>
-        {{-- @endforeach --}}
-    </tbody>
-</table>
+                <th>DESCRIPTION</th>
+                <th>QUANTITY</th>
+                <th>UNIT</th>
+                <th>RATE</th>
+                <th>AMOUNT</th>
+                <th>MEASURED QUANTITY</th>
+
+            </tr>
+        </thead>
+
+        <tbody id="workTable">
+            {{-- @foreach($scheduleWork as $w) --}}
+            <tr>
+                <td>1</td>
+                <td>{{ $scheduleWork->description }}</td>
+                <td>{{ $scheduleWork->quantity }}</td>
+                <td>{{ $scheduleWork->unit }}</td>
+                <td>{{ number_format($scheduleWork->rate, 2) }}</td>
+                <td>{{ number_format($scheduleWork->amount, 2) }}</td>
+                <td>{{ $scheduleWork->measured_quantity }}</td>
+            </tr>
+            {{-- @endforeach --}}
+        </tbody>
+    </table>
 </div>
 
 
 
 @php
-    
+
     $categories = [
         'MATERIAL',
         'WAGES',
@@ -156,14 +156,14 @@
     <thead class="table-light">
     <tr>
         <th>#</th>
-       
+
         <th>DATE</th>
-        
+
         <th>CATEGORY</th>
-      
+
         <th>DESCRIPTION OF ITEM</th>
         <th>QUANTITY</th>
-        
+
         <th width="">ACTION</th>
     </tr>
     </thead>
@@ -172,13 +172,13 @@
         @forelse($inventories as $index => $i)
             <tr data-id="{{ $i->id }}">
                 <td>{{ $index + 1 }}</td>
-                
+
                 <input type="hidden" class="project_id" value="{{ $project->id }}">
                 <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
-                   
+
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
-                
+
                <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -189,13 +189,13 @@
                         @endforeach
                     </select>
                 </td>
-                
+
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
-              
+
                 <td>
-                    
+
                     <button class="btn btn-success btn-sm saveRow">Update</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
@@ -204,7 +204,7 @@
             <tr>
                 <td>1</td>
 
-                
+
                 <input type="hidden" class="project_id" value="{{ $project->id }}">
                 <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
 
@@ -221,10 +221,10 @@
                 </td>
 
                 <td><input type="text" class="form-control description"></td>
-                
-                
+
+
                 <td><input type="number" class="form-control quantity"></td>
-                
+
                 <td>
                     <button class="btn btn-success btn-sm saveRow">Save</button>
                 </td>
@@ -235,7 +235,9 @@
 </div>
 
 <div class="d-flex align-items-center justify-content-end gap-4">
- <a href="{{ route('admin.schedule-work.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Schedule Work</a>   
+<a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm mt-2">
+    Back
+</a>
 <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
 </div>
 
@@ -258,7 +260,7 @@ $(function () {
             <input type="hidden" class="project_id" value="${selectedProjectId}">
             <input type="hidden" class="schedule_work_id" value="${schedule_workId}">
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-           
+
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -268,10 +270,10 @@ $(function () {
                 </select>
             </td>
             <td><input type="text" class="form-control description"></td>
-            
-           
+
+
             <td><input type="number" class="form-control quantity"></td>
-            
+
             <td>
                 <button class="btn btn-success btn-sm saveRow">Save</button>
                 <button class="btn btn-danger btn-sm removeRow">Del</button>
@@ -281,7 +283,7 @@ $(function () {
         $('#inventoryTable tbody').append(row);
     });
 
-    
+
 
     // SAVE
     $(document).on('click', '.saveRow', function () {
@@ -298,15 +300,15 @@ $(function () {
             : row.find('.project_select').val();
 
         let schedule_work_id = row.find('.schedule_work_id').val()
-               
+
         formData.append('project_id', projectId);
         formData.append('schedule_work_id', schedule_work_id);
         formData.append('date', row.find('.date').val());
         formData.append('category', row.find('.category').val());
         formData.append('description', row.find('.description').val());
-        
+
         formData.append('quantity', row.find('.quantity').val());
-        
+
 
         $.ajax({
             url: id
@@ -347,9 +349,9 @@ $(function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
-        
-        
+
+
+
 
         /* ðŸ”¥ GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -366,7 +368,7 @@ $(function () {
             );
         }
 
-        
+
     });
 </script>
 @endpush

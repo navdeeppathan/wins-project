@@ -107,7 +107,7 @@
         <th>Voucher Number</th>
          <th>Description of Item</th>
         <th>Quantity</th>
-        <th>Amount</th>
+        <th>Rate</th>
         <th>Deduction</th>
         <th>Net Payment</th>
         <th>Upload</th>
@@ -283,8 +283,9 @@ $(function () {
     $(document).on('input', '.amount, .deduction', function () {
         let row = $(this).closest('tr');
         let a = parseFloat(row.find('.amount').val()) || 0;
+        let c = parseFloat(row.find('.quantity').val()) || 0;
         let d = parseFloat(row.find('.deduction').val()) || 0;
-        row.find('.net_payable').text((a - d).toFixed(2));
+        row.find('.net_payable').text((a * c - d).toFixed(2));
     });
 
     // SAVE
@@ -352,7 +353,7 @@ $(function () {
 
  new DataTable('#inventoryTable', {
         scrollX: true,
-        scrollY:        400,
+        scrollY:        600,
         deferRender:    true,
         scroller:       true,
         scrollCollapse: true,

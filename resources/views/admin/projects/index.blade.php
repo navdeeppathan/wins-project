@@ -20,8 +20,8 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>NIT No</th>
-                <th>Location</th>
-                <th>Department</th>
+                {{-- <th>Location</th>
+                <th>Department</th> --}}
                 <th>Date of Opening</th>
                 <th>Estimate Amt</th>
                 <th>EMD Amt</th>
@@ -49,8 +49,8 @@
 
 
                 <td class="text-start">{{ $p->nit_number }}</td>
-                <td>{{ $p->state->name ?? '-' }}</td>
-                <td>{{ $p->departments->name ?? '-' }}</td>
+                {{-- <td>{{ $p->state->name ?? '-' }}</td>
+                <td>{{ $p->departments->name ?? '-' }}</td> --}}
                 <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                 <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                 <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
@@ -79,9 +79,12 @@
                        class="btn btn-warning btn-sm">Edit</a>
 
                    <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
-                        class="btn btn-secondary btn-sm">
+                        class="btn btn-primary btn-sm">
                         Inventory
                     </a>
+                    <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Correspondence</a>
+
+                    <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
 
                 </td>
             </tr>
@@ -135,7 +138,7 @@
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
-        autoWidth: false,
+        autoWidth: true,
         layout: {
             topStart: {
                 buttons: [ 'pdf', 'colvis']

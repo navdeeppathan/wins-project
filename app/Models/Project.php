@@ -8,7 +8,7 @@ class Project extends Model
 {
     protected $fillable = [
         'nit_number',
-        
+        'emd_rate',
         'name',
         'department',
         'location',
@@ -43,7 +43,7 @@ class Project extends Model
         'total_work_tobe_done',
         'date_ofstartof_work',
         'pg_submission_date'
-        
+
     ];
 
     // Project belongs to User

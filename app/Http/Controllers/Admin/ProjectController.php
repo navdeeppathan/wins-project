@@ -109,8 +109,8 @@ class ProjectController extends Controller
         // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'pgDetails'])
             ->where('user_id', $userId);
-        
-        
+
+
 
         // All projects (paginated)
         $projects = (clone $baseQuery)
@@ -124,8 +124,8 @@ class ProjectController extends Controller
             })
             ->latest()
             ->get();
-        
-               
+
+
 
         // Returned EMD projects
         $returneds = (clone $baseQuery)
@@ -135,7 +135,7 @@ class ProjectController extends Controller
             ->latest()
             ->get();
 
-             
+
 
         // Active EMD projects (not returned & not forfeited)
         $actives = (clone $baseQuery)
@@ -175,8 +175,8 @@ class ProjectController extends Controller
         // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
             ->where('user_id', $userId);
-        
-        
+
+
 
         // All projects (paginated)
         $projects = (clone $baseQuery)
@@ -190,8 +190,8 @@ class ProjectController extends Controller
             })
             ->latest()
             ->get();
-        
-               
+
+
 
         // Returned EMD projects
         $returneds = (clone $baseQuery)
@@ -201,7 +201,7 @@ class ProjectController extends Controller
             ->latest()
             ->get();
 
-             
+
 
         // Active EMD projects (not returned & not forfeited)
         $actives = (clone $baseQuery)
@@ -240,8 +240,8 @@ class ProjectController extends Controller
         // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
             ->where('user_id', $userId);
-        
-        
+
+
 
         // All projects (paginated)
         $projects = (clone $baseQuery)
@@ -255,8 +255,8 @@ class ProjectController extends Controller
             })
             ->latest()
             ->get();
-        
-               
+
+
 
         // Returned EMD projects
         $returneds = (clone $baseQuery)
@@ -266,7 +266,7 @@ class ProjectController extends Controller
             ->latest()
             ->get();
 
-             
+
 
         // Active EMD projects (not returned & not forfeited)
         $actives = (clone $baseQuery)
@@ -445,7 +445,7 @@ class ProjectController extends Controller
         return view('admin.withheld_forfieted.index2', compact('project', 'withhelds'));
     }
 
-   public function store(ProjectRequest $request)
+    public function store(ProjectRequest $request)
     {
         $data = $request->validated();
         $data['created_by'] = Auth::id();
@@ -880,6 +880,7 @@ class ProjectController extends Controller
     {
         $data = $request->validate([
             'name'                => 'required|string|max:255',
+            'emd_rate'=>'nullable|string|max:255',
             'nit_number'          => 'required|string|max:255',
             'department'          => 'required|exists:departments,id',
             'location'            => 'required|exists:states,id',
@@ -892,7 +893,7 @@ class ProjectController extends Controller
         ]);
 
 
-
+        // \Log::info($data);
         $project->update($data);
 
         return redirect()

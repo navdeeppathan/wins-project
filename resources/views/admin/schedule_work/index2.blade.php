@@ -34,7 +34,7 @@
         <label>NIT Number</label>
         <input class="form-control" value="{{ $project->nit_number }}" disabled>
     </div>
-{{--
+        {{--
     <div class="col-md-12 mb-2">
         <label>Project Name</label>
         <input class="form-control" value="{{ $project->name }}" disabled>
@@ -53,39 +53,36 @@
         <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
     </div>
 
-    <div class="col-md-4 mb-2">
+   <div class="col-md-4 mb-2">
         <label>Date of Start</label>
-        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->date_ofstartof_work)) }}" disabled>
+        <input class="form-control" disabled
+            value="{{
+                $project->date_ofstartof_work
+                    ? date('d-m-Y', strtotime($project->date_ofstartof_work))
+                    : $project->created_at->format('d-m-Y')
+            }}">
     </div>
     <div class="col-md-4 mb-2">
         <label>Date of Completion</label>
-        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->stipulated_date_ofcompletion)) }}" disabled>
+        <input class="form-control" disabled
+            value="{{
+                $project->stipulated_date_ofcompletion
+                    ? date('d-m-Y', strtotime($project->stipulated_date_ofcompletion))
+                    : $project->created_at->format('d-m-Y')
+            }}">
     </div>
+
     <div class="col-md-4 mb-2">
         <label>Percentage</label>
         <input class="form-control {{ str_contains($percentageText,'BELOW')?'text-danger':'text-success' }}"
                value="{{ $percentageText }}" disabled>
     </div>
 </div>
-<style>
-    #example textarea.form-control {
-        min-width: 200px !important;
-        width: 100%;
-    }
-    #example input.form-control {
-        min-width: 80px !important;
-        width: 100%;
-    }
 
-  #example select.form-select {
-        min-width: 150px;
-        width: 100%;
-    }
 
-</style>
 {{-- TABLE --}}
 <div class="table-responsive">
-    <table id="example" class="table class-table nowrap" style="width:100%">
+    <table id="example" class="table class-table table-bordered nowrap" style="width:100%">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
@@ -101,58 +98,47 @@
         </thead>
 
         <tbody id="workTable">
-                @foreach($works as $i => $w)
-                    <tr>
-                        <td>{{ $i+1 }}
-                            <input type="hidden" class="row-id" value="{{ $w->id }}">
-                        </td>
 
-                        <td><textarea class="form-control description">{{ $w->description }}</textarea></td>
-                        <td><input class="form-control qty" value="{{ $w->quantity }}"></td>
-                        <td><input class="form-control unit" value="{{ $w->unit }}"></td>
-                        <td><input class="form-control rate" value="{{ $w->rate }}"></td>
-                        <td class="amount">{{ number_format($w->amount,2) }}</td>
-                        {{-- <td>
+    @forelse($works as $i => $w)
+        <tr>
+            <td>{{ $i+1 }}
+                <input type="hidden" class="row-id" value="{{ $w->id }}">
+            </td>
+            <td><textarea class="form-control description">{{ $w->description }}</textarea></td>
+            <td><input class="form-control qty" value="{{ $w->quantity }}"></td>
+            <td><input class="form-control unit" value="{{ $w->unit }}"></td>
+            <td><input class="form-control rate" value="{{ $w->rate }}"></td>
+            <td class="amount text-center">{{ number_format($w->amount,2) }}</td>
+            <td><input class="form-control measured_quantity" value="{{ $w->measured_quantity }}"></td>
+            <td> <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}" class="btn btn-primary btn-sm"> Add Inventory </a> </td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
+                <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
+            </td>
+        </tr>
 
-                            <select class="form-select inventory_select">
-                                <option value="">Select Inventory</option>
-                                @foreach($inventories as $inventory)
-                                    <option value="{{ $inventory->id }}"
-                                        {{ $w->inventory_id == $inventory->id ? 'selected' : '' }}>
-                                        {{ $inventory->description }}
-                                    </option>
-                                @endforeach
-                            </select>
+    @empty
+        {{-- DEFAULT EMPTY ROW --}}
+        <tr>
+            <td>1
+                <input type="hidden" class="row-id">
+            </td>
+            <td><textarea class="form-control description"></textarea></td>
+            <td><input class="form-control qty"></td>
+            <td><input class="form-control unit" value="1"></td>
+            <td><input class="form-control rate"></td>
+            <td class="amount text-center">0.00</td>
+            <td><input class="form-control measured_quantity"></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
+                <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
+            </td>
+        </tr>
+    @endforelse
 
+</tbody>
 
-                        </td> --}}
-                        <td><input class="form-control measured_quantity" value="{{ $w->measured_quantity }}"></td>
-
-
-                        {{-- <td>
-                            <select class="form-control category">
-                                <option value="">Select</option>
-                                @foreach(['MATERIAL','WAGES','LOGISTIC','FEE','TOURS','OTHERS'] as $cat)
-                                    <option value="{{ $cat }}" {{ $w->category==$cat?'selected':'' }}>{{ $cat }}</option>
-                                @endforeach
-                            </select>
-                        </td> --}}
-                        <td>
-                            <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
-                            class="btn btn-primary btn-sm">
-                                Add Inventory
-                            </a>
-                        </td>
-
-
-                        <td>
-                            <button type="button" class="btn btn-success btn-sm saveRow">Update</button>
-                            <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
-                        </td>
-
-                    </tr>
-                @endforeach
-        </tbody>
     </table>
 </div>
 
@@ -174,7 +160,7 @@
             <td><input class="form-control qty"></td>
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
-            <td class="amount">0.00</td>
+            <td class="amount text-center">0.00</td>
 
             <td><input class="form-control measured_quantity"></td>
             <td>
@@ -205,7 +191,6 @@
 
         let payload = {
             id: row.querySelector('.row-id').value,
-            inventory_id: row.querySelector('.inventory_select').value,
             description: row.querySelector('.description').value,
             quantity: row.querySelector('.qty').value,
             unit: row.querySelector('.unit').value,
@@ -225,8 +210,8 @@
         .then(res => res.json())
         .then(res => {
             if(res.id) row.querySelector('.row-id').value = res.id;
-            e.target.textContent = "✔ Saved";
-            e.target.classList.replace('btn-success','btn-secondary');
+            e.target.textContent = "Saved";
+            window.location.reload();
         });
     });
 </script>
@@ -267,6 +252,34 @@
             }
         })
         .catch(() => alert('Server error'));
+    });
+    new DataTable('#example', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: true,
+        layout: {
+            topStart: {
+                buttons: [ 'pdf', 'colvis']
+            }
+        },
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+
     });
 </script>
 
