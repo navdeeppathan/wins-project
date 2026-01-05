@@ -12,18 +12,7 @@
 
 
 <style>
-    /* 🔥 Allow full width inputs */
-    #billingTable input.form-control,
-    #billingTable select.form-select {
-        min-width: 120px;
-        width: 100%;
-    }
 
-    /* 🔥 Paid To & Narration extra wide */
-    #billingTable td:nth-child(3) input,
-    #billingTable td:nth-child(5) input {
-        min-width: 120px;
-    }
 
     /* 🔥 Disable text cutting */
     #billingTable input,
@@ -46,9 +35,8 @@
     <h3 class="mb-3">Project Billings</h3>
 
     <div class="table-responsive">
-        <table id="billingTable" class="table class-table nowrap" style="width:100%">
+        <table id="billingTable" class="table table-bordered class-table nowrap dataTable">
             <thead class="table-dark">
-
                 <tr>
                     <th>#</th>
                     <th>BILL NUMBER</th>
@@ -67,85 +55,88 @@
             </thead>
 
             <tbody>
-            @forelse($billings as $index => $bill)
+                @forelse($billings as $index => $bill)
 
-                <tr data-id="{{ $bill->id }}">
-                    <td>{{ $index+1 }}</td>
+                    <tr data-id="{{ $bill->id }}">
+                        <td>{{ $index+1 }}</td>
 
-                    <td><input type="text" class="form-control bill_number" value="{{ $bill->bill_number }}"></td>
+                        <td><input type="text" class="form-control bill_number" value="{{ $bill->bill_number }}"></td>
 
-                    <td>
-                        <select class="form-control bill_type">
-                            <option value="running" {{ $bill->bill_type=='running'?'selected':'' }}>Running</option>
-                            <option value="final" {{ $bill->bill_type=='final'?'selected':'' }}>Final</option>
-                            <option value="rescind" {{ $bill->bill_type=='rescind'?'selected':'' }}>Rescind</option>
-                        </select>
-                    </td>
+                        <td>
+                            <select class="form-control bill_type">
+                                <option value="running" {{ $bill->bill_type=='running'?'selected':'' }}>Running</option>
+                                <option value="final" {{ $bill->bill_type=='final'?'selected':'' }}>Final</option>
+                                <option value="rescind" {{ $bill->bill_type=='rescind'?'selected':'' }}>Rescind</option>
+                            </select>
+                        </td>
 
-                    <td><input type="date" class="form-control bill_date" value="{{ $bill->bill_date }}"></td>
-                    <td><input type="text" class="form-control mb_number" value="{{ $bill->mb_number }}"></td>
-                    <td><input type="text" class="form-control page_number" value="{{ $bill->page_number }}"></td>
-                    <td><input type="number" step="0.01" class="form-control gross_amount" value="{{ $bill->gross_amount }}"></td>
+                        <td><input type="date" class="form-control bill_date" value="{{ $bill->bill_date }}"></td>
+                        <td><input type="text" class="form-control mb_number" value="{{ $bill->mb_number }}"></td>
+                        <td><input type="text" class="form-control page_number" value="{{ $bill->page_number }}"></td>
+                        <td><input type="number" step="0.01" class="form-control gross_amount" value="{{ $bill->gross_amount }}"></td>
 
-                    <td>
-
+                        <td>
                             {{ number_format($bill->recoveries_sum_total ?? 0, 2) }}
+                            <input type="hidden"
+                                class="total_recovery"
+                                value="{{ $bill->recoveries_sum_total ?? 0 }}">
+                        </td>
 
-                    </td>
+                        <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
+                        <td><input type="text" class="form-control remarks" value="{{ $bill->remarks }}"></td>
+                        <td>
+                            @if($bill->bill_file)
+                                <a href="{{ Storage::url($bill->bill_file) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary mb-1">
+                                    View
+                                </a>
+                            @endif
 
-                    <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
-                    <td><input type="text" class="form-control remarks" value="{{ $bill->remarks }}"></td>
-                    <td>
-                        @if($bill->bill_file)
-                            <a href="{{ Storage::url($bill->bill_file) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                                View
-                            </a>
-                        @endif
-
-                        <input type="file" class="form-control bill_file">
-                    </td>
+                            <input type="file" class="form-control bill_file">
+                        </td>
 
 
-                    <td>
-                        <button class="btn btn-success btn-sm saveRow">Update</button>
-                         <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Add Recoveries</a>
-                    </td>
+                        <td>
+                            <button class="btn btn-success btn-sm saveRow">Update</button>
+                            <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Add Recoveries</a>
+                        </td>
 
-                    <td class="completionCell" style="display:none;">
-                        <input type="date" class="form-control completion_date"
-                               value="{{ $bill->completion_date ?? '' }}">
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td>1</td>
-                    <td><input type="text" class="form-control bill_number"></td>
-                    <td>
-                        <select class="form-control bill_type">
-                            <option value="">Select</option>
-                            <option value="running">Running</option>
-                            <option value="final">Final</option>
-                            <option value="rescind">Rescind</option>
-                        </select>
-                    </td>
-                    <td><input type="date" class="form-control bill_date"></td>
-                    <td><input type="text" class="form-control mb_number"></td>
-                    <td><input type="text" class="form-control page_number"></td>
-                    <td><input type="number" step="0.01" class="form-control gross_amount"></td>
-                    <td>0.00</td>
-                    <td><input type="number" step="0.01" class="form-control net_payable"></td>
-                    <td><input type="text" class="form-control remarks"></td>
-                    <td><input type="file" class="form-control bill_file"></td>
-                    <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
-                    <td >
-                        <div class="completionCell" style="display:none;">
-                            <input type="date" class="form-control completion_date">
-                        </div>
-                    </td>
-                </tr>
-            @endforelse
+                        <td class="completionCell" style="display:none;">
+                            <input type="date"
+                                name="completion_date"
+                                class="form-control completion_date"
+                                value="{{ $bill->completion_date }}">
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>1</td>
+                        <td><input type="text" class="form-control bill_number"></td>
+                        <td>
+                            <select class="form-control bill_type">
+                                <option value="">Select</option>
+                                <option value="running">Running</option>
+                                <option value="final">Final</option>
+                                <option value="rescind">Rescind</option>
+                            </select>
+                        </td>
+                        <td><input type="date" class="form-control bill_date"></td>
+                        <td><input type="text" class="form-control mb_number"></td>
+                        <td><input type="text" class="form-control page_number"></td>
+                        <td><input type="number" step="0.01" class="form-control gross_amount"></td>
+                        <td>0.00</td>
+                        <td><input type="number" step="0.01" class="form-control net_payable"></td>
+                        <td><input type="text" class="form-control remarks"></td>
+                        <td><input type="file" class="form-control bill_file"></td>
+                        <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
+                        <td >
+                            <div class="completionCell" style="display:none;">
+                                <input type="date" class="form-control completion_date">
+                            </div>
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 
@@ -228,27 +219,28 @@
         </tr>`);
     });
 
-    function updateCompletionVisibility() {
-        let show = false;
+   function updateCompletionVisibility() {
+    let showCompletion = false;
 
-        $('.bill_type').each(function () {
-            let row = $(this).closest('tr');
-            let cell = row.find('.completionCell');
-            let input = row.find('.completion_date');
+    $('.bill_type').each(function () {
+        let row = $(this).closest('tr');
+        let cell = row.find('.completionCell');
+        let input = row.find('.completion_date');
 
-            if (this.value === 'final' || this.value === 'rescind') {
-                show = true;
-                cell.show();
-                input.prop({disabled:false, required:true});
-            } else {
-                cell.hide();
-                input.prop({disabled:true, required:false}).val('');
-            }
-        });
+        if (this.value === 'final' || this.value === 'rescind') {
+            showCompletion = true;
+            cell.show();
+            input.prop({ disabled: false, required: true });
+        } else {
+            cell.hide();
+            input.prop({ disabled: true, required: false }).val('');
+        }
+    });
 
-        $('#completionHeader').toggle(show);
-        $('#addBillRow').prop('disabled', show).toggleClass('disabled', show);
-    }
+    $('#completionHeader').toggle(showCompletion);
+    $('#addBillRow').prop('disabled', showCompletion);
+}
+
 
     $(document).on('change', '.bill_type', updateCompletionVisibility);
     $(document).ready(updateCompletionVisibility);
@@ -257,8 +249,6 @@
     new DataTable('#billingTable', {
         scrollX: true,
         scrollCollapse: true,
-        responsive: false,
-        autoWidth: false,
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);

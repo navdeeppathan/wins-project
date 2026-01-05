@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
 
-    
+
     <style>
         * {
             margin: 0;
@@ -906,9 +906,8 @@
                 color: #ffffff !important;
                 font-weight: 600;
                 font-size: 14px;
-                padding: 14px 16px;
                 border: none !important;
-            
+
 
             }
 
@@ -928,7 +927,6 @@
 
             /* ================= BODY CELLS ================= */
             .table.class-table tbody td {
-                padding: 14px 16px;
                 font-size: 13px;
                 color: #555;
                 border: none !important;
@@ -1030,7 +1028,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.projects.index') }}"
                 class="nav-link {{ Request::is('staff/projects*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1045,7 +1043,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.projects.acceptance') }}"
                 class="nav-link {{ Request::is('staff/acceptance*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1060,7 +1058,7 @@
              <div class="nav-item">
                 <a href="{{ route('staff.projects.award') }}"
                 class="nav-link {{ Request::is('staff/award*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1075,7 +1073,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.activities.index') }}"
                 class="nav-link {{ Request::is('staff/activities*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1091,7 +1089,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.schedule-work.index') }}"
                 class="nav-link {{ Request::is('staff/schedule-work*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1108,7 +1106,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.projects.agreement') }}"
                 class="nav-link {{ Request::is('staff/agreement*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1123,7 +1121,7 @@
             <div class="nav-item">
                 <a href="{{url('/staff/bill')}}"
                 class="nav-link {{ Request::is('staff/bill*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1138,7 +1136,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.projects.correspondence.index') }}"
                 class="nav-link {{ Request::is('staff/correspondence*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1153,7 +1151,7 @@
             <div class="nav-item">
                 <a href=""
                 class="nav-link ">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1164,12 +1162,12 @@
                     <span class="nav-text">COMPLETION</span>
                 </a>
             </div>
-             
+
 
             <div class="nav-item">
                 <a href="{{ route('staff.inventory.index') }}"
                 class="nav-link {{ Request::is('staff/inventory*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1201,7 +1199,7 @@
                     <a href="{{ route('staff.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('staff/pg*') ? 'active' : '' }}">PG</a>
 
                     <a href="{{ route('staff.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('staff/security*') ? 'active' : '' }}">SECURITY DEPOSIT</a>
-                    
+
                     <a href="{{ route('staff.projects.withheldreturned.index') }}" class="dropdown-item {{ Request::is('staff/withheld*') ? 'active' : '' }}">WITHHELD</a>
                 </div>
             </div>
@@ -1209,7 +1207,7 @@
              <div class="nav-item">
                 <a href="{{ route('staff.t-and-p.index') }}"
                 class="nav-link {{ Request::is('staff/t-and-p*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1242,7 +1240,7 @@
                 </div>
             </div>
 
-            
+
             <div class="nav-item">
                 <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
                     <span class="nav-icon">
@@ -1263,15 +1261,15 @@
                     <a href="{{ route('staff.schedule-work.index') }}" class="dropdown-item {{ Request::is('staff/schedule-work*') ? 'active' : '' }}">SCHEDULE MAKER</a>
 
                     {{-- <a href="{{ route('staff.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('staff/security*') ? 'active' : '' }}">ANALYSIS OF RATES</a> --}}
-                
+
                 </div>
             </div>
 
-            
+
            {{-- <div class="nav-item">
                 <a href="{{ route('staff.inventory.index') }}"
                 class="nav-link {{ Request::is('staff/inventory*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1286,7 +1284,7 @@
             <div class="nav-item">
                 <a href="{{ route('staff.daily-notes.index') }}"
                 class="nav-link {{ Request::is('staff/daily-notes*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1300,7 +1298,7 @@
 
         </nav>
 
-       
+
     </aside>
 
     <div class="main-wrapper">
@@ -1312,10 +1310,10 @@
                 <input type="text" placeholder="Search campaigns, customers, or templates...">
             </div>
             <div>
-                
+
                     <span style="color: red;" class="topbar-title text-center text-red">YOUR P.O.V. TRIAL PERIOD IS VALID UPTO 31/03/2026</span>
-                    
-                
+
+
             </div>
             <div class="topbar-actions">
                 <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
@@ -1354,14 +1352,14 @@
                                     font-weight: 600;
 
                                     color: #000000;
-                                    
+
 
                                     border: none;
                                     border-radius: 6px;
                                     cursor: pointer;
 
                                     transition: all 0.25s ease;
-                                    
+
                                 }
 
                                 .logout-btn i {
@@ -1430,7 +1428,7 @@
 
             // Update chart colors
             updateChartColors();
-            
+
             // Save preference
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         }
@@ -1445,7 +1443,7 @@
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
-            
+
             // Close all dropdowns when sidebar is collapsed
             if (document.getElementById('sidebar').classList.contains('collapsed')) {
                 document.querySelectorAll('.nav-item.open').forEach(item => {
@@ -1456,15 +1454,15 @@
 
         function toggleDropdown(element) {
             const sidebar = document.getElementById('sidebar');
-            
+
             // Don't open dropdown if sidebar is collapsed
             if (sidebar.classList.contains('collapsed')) {
                 return;
             }
-            
+
             const navItem = element.closest('.nav-item');
             const wasOpen = navItem.classList.contains('open');
-            
+
             // Toggle current dropdown
             navItem.classList.toggle('open');
         }
@@ -1472,7 +1470,7 @@
         function toggleMobile() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
-            
+
             sidebar.classList.toggle('mobile-open');
             overlay.classList.toggle('active');
         }
@@ -1481,13 +1479,13 @@
         document.querySelectorAll('.nav-link:not([onclick]), .dropdown-item').forEach(link => {
             link.addEventListener('click', function(e) {
                 const route = this.getAttribute('data-route');
-                
+
                 // Remove active class from all links
                 document.querySelectorAll('.nav-link, .dropdown-item').forEach(l => l.classList.remove('active'));
-                
+
                 // Add active class to clicked link
                 this.classList.add('active');
-                
+
                 // If it's a dropdown item, also highlight parent
                 if (this.classList.contains('dropdown-item')) {
                     const parentNavItem = this.closest('.nav-item');
@@ -1495,9 +1493,9 @@
                         parentNavItem.querySelector('.nav-link').classList.add('active');
                     }
                 }
-                
-                
-                
+
+
+
                 // Close mobile menu if open
                 if (window.innerWidth <= 1024) {
                     toggleMobile();
@@ -1516,18 +1514,18 @@
 
         // Chart
         let chart;
-        
+
         function initChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
-            
+
             const gradient1 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient1.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
             gradient1.addColorStop(1, 'rgba(59, 130, 246, 0)');
-            
+
             const gradient2 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient2.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
             gradient2.addColorStop(1, 'rgba(16, 185, 129, 0)');
-            
+
             const gradient3 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient3.addColorStop(0, 'rgba(245, 158, 11, 0.3)');
             gradient3.addColorStop(1, 'rgba(245, 158, 11, 0)');
@@ -1657,7 +1655,7 @@
         initChart();
     </script>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Sidebar toggle functionality
@@ -1672,7 +1670,7 @@
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('closed');
             mainContent.classList.toggle('expanded');
-            
+
             if (sidebar.classList.contains('closed')) {
                 toggleIcon.classList.remove('fa-angle-left');
                 toggleIcon.classList.add('fa-angle-right');
@@ -1686,7 +1684,7 @@
         mobileToggle.addEventListener('click', function() {
             sidebar.classList.toggle('mobile-open');
             sidebarOverlay.classList.toggle('active');
-            
+
             if (sidebar.classList.contains('mobile-open')) {
                 mobileToggle.querySelector('i').classList.remove('fa-bars');
                 mobileToggle.querySelector('i').classList.add('fa-times');

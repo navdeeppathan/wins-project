@@ -915,7 +915,6 @@
                 color: #ffffff !important;
                 font-weight: 600;
                 font-size: 14px;
-                padding: 14px 16px;
                 border: 2px solid #ffffff !important;
 
             }
@@ -936,7 +935,6 @@
 
             /* ================= BODY CELLS ================= */
             .table.class-table tbody td {
-                padding: 14px 16px;
                 font-size: 13px;
                 color: #555;
                 border: 2px solid #ffffff !important;
