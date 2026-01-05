@@ -20,12 +20,12 @@
         </div>
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Department *</label>
             <select name="department" class="form-select" required>
                 <option value="">Select Department</option>
@@ -36,7 +36,7 @@
         </div>
 
         
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">State *</label>
             <select name="location" class="form-select" required>
                 <option value="">Select State</option>
@@ -46,7 +46,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Estimated Amount *</label>
            <input type="number" step="0.01" name="estimated_amount" 
             id="estimated_amount"
@@ -55,7 +55,7 @@
             class="form-control" required>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Time Allowed *</label>
             <select name="time_allowed_number" class="form-select"  required>
                 <option value="">Select</option>
@@ -66,7 +66,7 @@
         </div>
 
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Term *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
@@ -77,7 +77,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Date of Submission</label>
             <input 
                 type="date" 
@@ -88,7 +88,7 @@
             >
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Date of Opening</label>
             <input 
                 type="date" 

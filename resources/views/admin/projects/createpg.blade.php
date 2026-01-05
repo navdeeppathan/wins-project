@@ -119,7 +119,7 @@
 
     <td>
         <select name="pg[{{ $i }}][instrument_type]" class="form-select">
-            @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED'] as $t)
+            @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED','FROM BILL'] as $t)
                 <option value="{{ $t }}" @selected($pg->instrument_type==$t)>{{ $t }}</option>
             @endforeach
         </select>
@@ -156,7 +156,7 @@
 <td>1</td>
 <td>
 <select name="pg[0][instrument_type]" class="form-select">
-    @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED'] as $t)
+    @foreach(['FDR','DD','BG','CHALLAN','FROM BILL','EXEMPTED'] as $t)
         <option value="{{ $t }}">{{ $t }}</option>
     @endforeach
 </select>
@@ -224,7 +224,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
-                    <option value="Challan">CHALLAN</option>
+                    <option value="CHALLAN">CHALLAN</option>
+                    <option value="FROM BILL">FROM BILL</option>
                     <option value="EXEMPTED">EXEMPTED</option>
                 </select>
             </td>

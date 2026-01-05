@@ -21,8 +21,8 @@
                     <option value="FDR" {{ ($sd->instrument_type ?? '')=='FDR'?'selected':'' }}>FDR</option>
                     <option value="BG" {{ ($sd->instrument_type ?? '')=='BG'?'selected':'' }}>BG</option>
                     <option value="DD" {{ ($sd->instrument_type ?? '')=='DD'?'selected':'' }}>DD</option>
-                    <option value="Challan" {{ ($sd->instrument_type ?? '')=='Challan'?'selected':'' }}>Challan</option>
-                    <option value="Cash" {{ ($sd->instrument_type ?? '')=='Cash'?'selected':'' }}>Cash</option>
+                    <option value="CHALLAN" {{ ($sd->instrument_type ?? '')=='CHALLAN'?'selected':'' }}>CHALLAN</option>
+                    <option value="FROM_BILL" {{ ($sd->instrument_type ?? '')=='FROM_BILL'?'selected':'' }}>FROM BILL</option>
                 </select>
             </div>
 

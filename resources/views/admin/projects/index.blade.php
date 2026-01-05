@@ -82,10 +82,7 @@
                         class="btn btn-primary btn-sm">
                         Inventory
                     </a>
-                    <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Correspondence</a>
-
-                    <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
-
+                   
                 </td>
             </tr>
             @php
