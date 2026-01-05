@@ -1,216 +1,105 @@
-@extends('layouts.admin')
+{{-- @extends('layouts.admin')
 
 @section('title', 'Add Security Deposit')
 
-@section('content')
+@section('content') --}}
 
-<style>
-    /* 🔥 Allow full width inputs */
-    #securityTable input.form-control,
-    #securityTable select.form-select {
-        min-width: 180px;
-        width: 100%;
-    }
+<div class="card">
+    <div class="card-body">
+        <h5 class="mb-4">Security Deposit Details</h5>
 
-    /* 🔥 Paid To & Narration extra wide */
-    #securityTable td:nth-child(3) input,
-    #securityTable td:nth-child(5) input {
-        min-width: 250px;
-    }
+        @php
+            $sd = $securityDeposits->first();
+        @endphp
 
-    /* 🔥 Disable text cutting */
-    #securityTable input,
-    #securityTable select {
-        white-space: nowrap;
-        overflow-x: auto;
-    }
+        <div class="row g-3" id="securityForm">
 
-    /* 🔥 Horizontal scroll inside input */
-    #securityTable input {
-        text-overflow: clip;
-    }
-
-    /* Optional: show scrollbar only when needed */
-    #securityTable input::-webkit-scrollbar {
-        height: 6px;
-    }
-</style>
-<div class="table-responsive">
-<table class="table table-bordered nowrap class-table" id="securityTable" style="width:100%">
-    <thead class="table-dark">
-        <tr>
-            <th>#</th>
-            <th>Instrument Type</th>
-            <th>Instrument Number</th>
-            <th>Instrument Date</th>
-            <th>Amount</th>
-            <th>Upload</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tbody id="securityBody">
-    @forelse($securityDeposits as $index => $p)
-        <tr>
-            <td>{{ $index+1 }}</td>
-
-            <td>
-                <select class="form-select form-select-sm instrument_type">
+            <div class="col-md-4">
+                <label>Instrument Type</label>
+                <select class="form-select instrument_type">
                     <option value="">Select</option>
-                    <option value="FDR" {{ $p->instrument_type=='FDR'?'selected':'' }}>FDR</option>
-                    <option value="BG" {{ $p->instrument_type=='BG'?'selected':'' }}>BG</option>
-                    <option value="DD" {{ $p->instrument_type=='DD'?'selected':'' }}>DD</option>
-                    <option value="Challan" {{ $p->instrument_type=='Challan'?'selected':'' }}>Challan</option>
-                    <option value="Cash" {{ $p->instrument_type=='Cash'?'selected':'' }}>Cash</option>
+                    <option value="FDR" {{ ($sd->instrument_type ?? '')=='FDR'?'selected':'' }}>FDR</option>
+                    <option value="BG" {{ ($sd->instrument_type ?? '')=='BG'?'selected':'' }}>BG</option>
+                    <option value="DD" {{ ($sd->instrument_type ?? '')=='DD'?'selected':'' }}>DD</option>
+                    <option value="Challan" {{ ($sd->instrument_type ?? '')=='Challan'?'selected':'' }}>Challan</option>
+                    <option value="Cash" {{ ($sd->instrument_type ?? '')=='Cash'?'selected':'' }}>Cash</option>
                 </select>
-            </td>
+            </div>
 
-            <td><input class="form-control form-control-sm instrument_number" value="{{ $p->instrument_number }}"></td>
-           <td>
-                <input type="date"
-                    class="form-control form-control-sm instrument_date"
-                    value="{{ $p->instrument_date ? \Carbon\Carbon::parse($p->instrument_date)->format('Y-m-d') : '' }}">
-            </td>
+            <div class="col-md-4">
+                <label>Instrument Number</label>
+                <input class="form-control instrument_number"
+                       value="{{ $sd->instrument_number ?? '' }}">
+            </div>
 
-            <td><input type="number" step="0.01" class="form-control form-control-sm amount" value="{{ $p->amount }}"></td>
+            <div class="col-md-4">
+                <label>Instrument Date</label>
+                <input type="date" class="form-control instrument_date"
+                       value="{{ isset($sd->instrument_date) ? \Carbon\Carbon::parse($sd->instrument_date)->format('Y-m-d') : '' }}">
+            </div>
 
-            <td>
-                @if($p->upload)
-                    <a href="{{ Storage::url($p->upload) }}"
-                    target="_blank"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                        View
-                    </a>
+            <div class="col-md-4">
+                <label>Amount</label>
+                <input type="number" step="0.01" class="form-control amount"
+                       value="{{ $sd->amount ?? '' }}">
+            </div>
+
+            <div class="col-md-4">
+                <label>Upload</label>
+
+                @if(isset($sd->upload))
+                    <div class="mb-1">
+                        <a href="{{ Storage::url($sd->upload) }}"
+                           target="_blank"
+                           class="btn btn-sm btn-outline-primary">
+                            View Uploaded File
+                        </a>
+                    </div>
                 @endif
 
-                <input type="file" class="form-control form-control-sm upload">
-            </td>
+                <input type="file" class="form-control upload">
+            </div>
 
-
-            <td>
-                <button class="btn btn-sm btn-success saveSecurity">
-                    Save
+            <div class="col-md-12 mt-3">
+                <button class="btn btn-success btn-sm rounded-pill saveSecurity">
+                    {{ $sd ? 'Update' : 'Save' }}
                 </button>
-            </td>
-        </tr>
-    @empty
-        <tr>
-            <td>1</td>
-            <td>
-                <select class="form-select form-select-sm instrument_type">
-                    <option value="">Select</option>
-                    <option value="FDR">FDR</option>
-                    <option value="BG">BG</option>
-                    <option value="DD">DD</option>
-                    <option value="Challan">Challan</option>
-                    <option value="Cash">Cash</option>
-                </select>
-            </td>
-            <td><input class="form-control form-control-sm instrument_number"></td>
-            <td><input type="date" class="form-control form-control-sm instrument_date"></td>
-            <td><input type="number" step="0.01" class="form-control form-control-sm amount"></td>
-            <td><input type="file" class="form-control form-control-sm upload"></td>
-            <td><button class="btn btn-sm btn-success saveSecurity">Save</button></td>
-        </tr>
-    @endforelse
-    </tbody>
-</table>
-</div>
+            </div>
 
-<button id="addSecurityRow" class="btn btn-sm btn-primary mt-2">
-    + Add More Security Deposit
-</button>
+        </div>
+    </div>
+</div>
 
 @push('scripts')
 <script>
-let securityTable = $('#securityTable').DataTable({
-    scrollX: true,
-    responsive: false,
-    autoWidth: false
-});
-
-// ADD MORE ROW
-$('#addSecurityRow').on('click', function () {
-
-    let index = securityTable.rows().count() + 1;
-
-    securityTable.row.add([
-        index,
-
-        `<select class="form-select form-select-sm instrument_type">
-            <option value="">Select</option>
-            <option value="FDR">FDR</option>
-            <option value="BG">BG</option>
-            <option value="DD">DD</option>
-            <option value="Challan">Challan</option>
-            <option value="Cash">Cash</option>
-        </select>`,
-
-        `<input class="form-control form-control-sm instrument_number">`,
-        `<input type="date" class="form-control form-control-sm instrument_date">`,
-        `<input type="number" step="0.01" class="form-control form-control-sm amount">`,
-        `<input type="file" class="form-control form-control-sm upload">`,
-        `<button class="btn btn-sm btn-success saveSecurity">Save</button>`
-    ]).draw(false);
-});
-
-// SAVE ROW
 $(document).on('click', '.saveSecurity', function () {
-
-    let row = $(this).closest('tr');
 
     let formData = new FormData();
     formData.append('_token', "{{ csrf_token() }}");
-    formData.append('instrument_type', row.find('.instrument_type').val());
-    formData.append('instrument_number', row.find('.instrument_number').val());
-    formData.append('instrument_date', row.find('.instrument_date').val());
-    formData.append('amount', row.find('.amount').val());
+    formData.append('instrument_type', $('.instrument_type').val());
+    formData.append('instrument_number', $('.instrument_number').val());
+    formData.append('instrument_date', $('.instrument_date').val());
+    formData.append('amount', $('.amount').val());
 
-    let file = row.find('.upload')[0];
+    let file = $('.upload')[0];
     if (file && file.files.length) {
         formData.append('upload', file.files[0]);
     }
 
     $.ajax({
         url: "{{ route('admin.security-deposits.store', [$project->id, $billing->id]) }}",
-        method: 'POST',
+        type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function () {
-            alert('Security Deposit saved');
+            alert('Security Deposit saved successfully');
+            location.reload();
         }
     });
 });
 </script>
-
-<script>
-    new DataTable('#recoveryTable', {
-        scrollX: true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: false,
-        
-
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
-
-        
-    });
-</script>
 @endpush
 
-@endsection
 
+{{-- @endsection --}}

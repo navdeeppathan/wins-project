@@ -3,120 +3,103 @@
 @section('title','Billing')
 
 @section('content')
-<style>
-    /* 🔥 Allow full width inputs */
-    #recoveryTable input.form-control,
-    #recoveryTable select.form-select {
-        min-width: 180px;
-        width: 100%;
-    }
 
-    /* 🔥 Paid To & Narration extra wide */
-    #recoveryTable td:nth-child(3) input,
-    #recoveryTable td:nth-child(5) input {
-        min-width: 250px;
-    }
+<div class="card">
+    <div class="card-body">
+        <h5 class="mb-4">Recovery Details</h5>
 
-    /* 🔥 Disable text cutting */
-    #recoveryTable input,
-    #recoveryTable select {
-        white-space: nowrap;
-        overflow-x: auto;
-    }
+        <div class="row g-3" id="recoveryForm" data-id="{{ $billing->id }}">
 
-    /* 🔥 Horizontal scroll inside input */
-    #recoveryTable input {
-        text-overflow: clip;
-    }
+            <div class="col-md-3">
+                <label>Security (2.5%)</label>
+                <input type="number" class="form-control security" readonly
+                       value="{{ $recoveries->first()->security ?? '' }}">
+            </div>
 
-    /* Optional: show scrollbar only when needed */
-    #recoveryTable input::-webkit-scrollbar {
-        height: 6px;
-    }
-</style>
+            <div class="col-md-3">
+                <label>Income Tax (2%)</label>
+                <input type="number" class="form-control income_tax" readonly
+                       value="{{ $recoveries->first()->income_tax ?? '' }}">
+            </div>
 
-<div class="table-responsive">
-<table class="table table-bordered class-table nowrap" id="recoveryTable" style="width:100%">
-    <thead class="">
-        <tr>
-            <th>#</th>
-            <th>Security (2.5%)</th>
-            <th>Income Tax (2%)</th>
-            <th>Labour Cess (1%)</th>
-            <th>Water Charges (1%)</th>
-            <th>License Fee</th>
-            <th>CGST</th>
-            <th>SGST</th>
-            <th>Withheld 1</th>
-            <th>Withheld 2</th>
-            <th>Recovery</th>
-            <th>Total</th>
-            <th>Action</th>
-        </tr>
-    </thead>
+            <div class="col-md-3">
+                <label>Labour Cess (1%)</label>
+                <input type="number" class="form-control labour_cess" readonly
+                       value="{{ $recoveries->first()->labour_cess ?? '' }}">
+            </div>
 
-    <tbody id="recoveryBody">
-    @forelse($recoveries as $index => $r)
-        <tr data-id="{{ $billing->id }}">
-            <td>{{ $index+1 }}</td>
+            <div class="col-md-3">
+                <label>Water Charges (1%)</label>
+                <input type="number" class="form-control water_charges" readonly
+                       value="{{ $recoveries->first()->water_charges ?? '' }}">
+            </div>
 
-            <td><input type="number" class="form-control form-control-sm security" value="{{ $r->security }}" readonly></td>
-            <td><input type="number" class="form-control form-control-sm income_tax" value="{{ $r->income_tax }}" readonly></td>
-            <td><input type="number" class="form-control form-control-sm labour_cess" value="{{ $r->labour_cess }}" readonly></td>
-            <td><input type="number" class="form-control form-control-sm water_charges" value="{{ $r->water_charges }}" readonly></td>
+            <div class="col-md-3">
+                <label>License Fee</label>
+                <input type="number" class="form-control license_fee"
+                       value="{{ $recoveries->first()->license_fee ?? '' }}">
+            </div>
 
-            <td><input type="number" class="form-control form-control-sm license_fee" value="{{ $r->license_fee }}"></td>
+            <div class="col-md-3">
+                <label>CGST</label>
+                <input type="number" class="form-control cgst" readonly
+                       value="{{ $recoveries->first()->cgst ?? '' }}">
+            </div>
 
-            <td><input type="number" class="form-control form-control-sm cgst" value="{{ $r->cgst }}" readonly></td>
-            <td><input type="number" class="form-control form-control-sm sgst" value="{{ $r->sgst }}" readonly></td>
+            <div class="col-md-3">
+                <label>SGST</label>
+                <input type="number" class="form-control sgst" readonly
+                       value="{{ $recoveries->first()->sgst ?? '' }}">
+            </div>
 
-            <td><input type="number" class="form-control form-control-sm withheld_1" value="{{ $r->withheld_1 }}"></td>
-            <td><input type="number" class="form-control form-control-sm withheld_2" value="{{ $r->withheld_2 }}"></td>
+            <div class="col-md-3">
+                <label>Withheld 1</label>
+                <input type="number" class="form-control withheld_1"
+                       value="{{ $recoveries->first()->withheld_1 ?? '' }}">
+            </div>
 
-            <td><input type="number" class="form-control form-control-sm recovery" value="{{ $r->recovery }}"></td>
+            <div class="col-md-3">
+                <label>Withheld 2</label>
+                <input type="number" class="form-control withheld_2"
+                       value="{{ $recoveries->first()->withheld_2 ?? '' }}">
+            </div>
 
-            <td>
-                <input type="number" class="form-control form-control-sm total" value="{{ $r->total }}" readonly>
-            </td>
+            <div class="col-md-3">
+                <label>Recovery</label>
+                <input type="number" class="form-control recovery"
+                       value="{{ $recoveries->first()->recovery ?? '' }}">
+            </div>
 
-            <td>
-                <button class="btn btn-sm btn-success saveRecovery">Update</button>
-                <a href="{{ route('admin.security-deposits.create', [
-                            'project' => $project->id,
-                            'billing' => $billing->id,
-                        ]) }}" class="btn btn-primary btn-sm">Add Security Deposit</a>
-            </td>
-        </tr>
-    @empty
-        {{-- Empty row --}}
-        <tr data-id="{{ $billing->id }}">
-            <td>1</td>
+            <div class="col-md-3">
+                <label>Total</label>
+                <input type="number" class="form-control total" readonly
+                       value="{{ $recoveries->first()->total ?? '' }}">
+            </div>
 
-            <td><input class="form-control form-control-sm security" readonly></td>
-            <td><input class="form-control form-control-sm income_tax" readonly></td>
-            <td><input class="form-control form-control-sm labour_cess" readonly></td>
-            <td><input class="form-control form-control-sm water_charges" readonly></td>
+            <div class="col-md-12 mt-3">
+                <button class="btn btn-success btn-sm rounded-pill saveRecovery">
+                    {{ $recoveries->count() ? 'Update' : 'Save' }}
+                </button>
 
-            <td><input class="form-control form-control-sm license_fee"></td>
-            <td><input class="form-control form-control-sm cgst" readonly></td>
-            <td><input class="form-control form-control-sm sgst" readonly></td>
+                {{-- <a href="{{ route('admin.security-deposits.create', [
+                        'project' => $project->id,
+                        'billing' => $billing->id
+                    ]) }}" class="btn btn-primary ms-2">
+                    Add Security Deposit
+                </a> --}}
+            </div>
 
-            <td><input class="form-control form-control-sm withheld_1"></td>
-            <td><input class="form-control form-control-sm withheld_2"></td>
-            <td><input class="form-control form-control-sm recovery"></td>
-
-            <td><input class="form-control form-control-sm total" readonly></td>
-            <td><button class="btn btn-sm btn-success saveRecovery">Save</button></td>
-        </tr>
-    @endforelse
-    </tbody>
-</table>
+        </div>
+    </div>
 </div>
 
-<button id="addRecoveryRow"
-        class="btn btn-sm btn-primary mt-2">
-    + Add More Recovery
-</button>
+<div class="mt-4">
+    @include('admin.security_deposits.create')
+</div>
+
+<div class="mt-4">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+</div>
 
 
 @push('scripts')
@@ -124,7 +107,8 @@
 const tender = {{ $project->tendered_amount }};
 const gross  = {{ $billing->gross_amount }};
 
-function calculateRow(row) {
+function calculateForm() {
+
     let security     = tender * 0.025;
     let incomeTax    = gross * 0.02;
     let labourCess   = gross * 0.01;
@@ -134,122 +118,53 @@ function calculateRow(row) {
     let cgst = taxable * 0.09;
     let sgst = taxable * 0.09;
 
-    row.find('.security').val(security.toFixed(2));
-    row.find('.income_tax').val(incomeTax.toFixed(2));
-    row.find('.labour_cess').val(labourCess.toFixed(2));
-    row.find('.water_charges').val(waterCharges.toFixed(2));
-    row.find('.cgst').val(cgst.toFixed(2));
-    row.find('.sgst').val(sgst.toFixed(2));
+    $('.security').val(security.toFixed(2));
+    $('.income_tax').val(incomeTax.toFixed(2));
+    $('.labour_cess').val(labourCess.toFixed(2));
+    $('.water_charges').val(waterCharges.toFixed(2));
+    $('.cgst').val(cgst.toFixed(2));
+    $('.sgst').val(sgst.toFixed(2));
 
     let total =
         security + incomeTax + labourCess + waterCharges + cgst + sgst +
-        (+row.find('.license_fee').val() || 0) +
-        (+row.find('.withheld_1').val() || 0) +
-        (+row.find('.withheld_2').val() || 0) +
-        (+row.find('.recovery').val() || 0);
+        (+$('.license_fee').val() || 0) +
+        (+$('.withheld_1').val() || 0) +
+        (+$('.withheld_2').val() || 0) +
+        (+$('.recovery').val() || 0);
 
-    row.find('.total').val(total.toFixed(2));
+    $('.total').val(total.toFixed(2));
 }
 
 $(document).on('input', '.license_fee, .withheld_1, .withheld_2, .recovery', function () {
-    calculateRow($(this).closest('tr'));
+    calculateForm();
 });
 
-// SAVE ROW
+// SAVE
 $(document).on('click', '.saveRecovery', function () {
-    let row = $(this).closest('tr');
 
     let data = {
         _token: "{{ csrf_token() }}",
-        security: row.find('.security').val(),
-        income_tax: row.find('.income_tax').val(),
-        labour_cess: row.find('.labour_cess').val(),
-        water_charges: row.find('.water_charges').val(),
-        license_fee: row.find('.license_fee').val(),
-        cgst: row.find('.cgst').val(),
-        sgst: row.find('.sgst').val(),
-        withheld_1: row.find('.withheld_1').val(),
-        withheld_2: row.find('.withheld_2').val(),
-        recovery: row.find('.recovery').val(),
-        total: row.find('.total').val(),
+        security: $('.security').val(),
+        income_tax: $('.income_tax').val(),
+        labour_cess: $('.labour_cess').val(),
+        water_charges: $('.water_charges').val(),
+        license_fee: $('.license_fee').val(),
+        cgst: $('.cgst').val(),
+        sgst: $('.sgst').val(),
+        withheld_1: $('.withheld_1').val(),
+        withheld_2: $('.withheld_2').val(),
+        recovery: $('.recovery').val(),
+        total: $('.total').val(),
     };
 
     $.post("{{ route('admin.billing.recovery.store', $billing) }}", data, function () {
-        window.location.reload();
         alert('Recovery saved successfully');
+        location.reload();
     });
 });
 
-// initial calc
-$('#recoveryTable tbody tr').each(function(){
-    calculateRow($(this));
-});
-</script>
-<script>
-$('#addRecoveryRow').on('click', function () {
-
-    let index = $('#recoveryBody tr').length + 1;
-
-    let row = `
-    <tr data-id="{{ $billing->id }}">
-        <td>${index}</td>
-
-        <td><input class="form-control form-control-sm security" readonly></td>
-        <td><input class="form-control form-control-sm income_tax" readonly></td>
-        <td><input class="form-control form-control-sm labour_cess" readonly></td>
-        <td><input class="form-control form-control-sm water_charges" readonly></td>
-
-        <td><input class="form-control form-control-sm license_fee"></td>
-
-        <td><input class="form-control form-control-sm cgst" readonly></td>
-        <td><input class="form-control form-control-sm sgst" readonly></td>
-
-        <td><input class="form-control form-control-sm withheld_1"></td>
-        <td><input class="form-control form-control-sm withheld_2"></td>
-
-        <td><input class="form-control form-control-sm recovery"></td>
-
-        <td><input class="form-control form-control-sm total" readonly></td>
-
-        <td>
-            <button class="btn btn-sm btn-success saveRecovery">
-                Save
-            </button>
-        </td>
-    </tr>`;
-
-    $('#recoveryBody').append(row);
-
-    // Auto calculate new row
-    calculateRow($('#recoveryBody tr:last'));
-});
-</script>
-
-<script>
-    new DataTable('#recoveryTable', {
-        scrollX: true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: false,
-
-
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
-
-
-    });
+// Initial calculation
+calculateForm();
 </script>
 @endpush
 

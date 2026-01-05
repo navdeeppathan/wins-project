@@ -42,7 +42,7 @@
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>
                         {{-- <a href="{{ route('admin.projects.edit', $p) }}" class="btn btn-sm btn-warning">Edit</a> --}}
-                        <a href="{{ route('admin.projects.billing.index', $p) }}" class="btn btn-sm btn-secondary">
+                        <a href="{{ route('admin.projects.billing.index', $p) }}" class="btn btn-sm btn-primary">
                             Billing
                         </a>
                     </td>

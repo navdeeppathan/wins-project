@@ -24,6 +24,7 @@ class Vendor extends Model
                 'vendor_agency_name',
                 'contact_number',
                 'email_id',
+                'gst_number',
 
     ];
 

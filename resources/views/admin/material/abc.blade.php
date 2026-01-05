@@ -432,24 +432,33 @@ $(document).on('click', '.saveDismantalBtn2', function () {
 });
 
 
-document.addEventListener('input', function (e) {
-    if (
-        e.target.classList.contains('dismantals') ||
-        e.target.classList.contains('dismantal_rate')
-    ) {
-        let row = e.target.closest('tr');
 
-        let dismantals = parseFloat(row.querySelector('.dismantals')?.value) || 0;
-        let rate = parseFloat(row.querySelector('.dismantal_rate')?.value) || 0;
-
-        let amount = dismantals * rate;
-
-        row.querySelector('.dismantal_amount').innerText = amount.toFixed(2);
-    }
-});
 
 
 
 
 </script>
+<script>
+function calculateRowAmount(row) {
+    let dismantals = parseFloat(row.find('.dismantals').val()) || 0;
+    let rate       = parseFloat(row.find('.dismantal_rate').val()) || 0;
+
+    let amount = dismantals * rate;
+    row.find('.dismantal_amount').text(amount.toFixed(2));
+}
+</script>
+<script>
+$(document).ready(function () {
+    $('#quotes-table tbody tr').each(function () {
+        calculateRowAmount($(this));
+    });
+});
+</script>
+<script>
+$(document).on('input', '.dismantals, .dismantal_rate', function () {
+    let row = $(this).closest('tr');
+    calculateRowAmount(row);
+});
+</script>
+
 @endsection

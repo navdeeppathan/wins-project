@@ -307,7 +307,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\BillingController::class, 'index']
     )->name('projects.billing.index');
 
-     Route::get('projects/{project}/{billing}/recoveries',
+     Route::get('bill/projects/{project}/{billing}/recoveries',
         [App\Http\Controllers\Admin\RecoveryController::class, 'index']
     )->name('projects.recoveries.index');
 
@@ -375,7 +375,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     //     'index', 'store', 'destroy'
     // ]);
 
+
     Route::get('vendors', [App\Http\Controllers\Admin\VendorController::class, 'index'])->name('vendors.index');
+    Route::get('vendors/create', [App\Http\Controllers\Admin\VendorController::class, 'create'])->name('vendors.create');
+    Route::get('vendors/edit/{vendor}', [App\Http\Controllers\Admin\VendorController::class, 'edit'])->name('vendors.edit');
+
+
     Route::post('vendors', [App\Http\Controllers\Admin\VendorController::class, 'store'])->name('vendors.store');
     Route::post('vendors/{vendor}/update', [App\Http\Controllers\Admin\VendorController::class, 'update'])->name('vendors.update');
     Route::post('vendors/{vendor}/destroy', [App\Http\Controllers\Admin\VendorController::class, 'destroy'])->name('vendors.destroy');

@@ -13,11 +13,12 @@ class RecoveryController extends Controller
     public function index(Project $project, Billing $billing)
     {
         $recoveries = $billing->recoveries()->latest()->get();
-
+        $securityDeposits = $billing->securityDeposits()->latest()->get();
         return view('admin.recoveries.index', compact(
             'project',
             'billing',
-            'recoveries'
+            'recoveries',
+            'securityDeposits'
         ));
     }
 

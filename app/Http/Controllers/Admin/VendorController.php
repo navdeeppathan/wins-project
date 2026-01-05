@@ -23,6 +23,16 @@ class VendorController extends Controller
 
         return view('admin.vendors.index', compact('vendors', 'states'));
     }
+     public function create()
+    {
+        $vendors = Vendor::where('user_id', auth()->id())
+            ->latest()
+            ->paginate(20);
+
+        $states = State::all();    
+
+        return view('admin.vendors.create', compact('vendors', 'states'));
+    }
 
     /**
      * Store vendor entry
@@ -43,8 +53,9 @@ class VendorController extends Controller
             'state'         => 'nullable',
             'vendor_agency_name'    => 'nullable|string|max:255',
             'contact_number'=> 'nullable|string|max:20',
-            'email_id'=>'nullable|string',
+            'email_id'=>'nullable|string|unique:vendors,email_id',
             'contact_person'=>'nullable|string',
+            'gst_number'=>'nullable|string',
         ]);
 
         // attach user
@@ -63,12 +74,18 @@ class VendorController extends Controller
 
         Vendor::create($data);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Vendor entry added successfully'
-        ]);
+        return redirect()->route('admin.vendors.index')->with('success', 'Vendor added successfully.');
     }
 
+
+    public function edit(Vendor $vendor)
+    {
+      
+
+        $states = State::all();    
+
+        return view('admin.vendors.edit', compact('vendor', 'states'));
+    }
     /**
      * Update vendor entry
      */
@@ -90,6 +107,8 @@ class VendorController extends Controller
             'contact_number'=> 'nullable|string|max:20',
             'email_id'=>'nullable|string',
             'contact_person'=>'nullable|string',
+            'gst_number'=>'nullable|string',
+
         ]);
 
         // recalc net payable
@@ -111,10 +130,7 @@ class VendorController extends Controller
 
         $vendor->update($data);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Vendor entry updated successfully'
-        ]);
+        return redirect()->back()->with('success', 'Vendor entry updated successfully!');
     }
 
     /**
