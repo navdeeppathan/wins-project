@@ -2,164 +2,215 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Project OverView (P.O.V.)</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Project OverView (P.O.V.)</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
 
-  <!-- Favicons -->
- 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        /* HERO BACKGROUND SLIDER */
+        .hero {
+        position: relative;
+        overflow: hidden;
+        }
+
+        .hero-bg-slider {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        }
+
+        .hero-bg-slider .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: scale(1.08);
+        transition: opacity 1.5s ease-in-out, transform 6s ease;
+        }
+
+        .hero-bg-slider .slide.active {
+        opacity: 1;
+        transform: scale(1);
+        }
+
+        /* Dark elegant overlay */
+        .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            120deg,
+            rgba(0,0,0,0.85),
+            rgba(0,0,0,0.65)
+        );
+        z-index: 2;
+        }
+
+        /* Keep content above slider */
+        .hero .container {
+        position: relative;
+        z-index: 3;
+        }
+
+        /* Optional subtle grain for luxury feel */
+        .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='rgba(255,255,255,0.02)'/%3E%3C/svg%3E");
+        opacity: 0.15;
+        z-index: 2;
+        pointer-events: none;
+        }
+
+    </style>
+
+    <style>
+        .security-section {
+            padding: 60px 20px;
+            background: #f9fafb;
+        }
+        .security-section h2 {
+            margin-bottom: 15px;
+        }
+        .security-section ul {
+            margin-top: 15px;
+        }
+        .security-section li {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        .security-section {
+            padding: 80px 20px;
+            background: #f4f6f9;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+
+        .security-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .security-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .security-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .security-card h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .security-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+
+    <style>
+                    .brand-vertical {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
+                        animation: fadeUp 1s ease forwards;
+                        }
+
+                        /* White circle */
+                        .logo-circle {
+                        width: 80px;
+                        height: 80px;
+                        background: #1c1b1b;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+                        animation: float 3.5s ease-in-out infinite;
+                        }
+
+                        /* Crown icon */
+                        .logo-circle i {
+                        font-size: 34px;
+                        color: #dd3209; /* soft pink like image */
+                        animation: crownPulse 2s infinite;
+                        }
+
+                        /* Brand name */
+                        .brand-text {
+                        font-size: 34px;
+                        font-weight: 700;
+                        color: #dd3209;
+                        letter-spacing: 1px;
+                        text-shadow: 0 6px 18px rgba(0,0,0,0.4);
+                        }
+
+                        /* Animations */
+                        @keyframes float {
+                        0%, 100% { transform: translateY(0); }
+                        50% { transform: translateY(-10px); }
+                        }
+
+                        @keyframes crownPulse {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.15); }
+                        }
+
+                        @keyframes fadeUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(15px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                        }
 
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    </style>
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: FlexBiz
-  * Template URL: https://bootstrapmade.com/flexbiz-bootstrap-business-template/
-  * Updated: Aug 04 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  {{-- slider --}}
-  <style>
-    /* HERO BACKGROUND SLIDER */
-    .hero {
-    position: relative;
-    overflow: hidden;
-    }
-
-    .hero-bg-slider {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    }
-
-    .hero-bg-slider .slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transform: scale(1.08);
-    transition: opacity 1.5s ease-in-out, transform 6s ease;
-    }
-
-    .hero-bg-slider .slide.active {
-    opacity: 1;
-    transform: scale(1);
-    }
-
-    /* Dark elegant overlay */
-    .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        120deg,
-        rgba(0,0,0,0.85),
-        rgba(0,0,0,0.65)
-    );
-    z-index: 2;
-    }
-
-    /* Keep content above slider */
-    .hero .container {
-    position: relative;
-    z-index: 3;
-    }
-
-    /* Optional subtle grain for luxury feel */
-    .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='rgba(255,255,255,0.02)'/%3E%3C/svg%3E");
-    opacity: 0.15;
-    z-index: 2;
-    pointer-events: none;
-    }
-
-  </style>
-
-  
-  <style>
-                   .brand-vertical {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 10px;
-                    animation: fadeUp 1s ease forwards;
-                    }
-
-                    /* White circle */
-                    .logo-circle {
-                    width: 80px;
-                    height: 80px;
-                    background: #1c1b1b;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-                    animation: float 3.5s ease-in-out infinite;
-                    }
-
-                    /* Crown icon */
-                    .logo-circle i {
-                    font-size: 34px;
-                    color: #dd3209; /* soft pink like image */
-                    animation: crownPulse 2s infinite;
-                    }
-
-                    /* Brand name */
-                    .brand-text {
-                    font-size: 34px;
-                    font-weight: 700;
-                    color: #dd3209;
-                    letter-spacing: 1px;
-                    text-shadow: 0 6px 18px rgba(0,0,0,0.4);
-                    }
-
-                    /* Animations */
-                    @keyframes float {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-10px); }
-                    }
-
-                    @keyframes crownPulse {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(1.15); }
-                    }
-
-                    @keyframes fadeUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(15px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                    }
-
-
-  </style>
-
-                <!-- header buttons -->
+    <!-- header buttons -->
     <style>
       .header-buttons {
         display: flex;
@@ -257,7 +308,7 @@
             right: 0;
             z-index: 999999;
         }
-    
+
         .quick-connect a {
         color: white;
         }
@@ -325,7 +376,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#features">Features</a></li>
-            
+
             <li><a href="#call-to-action">Contact</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -337,7 +388,7 @@
                 Login <i class="bi bi-arrow-right"></i>
               </a>
 
-              
+
             </div>
         </div>
       </div>
@@ -346,7 +397,7 @@
 
     <div class="nav-wrap">
       <div class="container d-flex justify-content-center position-relative">
-        
+
       </div>
     </div>
 
@@ -410,7 +461,7 @@
                 <div class="media-stack" data-aos="zoom-in" data-aos-delay="200">
                 <figure class="media primary shadow-sm">
                     <p class="lead p-4">
-                
+
                 We are deeply grateful to Shri Sanjeev Kumar, Assistant Engineer (Civil), whose expert
                 guidance and shared knowledge were instrumental in the successful completion of this
                 project.
@@ -489,184 +540,130 @@
           </div><!-- End Service Item -->
 
           <!-- Card 3 -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item">
-              <div class="icon">
-                <i class="bi bi-graph-up"></i>
-              </div>
-              <h3>Actionable Insights</h3>
-              <p>Transform daily activity into "Work Intelligence," allowing you to make faster, data-driven decisions that safeguard your margins. </p>
-              <div class="card-links">
-                <a href="#" class="link-item">
-                  Learn More
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-item">
+                    <div class="icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3>Actionable Insights</h3>
+                    <p>Transform daily activity into "Work Intelligence," allowing you to make faster, data-driven decisions that safeguard your margins. </p>
+                    <div class="card-links">
+                        <a href="#" class="link-item">
+                        Learn More
+                        <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div><!-- End Service Item -->
-
-          <!-- Card 4 -->
-          {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item">
-              <div class="icon">
-                <i class="bi bi-cpu"></i>
-              </div>
-              <h3>AI Integration</h3>
-              <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione.</p>
-              <div class="card-links">
-                <a href="#" class="link-item">
-                  Learn More
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          </div> --}}
           <!-- End Service Item -->
-
-          <!-- Card 5 -->
-          {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item">
-              <div class="icon">
-                <i class="bi bi-cloud-arrow-up"></i>
-              </div>
-              <h3>Cloud Services</h3>
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos.</p>
-              <div class="card-links">
-                <a href="#" class="link-item">
-                  Learn More
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          </div> --}}
-          <!-- End Service Item -->
-
-          <!-- Card 6 -->
-          {{-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item">
-              <div class="icon">
-                <i class="bi bi-gear"></i>
-              </div>
-              <h3>Process Automation</h3>
-              <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus.</p>
-              <div class="card-links">
-                <a href="#" class="link-item">
-                  Learn More
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
-            </div>
-          </div> --}}
-          <!-- End Service Item -->
-
         </div>
 
       </div>
 
-    </section><!-- /Featured Services Section -->
+    </section>
+    <!-- /Featured Services Section -->
 
     <!-- About Section -->
     <section id="about" class="about section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>About</h2>
+            <p>Project OverView (P.O.V.): Elegance in Execution </p>
+        </div>
+        <!-- End Section Title -->
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About</h2>
-        <p>Project OverView (P.O.V.): Elegance in Execution </p>
-      </div>
-      <!-- End Section Title -->
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row g-4 align-items-stretch">
 
-        <div class="row g-4 align-items-stretch">
-
-          <div class="col-lg-5 order-lg-2" data-aos="fade-left" data-aos-delay="200">
-            <aside class="showcase">
-              <figure class="showcase-main">
-                <img src="{{ asset('s1.jpg') }}" alt="Our Journey" class="img-fluid">
-                {{-- <figcaption class="badge-note" data-aos="zoom-in" data-aos-delay="350">
-                  <i class="bi bi-graph-up-arrow"></i>
-                  <div>
-                    <strong>Growing Strong</strong>
-                    <small>Lorem ipsum dolor sit amet.</small>
-                  </div>
-                </figcaption> --}}
-              </figure>
-            </aside>
-          </div>
-
-          <div class="col-lg-7 order-lg-1" data-aos="fade-right" data-aos-delay="200">
-            <article class="intro-card">
-              <div class="intro-head">
-                <span class="kicker"><i class="bi bi-stars me-1"></i>Our Story</span>
-                <h2>The Minimalistic Intelligence Hub for Modern Enterprise</h2>
-              </div>
-
-              <div class="intro-body">
-                <p class="lead">In an era of digital complexity, Project OverView (P.O.V.) offers a sophisticated alternative: a streamlined, high-performance web solution designed specifically for business owners navigating the demanding landscapes of Government, PSUs, Banking, and the Private Sector. </p>
-                <p>Project OverView (P.O.V.) eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
-
-                <div class="feature-list row gy-3">
-                  <div class="col-md-6" data-aos="fade-up" data-aos-delay="250">
-                    <div class="feature-item">
-                      <i class="bi bi-shield-check"></i>
-                      <div class="text">
-                        <h6>Reliable Delivery</h6>
-                        {{-- <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.</p> --}}
-                      </div>
+            <div class="col-lg-5 order-lg-2" data-aos="fade-left" data-aos-delay="200">
+                <aside class="showcase">
+                <figure class="showcase-main">
+                    <img src="{{ asset('s1.jpg') }}" alt="Our Journey" class="img-fluid">
+                    {{-- <figcaption class="badge-note" data-aos="zoom-in" data-aos-delay="350">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <div>
+                        <strong>Growing Strong</strong>
+                        <small>Lorem ipsum dolor sit amet.</small>
                     </div>
-                  </div>
-                  <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-item">
-                      <i class="bi bi-palette2"></i>
-                      <div class="text">
-                        <h6>Human-Centered Design</h6>
-                        {{-- <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus.</p> --}}
-                      </div>
+                    </figcaption> --}}
+                </figure>
+                </aside>
+            </div>
+
+            <div class="col-lg-7 order-lg-1" data-aos="fade-right" data-aos-delay="200">
+                <article class="intro-card">
+                <div class="intro-head">
+                    <span class="kicker"><i class="bi bi-stars me-1"></i>Our Story</span>
+                    <h2>The Minimalistic Intelligence Hub for Modern Enterprise</h2>
+                </div>
+
+                <div class="intro-body">
+                    <p class="lead">In an era of digital complexity, Project OverView (P.O.V.) offers a sophisticated alternative: a streamlined, high-performance web solution designed specifically for business owners navigating the demanding landscapes of Government, PSUs, Banking, and the Private Sector. </p>
+                    <p>Project OverView (P.O.V.) eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
+
+                    <div class="feature-list row gy-3">
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="250">
+                        <div class="feature-item">
+                        <i class="bi bi-shield-check"></i>
+                        <div class="text">
+                            <h6>Reliable Delivery</h6>
+                            {{-- <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis.</p> --}}
+                        </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-item">
+                        <i class="bi bi-palette2"></i>
+                        <div class="text">
+                            <h6>Human-Centered Design</h6>
+                            {{-- <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus.</p> --}}
+                        </div>
+                        </div>
+                    </div>
+                    </div>
 
-                <div class="metric-band" data-aos="fade-up" data-aos-delay="350">
-                  <div class="metric">
-                    <span class="value">15+</span>
-                    <span class="label">Years</span>
-                  </div>
-                  <div class="divider"></div>
-                  <div class="metric">
-                    <span class="value">520</span>
-                    <span class="label">Projects</span>
-                  </div>
-                  <div class="divider"></div>
-                  <div class="metric">
-                    <span class="value">30</span>
-                    <span class="label">Experts</span>
-                  </div>
-                </div>
+                    <div class="metric-band" data-aos="fade-up" data-aos-delay="350">
+                    <div class="metric">
+                        <span class="value">15+</span>
+                        <span class="label">Years</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="metric">
+                        <span class="value">520</span>
+                        <span class="label">Projects</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="metric">
+                        <span class="value">30</span>
+                        <span class="label">Experts</span>
+                    </div>
+                    </div>
 
-                <div class="actions d-flex flex-wrap align-items-center gap-3" data-aos="fade-up" data-aos-delay="400">
-                  <a href="#" class="btn btn-accent">
-                    <i class="bi bi-rocket-takeoff me-1"></i> Explore Capabilities
-                  </a>
-                  <a href="#" class="link-more">
-                    Learn about our culture <i class="bi bi-arrow-right-short"></i>
-                  </a>
+                    <div class="actions d-flex flex-wrap align-items-center gap-3" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#" class="btn btn-accent">
+                        <i class="bi bi-rocket-takeoff me-1"></i> Explore Capabilities
+                    </a>
+                    <a href="#" class="link-more">
+                        Learn about our culture <i class="bi bi-arrow-right-short"></i>
+                    </a>
+                    </div>
                 </div>
-              </div>
-            </article>
-          </div>
+                </article>
+            </div>
+
+            </div>
 
         </div>
+    </section>
+    <!-- /About Section -->
 
-      </div>
 
-    </section><!-- /About Section -->
-
-    
 
     <!-- Stats Section -->
     <section id="stats" class="stats section">
 
-        
+
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Measurable Impact by the Numbers </h2>
@@ -749,7 +746,7 @@
               </article><!-- End Stat Tile -->
             </div>
 
-            
+
           </div>
         </div>
 
@@ -768,7 +765,7 @@
             <div class="skills-header">
               <h3>Measurable Impact by the Numbers</h3>
               <p>
-                Our platform is engineered to deliver high-impact results that scale with your ambitions: 
+                Our platform is engineered to deliver high-impact results that scale with your ambitions:
               </p>
               <div class="certifications">
                 <div class="cert-item" data-aos="fade-right" data-aos-delay="200">
@@ -874,7 +871,7 @@
 
         <!-- Services Grid -->
         <div class="row gy-5 d-flex align-items-center justify-content-center">
-         
+
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-card featured">
@@ -884,7 +881,7 @@
                   <i class="bi bi-globe"></i>
                 </div>
               </div>
-              
+
                <div class="service-content">
                 <h4>Project OverView (P.O.V.) Pricing</h4>
                 <p>
@@ -903,13 +900,13 @@
                   phone, our team is ready to assist and ensuring a
                   seamless user experience.
                 </p>
-                
+
                 <div class="service-pricing">
-                  
+
                   <span style="color: #fff; font-weight:500;">Price Starting @ ₹ 7,200/- plus GST annually</span>
-                
+
                 </div>
-               
+
               </div>
             </div>
           </div>
@@ -923,7 +920,7 @@
                 </div>
               </div>
               <div class="service-content">
-                
+
                 <img src="/QR2.jpg" alt="" width="100%" height="100%">
               </div>
             </div>
@@ -1174,15 +1171,15 @@
                   </div>
 
                   <h2 data-aos="fade-up" data-aos-delay="300">
-                    Begin Your Project OverView (P.O.V) Journey.  
+                    Begin Your Project OverView (P.O.V) Journey.
                     <span class="accent-text">No Pre-payment required</span>
                   </h2>
 
                   <p data-aos="fade-up" data-aos-delay="350">We believe in the power of our platform, which is why we invite you to experience it firsthand— completely risk-free.
                     <br>
-                    Dedicated Support: Access our robust technical support via email, chat, or phone. 
+                    Dedicated Support: Access our robust technical support via email, chat, or phone.
                   </p>
-                  
+
 
                   <div class="benefits-list" data-aos="fade-up" data-aos-delay="400">
                     <div class="benefit-row">
@@ -1281,7 +1278,71 @@
 
       </div>
 
-    </section><!-- /Call To Action Section -->
+    </section>
+
+    <section class="security-section">
+        <div class="container">
+            <h2 class="section-title">Data Security & User Protection</h2>
+            <p class="section-subtitle">
+                Your data security is our top priority. We use industry-standard
+                security protocols to protect user information from unauthorized access.
+            </p>
+
+            <div class="security-cards">
+
+                <div class="security-card">
+                    <h3> Secure Data Encryption</h3>
+                    <p>
+                        All data exchanged between users and the system is protected
+                        using HTTPS encryption, ensuring privacy and data integrity.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h3> Authentication & Access Control</h3>
+                    <p>
+                        Secure login systems with role-based access ensure that users
+                        can only access data they are authorized to view.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h3>Protection Against Cyber Attacks</h3>
+                    <p>
+                        Built-in safeguards protect the platform from common threats
+                        such as unauthorized access, data manipulation, and misuse.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h3>Secure Data Storage</h3>
+                    <p>
+                        User information is securely stored in protected databases with
+                        restricted access to prevent data leakage.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h3>Regular Security Updates</h3>
+                    <p>
+                        The system is regularly updated with the latest security patches
+                        to ensure protection against new vulnerabilities.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h3>Continuous Monitoring</h3>
+                    <p>
+                        Ongoing system monitoring helps detect unusual activity early
+                        and ensures the platform remains safe and reliable.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+        <!-- /Call To Action Section -->
 
   </main>
 
@@ -1313,7 +1374,7 @@
             </a>
             <p class="tagline">UPI : solutions@barodampay</p>
 
-            
+
             <div class="mt-4">
             <h5>Follow US:</h5>
             <div class="social-links ">
