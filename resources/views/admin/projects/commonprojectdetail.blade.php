@@ -1,15 +1,16 @@
 @php
     $estimated = (float) $project->estimated_amount;
     $tendered  = (float) $project->tendered_amount;
-    
+
 
     $percentageText = '-';
 
     if ($estimated > 0 && $tendered > 0) {
         $percentage = (($estimated - $tendered) / $estimated) * -100;
         $percentage = round($percentage, 2);
-
-        if ($percentage < 0) {
+        if ($percentage == '-0') {
+            $percentageText = 'AT PAR';
+        }elseif ($percentage < 0) {
             $percentageText = abs($percentage) . ' % BELOW';
         } else {
             $percentageText = $percentage . ' % ABOVE';
@@ -54,7 +55,7 @@
     <div class="col-md-4 flex mb-3">
         <label>Time</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
- 
+
     </div>
 
     <div class="col-md-4 mb-3">
@@ -62,7 +63,7 @@
         <input type="text" class="form-control" value="{{ $project->tendered_amount }}" disabled>
     </div>
 
-    
+
 
     <div class="col-md-4 mb-3">
         <label>Date Of Start Of Work</label>
