@@ -105,7 +105,7 @@
         <th>Voucher Number</th>
         <th>Description of Item</th>
         <th>Quantity</th>
-        <th>Amount</th>
+        <th>Rate</th>
         <th>Deduction</th>
         <th>Net Payment</th>
         <th>Upload</th>
@@ -139,7 +139,19 @@
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
 
-                <td width="200px"><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
+                {{-- <td width=""><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td> --}}
+                <td width="">
+                    <select class="form-select paid_to">
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->vendor_agency_name }}"
+                                {{ $i->paid_to == $vendor->vendor_agency_name ? 'selected' : '' }}>
+                                {{ $vendor->vendor_agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
+
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -170,7 +182,7 @@
 
                 <td>
 
-                    <button class="btn btn-success btn-sm">Saved</button>
+                    <button class="btn btn-success btn-sm saveRow">Saved</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
             </tr>
@@ -182,7 +194,17 @@
                 <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-                <td><input type="text" class="form-control paid_to"></td>
+                <td>
+                    <select class="form-select paid_to">
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->vendor_agency_name }}">
+                                {{ $vendor->vendor_agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
+
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -237,7 +259,17 @@ $(function () {
             <td>${index}</td>
             <input type="hidden" class="project_id" value="${selectedProjectId}">
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-            <td><input type="text" class="form-control paid_to"></td>
+            <td>
+                <select class="form-select paid_to">
+                    <option value="">Select Vendor</option>
+                    @foreach($vendors as $vendor)
+                        <option value="{{ $vendor->vendor_agency_name }}">
+                            {{ $vendor->vendor_agency_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -264,11 +296,12 @@ $(function () {
     });
 
     // NET PAYABLE
-    $(document).on('input', '.amount, .deduction', function () {
+     $(document).on('input', '.amount, .deduction', function () {
         let row = $(this).closest('tr');
         let a = parseFloat(row.find('.amount').val()) || 0;
+        let c = parseFloat(row.find('.quantity').val()) || 0;
         let d = parseFloat(row.find('.deduction').val()) || 0;
-        row.find('.net_payable').text((a - d).toFixed(2));
+        row.find('.net_payable').text((a * c - d).toFixed(2));
     });
 
     // SAVE

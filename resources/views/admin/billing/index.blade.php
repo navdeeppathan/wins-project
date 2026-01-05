@@ -15,14 +15,14 @@
     /* 🔥 Allow full width inputs */
     #billingTable input.form-control,
     #billingTable select.form-select {
-        min-width: 180px;
+        min-width: 120px;
         width: 100%;
     }
 
     /* 🔥 Paid To & Narration extra wide */
     #billingTable td:nth-child(3) input,
     #billingTable td:nth-child(5) input {
-        min-width: 250px;
+        min-width: 120px;
     }
 
     /* 🔥 Disable text cutting */

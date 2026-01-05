@@ -141,7 +141,18 @@
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
 
-                <td><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td>
+                {{-- <td><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td> --}}
+                <td width="">
+                    <select class="form-select paid_to">
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->vendor_agency_name }}"
+                                {{ $i->paid_to == $vendor->vendor_agency_name ? 'selected' : '' }}>
+                                {{ $vendor->vendor_agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -172,7 +183,7 @@
 
                 <td>
 
-                    <button class="btn btn-success btn-sm">Saved</button>
+                    <button class="btn btn-success btn-sm saveRow">Saved</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
             </tr>
@@ -190,7 +201,16 @@
                 </td> --}}
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-                <td><input type="text" class="form-control paid_to"></td>
+                <td>
+                    <select class="form-select paid_to">
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->vendor_agency_name }}">
+                                {{ $vendor->vendor_agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -253,7 +273,16 @@ $(function () {
             <td>${index}</td>
 
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-            <td><input type="text" class="form-control paid_to"></td>
+            <td>
+                    <select class="form-select paid_to">
+                        <option value="">Select Vendor</option>
+                        @foreach($vendors as $vendor)
+                            <option value="{{ $vendor->vendor_agency_name }}">
+                                {{ $vendor->vendor_agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+            </td>
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
