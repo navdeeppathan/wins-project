@@ -83,10 +83,9 @@
         </div>
 
 
-    <div class="col-md-3 mb-3">
+    <div class="col-md-2 mb-3">
         <label class="form-label">EMD Rate *</label>
         <select id="emd_rate" name="emd_rate" class="form-select">
-            <option value="">Select</option>
             <option value="2">2 PERCENT</option>
             <option value="1">1 PERCENT</option>
             <option value="other">OTHER</option>
@@ -94,20 +93,20 @@
     </div>
 
     {{-- EMD AMOUNT --}}
-    <div class="col-md-3 mb-3">
+    <div class="col-md-2 mb-3">
         <label class="form-label">EMD Amount *</label>
         <input type="text"
                id="emd_amount_display"
                class="form-control"
                placeholder="EMD Amount"
                value="{{ number_format($project->emd_amount) }}"
-               readonly>
+               >
 
         <input type="hidden" name="emd_amount" id="emd_amount">
     </div>
 
     {{-- DATE OF SUBMISSION --}}
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-3">
         <label class="form-label">Date of Submission</label>
         <input type="date"
                name="date_of_start"
@@ -116,7 +115,7 @@
     </div>
 
     {{-- DATE OF OPENING --}}
-    <div class="col-md-3 mb-3">
+    <div class="col-md-4 mb-3">
         <label class="form-label">Date of Opening</label>
         <input type="date"
                name="date_of_opening"

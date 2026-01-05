@@ -12,68 +12,68 @@
 
             <div class="col-md-3">
                 <label>Security (2.5%)</label>
-                <input type="number" class="form-control security" readonly
+                <input type="number" class="form-control security" 
                        value="{{ $recoveries->first()->security ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Income Tax (2%)</label>
-                <input type="number" class="form-control income_tax" readonly
+                <input type="number" class="form-control income_tax" 
                        value="{{ $recoveries->first()->income_tax ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Labour Cess (1%)</label>
-                <input type="number" class="form-control labour_cess" readonly
+                <input type="number" class="form-control labour_cess" 
                        value="{{ $recoveries->first()->labour_cess ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Water Charges (1%)</label>
-                <input type="number" class="form-control water_charges" readonly
-                       value="{{ $recoveries->first()->water_charges ?? '' }}">
+                <input type="number" class="form-control water_charges" 
+                       value="{{ $recoveries->first()->water_charges ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>License Fee</label>
                 <input type="number" class="form-control license_fee"
-                       value="{{ $recoveries->first()->license_fee ?? '' }}">
+                       value="{{ $recoveries->first()->license_fee ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>CGST</label>
-                <input type="number" class="form-control cgst" readonly
-                       value="{{ $recoveries->first()->cgst ?? '' }}">
+                <input type="number" class="form-control cgst" 
+                       value="{{ $recoveries->first()->cgst ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>SGST</label>
-                <input type="number" class="form-control sgst" readonly
-                       value="{{ $recoveries->first()->sgst ?? '' }}">
+                <input type="number" class="form-control sgst" 
+                       value="{{ $recoveries->first()->sgst ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Withheld 1</label>
                 <input type="number" class="form-control withheld_1"
-                       value="{{ $recoveries->first()->withheld_1 ?? '' }}">
+                       value="{{ $recoveries->first()->withheld_1 ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Withheld 2</label>
                 <input type="number" class="form-control withheld_2"
-                       value="{{ $recoveries->first()->withheld_2 ?? '' }}">
+                       value="{{ $recoveries->first()->withheld_2 ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Recovery</label>
                 <input type="number" class="form-control recovery"
-                       value="{{ $recoveries->first()->recovery ?? '' }}">
+                       value="{{ $recoveries->first()->recovery ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Total</label>
-                <input type="number" class="form-control total" readonly
-                       value="{{ $recoveries->first()->total ?? '' }}">
+                <input type="number" class="form-control total" 
+                       value="{{ $recoveries->first()->total ?? '0' }}">
             </div>
 
             <div class="col-md-12 mt-3">
@@ -115,8 +115,8 @@ function calculateForm() {
     let waterCharges = gross * 0.01;
 
     let taxable = gross / 1.18;
-    let cgst = taxable * 0.09;
-    let sgst = taxable * 0.09;
+    let cgst = taxable * 0.01;
+    let sgst = taxable * 0.01;
 
     $('.security').val(security.toFixed(2));
     $('.income_tax').val(incomeTax.toFixed(2));

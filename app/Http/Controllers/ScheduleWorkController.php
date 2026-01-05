@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\ScheduleWork;
 use Illuminate\Http\Request;
+use App\Models\Inventory;
 
 class ScheduleWorkController extends Controller
 {
@@ -26,9 +27,9 @@ class ScheduleWorkController extends Controller
     public function index3(Project $project,ScheduleWork $scheduleWork)
     {
         $inventories = $scheduleWork->inventories;
+        $allInventories = Inventory::where('user_id', auth()->id())->get();
 
-
-        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories'));
+        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories'));
     }
 
     // public function save(Request $request, Project $project)

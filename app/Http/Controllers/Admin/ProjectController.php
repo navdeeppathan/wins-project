@@ -698,7 +698,7 @@ class ProjectController extends Controller
 
      public function awardIndex()
     {
-        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement'])
+        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement','billing'])
             ->where('user_id', auth()->id())
             ->latest()
             ->paginate(10);

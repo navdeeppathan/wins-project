@@ -53,13 +53,24 @@
         <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
     </div>
 
-    <div class="col-md-4 mb-2">
+    
+   <div class="col-md-4 mb-2">
         <label>Date of Start</label>
-        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->date_ofstartof_work)) }}" disabled>
+        <input class="form-control" disabled
+            value="{{
+                $project->date_ofstartof_work
+                    ? date('d-m-Y', strtotime($project->date_ofstartof_work))
+                    : $project->created_at->format('d-m-Y')
+            }}">
     </div>
     <div class="col-md-4 mb-2">
         <label>Date of Completion</label>
-        <input class="form-control" value="{{ date('d-m-Y', strtotime($project->stipulated_date_ofcompletion)) }}" disabled>
+        <input class="form-control" disabled
+            value="{{
+                $project->stipulated_date_ofcompletion
+                    ? date('d-m-Y', strtotime($project->stipulated_date_ofcompletion))
+                    : $project->created_at->format('d-m-Y')
+            }}">
     </div>
     <div class="col-md-4 mb-2">
         <label>Percentage</label>
@@ -117,6 +128,7 @@
         'OTHERS',
     ];
 @endphp
+
 
 <style>
     /* ðŸ”¥ Allow full width inputs */
@@ -190,7 +202,14 @@
                     </select>
                 </td>
 
-                <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
+                <td>
+                    <select class="form-select description" data-selected="{{ $i->description }}">
+                        <option value="">Select description</option>
+                    </select>
+                </td>
+
+
+
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
 
@@ -220,7 +239,12 @@
                     </select>
                 </td>
 
-                <td><input type="text" class="form-control description"></td>
+                <td>
+                    <select class="form-select description">
+                        <option value="">Select description</option>
+                    </select>
+                </td>
+
 
 
                 <td><input type="number" class="form-control quantity"></td>
@@ -243,6 +267,11 @@
 
 
 @push('scripts')
+<script>
+    const allInventories = @json($allInventories);
+</script>
+
+
 <script>
 $(function () {
 
@@ -269,7 +298,12 @@ $(function () {
                     @endforeach
                 </select>
             </td>
-            <td><input type="text" class="form-control description"></td>
+            <td>
+                <select class="form-select description">
+                    <option value="">Select description</option>
+                </select>
+            </td>
+
 
 
             <td><input type="number" class="form-control quantity"></td>
@@ -371,6 +405,92 @@ $(function () {
 
     });
 </script>
+<script>
+document.addEventListener('change', function (e) {
+
+    // CATEGORY CHANGE
+    if (e.target.classList.contains('category')) {
+
+        let row = e.target.closest('tr');
+        let category = e.target.value;
+
+        let descSelect = row.querySelector('.description');
+        let qtyInput  = row.querySelector('.quantity');
+
+        // reset
+        descSelect.innerHTML = '<option value="">Select description</option>';
+        qtyInput.value = '';
+
+        if (!category) return;
+
+        // filter inventories by category
+        let matches = allInventories.filter(inv => inv.category === category);
+
+        matches.forEach(inv => {
+            let opt = document.createElement('option');
+            opt.value = inv.description;
+            opt.textContent = inv.description;
+            opt.dataset.quantity = inv.quantity;
+            descSelect.appendChild(opt);
+        });
+    }
+
+    // DESCRIPTION CHANGE → autofill quantity
+    if (e.target.classList.contains('description')) {
+
+        let row = e.target.closest('tr');
+        let selectedOption = e.target.selectedOptions[0];
+
+        if (!selectedOption) return;
+
+        let qty = selectedOption.dataset.quantity ?? '';
+        row.querySelector('.quantity').value = qty;
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
+
+        let categorySelect = row.querySelector('.category');
+        let descSelect     = row.querySelector('.description');
+        let qtyInput       = row.querySelector('.quantity');
+
+        if (!categorySelect || !descSelect) return;
+
+        let category = categorySelect.value;
+        let selectedDesc = descSelect.dataset.selected;
+
+        if (!category) return;
+
+        descSelect.innerHTML = '<option value="">Select description</option>';
+
+        let matches = allInventories.filter(inv => inv.category === category);
+
+        matches.forEach(inv => {
+            let opt = document.createElement('option');
+            opt.value = inv.description;
+            opt.textContent = inv.description;
+            opt.dataset.quantity = inv.quantity;
+
+            if (inv.description === selectedDesc) {
+                opt.selected = true;
+                qtyInput.value = inv.quantity;
+            }
+
+            descSelect.appendChild(opt);
+        });
+
+    });
+
+});
+</script>
+
+
+
 @endpush
 
 

@@ -20,12 +20,12 @@
         </div>
 
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number') }}" placeholder="Enter NIT Number" class="form-control" required>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Department *</label>
             <select name="department" class="form-select" required>
                 <option value="">Select Department</option>
@@ -36,7 +36,7 @@
         </div>
 
         
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">State *</label>
             <select name="location" class="form-select" required>
                 <option value="">Select State</option>
@@ -46,7 +46,7 @@
             </select>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
            <input type="number" step="0.01" name="estimated_amount" 
             id="estimated_amount"
@@ -55,7 +55,7 @@
             class="form-control" required>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Time Allowed *</label>
             <select name="time_allowed_number" class="form-select"  required>
                 <option value="">Select</option>
@@ -66,7 +66,7 @@
         </div>
 
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Term *</label>
             <select name="time_allowed_type" class="form-select" required>
                 <option value="">Select</option>
@@ -76,8 +76,27 @@
                 <option value="Years">Years</option>
             </select>
         </div>
+        <div class="col-md-2 mb-3">
+            <label class="form-label">EMD Rate *</label>
+            <select id="emd_rate" name="emd_rate" class="form-select">
+                <option value="2">2 PERCENT</option>
+                <option value="1">1 PERCENT</option>
+                <option value="other">OTHER</option>
+            </select>
+        </div>
 
-        <div class="col-md-3 mb-3">
+        {{-- EMD AMOUNT --}}
+        <div class="col-md-2 mb-3">
+            <label class="form-label">EMD Amount *</label>
+            <input type="text"
+                    id="emd_amount_display"
+                    class="form-control"
+                    placeholder="EMD Amount">
+
+                <input type="hidden" name="emd_amount" id="emd_amount">
+        </div>
+
+        <div class="col-md-4 mb-3">
             <label class="form-label">Date of Submission</label>
             <input 
                 type="date" 
@@ -88,7 +107,7 @@
             >
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
             <label class="form-label">Date of Opening</label>
             <input 
                 type="date" 
@@ -151,20 +170,61 @@
     </table>
 </div>
    
-<div class="d-flex flex-column align-items-end">
+<div class="d-flex align-items-end gap-2 justify-content-end" >
+    
+     <button class="btn btn-success mb-3">Save Project</button>
+    
     <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
         + Add More
     </button>
-<br>
-    <div>
-        <button class="btn btn-success">Save Project</button>
-        <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
-    </div>
+    <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mb-3">Back</a>
+       
 </div>
 
 
 </form>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const rateSelect = document.getElementById('emd_rate');
+    const displayAmt = document.getElementById('emd_amount_display');
+    const hiddenAmt  = document.getElementById('emd_amount');
+    const estInput   = document.getElementById('estimated_amount');
+
+    function calculateEMD() {
+        let rate = rateSelect.value;
+        let baseAmount = parseFloat(estInput.value) || 0;
+
+        if (rate === 'other') {
+            displayAmt.readOnly = false;
+            displayAmt.value = '';
+            hiddenAmt.value = '';
+            displayAmt.focus();
+            return;
+        }
+
+        if (rate !== '' && baseAmount > 0) {
+            let emd = (baseAmount * rate) / 100;
+            emd = emd.toFixed(2);
+
+            displayAmt.readOnly = true;
+            displayAmt.value = emd;
+            hiddenAmt.value = emd;
+        }
+    }
+
+    rateSelect.addEventListener('change', calculateEMD);
+    estInput.addEventListener('input', calculateEMD);
+
+    displayAmt.addEventListener('input', function () {
+        if (!displayAmt.readOnly) {
+            hiddenAmt.value = this.value;
+        }
+    });
+
+});
+</script>
 
 <script>
 let emdIndex = 1;

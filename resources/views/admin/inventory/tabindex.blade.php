@@ -103,12 +103,11 @@
         <th>Date</th>
         <th>Paid To</th>
         <th>Category</th>
-
         <th>Voucher Number</th>
-         <th>Description of Item</th>
+        <th>Description of Item</th>
         <th>Quantity</th>
         <th>Rate</th>
-        <th>Deduction</th>
+        <!-- <th>Deduction</th> -->
         <th>Net Payment</th>
         <th>Upload</th>
         <th width="">Action</th>
@@ -169,7 +168,7 @@
                 <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
                 <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
-                <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td>
+                <!-- <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> -->
 
                 <td class="net_payable">{{ number_format($i->net_payable,2) }}</td>
 
@@ -222,12 +221,11 @@
                     </select>
                 </td>
 
+                <td><input type="text" class="form-control voucher"></td>
                 <td><input type="text" class="form-control description"></td>
 
-                <td><input type="text" class="form-control voucher"></td>
                 <td><input type="number" class="form-control quantity"></td>
                 <td><input type="number" class="form-control amount"></td>
-                <td><input type="number" class="form-control deduction"></td>
                 <td class="net_payable">0.00</td>
                 <td><input type="file" class="form-control upload"></td>
 
@@ -291,12 +289,13 @@ $(function () {
                     @endforeach
                 </select>
             </td>
+             <td><input type="text" class="form-control voucher"></td>
             <td><input type="text" class="form-control description"></td>
 
-            <td><input type="text" class="form-control voucher"></td>
+           
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
-            <td><input type="number" class="form-control deduction"></td>
+            // <td><input type="number" class="form-control deduction"></td>
             <td class="net_payable">0.00</td>
             <td><input type="file" class="form-control upload"></td>
             <td>
