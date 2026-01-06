@@ -7,6 +7,7 @@ use App\Models\ScheduleWork;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\User;
+use Carbon\Carbon;
 
 class ScheduleWorkController extends Controller
 {
@@ -102,6 +103,8 @@ class ScheduleWorkController extends Controller
 
         // CREATE
         $work = ScheduleWork::create($data);
+
+       
 
         return response()->json([
             'status' => true,

@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\EmdDetail;
 use App\Models\PgDetail;
 use App\Models\Project;
+use App\Models\ScheduleWork;
 use App\Models\SecurityDeposit;
 use App\Models\State;
 use App\Models\User;
@@ -482,6 +483,19 @@ class ProjectController extends Controller
                 EmdDetail::create($emdData);
             }
         }
+
+        ScheduleWork::create([
+            'project_id'        => $project->id,
+            'section_name'      => 'GENERAL',
+            'description'       =>'Project Contingency',
+            'quantity'          => 1,
+            'unit'              => 1,
+            'rate'              => 1,
+            'amount'            => 1,
+            'measured_quantity' => 1,
+        ]);
+        
+        
 
         return redirect()->route('admin.projects.index')
             ->with('success', 'Project created.');
