@@ -46,7 +46,7 @@
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-warning">Add Correspondence</a>
+                        <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-warning">Add Note</a>
                     </td>
                 </tr>
                  @php

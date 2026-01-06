@@ -91,7 +91,7 @@
                 <th>UNIT</th>
                 <th>RATE</th>
                 <th>AMOUNT</th>
-                <th>MEASURED QUANTITY</th>
+                <th>Qty Issued</th>
 
             </tr>
         </thead>
