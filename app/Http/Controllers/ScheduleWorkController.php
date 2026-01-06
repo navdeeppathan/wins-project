@@ -11,10 +11,15 @@ use Carbon\Carbon;
 
 class ScheduleWorkController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        
+        $projects = Project::with(['departments', 'state','emds'])
+                    ->where('user_id', auth()->id())
+                    ->when($request->filled('year'), function ($query) use ($request) {
+                        $query->whereYear('created_at', $request->year);
+                    })
+                    ->latest()->paginate(20);
+
         return view('admin.schedule_work.index', compact('projects'));
     }
 
@@ -104,7 +109,7 @@ class ScheduleWorkController extends Controller
         // CREATE
         $work = ScheduleWork::create($data);
 
-       
+
 
         return response()->json([
             'status' => true,
@@ -130,7 +135,7 @@ class ScheduleWorkController extends Controller
      public function updateScheduleDismantal(Request $request, ScheduleWork $schedule)
     {
         $request->validate([
-            'dismantals'       => 'nullable|numeric', 
+            'dismantals'       => 'nullable|numeric',
         ]);
 
         $schedule->dismantals = $request->dismantals;
@@ -142,6 +147,6 @@ class ScheduleWorkController extends Controller
         ]);
     }
 
-    
+
 }
 

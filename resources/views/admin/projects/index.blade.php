@@ -10,93 +10,108 @@
         + Create Project
     </a>
 </div>
-
+<form method="GET" action="{{ route('admin.projects.index') }}">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="fw-bold">Filter by Year (Created)</label>
+            <select name="year" class="form-select" onchange="this.form.submit()">
+                <option value="">All Years</option>
+                @for($y = 2025; $y <= 2050; $y++)
+                    <option value="{{ $y }}"
+                        {{ request('year') == $y ? 'selected' : '' }}>
+                        {{ $y }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </div>
+</form>
 @if($projects->count() > 0)
 
-<div class="table-responsive">
-    <table id="projectTable" class="table table-bordered class-table nowrap" style="width:100%">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>NIT No</th>
-                {{-- <th>Location</th>
-                <th>Department</th> --}}
-                <th>Date of Opening</th>
-                <th>Estimate Amt</th>
-                <th>EMD Amt</th>
-                <th>Qualified</th>
+    <div class="table-responsive">
+        <table id="projectTable" class="table table-bordered class-table nowrap" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>NIT No</th>
+                    {{-- <th>Location</th>
+                    <th>Department</th> --}}
+                    <th>Date of Opening</th>
+                    <th>Estimate Amt</th>
+                    <th>EMD Amt</th>
+                    <th>Qualified</th>
 
-                <th width="160">Actions</th>
-            </tr>
-        </thead>
+                    <th width="160">Actions</th>
+                </tr>
+            </thead>
 
-        <tbody class="text-center">
-            @php
-                $i=1;
-            @endphp
-            @foreach($projects as $p)
-            <tr>
-                <td>{{ $i }}</td>
-               <td class="text-start">
-                    {!! implode('<br>', array_map(
-                        fn($chunk) => implode(' ', $chunk),
-                        array_chunk(explode(' ', $p->name), 10)
-                    )) !!}
-                </td>
-
-
+            <tbody class="text-center">
+                @php
+                    $i=1;
+                @endphp
+                @foreach($projects as $p)
+                <tr>
+                    <td>{{ $i }}</td>
+                <td class="text-start">
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
 
 
-                <td class="text-start">{{ $p->nit_number }}</td>
-                {{-- <td>{{ $p->state->name ?? '-' }}</td>
-                <td>{{ $p->departments->name ?? '-' }}</td> --}}
-                <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
-                <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
-                <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
-                {{-- @if ($p->isQualified==0) --}}
-                <td class="text-center">
 
-                    <input type="checkbox"
-                        class="form-check-input isQualifiedBox"
-                        data-id="{{ $p->id }}"
-                        {{ $p->isQualified ? 'checked' : '' }}>
-                &nbsp;&nbsp;
-                    <button class="btn btn-success btn-sm saveQualifiedBtn"
-                        data-id="{{ $p->id }}">
-                        Save
-                    </button>
-                </td>
-                {{-- @else
-                <td  class="text-center ">
-                    <span class="badge bg-success">Qualified</span>
-                </td>
 
-                @endif --}}
+                    <td class="text-start">{{ $p->nit_number }}</td>
+                    {{-- <td>{{ $p->state->name ?? '-' }}</td>
+                    <td>{{ $p->departments->name ?? '-' }}</td> --}}
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
+                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
+                    <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
+                    {{-- @if ($p->isQualified==0) --}}
+                    <td class="text-center">
 
-                <td>
-                    <a href="{{ route('admin.projects.edit', $p) }}"
-                       class="btn btn-warning btn-sm">Edit</a>
+                        <input type="checkbox"
+                            class="form-check-input isQualifiedBox"
+                            data-id="{{ $p->id }}"
+                            {{ $p->isQualified ? 'checked' : '' }}>
+                    &nbsp;&nbsp;
+                        <button class="btn btn-success btn-sm saveQualifiedBtn"
+                            data-id="{{ $p->id }}">
+                            Save
+                        </button>
+                    </td>
+                    {{-- @else
+                    <td  class="text-center ">
+                        <span class="badge bg-success">Qualified</span>
+                    </td>
 
-                   <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
-                        class="btn btn-primary btn-sm">
-                        Inventory
-                    </a>
-                   
-                </td>
-            </tr>
-            @php
-                $i++;
-            @endphp
-            @endforeach
-        </tbody>
-    </table>
-</div>
+                    @endif --}}
+
+                    <td>
+                        <a href="{{ route('admin.projects.edit', $p) }}"
+                        class="btn btn-warning btn-sm">Edit</a>
+
+                    <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
+                            class="btn btn-primary btn-sm">
+                            Inventory
+                        </a>
+
+                    </td>
+                </tr>
+                @php
+                    $i++;
+                @endphp
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
 @else
-<div class="alert alert-warning text-center">
-    Data is not available.
-</div>
+    <div class="alert alert-warning text-center">
+        Data is not available. Start Your Projects.
+    </div>
 @endif
 
 @endsection

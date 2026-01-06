@@ -704,39 +704,29 @@ class ProjectController extends Controller
         ]);
     }
 
-
-    public function acceptanceIndex( Request $request)
+    public function acceptanceIndex()
     {
         $projects = Project::whereIn('status', ['bidding', 'accepted'])
-                    ->where('user_id', auth()->id())
-                    ->when($request->filled('year'), function ($query) use ($request) {
-                        $query->whereYear('created_at', $request->year);
-                    })
-                    ->latest()
-                    ->paginate(10);
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
 
         return view('admin.acceptance.index', compact('projects'));
     }
 
-     public function awardIndex(Request $request)
+     public function awardIndex()
     {
-        // whereIn('status', ['bidding', 'accepted','awarded','agreement','billing'])
-        $projects = Project::where('user_id', auth()->id())
-                    ->when($request->filled('year'), function ($query) use ($request) {
-                        $query->whereYear('created_at', $request->year);
-                    })
-                    ->latest()
-                    ->paginate(10);
+        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement','billing'])
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(10);
 
         return view('admin.award.index', compact('projects'));
     }
 
-    public function agreementIndex(Request $request)
+      public function agreementIndex()
     {
         $projects = Project::whereIn('status', ['bidding', 'accepted','awarded','agreement'])->where('user_id', auth()->id())
-            ->when($request->filled('year'), function ($query) use ($request) {
-                $query->whereYear('created_at', $request->year);
-            })
             ->latest()
             ->paginate(10);
 

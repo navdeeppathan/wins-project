@@ -10,29 +10,33 @@ use Illuminate\Support\Facades\Auth;
 
 class BillingController extends Controller
 {
-    public function index(Project $project)
+    public function index(Project $project, Request $request)
     {
          $billings = $project->billings()
-        ->withSum('recoveries','total')   // ✅ correct eager loading
-        ->latest()
-        ->get();
+                    ->withSum('recoveries','total')
 
-      
+                    ->latest()
+                    ->get();
+
+
 
 
         // dd($billings);
         return view('admin.billing.index', compact('project','billings'));
     }
 
-     public function indexprojects()
+     public function indexprojects(Request $request)
     {
         $projects = Project::
-        where('status', 'agreement')
-        ->orWhere('status', 'billing')
-        ->latest()->paginate(20);
+                where('status', 'agreement')
+                ->when($request->filled('year'), function ($query) use ($request) {
+                    $query->whereYear('created_at', $request->year);
+                })
+                ->orWhere('status', 'billing')
+                ->latest()->paginate(20);
         return view('admin.billing.indexprojects', compact('projects'));
     }
-    
+
     public function store(Request $request, Project $project)
     {
         $request->validate([
@@ -45,7 +49,7 @@ class BillingController extends Controller
             'net_payable' => 'required|numeric',
             'remarks' => 'required|string',
             'bill_file' => 'nullable|mimes:pdf,jpg,png|max:4096',
-            
+
             'completion_date' => 'nullable|date'
         ]);
 
@@ -61,7 +65,7 @@ class BillingController extends Controller
         $data['net_payable'] = $request->net_payable;
         $data['remarks'] = $request->remarks;
 
-        
+
         $data['approved_at'] = now();
 
         Billing::create($data);
@@ -83,7 +87,7 @@ class BillingController extends Controller
             'net_payable' => 'nullable|numeric',
             'remarks' => 'nullable|string',
             'bill_file' => 'nullable|mimes:pdf,jpg,jpeg,png',
-           
+
             'completion_date' => 'nullable|date'
         ]);
 
