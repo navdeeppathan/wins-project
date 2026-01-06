@@ -48,7 +48,7 @@
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td>{{ number_format($p->emds->sum('amount'),2) }}</td>
                     <td>
-                        <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-warning">Add SOW</a>
+                        <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">Add SOW</a>
                     </td>
                 </tr>
                  @php

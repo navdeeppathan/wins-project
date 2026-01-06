@@ -27,7 +27,9 @@ class Inventory extends Model
                 'dismantals',
                 'dismantal_amount',
                 'dismantal_rate',
-                'schedule_work_id'
+                'schedule_work_id',
+                'staff_id',
+                'isApproved'
 
             
     ];

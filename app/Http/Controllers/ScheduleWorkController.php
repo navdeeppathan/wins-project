@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\ScheduleWork;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
+use App\Models\User;
 
 class ScheduleWorkController extends Controller
 {
@@ -28,8 +29,10 @@ class ScheduleWorkController extends Controller
     {
         $inventories = $scheduleWork->inventories;
         $allInventories = Inventory::where('user_id', auth()->id())->get();
+        $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
-        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories'));
+
+        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories','staffs'));
     }
 
     // public function save(Request $request, Project $project)

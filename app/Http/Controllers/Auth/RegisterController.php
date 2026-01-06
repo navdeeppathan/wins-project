@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,6 +22,16 @@ class RegisterController extends Controller
     {
         $users = User::where('parent_id', auth()->user()->id)->get();
         return view('admin.users.index', compact('users'));
+    }
+
+     public function adminUserDetails(User $user)
+    {
+        $inventories = Inventory::where('user_id', $user->id)->get();
+        $totalNetPayable = $inventories->where('isApproved',0)->sum('net_payable');
+        $totalPaidNetPayable = $inventories->where('isApproved',1)->sum('net_payable');
+        $balanceAmount = $totalNetPayable - $totalPaidNetPayable;
+
+        return view('admin.users.userdetails', compact('user', 'inventories', 'totalNetPayable', 'totalPaidNetPayable', 'balanceAmount'));
     }
 
     public function create()

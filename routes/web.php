@@ -67,6 +67,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('users', [RegisterController::class, 'adminIndex'])->name('users.index');
     Route::get('users/create', [RegisterController::class, 'adminCreate'])->name('users.create');
     Route::post('users', [RegisterController::class, 'userCreate'])->name('users.store');
+    Route::get('users/details/{user}', [RegisterController::class, 'adminUserDetails'])->name('users.details.index');
      
 
        Route::get('daily-notes', [DailyNoteController::class, 'index'])->name('daily-notes.index');
@@ -379,6 +380,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('vendors', [App\Http\Controllers\Admin\VendorController::class, 'index'])->name('vendors.index');
     Route::get('vendors/create', [App\Http\Controllers\Admin\VendorController::class, 'create'])->name('vendors.create');
     Route::get('vendors/edit/{vendor}', [App\Http\Controllers\Admin\VendorController::class, 'edit'])->name('vendors.edit');
+    Route::get('vendors/details/{vendor}', [App\Http\Controllers\Admin\VendorController::class, 'index2'])->name('vendors.details.index');
 
 
     Route::post('vendors', [App\Http\Controllers\Admin\VendorController::class, 'store'])->name('vendors.store');
@@ -421,6 +423,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         // ❌ Delete Inventory
         Route::post('inventory/{inventory}/destroy', [App\Http\Controllers\Admin\InventoryController::class, 'destroy'])
             ->name('inventory.destroy');
+
+        Route::patch('/inventory/{inventory}/approve',
+            [App\Http\Controllers\Admin\InventoryController::class, 'isApproved']
+        )->name('inventory.approve');
+    
 
     /* ===================== T & P ===================== */
     // Route::resource('tandp', App\Http\Controllers\Admin\TAndPController::class)->only([

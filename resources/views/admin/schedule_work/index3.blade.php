@@ -170,11 +170,17 @@
         <th>#</th>
 
         <th>DATE</th>
+        
+        <th>STAFF</th>
 
         <th>CATEGORY</th>
 
         <th>DESCRIPTION OF ITEM</th>
         <th>QUANTITY</th>
+        <th>RATE</th>
+        <th>AMOUNT</th>
+        
+        
 
         <th width="">ACTION</th>
     </tr>
@@ -190,6 +196,17 @@
 
                 <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
+                <td width="">
+                    <select class="form-select staff_id">
+                        <option value="">Select Staff</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}"
+                                {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
+                                {{ $staff->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
 
                <td>
                     <select class="form-select category">
@@ -212,6 +229,8 @@
 
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
+                <td><input type="number" step="0.01" class="form-control rate" value="{{ $i->amount }}"></td>
+                <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->net_payable }}"></td>
 
                 <td>
 
@@ -228,6 +247,17 @@
                 <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
 
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+
+                <td width="">
+                    <select class="form-select staff_id">
+                        <option value="">Select Staff</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}">
+                                {{ $staff->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -248,6 +278,8 @@
 
 
                 <td><input type="number" class="form-control quantity"></td>
+                <td><input type="number" class="form-control amount"></td>
+                <td><input type="number" class="form-control net_payable"></td>
 
                 <td>
                     <button class="btn btn-success btn-sm saveRow">Save</button>
@@ -290,6 +322,17 @@ $(function () {
             <input type="hidden" class="schedule_work_id" value="${schedule_workId}">
             <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
 
+            <td width="">
+                <select class="form-select staff_id">
+                    <option value="">Select Staff</option>
+                    @foreach($staffs as $staff)
+                        <option value="{{ $staff->id }}">
+                            {{ $staff->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
+
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -307,6 +350,8 @@ $(function () {
 
 
             <td><input type="number" class="form-control quantity"></td>
+            <td><input type="number" class="form-control amount"></td>
+            <td><input type="number" class="form-control net_payable"></td>
 
             <td>
                 <button class="btn btn-success btn-sm saveRow">Save</button>
@@ -342,6 +387,10 @@ $(function () {
         formData.append('description', row.find('.description').val());
 
         formData.append('quantity', row.find('.quantity').val());
+        formData.append('amount', row.find('.amount').val());
+        formData.append('net_payable', row.find('.net_payable').val());
+
+        formData.append('staff_id', row.find('.staff_id').val());
 
 
         $.ajax({

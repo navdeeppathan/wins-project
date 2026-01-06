@@ -292,9 +292,9 @@
                                                     </button>
                                                 </form> --}}
 
-                                                <a href="{{ route('admin.users.projects', $user->id) }}"
+                                                <a href="{{ route('admin.users.details.index', $user->id) }}"
                                                     class="btn btn-sm btn-primary me-2">
-                                                    <i class="fas fa-project-diagram"></i> Projects
+                                                    <i class="fas fa-eye"></i> View
                                                 </a>
 
 

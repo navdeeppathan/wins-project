@@ -7,6 +7,7 @@ use App\Models\DailyNote;
 use App\Models\Inventory;
 use App\Models\Project;
 use App\Models\ScheduleWork;
+use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -28,8 +29,9 @@ class InventoryController extends Controller
         $project= Project::where('id', $projectId)->first();
         $vendors  = Vendor::where('user_id', auth()->id())->get();
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
+        $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
-        return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project'));
+        return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs'));
     }
 
 
@@ -69,8 +71,9 @@ class InventoryController extends Controller
         $project= Project::where('id', $projectId)->first();
         $vendors  = Vendor::where('user_id', auth()->id())->get();
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
+        $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
-        return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project'));
+        return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs'));
     }
     // ✅ STORE (Create new row)
 
@@ -90,9 +93,15 @@ class InventoryController extends Controller
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'schedule_work_id' => 'nullable',
+            'staff_id' => 'nullable',
 
         ]);
 
+        if($data['staff_id'] == null)
+        {
+            $data['staff_id'] = auth()->id();
+        }
+        
         // 🧮 Net Payable
         $data['net_payable'] = ($data['quantity'] ?? 0) * ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
         $data['user_id'] = auth()->id();
@@ -108,6 +117,8 @@ class InventoryController extends Controller
             $data['upload'] = 'inventory_uploads/' . $fileName;
         }
 
+        
+
         Inventory::create($data);
 
         return response()->json([
@@ -122,6 +133,7 @@ class InventoryController extends Controller
 
     public function update(Request $request, Inventory $inventory)
     {
+       
         $data = $request->validate([
             'project_id'  => 'nullable|exists:projects,id',
             'vendor_id'   => 'nullable|exists:vendors,id',
@@ -135,6 +147,8 @@ class InventoryController extends Controller
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'schedule_work_id' => 'nullable',
+            'staff_id' => 'nullable',
+
         ]);
 
         // 🧮 Net Payable
@@ -161,6 +175,23 @@ class InventoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Inventory item updated'
+        ]);
+    }
+
+    public function isApproved(Request $request, Inventory $inventory)
+    {
+        $data = $request->validate([
+            'isApproved' => 'required'
+        ]);
+
+        $inventory->update([
+            'isApproved' => $data['isApproved']
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Inventory status updated successfully',
+            'status'  => $inventory->isApproved
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\State;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -22,6 +23,19 @@ class VendorController extends Controller
         $states = State::all();    
 
         return view('admin.vendors.index', compact('vendors', 'states'));
+    }
+
+
+     public function index2(Vendor $vendor)
+    {
+        
+        $inventories = Inventory::where('paid_to', $vendor->vendor_agency_name)->get();
+        $totalNetPayable = $inventories->where('isApproved',0)->sum('net_payable');
+        $totalPaidNetPayable = $inventories->where('isApproved',1)->sum('net_payable');
+        $balanceAmount = $totalNetPayable - $totalPaidNetPayable;
+          
+
+        return view('admin.vendors.vendordetails', compact('vendor', 'inventories', 'totalNetPayable', 'totalPaidNetPayable', 'balanceAmount'));
     }
      public function create()
     {

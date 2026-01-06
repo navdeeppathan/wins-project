@@ -93,14 +93,14 @@
 </div>
 
     <div class="table-responsive">
-        <table id="activitiesTable" class="table class-table table-bordered">
+        <table id="activitiesTable" class="table class-table table-bordered" style="width:100%">
             <thead class="table-dark">
                 <tr>
                     <th>#</th>
                     <th>Activity Name *</th>
                     <th>From Date *</th>
                     <th>To Date *</th>
-                    <th>Weightage *</th>
+                    <th>Target *</th>
                     <th>Progress *</th>
                     <th width="100">Action</th>
                 </tr>
@@ -132,11 +132,9 @@
                   
 
                     </td>
-                    <td class="d-flex gap-2">
+                    <td >
                         <button class="btn btn-success btn-sm saveRow">Update</button>
-                       
                         <button class="btn btn-danger btn-sm removeRow">Del</button>
-                      
                     </td>
                 </tr>
                 @empty
@@ -175,7 +173,7 @@
         <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
     </div>
 
-    <div class="card mb-4">
+    <div class="card mb-4 mt-4">
         <div class="card-header">Activity Progress Overview</div>
         <div class="card-body">
             <canvas id="progressChart" height="120"></canvas>
@@ -239,9 +237,11 @@ $(document).ready(function() {
 
         $.post(id ? `/admin/activities/${id}` : "{{ route('admin.activities.store') }}", data, function(res){
             if(!id) {
-                location.reload(); // reload to get new id
+                window.location.reload(); // reload to get new id
             } else {
+                window.location.reload(); // reload to get new id
                 alert('Updated successfully');
+                
             }
         });
     });
@@ -288,16 +288,25 @@ $(document).on('change', '.weightage, .progresss', function () {
         progress = weightage;
     }
 
-    // ❌ Weightage + Progress > 100
-    if ((weightage + progress) > 100) {
-        alert('Weightage + Progress cannot exceed 100');
+    // ❌ TOTAL Weightage > 100
+    let totalWeightage = calculateTotalWeightage();
 
-        let allowedProgress = 100 - weightage;
-        row.find('.progresss').val(allowedProgress > 0 ? allowedProgress : 0);
+    if (totalWeightage > 100) {
+        alert('Total Weightage cannot exceed 100');
+
+        row.find('.weightage').val(0);
     }
 
+    // ✅ Toggle Add Row Button
+    toggleAddRowButton();
 });
 </script>
+<script>
+$(document).ready(function () {
+    toggleAddRowButton();
+});
+</script>
+
 
 
 <script>
@@ -365,6 +374,62 @@ new Chart(document.getElementById('progressChart'), {
 });
 </script>
 
+<script>
+    new DataTable('#activitiesTable', {
+          scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+
+
+
+
+        /* ðŸ”¥ GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+
+    });
+</script>
+<script>
+function calculateTotalWeightage() {
+    let total = 0;
+
+    $('#activitiesTable tbody tr').each(function () {
+        let weightage = parseInt($(this).find('.weightage').val()) || 0;
+        total += weightage;
+    });
+
+    return total;
+}
+
+function toggleAddRowButton() {
+    let totalWeightage = calculateTotalWeightage();
+
+    if (totalWeightage >= 100) {
+        $('#addRow').prop('disabled', true)
+            .addClass('btn-secondary')
+            .removeClass('btn-primary')
+            .text('Weightage Reached 100');
+    } else {
+        $('#addRow').prop('disabled', false)
+            .addClass('btn-primary')
+            .removeClass('btn-secondary')
+            .text('+ Add New Row');
+    }
+}
+</script>
 
 @endpush
 

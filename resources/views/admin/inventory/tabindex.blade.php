@@ -102,13 +102,14 @@
         {{-- <th>Project</th> --}}
         <th>Date</th>
         <th>Paid To</th>
+        <th>Staff</th>
         <th>Category</th>
         <th>Voucher Number</th>
         <th>Description of Item</th>
         <th>Quantity</th>
         <th>Rate</th>
         <!-- <th>Deduction</th> -->
-        <th>Net Payment</th>
+        <th>Amount</th>
         <th>Upload</th>
         <th width="">Action</th>
     </tr>
@@ -152,6 +153,18 @@
                         @endforeach
                     </select>
                 </td>
+
+                <td width="">
+                    <select class="form-select staff_id">
+                        <option value="">Select Staff</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}"
+                                {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
+                                {{ $staff->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -182,7 +195,7 @@
 
                 <td>
 
-                    <button class="btn btn-success btn-sm saveRow">Saved</button>
+                    <button class="btn btn-success btn-sm saveRow">Update</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
             </tr>
@@ -210,6 +223,19 @@
                         @endforeach
                     </select>
                 </td>
+
+                <td>
+                    <select class="form-select staff_id">
+                        <option value="">Select Staff</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}">
+                                {{ $staff->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </td>
+
+                
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
@@ -281,6 +307,17 @@ $(function () {
                         @endforeach
                     </select>
             </td>
+
+            <td>
+                <select class="form-select staff_id">
+                    <option value="">Select Staff</option>
+                    @foreach($staffs as $staff)
+                        <option value="{{ $staff->id }}">
+                            {{ $staff->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </td>
             <td>
                 <select class="form-select category">
                     <option value="">Select</option>
@@ -338,7 +375,8 @@ $(function () {
         formData.append('voucher', row.find('.voucher').val());
         formData.append('quantity', row.find('.quantity').val());
         formData.append('amount', row.find('.amount').val());
-        formData.append('deduction', row.find('.deduction').val());
+        // formData.append('deduction', row.find('.deduction').val());
+        formData.append('staff_id', row.find('.staff_id').val());
 
         let file = row.find('.upload')[0];
         if (file && file.files.length) {
