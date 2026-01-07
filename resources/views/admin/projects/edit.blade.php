@@ -86,9 +86,10 @@
         <div class="col-md-2 mb-3">
             <label class="form-label">EMD Rate *</label>
             <select id="emd_rate" name="emd_rate" class="form-select">
-                <option value="2">2 PERCENT</option>
-                <option value="1">1 PERCENT</option>
-                <option value="other">OTHER</option>
+                <option value="2" {{ $project->emd_rate == 2 ? 'selected' : '' }}>2 PERCENT</option>
+                <option value="1" {{ $project->emd_rate == 1 ? 'selected' : '' }}>1 PERCENT</option>
+                <option value="other" {{ $project->emd_rate == 'other' ? 'selected' : '' }}>OTHER</option>
+
             </select>
         </div>
 
@@ -138,20 +139,18 @@
 
 <script>
     const baseAmount = {{ (float) $project->estimated_amount }};
-    // OR use tendered_amount if required
 
     const rateSelect  = document.getElementById('emd_rate');
     const displayAmt  = document.getElementById('emd_amount_display');
     const hiddenAmt   = document.getElementById('emd_amount');
 
-    rateSelect.addEventListener('change', function () {
-        let rate = this.value;
+    function calculateEMD() {
+        let rate = rateSelect.value;
 
         if (rate === 'other') {
             displayAmt.readOnly = false;
             displayAmt.value = '';
             hiddenAmt.value = '';
-            displayAmt.focus();
             return;
         }
 
@@ -163,14 +162,21 @@
             displayAmt.value = emd;
             hiddenAmt.value = emd;
         }
-    });
+    }
 
-    // Manual entry sync for OTHER
+    // On change
+    rateSelect.addEventListener('change', calculateEMD);
+
+    // ✅ RUN ON PAGE LOAD
+    document.addEventListener('DOMContentLoaded', calculateEMD);
+
+    // Manual entry sync
     displayAmt.addEventListener('input', function () {
         if (!displayAmt.readOnly) {
             hiddenAmt.value = this.value;
         }
     });
 </script>
+
 
 @endsection

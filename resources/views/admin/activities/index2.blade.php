@@ -121,7 +121,7 @@
                             @endfor
                         </select>
                     </td>
-                    <td>
+                    {{-- <td>
                        
                         <select class="form-control progresss">
                             <option value="">Select</option>
@@ -131,7 +131,20 @@
                         </select>
                   
 
+                    </td> --}}
+                    <td>
+                        <input
+                            type="number"
+                            name="progress"
+                            class="form-control progresss show-spinner"
+                            min="1"
+                            max="100"
+                            step="1"
+                            placeholder="0"
+                            value="{{ old('progress', $activity->progress ?? '') }}"
+                        >
                     </td>
+
                     <td >
                         <button class="btn btn-success btn-sm saveRow">Update</button>
                         <button class="btn btn-danger btn-sm removeRow">Del</button>
@@ -153,14 +166,27 @@
                         </select>
                     </td>
 
-                    <td>
+                    {{-- <td>
                         <select class="form-control progresss">
                             <option value="">Select</option>
                             @for ($i = 1; $i <= 100; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
+                    </td> --}}
+                    <td>
+                       
+                        <input
+                            type="number"
+                            name="progress"
+                            class="form-control progresss"
+                            min="1"
+                            max="100"
+                            step="1"
+                            placeholder="0"
+                        >
                     </td>
+
 
                     <td>
                         <button class="btn btn-success btn-sm saveRow">Save</button>
@@ -204,12 +230,16 @@ $(document).ready(function() {
             </td>
 
             <td>
-                <select class="form-control progresss">
-                    <option value="">Select</option>
-                    @for ($i = 1; $i <= 100; $i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
-                    @endfor
-                </select>
+                       
+                        <input
+                            type="number"
+                            name="progress"
+                            class="form-control progresss"
+                            min="1"
+                            max="100"
+                            step="1"
+                            placeholder="0"
+                        >
             </td>
 
             <td>
@@ -221,30 +251,47 @@ $(document).ready(function() {
     });
 
     // Save row via AJAX
-    $(document).on('click', '.saveRow', function() {
-        let row = $(this).closest('tr');
-        let id = row.data('id') || null;
+   $(document).on('click', '.saveRow', function () {
+    let row = $(this).closest('tr');
+    let id = row.data('id') || null;
 
-        let data = {
-            _token: "{{ csrf_token() }}",
-            project_id: "{{ $project->id }}",
-            activity_name: row.find('.activity_name').val(),
-            from_date: row.find('.from_date').val(),
-            to_date: row.find('.to_date').val(),
-            weightage: row.find('.weightage').val(),
-            progress: row.find('.progresss').val()
-        };
+    let data = {
+        _token: "{{ csrf_token() }}",
+        project_id: "{{ $project->id }}",
+        activity_name: row.find('.activity_name').val(),
+        from_date: row.find('.from_date').val(),
+        to_date: row.find('.to_date').val(),
+        weightage: row.find('.weightage').val(),
+        progress: row.find('.progresss').val()
+    };
 
-        $.post(id ? `/admin/activities/${id}` : "{{ route('admin.activities.store') }}", data, function(res){
-            if(!id) {
-                window.location.reload(); // reload to get new id
+    $.ajax({
+        url: id ? `/admin/activities/${id}` : "{{ route('admin.activities.store') }}",
+        type: "POST",
+        data: data,
+
+        success: function (res) {
+            alert(id ? 'Updated successfully' : 'Saved successfully');
+            window.location.reload();
+        },
+
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                let errorMsg = '';
+
+                $.each(errors, function (key, value) {
+                    errorMsg += value[0] + '\n';
+                });
+
+                alert(errorMsg);
             } else {
-                window.location.reload(); // reload to get new id
-                alert('Updated successfully');
-                
+                alert('Something went wrong. Please try again.');
             }
-        });
+        }
     });
+});
+
 
     // Remove row
     $(document).on('click', '.removeRow', function() {
@@ -281,13 +328,12 @@ $(document).on('change', '.weightage, .progresss', function () {
         weightage = 100;
     }
 
-    // ❌ Progress > Weightage
-    if (progress > weightage) {
-        alert('Progress cannot exceed Weightage');
-        row.find('.progresss').val(weightage);
-        progress = weightage;
+    // ❌ Progress > 100
+    if (progress > 100) {
+        alert('Progress cannot be greater than 100');
+        row.find('.progresss').val(100);
+        progress = 100;
     }
-
     // ❌ TOTAL Weightage > 100
     let totalWeightage = calculateTotalWeightage();
 
@@ -313,7 +359,6 @@ $(document).ready(function () {
 const chartData = @json($chartData);
 
 const labels = chartData.map(i => i.name);
-const total = chartData.map(() => 100);
 const weightage = chartData.map(i => i.weightage);
 const progress = chartData.map(i => i.progress);
 
@@ -322,26 +367,19 @@ new Chart(document.getElementById('progressChart'), {
     data: {
         labels: labels,
         datasets: [
-            
-
-            // WEIGHTAGE
             {
                 label: 'Weightage',
                 data: weightage,
                 backgroundColor: '#3B82F6',
-                barThickness: 20,
-                borderRadius: 6,
-                stack: 'combined'
+                barThickness: 18,
+                borderRadius: 6
             },
-
-            // PROGRESS (inside weightage)
             {
                 label: 'Progress',
                 data: progress,
                 backgroundColor: '#22C55E',
-                barThickness: 20,
-                borderRadius: 6,
-                stack: 'combined'
+                barThickness: 18,
+                borderRadius: 6
             }
         ]
     },
@@ -360,19 +398,21 @@ new Chart(document.getElementById('progressChart'), {
         },
         scales: {
             x: {
-                stacked: true,
                 max: 100,
                 ticks: {
                     callback: value => value + '%'
                 }
             },
             y: {
-                stacked: true
+                grid: {
+                    display: false
+                }
             }
         }
     }
 });
 </script>
+
 
 <script>
     new DataTable('#activitiesTable', {

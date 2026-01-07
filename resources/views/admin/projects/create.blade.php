@@ -97,24 +97,26 @@
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Date of Submission</label>
+            <label class="form-label">Date of Submission *</label>
             <input 
                 type="date" 
                 name="date_of_start" 
                 id="date_of_start"
                 value="{{ old('date_of_start') }}" 
                 class="form-control"
+                required
             >
         </div>
 
         <div class="col-md-4 mb-3">
-            <label class="form-label">Date of Opening</label>
+            <label class="form-label">Date of Opening *</label>
             <input 
                 type="date" 
                 name="date_of_opening" 
                 id="date_of_opening"
                 value="{{ old('date_of_opening') }}" 
                 class="form-control"
+                required
             >
         </div>
         

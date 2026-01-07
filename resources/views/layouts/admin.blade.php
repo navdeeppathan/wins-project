@@ -1718,6 +1718,35 @@
         initChart();
     </script>
 
+<script>
+document.addEventListener('input', function (e) {
+    const el = e.target;
+
+    // Apply to ALL text inputs & textareas
+    if (
+        (el.tagName === 'INPUT' && el.type === 'text') ||
+        el.tagName === 'TEXTAREA'
+    ) {
+        el.value = el.value.toUpperCase();
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('input, textarea').forEach(el => {
+
+        // Skip buttons, hidden, submit, checkbox, radio
+        const skipTypes = ['button', 'submit', 'reset', 'hidden', 'checkbox', 'radio', 'file'];
+        if (el.tagName === 'INPUT' && skipTypes.includes(el.type)) return;
+
+        // Set placeholder ONLY if not already present
+        if (!el.hasAttribute('placeholder')) {
+            el.setAttribute('placeholder', 'ENTER VALUE');
+        }
+    });
+});
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>

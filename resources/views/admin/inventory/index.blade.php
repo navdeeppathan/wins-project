@@ -10,7 +10,7 @@
 <h3 class="mb-3">
     Inventory
     @if($selectedProjectId)
-        â€” <strong>{{ $projects->firstWhere('id', $selectedProjectId)->name }}</strong>
+    : <strong>{{ $projects->firstWhere('id', $selectedProjectId)->name }}</strong>
     @endif
 </h3>
 
@@ -107,7 +107,7 @@
         <th>Description of Item</th>
         <th>Quantity</th>
         <th>Rate</th>
-        <th>Deduction</th>
+        {{-- <th>Deduction</th> --}}
         <th>Amount</th>
         <th>Upload</th>
         <th width="">Action</th>
@@ -180,7 +180,7 @@
 
                 <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
                 <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
-                <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td>
+                {{-- <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> --}}
 
                 <td class="net_payable">{{ number_format($i->net_payable,2) }}</td>
 
@@ -244,7 +244,7 @@
                 <td><input type="text" class="form-control voucher"></td>
                 <td><input type="number" class="form-control quantity"></td>
                 <td><input type="number" class="form-control amount"></td>
-                <td><input type="number" class="form-control deduction"></td>
+                {{-- <td><input type="number" class="form-control deduction"></td> --}}
                 <td class="net_payable">0.00</td>
                 <td><input type="file" class="form-control upload"></td>
 
@@ -317,7 +317,7 @@ $(function () {
             <td><input type="text" class="form-control voucher"></td>
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
-            <td><input type="number" class="form-control deduction"></td>
+       
             <td class="net_payable">0.00</td>
             <td><input type="file" class="form-control upload"></td>
             <td>
@@ -360,7 +360,7 @@ $(function () {
         formData.append('voucher', row.find('.voucher').val());
         formData.append('quantity', row.find('.quantity').val());
         formData.append('amount', row.find('.amount').val());
-        formData.append('deduction', row.find('.deduction').val());
+        // formData.append('deduction', row.find('.deduction').val());
         formData.append('staff_id', row.find('.staff_id').val());
 
         let file = row.find('.upload')[0];

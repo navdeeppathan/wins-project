@@ -425,8 +425,18 @@
                     <span>Project OverView (P.O.V.): Elegance in Execution</span>
                 </div>
                 <div class="content">
-                    <h2 class="display-5 fw-bold mb-3">The Minimalistic Intelligence Hub for Modern Enterprise </h2>
-                    <p class="lead mb-4">In an era of digital complexity, Project OverView (P.O.V.) offers a sophisticated alternative: a streamlined, high-performance web solution designed specifically for business owners navigating the demanding landscapes of Government, PSUs, Banking, and the Private Sector</p>
+                    <h2 class="display-5 fw-bold mb-3">
+                      The Minimalistic Intelligence Hub for Business
+                    Owners
+                    </h2>
+                    <p class="lead mb-4">In an era of digital complexity, Project OverView
+                    (P.O.V.) offers a sophisticated alternative; a
+                    streamlined, high-performance web solution
+                    designed specifically for business owners
+                    navigating the demanding landscapes of
+                    Government, PSUs, Banking and the Private
+                    Sector Units.
+                    </p>
                     <div class="d-flex flex-wrap gap-3">
                     <a href="/register" class="btn btn-primary-ghost">
                         <span>Explore Now</span>
@@ -595,11 +605,18 @@
                 <article class="intro-card">
                 <div class="intro-head">
                     <span class="kicker"><i class="bi bi-stars me-1"></i>Our Story</span>
-                    <h2>The Minimalistic Intelligence Hub for Modern Enterprise</h2>
+                    <h2>The Minimalistic Intelligence Hub for Business Owners</h2>
                 </div>
 
                 <div class="intro-body">
-                    <p class="lead">In an era of digital complexity, Project OverView (P.O.V.) offers a sophisticated alternative: a streamlined, high-performance web solution designed specifically for business owners navigating the demanding landscapes of Government, PSUs, Banking, and the Private Sector. </p>
+                    <p class="lead">In an era of digital complexity, Project OverView
+                    (P.O.V.) offers a sophisticated alternative; a
+                    streamlined, high-performance web solution
+                    designed specifically for business owners
+                    navigating the demanding landscapes of
+                    Government, PSUs, Banking and the Private
+                    Sector Units. 
+                   </p>
                     <p>Project OverView (P.O.V.) eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
 
                     <div class="feature-list row gy-3">
@@ -903,7 +920,10 @@
 
                 <div class="service-pricing">
 
-                  <span style="color: #fff; font-weight:500;">Price Starting @ ₹ 7,200/- plus GST annually</span>
+                  <span style="color: #fff; font-weight:500;">
+                    Price Starting @ ₹ 7,200/- plus GST annually
+                    <br>
+                    Price Rs.8496/- GST Included</span>
 
                 </div>
 
@@ -1372,7 +1392,7 @@
             </div>
 
             </a>
-            <p class="tagline">UPI : solutions@barodampay</p>
+            <p class="tagline">UPI : solut93503135@barodampay</p>
 
 
             <div class="mt-4">
