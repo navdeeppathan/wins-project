@@ -27,13 +27,26 @@ class BillingController extends Controller
 
      public function indexprojects(Request $request)
     {
-        $projects = Project::
-                where('status', 'agreement')
-                ->when($request->filled('year'), function ($query) use ($request) {
-                    $query->whereYear('created_at', $request->year);
-                })
-                ->orWhere('status', 'billing')
-                ->latest()->paginate(20);
+       
+        // $projects = Project::
+        //         where('status', 'agreement')
+        //         ->orWhere('status', 'billing')
+        //         ->when($request->filled('year'), function ($query) use ($request) {
+        //             $query->whereYear('created_at', $request->year);
+        //         })
+        //         ->latest()->paginate(20);
+        $projects = Project::where('user_id', auth()->id())
+                                ->where(function ($query) {
+                                    $query->where('status', 'agreement')
+                                        ->orWhere('status', 'billing');
+                                })
+                                ->when($request->filled('year'), function ($query) use ($request) {
+                                    $query->whereYear('created_at', $request->year);
+                                })
+                                ->latest()
+                                ->paginate(10);
+
+        //  dd($projects);        
         return view('admin.billing.indexprojects', compact('projects'));
     }
 

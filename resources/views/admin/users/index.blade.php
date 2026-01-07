@@ -188,19 +188,17 @@
         <div class="col-12">
 
             <div class="card card-elegant ">
-                <div class="header-elegant">
+                {{-- <div class="header-elegant">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div class="d-flex align-items-center">
-                            <div class="icon-wrapper">
-                                <i class="fas fa-users fa-lg"></i>
-                            </div>
+                            
                             <h5>Registered Users</h5>
                         </div>
                         <span class="badge badge-elegant bg-white text-primary">
                             {{ $users->count() }} Total Users
                         </span>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="card-body p-0">
                     <div class="table-responsive">
@@ -230,9 +228,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-user"></i>
-                                                </div>
+                                               
                                                 <span class="fw-semibold">{{ $user->name }}</span>
                                             </div>
                                         </td>
@@ -246,26 +242,30 @@
                                             @endif
                                         </td>
                                         <td>
-                                             <span class="badge bg-light text-dark">
-                                                <i class="far fa-calendar me-1"></i>
-                                                {{ date('d M Y', strtotime($user->date_of_joining)) ?? '-' }}
-                                            </div>
+                                             
+                                            
+                                            <span class="badge bg-light text-dark">
+                                                {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
+                                            </span>
+
+
                                         </td>
                                         <td>
+                                           
                                             <span class="badge bg-light text-dark">
-                                                <i class="far fa-calendar me-1"></i>
-                                                {{ date('d M Y', strtotime($user->date_of_leaving)) ?? '-' }}
-                                            </div>
+                                                {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
+                                            </span>
+
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <i class="fas fa-user-phone text-primary me-2"></i>
+                                          
                                                 {{ $user->phone ?? '-' }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <i class="fas fa-envelope text-muted me-2"></i>
+                                                
                                                 {{ $user->email }}
                                             </div>
                                         </td>
@@ -294,7 +294,7 @@
 
                                                 <a href="{{ route('admin.users.details.index', $user->id) }}"
                                                     class="btn btn-sm btn-primary me-2">
-                                                    <i class="fas fa-eye"></i> View
+                                                    View
                                                 </a>
 
 

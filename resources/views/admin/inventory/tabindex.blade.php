@@ -14,6 +14,23 @@
     @endif
 </h3>
 
+<form method="GET" action="{{ route('admin.inventory.tabindex') }}">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="fw-bold">Filter by Year (Created)</label>
+            <select name="year" class="form-select" onchange="this.form.submit()">
+                <option value="">All Years</option>
+                @for($y = 2025; $y <= 2050; $y++)
+                    <option value="{{ $y }}"
+                        {{ request('year') == $y ? 'selected' : '' }}>
+                        {{ $y }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </div>
+</form>
+
 @if ($selectedProjectId)
 <div class="row">
 

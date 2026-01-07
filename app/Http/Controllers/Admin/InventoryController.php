@@ -65,6 +65,9 @@ class InventoryController extends Controller
             ->with(['project'])
             ->where('user_id', auth()->id())
             ->OrderBy('id', 'desc')
+            ->when($request->filled('year'), function ($query) use ($request) {
+                                    $query->whereYear('created_at', $request->year);
+                                })
             ->get();
 
         $projects = Project::where('user_id', auth()->id())->get();

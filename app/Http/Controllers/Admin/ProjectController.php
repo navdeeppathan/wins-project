@@ -29,8 +29,8 @@ class ProjectController extends Controller
                 $query->whereYear('created_at', $request->year);
             })
             ->latest()
-            ->paginate(20)
-            ->withQueryString(); // 👈 keeps filter on pagination
+            ->paginate(20);
+           
 
         return view('admin.projects.index', compact('projects'));
     }
