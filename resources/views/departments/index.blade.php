@@ -23,7 +23,7 @@
     }
 </style>
 
-<div class="container py-4">
+
 
     {{-- Header & Button --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -46,7 +46,7 @@
   @if($departments->count() > 0)
     <div class="card dept-card shadow-sm">
         <div class="table-responsive">
-            <table id="example" class="table class-table nowrap" style="width:100%">
+            <table id="example" class="table class-table nowrap " style="width:100%">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -113,5 +113,4 @@
 
 
 
-</div>
 @endsection
