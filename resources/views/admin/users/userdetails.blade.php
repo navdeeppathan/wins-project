@@ -68,16 +68,21 @@
             value="₹ {{ number_format($totalPaidNetPayable, 2) }}"
             readonly>
     </div>
-   
+
 </div>
 
 
 
 
 
-<h3 class="mb-3">
-    Inventories
-</h3>
+<div class="d-flex align-items-end gap-2 justify-content-between mb-3">
+
+    <h3 class="mb-3">Inventory</h3>
+    <a href="{{ route('admin.vendors.index') }}"
+        class="btn btn-secondary">
+        Back
+    </a>
+</div>
 
 
 
@@ -121,14 +126,14 @@
             <th>#</th>
             <th>Date</th>
             <th>Paid To</th>
-            
+
             <th>Category</th>
             <th>Voucher Number</th>
             <th>Description of Item</th>
             <th>Quantity</th>
             <th>Rate</th>
             <th>Amount</th>
-           
+
             <th>Action</th>
         </tr>
     </thead>
@@ -139,14 +144,14 @@
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $i->date }}</td>
                 <td>{{ $i->paid_to ?? '-' }}</td>
-                
+
                 <td>{{ $i->category ?? '-' }}</td>
                 <td>{{ $i->voucher ?? '-' }}</td>
                 <td>{{ $i->description ?? '-' }}</td>
                 <td>{{ $i->quantity }}</td>
                 <td>₹ {{ number_format($i->amount, 2) }}</td>
                 <td>₹ {{ number_format($i->net_payable, 2) }}</td>
-                
+
                 <td>
                     <button class="btn btn-success btn-sm approveBtn"
                             data-id="{{ $i->id }}"
