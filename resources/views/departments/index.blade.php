@@ -55,7 +55,6 @@
                         <th>Designation</th>
                         <th>Contact No.</th>
                         <th>Email</th>
-                        <th>Created</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -82,7 +81,6 @@
                         <td>
                             {{ $dept->email_id ?? '-' }}
                         </td>
-                        <td>{{ date('d-m-Y', strtotime($dept->created_at)) }}</td>
                         <td class="action-btns">
                             <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             {{-- <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline">
@@ -102,7 +100,7 @@
                     </tr>
 
                     @endforelse
-                    
+
                 </tbody>
             </table>
         </div>

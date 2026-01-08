@@ -41,22 +41,21 @@
             <td>{{ $v->gst_number }}</td>
             <td>
                 <a href="{{ url('admin/vendors/edit/'.$v->id) }}"
-                   class="btn btn-sm btn-success">Edit</a>
-
-               
+                    class="btn btn-sm btn-success">Edit</a>
                     <a href="{{route('admin.vendors.details.index', $v->id)}}" class="btn btn-sm btn-primary">View</a>
-                
 
-                <form action="{{ route('admin.vendors.destroy',$v->id) }}"
-                      method="POST"
-                      class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-sm btn-danger"
-                            onclick="return confirm('Delete this vendor?')">
-                        Del
-                    </button>
-                </form>
+                @if($vendors->count() > 1)
+                    <form action="{{ route('admin.vendors.destroy',$v->id) }}"
+                        method="POST"
+                        class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-sm btn-danger"
+                                onclick="return confirm('Delete this vendor?')">
+                            Del
+                        </button>
+                    </form>
+                @endif
             </td>
         </tr>
     @endforeach

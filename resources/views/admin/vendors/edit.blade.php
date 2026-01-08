@@ -29,6 +29,7 @@
         <label>Vendor Agency Name</label>
         <input type="text"
                name="vendor_agency_name"
+               placeholder="Enter Vender Agency Name"
                class="form-control"
                value="{{ $vendor->vendor_agency_name }}"
                required>
@@ -38,6 +39,7 @@
         <label>Contact Person</label>
         <input type="text"
                name="contact_person"
+                placeholder="Enter Contact Person"
                class="form-control"
                value="{{ $vendor->contact_person }}"
                required>
@@ -47,6 +49,7 @@
         <label>Contact Number</label>
         <input type="text"
                name="contact_number"
+                placeholder="Enter Contact Number"
                class="form-control"
                value="{{ $vendor->contact_number }}"
                required>
@@ -55,6 +58,7 @@
     <div class="col-md-4">
         <label>Email</label>
         <input type="email"
+               placeholder="Enter Email"
                name="email_id"
                class="form-control"
                value="{{ $vendor->email_id }}">
@@ -63,6 +67,7 @@
     <div class="col-md-4">
         <label>GST Number</label>
         <input type="text"
+                placeholder="Enter GST Number"
                name="gst_number"
                class="form-control"
                value="{{ $vendor->gst_number }}">

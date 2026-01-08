@@ -27,6 +27,7 @@
         <label>Vendor Agency Name</label>
         <input type="text"
                name="vendor_agency_name"
+               placeholder="Enter Vender Agency Name"
                class="form-control"
                required>
     </div>
@@ -35,6 +36,7 @@
         <label>Contact Person</label>
         <input type="text"
                name="contact_person"
+                placeholder="Enter Contact Person"
                class="form-control"
                required>
     </div>
@@ -43,6 +45,7 @@
         <label>Contact Number</label>
         <input type="text"
                name="contact_number"
+               placeholder="Enter Contact Number"
                class="form-control"
                required>
     </div>
@@ -51,6 +54,7 @@
         <label>Email</label>
         <input type="email"
                name="email_id"
+                placeholder="Enter Email"
                class="form-control">
     </div>
 
@@ -58,6 +62,7 @@
         <label>GST Number</label>
         <input type="text"
                name="gst_number"
+                placeholder="Enter GST Number"
                class="form-control">
     </div>
 

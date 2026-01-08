@@ -191,7 +191,7 @@
                 {{-- <div class="header-elegant">
                     <div class="d-flex align-items-center justify-content-between flex-wrap">
                         <div class="d-flex align-items-center">
-                            
+
                             <h5>Registered Users</h5>
                         </div>
                         <span class="badge badge-elegant bg-white text-primary">
@@ -206,15 +206,14 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>NAME OF THE PERSON</th>
+                                    <th>NAME OF THE USER</th>
+                                    <th>DOJ</th>
+                                    <th>DOL</th>
                                     <th>STATE</th>
-                                    <th>DATE OF JOINING</th>
-                                    <th>DATE OF LEAVING</th>
                                     <th>CONTACT NUMBER</th>
                                     <th>EMAIL ID</th>
                                     <th>DESIGNATION</th>
-                                     <th>MONTHLY SALARY </th>
-
+                                    <th>MONTHLY SALARY </th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -228,7 +227,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                               
+
                                                 <span class="fw-semibold">{{ $user->name }}</span>
                                             </div>
                                         </td>
@@ -242,8 +241,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                             
-                                            
+
+
                                             <span class="badge bg-light text-dark">
                                                 {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
                                             </span>
@@ -251,7 +250,7 @@
 
                                         </td>
                                         <td>
-                                           
+
                                             <span class="badge bg-light text-dark">
                                                 {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
                                             </span>
@@ -259,13 +258,13 @@
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                          
+
                                                 {{ $user->phone ?? '-' }}
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                
+
                                                 {{ $user->email }}
                                             </div>
                                         </td>

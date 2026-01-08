@@ -35,7 +35,7 @@
             </select>
         </div>
 
-        
+
         <div class="col-md-4 mb-3">
             <label class="form-label">State *</label>
             <select name="location" class="form-select" required>
@@ -48,10 +48,10 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
-           <input type="number" step="0.01" name="estimated_amount" 
+           <input type="number" step="0.01" name="estimated_amount"
             id="estimated_amount"
-            value="{{ old('estimated_amount') }}" 
-            placeholder="Enter Estimated Cost" 
+            value="{{ old('estimated_amount') }}"
+            placeholder="Enter Estimated Cost"
             class="form-control" required>
         </div>
 
@@ -98,11 +98,11 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Submission *</label>
-            <input 
-                type="date" 
-                name="date_of_start" 
+            <input
+                type="date"
+                name="date_of_start"
                 id="date_of_start"
-                value="{{ old('date_of_start') }}" 
+                value="{{ old('date_of_start') }}"
                 class="form-control"
                 required
             >
@@ -110,21 +110,21 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Opening *</label>
-            <input 
-                type="date" 
-                name="date_of_opening" 
+            <input
+                type="date"
+                name="date_of_opening"
                 id="date_of_opening"
-                value="{{ old('date_of_opening') }}" 
+                value="{{ old('date_of_opening') }}"
                 class="form-control"
                 required
             >
         </div>
-        
+
     </div>
 
     <!-- ---------------- EMD DETAILS MULTIPLE ROW SECTION ---------------- -->
     <h4 class="mt-4">EMD Details (Multiple)</h4>
-    
+
 <div class="table-responsive">
     <table class="table class-table example table-bordered" id="emdTable" style="width:100%">
         <thead class="table-dark">
@@ -134,7 +134,7 @@
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
                 <th>Amount</th>
-                <th>Remarks</th>
+                {{-- <th>Remarks</th> --}}
                 <th>Upload (PDF)</th>
                 <th>Action</th>
             </tr>
@@ -144,7 +144,7 @@
             <tr>
                 <td>1</td>
                 <td>
-                 
+
                     <select name="emd[0][instrument_type]" class="form-select">
                         <option value="">Select</option>
                         <option value="FDR">FDR</option>
@@ -159,28 +159,28 @@
                 <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
                 {{-- <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control"></td> --}}
                 <td>
-                    <input type="number" step="0.01" 
-                        name="emd[0][amount]" 
+                    <input type="number" step="0.01"
+                        name="emd[0][amount]"
                         class="form-control emd-amount">
                 </td>
 
-                <td><input type="text" name="emd[0][remarks]" class="form-control"></td>
+                {{-- <td><input type="text" name="emd[0][remarks]" class="form-control"></td> --}}
                 <td><input type="file" name="emd[0][upload]" class="form-control"></td>
                 <td></td>
             </tr>
         </tbody>
     </table>
 </div>
-   
+
 <div class="d-flex align-items-end gap-2 justify-content-end" >
-    
+
      <button class="btn btn-success mb-3">Save Project</button>
-    
+
     <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
         + Add More
     </button>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mb-3">Back</a>
-       
+
 </div>
 
 
@@ -279,12 +279,11 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
             <td><input type="text" name="emd[${emdIndex}][instrument_number]" class="form-control"></td>
             <td><input type="date" name="emd[${emdIndex}][instrument_date]" class="form-control"></td>
             <td>
-                <input type="number" step="0.01" 
-                       name="emd[${emdIndex}][amount]" 
-                       class="form-control emd-amount" 
+                <input type="number" step="0.01"
+                       name="emd[${emdIndex}][amount]"
+                       class="form-control emd-amount"
                        value="${(estimatedCost * 0.02).toFixed(2)}">
             </td>
-            <td><input type="text" name="emd[${emdIndex}][remarks]" class="form-control"></td>
             <td><input type="file" name="emd[${emdIndex}][upload]" class="form-control"></td>
             <td><button type="button" class="btn btn-danger removeRow">X</button></td>
         </tr>
@@ -329,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -346,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
             );
         }
 
-        
+
     });
 
 </script>

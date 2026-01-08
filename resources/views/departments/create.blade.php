@@ -1,8 +1,7 @@
 @extends('layouts.admin')
-
 @section('title','Create Department')
-
 @section('content')
+
 <style>
     .dept-title {
         font-weight: 600;
@@ -29,7 +28,7 @@
         <div class="card-body">
             <form action="{{ route('departments.store') }}" method="POST">
                 @csrf
-                
+
                 <div class="mb-3">
                     <label class="form-label">Department Name</label>
                     {{-- <input type="text" name="name" value="{{ old('name') }}" class="form-control"> --}}
@@ -50,14 +49,15 @@
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
+
                 {{-- Contact Person Designation --}}
                 <div class="mb-3">
                     <label class="form-label">Contact Person Designation *</label>
                     <input type="text"
-                           name="contact_person_designation"
-                           value="{{ old('contact_person_designation') }}"
-                           class="form-control"
-                           required>
+                            name="contact_person_designation"
+                            value="{{ old('contact_person_designation') }}"
+                            class="form-control"
+                            required>
                     @error('contact_person_designation')
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror

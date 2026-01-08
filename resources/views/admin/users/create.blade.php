@@ -6,24 +6,18 @@
 
 <style>
     .gradient-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
     }
 
     .card-elegant {
         border: none;
-        border-radius: 20px;
         overflow: hidden;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card-elegant:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
-    }
 
     .form-control-elegant {
         border: 2px solid #e8ecf1;
-        border-radius: 12px;
         padding: 14px 20px;
         font-size: 15px;
         transition: all 0.3s ease;
@@ -38,9 +32,8 @@
     }
 
     .btn-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
         border: none;
-        border-radius: 12px;
         padding: 14px 30px;
         font-weight: 600;
         letter-spacing: 0.5px;
@@ -49,31 +42,10 @@
         overflow: hidden;
     }
 
-    .btn-gradient:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-gradient::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-gradient:hover::before {
-        left: 100%;
-    }
-
     .header-elegant {
         background:  #667eea;
         color: white;
         padding: 10px 20px;
-        border-radius: 20px 20px 0 0;
     }
 
     .header-elegant h5 {
@@ -102,13 +74,6 @@
         transition: all 0.3s ease;
         border-bottom: 1px solid #f1f3f5;
     }
-
-    .table-elegant tbody tr:hover {
-        background: linear-gradient(90deg, #f8f9ff 0%, #fff 100%);
-        transform: scale(1.01);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
     .table-elegant tbody td {
         padding: 18px 20px;
         vertical-align: middle;
@@ -118,7 +83,6 @@
 
     .badge-elegant {
         padding: 8px 16px;
-        border-radius: 20px;
         font-weight: 500;
         font-size: 13px;
     }
@@ -126,7 +90,7 @@
     .page-title {
         font-size: 2.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #667eea;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -137,8 +101,7 @@
     .icon-wrapper {
         width: 50px;
         height: 50px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 12px;
+        background: #667eea;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -169,38 +132,29 @@
         }
     }
 
-    .password-toggle {
-        position: absolute;
-        right: 18px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #6c757d;
-        transition: color 0.3s ease;
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s ease;
         }
 
-        .password-toggle:hover {
-        color: #667eea;
-        }
+
 
 </style>
 
 <div class="container-fluid py-4">
 
-    {{-- ================= PAGE TITLE ================= --}}
-    <h2 class="page-title">User Management</h2>
-
-    {{-- ================= CREATE USER CARD ================= --}}
     <div class="row justify-content-center mb-5">
         <div class="col-lg-7 col-xl-12">
 
             <div class="card card-elegant">
                 <div class="header-elegant">
                     <div class="d-flex align-items-center">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-user-plus fa-lg"></i>
-                        </div>
-                        <h5>Create New Account</h5>
+                        <h5>Create User Account</h5>
                     </div>
                 </div>
 
@@ -212,17 +166,17 @@
 
                         <div class="mb-4 col-md-12">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Name of the Person
+                                Name of the Person
                             </label>
                             <input type="text"
-                                   name="name"
-                                   class="form-control form-control-elegant"
-                                   placeholder="Enter agency name"
-                                   value="{{ old('name') }}"
-                                   required>
+                                    name="name"
+                                    class="form-control form-control-elegant"
+                                    placeholder="Enter agency name"
+                                    value="{{ old('name') }}"
+                                    required>
                         </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">State *</label>
                         <select name="state" class="form-select form-control-elegant" required>
                             <option value="">Select State</option>
@@ -232,9 +186,9 @@
                         </select>
                     </div>
 
-                    <div class="mb-4 col-md-6">
+                    <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Designation
+                                Designation
                             </label>
                             <input type="text"
                                    name="designation"
@@ -244,9 +198,9 @@
                                    >
                     </div>
 
-                         <div class="mb-4 col-md-6">
+                         <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Date of Joining
+                               Date of Joining
                             </label>
                             <input type="date"
                                    name="date_of_joining"
@@ -257,9 +211,9 @@
 
                         </div>
 
-                          <div class="mb-4 col-md-6">
+                          <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Date of Leaving
+                                Date of Leaving
                             </label>
                             <input type="date"
                                    name="date_of_leaving"
@@ -269,9 +223,9 @@
                                    >
 
                         </div>
-                        <div class="mb-4 col-md-6">
+                        <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-building me-2"></i>Monthly Salary
+                               Monthly Salary
                             </label>
                             <input type="text"
                                 name="monthly_salary"
@@ -281,9 +235,9 @@
                                 required>
 
                         </div>
-                        <div class="mb-4 col-md-6">
+                        <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-phone me-2"></i>Contact Number
+                                Contact Number
                             </label>
 
                             <input type="text"
@@ -295,9 +249,9 @@
                         </div>
 
 
-                        <div class="mb-4 col-md-6">
+                        <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-envelope me-2"></i>Email Address
+                                Email Address
                             </label>
                             <input type="email"
                                    name="email"
@@ -309,9 +263,9 @@
 
 
 
-                       <div class="mb-4 col-md-6">
+                       <div class="mb-4 col-md-4">
                             <label class="form-label fw-semibold text-muted mb-2">
-                                <i class="fas fa-lock me-2"></i>Password
+                                Password
                             </label>
 
                             <div class="position-relative">
@@ -350,8 +304,7 @@
 
                        <button type="submit"
                                 id="createUserBtn"
-                                class="btn btn-gradient btn-lg  text-white">
-                        <i class="fas fa-plus-circle me-2"></i>
+                                class="btn btn-primary text-white">
                         <span class="btn-text">CREATE ACCOUNT</span>
                         </button>
                     </div>

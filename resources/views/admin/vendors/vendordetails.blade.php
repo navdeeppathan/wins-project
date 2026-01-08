@@ -30,28 +30,22 @@
     {{-- USER NAME --}}
     <div class="col-md-6 mb-3">
         <label class="form-label">Name</label>
-        <input type="text"
-               class="form-control"
-               value="{{ $vendor->vendor_agency_name }}"
-               disabled>
+        <input type="text" class="form-control" value="{{ $vendor->vendor_agency_name }}" disabled>
     </div>
 
     {{-- CONTACT NUMBER --}}
     <div class="col-md-6 mb-3">
         <label class="form-label">Contact Number</label>
-        <input type="text"
-               class="form-control"
-               value="{{ $vendor->contact_number ?? '-' }}"
-               disabled>
+        <input type="text" class="form-control" value="{{ $vendor->contact_number ?? '-' }}" disabled>
     </div>
 
     {{-- EMAIL --}}
     <div class="col-md-6 mb-3">
         <label class="form-label">Email</label>
         <input type="email"
-               class="form-control"
-               value="{{ $vendor->email_id }}"
-               disabled>
+            class="form-control"
+            value="{{ $vendor->email_id }}"
+            disabled>
     </div>
 
     <div class="col-md-6 mb-3">
@@ -68,19 +62,16 @@
             value="₹ {{ number_format($totalPaidNetPayable, 2) }}"
             readonly>
     </div>
-   
 </div>
-
-
-
-
-
-<h3 class="mb-3">
-    Inventorie
-</h3>
-
-
-
+<div class="display-flex justify-between gap-2">
+    <h3 class="mb-3">Inventory</h3>
+    <div class="mt-3 justify-end">
+        <a href="{{ route('admin.vendors.index') }}"
+            class="btn btn-secondary">
+            Back
+        </a>
+    </div>
+</div>
 <style>
     /* ðŸ”¥ Allow full width inputs */
     #inventoryTable input.form-control,
@@ -112,59 +103,62 @@
         height: 6px;
     }
 </style>
+
+
 @if($inventories->count() > 0)
 
 <div class="table-responsive">
-<table id="inventoryTable" class="table class-table nowrap" style="width:100%">
-    <thead class="table-light">
-        <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Paid To</th>
-            
-            <th>Category</th>
-            <th>Voucher Number</th>
-            <th>Description of Item</th>
-            <th>Quantity</th>
-            <th>Rate</th>
-            <th>Amount</th>
-           
-            <th>Action</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @forelse($inventories as $index => $i)
+    <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
+        <thead class="table-light">
             <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $i->date }}</td>
-                <td>{{ $i->paid_to ?? '-' }}</td>
-                
-                <td>{{ $i->category ?? '-' }}</td>
-                <td>{{ $i->voucher ?? '-' }}</td>
-                <td>{{ $i->description ?? '-' }}</td>
-                <td>{{ $i->quantity }}</td>
-                <td>₹ {{ number_format($i->amount, 2) }}</td>
-                <td>₹ {{ number_format($i->net_payable, 2) }}</td>
-                
-                <td>
-                    <button class="btn btn-success btn-sm approveBtn"
-                            data-id="{{ $i->id }}"
-                            {{ $i->isApproved == 1 ? 'disabled' : '' }}>
-                        {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
-                    </button>
-                </td>
+                <th>#</th>
+                <th>Date</th>
+                <th>Paid By</th>
 
+                <th>Category</th>
+                <th>Voucher Number</th>
+                <th>Description of Item</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Amount</th>
+
+                <th>Action</th>
             </tr>
-        @empty
-            <tr>
-                <td colspan="11" class="text-center text-muted">
-                    No records found
-                </td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @forelse($inventories as $index => $i)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $i->date }}</td>
+                    <td>{{ $i->paid_to ?? '-' }}</td>
+
+                    <td>{{ $i->category ?? '-' }}</td>
+                    <td>{{ $i->voucher ?? '-' }}</td>
+                    <td>{{ $i->description ?? '-' }}</td>
+                    <td>{{ $i->quantity }}</td>
+                    <td>₹ {{ number_format($i->amount, 2) }}</td>
+                    <td>₹ {{ number_format($i->net_payable, 2) }}</td>
+
+                    <td>
+                        <button class="btn btn-success btn-sm approveBtn"
+                                data-id="{{ $i->id }}"
+                                {{ $i->isApproved == 1 ? 'disabled' : '' }}>
+                            {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
+                        </button>
+                    </td>
+
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="11" class="text-center text-muted">
+                        No records found
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+
 </div>
 @else
 <div class="alert alert-warning text-center">

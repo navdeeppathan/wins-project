@@ -1734,19 +1734,43 @@ document.addEventListener('input', function (e) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('input, textarea').forEach(el => {
 
-        // Skip buttons, hidden, submit, checkbox, radio
+    document.querySelectorAll('table input, table textarea').forEach(el => {
+
+        // Skip unwanted input types
         const skipTypes = ['button', 'submit', 'reset', 'hidden', 'checkbox', 'radio', 'file'];
         if (el.tagName === 'INPUT' && skipTypes.includes(el.type)) return;
 
-        // Set placeholder ONLY if not already present
-        if (!el.hasAttribute('placeholder')) {
-            el.setAttribute('placeholder', 'ENTER VALUE');
+        // Skip if placeholder already exists (like date, amount)
+        if (el.hasAttribute('placeholder')) return;
+
+        const td = el.closest('td');
+        const tr = el.closest('tr');
+        const table = el.closest('table');
+
+        if (!td || !tr || !table) return;
+
+        // Get column index
+        const colIndex = Array.from(tr.children).indexOf(td);
+
+        // Get corresponding table header
+        const th = table.querySelector(`thead tr th:nth-child(${colIndex + 1})`);
+        if (!th) return;
+
+        let headerText = th.textContent.trim();
+
+        // Clean text
+        headerText = headerText.replace(/[*:\n]/g, '').trim();
+
+        if (headerText) {
+            el.setAttribute('placeholder', 'ENTER ' + headerText.toUpperCase());
         }
     });
+
 });
 </script>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>

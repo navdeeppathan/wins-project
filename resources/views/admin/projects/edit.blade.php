@@ -158,7 +158,7 @@
             let emd = (baseAmount * rate) / 100;
             emd = emd.toFixed(2);
 
-            displayAmt.readOnly = true;
+            displayAmt.readOnly = false;
             displayAmt.value = emd;
             hiddenAmt.value = emd;
         }
