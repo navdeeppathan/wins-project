@@ -615,7 +615,7 @@
                     designed specifically for business owners
                     navigating the demanding landscapes of
                     Government, PSUs, Banking and the Private
-                    Sector Units. 
+                    Sector Units.
                    </p>
                     <p>Project OverView (P.O.V.) eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
 
@@ -892,7 +892,6 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
             <div class="service-card featured">
-              <div class="service-number">01</div>
               <div class="service-icon-wrapper">
                 <div class="service-icon">
                   <i class="bi bi-globe"></i>
@@ -922,8 +921,8 @@
 
                   <span style="color: #fff; font-weight:500;">
                     Price Starting @ ₹ 7,200/- plus GST annually
-                    <br>
-                    Price Rs.8496/- GST Included</span>
+                    <br></span>
+                    <span style="color: #fff;">Price Rs.8496/- GST Included</span>
 
                 </div>
 
@@ -933,7 +932,6 @@
 
           <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
             <div class="service-card">
-              <div class="service-number">02</div>
               <div class="service-icon-wrapper">
                 <div class="service-icon">
                   <i class="bi bi-qr-code"></i>
