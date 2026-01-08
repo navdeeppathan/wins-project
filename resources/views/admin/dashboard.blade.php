@@ -119,60 +119,111 @@
 
 <div class="dashboard-section">
     <h4 class="section-title">Top Vendors</h4>
-
-    <table class="table table-sm table-bordered" id="example">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Vendor Name</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($totalTopVendors as $vendor)
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered" id="example">
+            <thead>
                 <tr>
-                    <td>{{ $vendor->id }}</td>
-                    <td>{{ $vendor->name }}</td>
-                    <td>{{ number_format($vendor->amount ?? 0, 2) }}</td>
+                    <th>#</th>
+                    <th>Vendor Name</th>
+                    <th>Amount</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="3" class="text-center">No vendors found</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse($totalTopVendors as $vendor)
+                    <tr>
+                        <td>{{ $vendor->id }}</td>
+                        <td>{{ $vendor->name }}</td>
+                        <td>{{ number_format($vendor->amount ?? 0, 2) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">No vendors found</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="dashboard-section" >
     <h4 class="section-title">Top Inventory</h4>
-    <table class="table table-sm table-bordered" id="example">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Item</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($totalTopStock as $stock)
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered" id="example">
+            <thead>
                 <tr>
-                    <td>{{ $stock->id }}</td>
-                    <td>{{ $stock->description }}</td>
-                    <td>{{ number_format($stock->amount ?? 0, 2) }}</td>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Amount</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="3" class="text-center">No stock found</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse($totalTopStock as $stock)
+                    <tr>
+                        <td>{{ $stock->id }}</td>
+                        <td>{{ $stock->description }}</td>
+                        <td>{{ number_format($stock->amount ?? 0, 2) }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">No stock found</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
 <script>
     new DataTable('#example', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+
+    });
+    new DataTable('#inventoryexample', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: false,
+
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+
+    });
+    new DataTable('#venderexample', {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
