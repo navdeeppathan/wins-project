@@ -725,13 +725,27 @@ class ProjectController extends Controller
 
     public function acceptanceIndex( Request $request)
     {
-        $projects = Project::whereIn('status', ['bidding', 'accepted'])
-                    ->where('user_id', auth()->id())
-                    ->when($request->filled('year'), function ($query) use ($request) {
-                        $query->whereYear('created_at', $request->year);
-                    })
-                    ->latest()
-                    ->paginate(10);
+        // $projects = Project::whereIn('status', ['bidding', 'accepted'])
+        //             ->where('user_id', auth()->id())
+        //             ->when($request->filled('year'), function ($query) use ($request) {
+        //                 $query->whereYear('created_at', $request->year);
+        //             })
+        //             ->latest()
+        //             ->paginate(10);
+
+
+        $projects = Project::
+         whereIn('status', ['bidding', 'accepted'])
+        ->where('user_id', auth()->id())
+        ->when($request->filled('fy'), function ($query) use ($request) {
+
+            $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+            $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+
+            $query->whereBetween('date_of_start', [$start, $end]);
+        })
+        ->latest()
+        ->paginate(20);            
 
         return view('admin.acceptance.index', compact('projects'));
     }
@@ -739,12 +753,25 @@ class ProjectController extends Controller
      public function awardIndex(Request $request)
     {
         // whereIn('status', ['bidding', 'accepted','awarded','agreement','billing'])
-        $projects = Project::where('user_id', auth()->id())
-                    ->when($request->filled('year'), function ($query) use ($request) {
-                        $query->whereYear('created_at', $request->year);
-                    })
-                    ->latest()
-                    ->paginate(10);
+        // $projects = Project::where('user_id', auth()->id())
+        //             ->when($request->filled('year'), function ($query) use ($request) {
+        //                 $query->whereYear('created_at', $request->year);
+        //             })
+        //             ->latest()
+        //             ->paginate(10);
+
+        $projects = Project::
+        //  whereIn('status', ['bidding', 'accepted'])
+        where('user_id', auth()->id())
+        ->when($request->filled('fy'), function ($query) use ($request) {
+
+            $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+            $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+
+            $query->whereBetween('date_of_start', [$start, $end]);
+        })
+        ->latest()
+        ->paginate(20);            
 
         return view('admin.award.index', compact('projects'));
     }

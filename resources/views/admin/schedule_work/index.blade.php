@@ -11,16 +11,31 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (Schedule Work)</h3>
 </div>
+
+
+@php
+    use Carbon\Carbon;
+
+    $startFY = 2011;
+
+    $today = Carbon::today();
+    $currentFY = $today->month >= 4
+        ? $today->year
+        : $today->year - 1;
+@endphp
+
 <form method="GET" action="{{ route('admin.schedule-work.index') }}">
     <div class="row mb-3">
-        <div class="col-md-3">
-            <label class="fw-bold">Filter by Year (Created)</label>
-            <select name="year" class="form-select" onchange="this.form.submit()">
-                <option value="">All Years</option>
-                @for($y = 2025; $y <= 2050; $y++)
-                    <option value="{{ $y }}"
-                        {{ request('year') == $y ? 'selected' : '' }}>
-                        {{ $y }}
+        <div class="col-md-4">
+            <label class="fw-bold">Filter by Financial Year</label>
+            <select name="fy" class="form-select" onchange="this.form.submit()">
+                <option value="">All Financial Years</option>
+
+                @for ($fy = $startFY; $fy <= $currentFY; $fy++)
+                    @php $label = $fy . '-' . ($fy + 1); @endphp
+                    <option value="{{ $fy }}"
+                        {{ request('fy') == $fy ? 'selected' : '' }}>
+                        {{ $label }}
                     </option>
                 @endfor
             </select>
