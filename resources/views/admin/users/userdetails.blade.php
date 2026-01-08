@@ -75,14 +75,6 @@
     <div class="col-12">
         <div class="p-3 border rounded summary-box">
             <div class="row text-center">
-
-                <div class="col-md-4 mb-2 mb-md-0">
-                    <label class="form-label text-muted">Balance</label>
-                    <div class="summary-value balance">
-                        ₹ {{ number_format($balanceAmount, 2) }}
-                    </div>
-                </div>
-
                 <div class="col-md-4 mb-2 mb-md-0">
                     <label class="form-label text-muted">Total Due</label>
                     <div class="summary-value due">
@@ -94,6 +86,13 @@
                     <label class="form-label text-muted">Total Paid</label>
                     <div class="summary-value paid">
                         ₹ {{ number_format($totalPaidNetPayable, 2) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2 mb-md-0">
+                    <label class="form-label text-muted">Balance</label>
+                    <div class="summary-value balance">
+                        ₹ {{ number_format($balanceAmount, 2) }}
                     </div>
                 </div>
 
