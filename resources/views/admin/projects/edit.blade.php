@@ -152,15 +152,15 @@
         let baseAmount = parseFloat(estimateInput.value);
 
         if (!baseAmount || baseAmount <= 0) {
-            displayAmt.value = baseAmount;
-            hiddenAmt.value = baseAmount;
+            // displayAmt.value = baseAmount;
+            // hiddenAmt.value = baseAmount;
             return;
         }
 
         if (rate === 'other') {
             displayAmt.readOnly = false;
-            displayAmt.value = baseAmount.toFixed(2);
-            hiddenAmt.value = baseAmount.toFixed(2);
+            // displayAmt.value = baseAmount.toFixed(2);
+            // hiddenAmt.value = baseAmount.toFixed(2);
             return;
         }
 
