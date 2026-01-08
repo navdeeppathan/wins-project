@@ -36,7 +36,7 @@
             <button class="tab" onclick="switchTab('tab-returned', this)">Returned</button>
             <button class="tab" onclick="switchTab('tab-forfeited', this)">Forfeited</button>
         </div>
-        
+
         <div class="tab-content">
             <div class="content2 emd tab-active">
                 @if($actives->count() > 0)
@@ -44,19 +44,19 @@
                         <table id="emdactive" class="table  cell-border class-table nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>NIT No</th>
-                                    <th>Location</th>
-                                    <th>Department</th>
-                                    <th>Estimate Amt</th>
-                                    <th>EMD Amt</th>
-                                    <th>Instrument Type/ Number/ Date</th>
-                                    <th>Return</th>
-                                    <th>Save</th>
-                                    <th>Forfeited</th>
-                                    <th>Save</th>
-                                    {{-- <th>Status</th> --}}
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">NIT No</th>
+                                    <th class="text-center">Location</th>
+                                    <th class="text-center">Department</th>
+                                    <th class="text-center">Estimate Amt</th>
+                                    <th class="text-center">EMD Amt</th>
+                                    <th class="text-center">Instrument Type/ Number/ Date</th>
+                                    <th class="text-center">Return</th>
+                                    <th class="text-center">Save</th>
+                                    <th class="text-center">Forfeited</th>
+                                    <th class="text-center">Save</th>
+                                    {{-- <th class="text-center">Status</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,22 +65,22 @@
                                 @foreach($project->emds as $emd)
                                     @if($emd->isReturned || $emd->isForfeited) @continue @endif
                                     <tr>
-                                        <td>{{ $project->id }}</td>
+                                        <td class="text-center">{{ $project->id }}</td>
 
-                                        <td>
+                                        <td class="text-center">
                                             {!! implode('<br>', array_map(
                                                 fn($chunk) => implode(' ', $chunk),
                                                 array_chunk(explode(' ', $project->name), 10)
                                             )) !!}
                                         </td>
 
-                                        <td>{{ $project->nit_number }}</td>
-                                        <td>{{ $project->state->name ?? '-' }}</td>
-                                        <td>{{ $project->departments->name ?? '-' }}</td>
-                                        <td>{{ number_format($project->estimated_amount, 2) }}</td>
+                                        <td class="text-center">{{ $project->nit_number }}</td>
+                                        <td class="text-center">{{ $project->state->name ?? '-' }}</td>
+                                        <td class="text-center">{{ $project->departments->name ?? '-' }}</td>
+                                        <td class="text-center">{{ number_format($project->estimated_amount, 2) }}</td>
 
-                                        <td>{{ number_format($emd->amount, 2) }}</td>
-                                        <td>{{ $emd->instrument_type }}/ {{ $emd->instrument_number }}/ {{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
+                                        <td class="text-center">{{ number_format($emd->amount, 2) }}</td>
+                                        <td class="text-center">{{ $emd->instrument_type }}/ {{ $emd->instrument_number }}/ {{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
 
                                         {{-- Returned --}}
                                         <td style="background:yellow;">
@@ -112,7 +112,7 @@
                                             </button>
                                         </td>
 
-                                        {{-- <td>
+                                        {{-- <td class="text-center">
                                             <span class="badge bg-info">
                                                 {{ ucfirst($project->status) }}
                                             </span>
@@ -142,19 +142,19 @@
                         <table id="emdreturned" class="table table-striped class-table nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>NIT No</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">NIT No</th>
 
-                                    <th>Location</th>
-                                    <th>Department</th>
-                                    <th>Estimate Amt</th>
-                                    <th>EMD Amt</th>
-                                    <th>Instrument Type</th>
-                                    <th>Instrument Number</th>
-                                    <th>Instrument Date</th>
-                                    <th>Returned</th>
-                                    <th>Save</th>
+                                    <th class="text-center">Location</th>
+                                    <th class="text-center">Department</th>
+                                    <th class="text-center">Estimate Amt</th>
+                                    <th class="text-center">EMD Amt</th>
+                                    <th class="text-center">Instrument Type</th>
+                                    <th class="text-center">Instrument Number</th>
+                                    <th class="text-center">Instrument Date</th>
+                                    <th class="text-center">Returned</th>
+                                    <th class="text-center">Save</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -165,24 +165,24 @@
                                 @foreach($project->emds as $emd)
                                     @if($emd->isReturned)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td class="text-center">{{ $i++ }}</td>
 
-                                        <td>
+                                        <td class="text-center">
                                             {!! implode('<br>', array_map(
                                                 fn($chunk) => implode(' ', $chunk),
                                                 array_chunk(explode(' ', $project->name), 10)
                                             )) !!}
                                         </td>
 
-                                        <td>{{ $project->nit_number }}</td>
-                                        <td>{{ $project->state->name ?? '-' }}</td>
-                                        <td>{{ $project->departments->name ?? '-' }}</td>
-                                        <td>{{ number_format($project->estimated_amount, 2) }}</td>
+                                        <td class="text-center">{{ $project->nit_number }}</td>
+                                        <td class="text-center">{{ $project->state->name ?? '-' }}</td>
+                                        <td class="text-center">{{ $project->departments->name ?? '-' }}</td>
+                                        <td class="text-center">{{ number_format($project->estimated_amount, 2) }}</td>
 
-                                        <td>{{ number_format($emd->amount, 2) }}</td>
-                                        <td>{{ $emd->instrument_type }}</td>
-                                        <td>{{ $emd->instrument_number }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
+                                        <td class="text-center">{{ number_format($emd->amount, 2) }}</td>
+                                        <td class="text-center">{{ $emd->instrument_type }}</td>
+                                        <td class="text-center">{{ $emd->instrument_number }}</td>
+                                        <td class="text-center">{{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
 
                                         <td style="background:yellow;">
                                             <input type="checkbox"
@@ -222,19 +222,19 @@
                         <table id="emdforfieted" class="table table-striped class-table nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>NIT No</th>
-                                    <th>Location</th>
-                                    <th>Department</th>
-                                    <th>Estimate Amt</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">NIT No</th>
+                                    <th class="text-center">Location</th>
+                                    <th class="text-center">Department</th>
+                                    <th class="text-center">Estimate Amt</th>
 
-                                    <th>EMD Amt</th>
-                                    <th>Instrument Type</th>
-                                    <th>Instrument Number</th>
-                                    <th>Instrument Date</th>
-                                    <th>Forfeited</th>
-                                    <th>Save</th>
+                                    <th class="text-center">EMD Amt</th>
+                                    <th class="text-center">Instrument Type</th>
+                                    <th class="text-center">Instrument Number</th>
+                                    <th class="text-center">Instrument Date</th>
+                                    <th class="text-center">Forfeited</th>
+                                    <th class="text-center">Save</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -245,24 +245,24 @@
                                 @foreach($project->emds as $emd)
                                     @if($emd->isForfieted)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td class="text-center">{{ $i++ }}</td>
 
-                                        <td>
+                                        <td class="text-center">
                                             {!! implode('<br>', array_map(
                                                 fn($chunk) => implode(' ', $chunk),
                                                 array_chunk(explode(' ', $project->name), 10)
                                             )) !!}
                                         </td>
 
-                                        <td>{{ $project->nit_number }}</td>
-                                        <td>{{ $project->state->name ?? '-' }}</td>
-                                        <td>{{ $project->departments->name ?? '-' }}</td>
-                                        <td>{{ number_format($project->estimated_amount, 2) }}</td>
+                                        <td class="text-center">{{ $project->nit_number }}</td>
+                                        <td class="text-center">{{ $project->state->name ?? '-' }}</td>
+                                        <td class="text-center">{{ $project->departments->name ?? '-' }}</td>
+                                        <td class="text-center">{{ number_format($project->estimated_amount, 2) }}</td>
 
-                                        <td>{{ number_format($emd->amount, 2) }}</td>
-                                        <td>{{ $emd->instrument_type }}</td>
-                                        <td>{{ $emd->instrument_number }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
+                                        <td class="text-center">{{ number_format($emd->amount, 2) }}</td>
+                                        <td class="text-center">{{ $emd->instrument_type }}</td>
+                                        <td class="text-center">{{ $emd->instrument_number }}</td>
+                                        <td class="text-center">{{ date('d-m-Y', strtotime($emd->instrument_date)) }}</td>
 
                                         <td style="background:yellow;">
                                             <input type="checkbox"
@@ -358,7 +358,10 @@
 @endsection
 
 @push('scripts')
+
     <script>
+
+
         let currentType = 'emd';
         let currentTab  = 'tab-active';
 
@@ -376,6 +379,15 @@
             showContent();
         }
 
+        // function switchTab(tab, btn) {
+        //     currentTab = tab;
+
+        //     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        //     btn.classList.add('active');
+
+        //     showContent();
+        // }
+
         function switchTab(tab, btn) {
             currentTab = tab;
 
@@ -383,8 +395,20 @@
             btn.classList.add('active');
 
             showContent();
-        }
 
+            // 🔥 FIX: adjust datatable columns after tab is visible
+            setTimeout(() => {
+                if (tab === 'tab-active' && tableActive) {
+                    tableActive.columns.adjust().draw(false);
+                }
+                if (tab === 'tab-returned' && tableReturned) {
+                    tableReturned.columns.adjust().draw(false);
+                }
+                if (tab === 'tab-forfeited' && tableForfeited) {
+                    tableForfeited.columns.adjust().draw(false);
+                }
+            }, 200);
+        }
         function showContent() {
             document.querySelectorAll('.content2').forEach(c => c.classList.remove('show'));
 
@@ -482,7 +506,7 @@
         return {
             scrollX: true,
             responsive: false,
-            autoWidth: false,
+            autoWidth: false,   // ✅ important
             scrollCollapse: true,
 
             createdRow: function (row, data, index) {
@@ -491,7 +515,7 @@
             },
 
             rowCallback: function (row, data, index) {
-                 let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+                let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
                 $(row).off('mouseenter mouseleave').hover(
                     () => $('td', row).css('background-color', '#e9ecff'),
@@ -500,6 +524,7 @@
             }
         };
     }
+
 </script>
 @endpush
 

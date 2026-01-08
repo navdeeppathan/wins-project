@@ -20,7 +20,7 @@ class VendorController extends Controller
             ->latest()
             ->paginate(20);
 
-        $states = State::all();    
+        $states = State::all();
 
         return view('admin.vendors.index', compact('vendors', 'states'));
     }
@@ -28,12 +28,12 @@ class VendorController extends Controller
 
      public function index2(Vendor $vendor)
     {
-        
-        $inventories = Inventory::where('paid_to', $vendor->vendor_agency_name)->get();
+
+        $inventories = Inventory::with('user')->where('paid_to', $vendor->vendor_agency_name)->get();
         $totalNetPayable = $inventories->where('isApproved',0)->sum('net_payable');
         $totalPaidNetPayable = $inventories->where('isApproved',1)->sum('net_payable');
         $balanceAmount = $totalNetPayable - $totalPaidNetPayable;
-          
+
 
         return view('admin.vendors.vendordetails', compact('vendor', 'inventories', 'totalNetPayable', 'totalPaidNetPayable', 'balanceAmount'));
     }
@@ -43,7 +43,7 @@ class VendorController extends Controller
             ->latest()
             ->paginate(20);
 
-        $states = State::all();    
+        $states = State::all();
 
         return view('admin.vendors.create', compact('vendors', 'states'));
     }
@@ -54,7 +54,7 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            
+
             'date'          => 'nullable|date',
             'category'      => 'nullable|string|max:100',
             'description'   => 'nullable|string',
@@ -94,9 +94,9 @@ class VendorController extends Controller
 
     public function edit(Vendor $vendor)
     {
-      
 
-        $states = State::all();    
+
+        $states = State::all();
 
         return view('admin.vendors.edit', compact('vendor', 'states'));
     }
@@ -106,7 +106,7 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
         $data = $request->validate([
-            
+
             'date'          => 'nullable|date',
             'category'      => 'nullable|string|max:100',
             'description'   => 'nullable|string',

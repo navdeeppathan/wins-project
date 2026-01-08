@@ -27,14 +27,14 @@
     <table id="example" class="table class-table nowrap" style="width:100%">
         <thead class="table-light">
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>NIT No</th>
-                <th>Location</th>
-                <th>Department</th>
-                <th>Estimated</th>
-                <th>Date of Opening</th>
-                <th width="">Actions</th>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">NIT No</th>
+                <th class="text-center">Location</th>
+                <th class="text-center">Department</th>
+                <th class="text-center">Estimated</th>
+                <th class="text-center">Date of Opening</th>
+                <th class="text-center" width="">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,19 +43,25 @@
             @endphp
             @forelse($projects as $p)
                 <tr>
-                    <td>{{ $i }}</td>
-                    <td>
+                    <td class="text-center">{{ $i }}</td>
+                    <td style="
+                            text-align: justify;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            word-break: break-word;
+                        ">
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
                             array_chunk(explode(' ', $p->name), 10)
                         )) !!}
                     </td>
-                    <td>{{ $p->nit_number }}</td>
-                    <td>{{  $p->state->name ?? '-' }}</td>
-                    <td>{{ $p->departments->name }}</td>
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
-                    <td>
+                    <td class="text-center">{{ $p->nit_number }}</td>
+                    <td class="text-center">{{  $p->state->name ?? '-' }}</td>
+                    <td class="text-center">{{ $p->departments->name }}</td>
+                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
+                    <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
+                    <td class="text-center">
                         {{-- <a href="{{ route('admin.projects.edit', $p) }}" class="btn btn-sm btn-warning">Edit</a> --}}
                         <a href="{{ route('admin.projects.billing.index', $p) }}" class="btn btn-sm btn-primary">
                             Billing

@@ -31,7 +31,7 @@ class Inventory extends Model
                 'staff_id',
                 'isApproved'
 
-            
+
     ];
 
     public function project()
@@ -54,4 +54,9 @@ class Inventory extends Model
      return $this->belongsTo(ScheduleWork::class, 'schedule_work_id', 'id');
 
    }
+    public function user()
+    {
+      return $this->belongsTo(User::class, 'staff_id', 'id');
+
+    }
 }

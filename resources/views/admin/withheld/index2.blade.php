@@ -14,23 +14,23 @@
     <table id="withheldreturn" class="table table-striped nowrap" style="width:100%">
         <thead >
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>NIT No</th>
-                <th>Estimate Amt</th>
-                {{-- <th>Date of Opening</th> --}}
-                <th>Location</th>
-                <th>Department</th>
-                <th>EMD Amt</th>
-                <th>Instrument Type</th>
-                <th>Instrument Number</th>
-                <th>Instrument Date</th>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">NIT No</th>
+                <th class="text-center">Estimate Amt</th>
+                {{-- <th class="text-center">Date of Opening</th> --}}
+                <th class="text-center">Location</th>
+                <th class="text-center">Department</th>
+                <th class="text-center">EMD Amt</th>
+                <th class="text-center">Instrument Type</th>
+                <th class="text-center">Instrument Number</th>
+                <th class="text-center">Instrument Date</th>
 
 
 
                 <!-- NEW COLUMNS -->
-                <th>Return</th>
-                <th>Save</th>
+                <th class="text-center">Return</th>
+                <th class="text-center">Save</th>
                 {{-- <th>Status</th> --}}
 
                 {{-- <th width="160">Actions</th> --}}
@@ -50,31 +50,31 @@
                             array_chunk(explode(' ', $project->name), 10)
                         )) !!}
                     </td>
-                    <td>{{  $project->nit_number }}</td>
-                    <td>{{ number_format( $project->estimated_amount,2) }}</td>
-                    {{-- <td>{{ $p->date_of_opening }}</td> --}}
-                    <td>{{  $project->state->name ?? '-' }}</td>
-                    <td>{{  $project->departments->name ?? '-' }}</td>
-                    <td>{{  number_format( $emd->amount,2) }}</td>
-                    <td>
+                    <td class="text-center">{{  $project->nit_number }}</td>
+                    <td class="text-center">{{ number_format( $project->estimated_amount,2) }}</td>
+                    {{-- <td class="text-center">{{ $p->date_of_opening }}</td> --}}
+                    <td class="text-center">{{  $project->state->name ?? '-' }}</td>
+                    <td class="text-center">{{  $project->departments->name ?? '-' }}</td>
+                    <td class="text-center">{{  number_format( $emd->amount,2) }}</td>
+                    <td class="text-center">
 
                             {{ $emd->instrument_type }}<br>
 
                     </td>
 
-                    <td>
+                    <td class="text-center">
 
                             {{ $emd->instrument_number }}<br>
 
                     </td>
 
-                    <td>
+                    <td class="text-center">
 
                             {{ $emd->instrument_date }}<br>
 
                     </td>
 
-                    <td style="background:yellow;">
+                    <td style="background:yellow;" class="text-center">
                             <input type="checkbox"
                                 class="form-check-input isReturnedBox"
                                 data-id="{{ $emd->id }}"
@@ -82,14 +82,14 @@
                         </td>
 
                     <!-- SAVE BUTTON -->
-                    <td style="background:yellow;">
+                    <td style="background:yellow;" class="text-center">
                         <button class="btn btn-sm btn-success saveisReturnedBtn"
                                 data-id="{{ $emd->id }}">
                             Save
                         </button>
                     </td>
 
-                    <td><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
+                    <td class="text-center"><span class="badge bg-info">{{ ucfirst($project->status) }}</span></td>
 
                 </tr>
                  @php

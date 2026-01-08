@@ -46,21 +46,19 @@
 
         <thead >
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>NIT No</th>
-                <!-- <th>Location</th>
-                <th>Department</th> -->
-                <th>Date of Opening</th>
-                <th>Estimate Amt</th>
-                <!-- <th>EMD Amt</th> -->
-                <th>Tendered Amount*</th>
-                <th>Acceptance Letter No.</th>
-                <th>Date</th>
-                <th>PG Submission By Date</th>
-                <th>Upload</th>
-                <th>Save</th>
-                <th>Add PG</th>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">NIT No</th>
+                <th class="text-center">Date of Opening</th>
+                <th class="text-center">Estimate Amt</th>
+                <!-- <th class="text-center">EMD Amt</th> -->
+                <th class="text-center">Tendered Amount*</th>
+                <th class="text-center">Acceptance Letter No.</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">PG Submission By Date</th>
+                <th class="text-center">Upload</th>
+                <th class="text-center">Save</th>
+                <th class="text-center">Add PG</th>
             </tr>
         </thead>
         <tbody>
@@ -71,40 +69,46 @@
 
             @if ($p->isQualified == 1)
                 <tr>
-                    <td>{{ $i }}</td>
-                   <td>
+                    <td class="text-center">{{ $i }}</td>
+                    <td style="
+                            text-align: justify;
+                            word-break: break-word;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            ">
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
                             array_chunk(explode(' ', $p->name), 10)
                         )) !!}
                     </td>
-                    <td>{{ $p->nit_number }}</td>
+                    <td class="text-center">{{ $p->nit_number }}</td>
                     <!-- <td>{{ $p->state->name ?? '-' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> -->
-                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
+                    <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
+                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                     <!-- <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td> -->
-                    <td>
+                    <td class="text-center">
                         <input type="number" step="0.01"
                             class="form-control form-control-sm tendered_amount"
                             value="{{ $p->tendered_amount }}" required>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <input type="text"
                             class="form-control form-control-sm acceptance_letter_no"
                             value="{{ $p->acceptance_letter_no }}" required>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <input type="date"
                             class="form-control form-control-sm acceptance_date"
                             value="{{ $p->date }}" required>
                     </td>
-                     <td>
+                     <td class="text-center">
                         <input type="date"
                             class="form-control form-control-sm pg_submission_date"
                             value="{{ $p->pg_submission_date }}" required>
                     </td>
-                   <td>
+                   <td class="text-center">
                         @if($p->acceptance_upload)
                             <a href="{{ Storage::url($p->acceptance_upload) }}"
                             target="_blank"
@@ -117,22 +121,19 @@
                             class="form-control form-control-sm acceptance_upload">
                     </td>
 
-                    <td>
+                    <td class="text-center">
                         {{-- @if (empty($p->pg_submission_date ) && empty($p->tendered_amount) && empty($p->acceptance_letter_no) && empty($p->date)) --}}
                         <button class="btn btn-sm btn-success saveAcceptanceBtn"
                                 data-id="{{ $p->id }}">
                             Save
                         </button>
-                        {{-- @else
-                        <span class="badge bg-success">Saved</span>
-                        @endif --}}
 
                     </td>
-                    <td>
-                        <a href="{{ route('admin.projects.pg.create', $p->id) }}"
-                        class="btn btn-sm btn-primary addPgBtn">
-                            Add PG
-                        </a>
+                    <td class="text-center">
+                            <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
+                                Add PG
+                            </a>
+                            <a href="{{ route('admin.projects.awards') }}" class="btn btn-sm btn-primary ">Awards</a>
                     </td>
                 </tr>
                 @endif

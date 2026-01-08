@@ -18,28 +18,28 @@
 <table id="example" class="table class-table nowrap" style="width:100%">
     <thead>
         <tr>
-            <th>#</th>
-            <th>State</th>
-            <th>Vendor Agency</th>
-            <th>Contact Person</th>
-            <th>Contact No</th>
-            <th>Email</th>
-            <th>GST</th>
-            <th>Action</th>
+            <th class="text-center">#</th>
+            <th class="text-center">State</th>
+            <th class="text-center">Vendor Agency</th>
+            <th class="text-center">Contact Person</th>
+            <th class="text-center">Contact No</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">GST</th>
+            <th class="text-center">Action</th>
         </tr>
     </thead>
 
     <tbody>
     @foreach($vendors as $i => $v)
         <tr>
-            <td>{{ $i+1 }}</td>
-            <td>{{ $v->state }}</td>
-            <td>{{ $v->vendor_agency_name }}</td>
-            <td>{{ $v->contact_person }}</td>
-            <td>{{ $v->contact_number }}</td>
-            <td>{{ $v->email_id }}</td>
-            <td>{{ $v->gst_number }}</td>
-            <td>
+            <td class="text-center">{{ $i+1 }}</td>
+            <td class="text-center">{{ $v->state }}</td>
+            <td class="text-center">{{ $v->vendor_agency_name }}</td>
+            <td class="text-center">{{ $v->contact_person }}</td>
+            <td class="text-center">{{ $v->contact_number }}</td>
+            <td class="text-center">{{ $v->email_id }}</td>
+            <td class="text-center">{{ $v->gst_number }}</td>
+            <td class="text-center">
                 <a href="{{ url('admin/vendors/edit/'.$v->id) }}"
                     class="btn btn-sm btn-success">Edit</a>
                     <a href="{{route('admin.vendors.details.index', $v->id)}}" class="btn btn-sm btn-primary">View</a>

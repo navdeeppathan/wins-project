@@ -141,20 +141,18 @@
 
     <div class="table-responsive">
         <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
-            <thead class="table-light">
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Paid By</th>
-
-                    <th>Category</th>
-                    <th>Voucher Number</th>
-                    <th>Description of Item</th>
-                    <th>Quantity</th>
-                    <th>Rate</th>
-                    <th>Amount</th>
-
-                    <th>Action</th>
+            <thead class="table-light text-center">
+                <tr style="text-align: center;">
+                    <th class="text-center">#</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Paid By</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Voucher Number</th>
+                    <th class="text-center">Description of Item</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Rate</th>
+                    <th class="text-center">Amount</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
 
@@ -163,7 +161,7 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td class="text-center">{{ $i->date }}</td>
-                        <td class="text-center">{{ $i->paid_to ?? '-' }}</td>
+                        <td class="text-center">{{ $i->user->name ?? 'Admin' }}</td>
 
                         <td class="text-center">{{ $i->category ?? '-' }}</td>
                         <td>{{ $i->voucher ?? '-' }}</td>

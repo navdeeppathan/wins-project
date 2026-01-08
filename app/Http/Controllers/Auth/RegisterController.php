@@ -26,7 +26,7 @@ class RegisterController extends Controller
 
      public function adminUserDetails(User $user)
     {
-        $inventories = Inventory::where('user_id', $user->id)->get();
+        $inventories = Inventory::where('staff_id', $user->id)->get();
         $totalNetPayable = $inventories->where('isApproved',0)->sum('net_payable');
         $totalPaidNetPayable = $inventories->where('isApproved',1)->sum('net_payable');
         $balanceAmount = $totalNetPayable - $totalPaidNetPayable;

@@ -96,28 +96,28 @@
 <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
     <thead class="table-light">
     <tr>
-        <th>#</th>
-        {{-- <th>Project</th> --}}
-        <th>Date</th>
-        <th width="">Paid To</th>
-        <th>Staff</th>
-        <th>Category</th>
+        <th class="text-center">#</th>
+        {{-- <th class="text-center">Project</th> --}}
+        <th class="text-center">Date</th>
+        <th class="text-center" width="">Paid To</th>
+        <th class="text-center">Staff</th>
+        <th class="text-center">Category</th>
 
-        <th>Voucher Number</th>
-        <th>Description of Item</th>
-        <th>Quantity</th>
-        <th>Rate</th>
-        {{-- <th>Deduction</th> --}}
-        <th>Amount</th>
-        <th>Upload</th>
-        <th width="">Action</th>
+        <th class="text-center">Voucher Number</th>
+        <th class="text-center">Description of Item</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-center">Rate</th>
+        {{-- <th class="text-center">Deduction</th> --}}
+        <th class="text-center">Amount</th>
+        <th class="text-center">Upload</th>
+        <th class="text-center" width="">Action</th>
     </tr>
     </thead>
 
     <tbody>
         @forelse($items as $index => $i)
             <tr data-id="{{ $i->id }}">
-                <td>{{ $index + 1 }}</td>
+                <td class="text-center">{{ $index + 1 }}</td>
 
                 {{-- PROJECT --}}
                 {{-- <td>
@@ -137,11 +137,11 @@
                     @endif
                 </td> --}}
 
-                <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
+                <td class="text-center"><input type="date" class="form-control date" value="{{ $i->date }}"></td>
 
 
-                {{-- <td width=""><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td> --}}
-                <td width="">
+                {{-- <td class="text-center" width=""><input type="text" class="form-control paid_to" value="{{ $i->paid_to }}"></td> --}}
+                <td class="text-center" width="">
                     <select class="form-select paid_to">
                         <option value="">Select Vendor</option>
                         @foreach($vendors as $vendor)
@@ -152,7 +152,7 @@
                         @endforeach
                     </select>
                 </td>
-                <td width="">
+                <td class="text-center" width="">
                     <select class="form-select staff_id">
                         <option value="">Select Staff</option>
                         @foreach($staffs as $staff)
@@ -164,7 +164,7 @@
                     </select>
                 </td>
 
-                <td>
+                <td class="text-center">
                     <select class="form-select category">
                         <option value="">Select</option>
                         @foreach($categories as $cat)
@@ -175,16 +175,16 @@
                     </select>
                 </td>
 
-                <td><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
-                <td><input type="text" class="form-control description" value="{{ $i->description }}"></td>
+                <td class="text-center"><input type="text" class="form-control voucher" value="{{ $i->voucher }}"></td>
+                <td class="text-center"><input type="text" class="form-control description" value="{{ $i->description }}"></td>
 
-                <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
-                <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
-                {{-- <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> --}}
+                <td class="text-center"><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
+                <td class="text-center"><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
+                {{-- <td class="text-center"><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> --}}
 
-                <td class="net_payable">{{ number_format($i->net_payable,2) }}</td>
+                <td class="text-center" class="net_payable">{{ number_format($i->net_payable,2) }}</td>
 
-                <td>
+                <td class="text-center">
                     @if($i->upload)
                         <a href="{{ asset($i->upload) }}" target="_blank"
                         class="btn btn-sm btn-outline-primary mb-1">View</a>
@@ -192,7 +192,7 @@
                     <input type="file" class="form-control upload">
                 </td>
 
-                <td>
+                <td class="text-center">
 
                     <button class="btn btn-success btn-sm saveRow">Update</button>
                     <button class="btn btn-danger btn-sm removeRow">Del</button>
@@ -200,7 +200,7 @@
             </tr>
         @empty
             <tr>
-                <td>1</td>
+                <td class="text-center">1</td>
 
 
                 <input type="hidden" class="project_id" value="{{ $selectedProjectId }}">
@@ -317,7 +317,7 @@ $(function () {
             <td><input type="text" class="form-control voucher"></td>
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
-       
+
             <td class="net_payable">0.00</td>
             <td><input type="file" class="form-control upload"></td>
             <td>

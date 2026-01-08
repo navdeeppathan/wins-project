@@ -144,28 +144,28 @@
                             @foreach($items as $index => $i)
 
                                         <tr data-id="{{ $i->id }}">
-                                            <td>{{ $index + 1 }}</td>
+                                            <td class="text-center">{{ $index + 1 }}</td>
 
-                                            <td>{{ $i->description }}</td>
+                                            <td class="text-center">{{ $i->description }}</td>
 
-                                            <td>{{ $i->quantity }}</td>
+                                            <td class="text-center">{{ $i->quantity }}</td>
 
-                                            <td>{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
-                                            <td>
+                                            <td class="text-center">{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
+                                            <td class="text-center">
                                                         <input type="number" step="0.01"
                                                             class="form-control form-control-sm dismantals"
                                                             value="{{ $i->dismantals }}" required>
                                             </td>
 
-                                            <td>
+                                            <td class="text-center">
                                                 <input type="number" step="0.01"
                                                     class="form-control form-control-sm dismantal_rate"
                                                     value="{{ $i->dismantal_rate }}" required>
                                             </td>
-                                            <td class="dismantal_amount">0.00</td>
+                                            <td  class="dismantal_amount text-center">0.00</td>
 
 
-                                            <td>
+                                            <td class="text-center">
                                                         <button class="btn btn-sm btn-success saveDismantalBtn1"
                                                                 data-id="{{ $i->id }}">
                                                             Save

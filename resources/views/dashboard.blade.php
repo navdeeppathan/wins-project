@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BtotMail - Dashboard</title>
+    <title> Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -885,245 +885,7 @@
         </svg>
     </button>
     <div class="overlay" onclick="toggleMobile()"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-            </div>
-            <span class="brand-name">BtotMail</span>
-            <button class="collapse-btn" onclick="toggleSidebar()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </button>
-        </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-item">
-                <a href="#dashboard" class="nav-link active" data-route="Admin\HomeController@index">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Dashboard</span>
-                </a>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Customers</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#customers" class="dropdown-item" data-route="Admin\CustomerController@index">Customers</a>
-                    <a href="#subscriptions" class="dropdown-item" data-route="Admin\SubscriptionController@index">Subscriptions</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Plans</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#plans" class="dropdown-item" data-route="Admin\PlanController@index">Plans</a>
-                    <a href="#currencies" class="dropdown-item" data-route="Admin\CurrencyController@index">Currencies</a>
-                    <a href="#tax" class="dropdown-item" data-route="Admin\TaxController@settings">Tax Settings</a>
-                    <a href="#invoice" class="dropdown-item" data-route="Admin\InvoiceController@template">Invoice Template</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Admins</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#admins" class="dropdown-item" data-route="Admin\AdminController@index">Admins</a>
-                    <a href="#admin-groups" class="dropdown-item" data-route="Admin\AdminGroupController@index">Admin Groups</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Sending</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#sending-servers" class="dropdown-item" data-route="Admin\SendingServerController@index">Sending Servers</a>
-                    <a href="#sub-accounts" class="dropdown-item" data-route="Admin\SubAccountController@index">Sub Accounts</a>
-                    <a href="#bounce-handlers" class="dropdown-item" data-route="Admin\BounceHandlerController@index">Bounce Handlers</a>
-                    <a href="#feedback-handlers" class="dropdown-item" data-route="Admin\FeedbackLoopHandlerController@index">Feedback Loop Handlers</a>
-                    <a href="#email-verification" class="dropdown-item" data-route="Admin\EmailVerificationServerController@index">Email Verification Servers</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Server Config</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#add-server" class="dropdown-item" data-route="servers.create">Add Server</a>
-                    <a href="#list-servers" class="dropdown-item" data-route="servers.index">List Servers</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Settings</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#all-settings" class="dropdown-item" data-route="Admin\SettingController@index">All Settings</a>
-                    <a href="#oauth" class="dropdown-item" data-route="Admin\AuthController@index">OAuth</a>
-                    <a href="#templates" class="dropdown-item" data-route="Admin\TemplateController@index">Template Gallery</a>
-                    <a href="#form-templates" class="dropdown-item" data-route="Admin\FormTemplateController@index">Form Templates</a>
-                    <a href="#layouts" class="dropdown-item" data-route="Admin\LayoutController@index">Page Form Layout</a>
-                    <a href="#languages" class="dropdown-item" data-route="Admin\LanguageController@index">Languages</a>
-                    <a href="#payment-gateways" class="dropdown-item" data-route="Admin\PaymentGatewayController@index">Payment Gateways</a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Plugins</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#new-plugin" class="dropdown-item" data-route="Admin\PluginController@install">New Plugin</a>
-                    <a href="#all-plugins" class="dropdown-item" data-route="Admin\PluginController@index">All Plugins</a>
-                </div>
-            </div>
-
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </span>
-                    <span class="nav-text">Reports</span>
-                    <span class="dropdown-arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </span>
-                </a>
-                <div class="dropdown-menu">
-                    <a href="#blacklist" class="dropdown-item" data-route="Admin\BlacklistController@index">Blacklist</a>
-                    <a href="#blocked-rules" class="dropdown-item" data-route="Admin\BlockedRuleController@index">Blocked Rules</a>
-                    <a href="#tracking-log" class="dropdown-item" data-route="Admin\TrackingLogController@index">Tracking Log</a>
-                    <a href="#bounce-log" class="dropdown-item" data-route="Admin\BounceLogController@index">Bounce Log</a>
-                    <a href="#feedback-log" class="dropdown-item" data-route="Admin\FeedbackLogController@index">Feedback Log</a>
-                    <a href="#open-log" class="dropdown-item" data-route="Admin\OpenLogController@index">Open Log</a>
-                    <a href="#click-log" class="dropdown-item" data-route="Admin\ClickLogController@index">Click Log</a>
-                    <a href="#unsubscribe-log" class="dropdown-item" data-route="Admin\UnsubscribeLogController@index">Unsubscribe Log</a>
-                </div>
-            </div>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <div class="user-avatar-small">TT</div>
-                <div class="user-details">
-                    <div class="user-name">test test</div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
     <div class="main-wrapper">
-        <header class="topbar">
-            <div class="search-box">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-                <input type="text" placeholder="Search campaigns, customers, or templates...">
-            </div>
-            <div class="topbar-actions">
-                <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-                    <svg id="darkIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-                    </svg>
-                    <svg id="lightIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-                    </svg>
-                </button>
-                <button class="icon-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    <span class="notification-badge"></span>
-                </button>
-                <div class="user-profile">
-                    <div class="user-avatar">TT</div>
-                    <span class="user-profile-text">test test</span>
-                    <span class="status-badge">Active</span>
-                </div>
-            </div>
-        </header>
 
         <main class="content">
             <div class="page-header">
@@ -1131,7 +893,7 @@
                 <p class="page-subtitle">Welcome back! Here's an overview of your email marketing performance.</p>
             </div>
 
-            <div class="action-cards">
+            {{-- <div class="action-cards">
                 <div class="action-card">
                     <div class="action-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1168,7 +930,7 @@
                     <h3>Setup Automation</h3>
                     <p>Build automated workflows</p>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="stats-grid">
                 <div class="stat-card">
@@ -1181,7 +943,7 @@
                         <span class="stat-change positive">↑ 12.5%</span>
                     </div>
                     <div class="stat-value">2,847</div>
-                    <div class="stat-label">Total Customers</div>
+                    <div class="stat-label">Total Projects</div>
                     <div class="stat-meta">vs last month</div>
                 </div>
 
@@ -1315,7 +1077,7 @@
 
             // Update chart colors
             updateChartColors();
-            
+
             // Save preference
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         }
@@ -1330,7 +1092,7 @@
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
-            
+
             // Close all dropdowns when sidebar is collapsed
             if (document.getElementById('sidebar').classList.contains('collapsed')) {
                 document.querySelectorAll('.nav-item.open').forEach(item => {
@@ -1341,15 +1103,15 @@
 
         function toggleDropdown(element) {
             const sidebar = document.getElementById('sidebar');
-            
+
             // Don't open dropdown if sidebar is collapsed
             if (sidebar.classList.contains('collapsed')) {
                 return;
             }
-            
+
             const navItem = element.closest('.nav-item');
             const wasOpen = navItem.classList.contains('open');
-            
+
             // Toggle current dropdown
             navItem.classList.toggle('open');
         }
@@ -1357,7 +1119,7 @@
         function toggleMobile() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
-            
+
             sidebar.classList.toggle('mobile-open');
             overlay.classList.toggle('active');
         }
@@ -1366,13 +1128,13 @@
         document.querySelectorAll('.nav-link:not([onclick]), .dropdown-item').forEach(link => {
             link.addEventListener('click', function(e) {
                 const route = this.getAttribute('data-route');
-                
+
                 // Remove active class from all links
                 document.querySelectorAll('.nav-link, .dropdown-item').forEach(l => l.classList.remove('active'));
-                
+
                 // Add active class to clicked link
                 this.classList.add('active');
-                
+
                 // If it's a dropdown item, also highlight parent
                 if (this.classList.contains('dropdown-item')) {
                     const parentNavItem = this.closest('.nav-item');
@@ -1380,9 +1142,9 @@
                         parentNavItem.querySelector('.nav-link').classList.add('active');
                     }
                 }
-                
-                
-                
+
+
+
                 // Close mobile menu if open
                 if (window.innerWidth <= 1024) {
                     toggleMobile();
@@ -1401,18 +1163,18 @@
 
         // Chart
         let chart;
-        
+
         function initChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
-            
+
             const gradient1 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient1.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
             gradient1.addColorStop(1, 'rgba(59, 130, 246, 0)');
-            
+
             const gradient2 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient2.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
             gradient2.addColorStop(1, 'rgba(16, 185, 129, 0)');
-            
+
             const gradient3 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient3.addColorStop(0, 'rgba(245, 158, 11, 0.3)');
             gradient3.addColorStop(1, 'rgba(245, 158, 11, 0)');

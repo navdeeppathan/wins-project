@@ -385,6 +385,19 @@
             btn.classList.add('active');
 
             showContent();
+
+            // 🔥 FIX: adjust datatable columns after tab is visible
+            setTimeout(() => {
+                if (tab === 'tab-active' && tableActive) {
+                    tableActive.columns.adjust().draw(false);
+                }
+                if (tab === 'tab-returned' && tableReturned) {
+                    tableReturned.columns.adjust().draw(false);
+                }
+                if (tab === 'tab-forfeited' && tableForfeited) {
+                    tableForfeited.columns.adjust().draw(false);
+                }
+            }, 200);
         }
 
         function showContent() {
@@ -480,11 +493,11 @@
         });
     }
 
-    function commonDTConfig() {
+     function commonDTConfig() {
         return {
             scrollX: true,
             responsive: false,
-            autoWidth: false,
+            autoWidth: false,   // ✅ important
             scrollCollapse: true,
 
             createdRow: function (row, data, index) {
@@ -493,7 +506,7 @@
             },
 
             rowCallback: function (row, data, index) {
-                 let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+                let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
                 $(row).off('mouseenter mouseleave').hover(
                     () => $('td', row).css('background-color', '#e9ecff'),

@@ -22,21 +22,21 @@
 
         <thead >
             <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Department</th>
-                <th>Award Letter No.</th>
-                <th>Award Letter Date</th>
-                <th>Stipulated Date of Completion</th>
-                <th>Estimate Amt</th>
-                <th>Tendered Amount</th>
-                <th>Agreement Number</th>
-                <th>Date of Start of Work</th>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Location</th>
+                <th class="text-center">Department</th>
+                <th class="text-center">Award Letter No.</th>
+                <th class="text-center">Award Letter Date</th>
+                <th class="text-center">Stipulated Date of Completion</th>
+                <th class="text-center">Estimate Amt</th>
+                <th class="text-center">Tendered Amount</th>
+                <th class="text-center">Agreement Number</th>
+                <th class="text-center">Date of Start of Work</th>
                 {{-- <th>Agreement Start Date</th> --}}
 
-                <th>Upload</th>
-                <th>Save</th>
+                <th class="text-center">Upload</th>
+                <th class="text-center">Save</th>
             </tr>
         </thead>
         <tbody>
@@ -46,8 +46,14 @@
             @forelse($projects as $p)
             @if (!empty($p->award_letter_no))
                 <tr>
-                    <td>{{ $i }}</td>
-                    <td>
+                    <td class="text-center">{{ $i }}</td>
+                    <td style="
+                            text-align: justify;
+                            word-break: break-word;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            ">
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
                             array_chunk(explode(' ', $p->name), 10)

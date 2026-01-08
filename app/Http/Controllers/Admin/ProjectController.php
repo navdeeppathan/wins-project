@@ -15,7 +15,9 @@ use App\Models\User;
 use App\Models\Withheld;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Inventory;
 
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,22 +37,61 @@ class ProjectController extends Controller
     //     return view('admin.projects.index', compact('projects'));
     // }
 
+
+    public function dashboard()
+    {
+
+
+        $totalProjects = Project::where('user_id', auth()->id())->count();
+        $totalBidding = Project::where('user_id', auth()->id())->where('status', 'bidding')->count();
+        $totalAwarded = Project::where('user_id', auth()->id())->where('status', 'awarded')->count();
+        $totalCompleted = Project::where('user_id', auth()->id())->where('status', 'completed')->count();
+
+        $totalEmd = Project::where('user_id', auth()->id())->sum('emd_amount');
+
+        $totalVendors = Vendor::where('user_id', auth()->id())->count();
+        $totalStaff = User::where('parent_id', auth()->id())->count();
+
+        $totalTopStock = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+
+        $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+
+        $totalTopStaff = User::where('parent_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+
+        $totalTopProjects = Project::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+
+        $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+
+        return view('admin.dashboard', compact(
+            'totalProjects',
+            'totalBidding',
+            'totalAwarded',
+            'totalCompleted',
+            'totalEmd',
+            'totalVendors',
+            'totalStaff',
+            'totalTopStock',
+            'totalTopVendors',
+            'totalTopStaff',
+            'totalTopProjects'
+        ));
+    }
     public function index(Request $request)
-{
-    $projects = Project::with(['departments', 'state', 'emds'])
-        ->where('user_id', auth()->id())
-        ->when($request->filled('fy'), function ($query) use ($request) {
+    {
+        $projects = Project::with(['departments', 'state', 'emds'])
+            ->where('user_id', auth()->id())
+            ->when($request->filled('fy'), function ($query) use ($request) {
 
-            $start = Carbon::create($request->fy, 4, 1)->startOfDay();
-            $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+                $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+                $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
 
-            $query->whereBetween('date_of_start', [$start, $end]);
-        })
-        ->latest()
-        ->paginate(20);
+                $query->whereBetween('date_of_start', [$start, $end]);
+            })
+            ->latest()
+            ->paginate(20);
 
-    return view('admin.projects.index', compact('projects'));
-}
+        return view('admin.projects.index', compact('projects'));
+    }
 
 
     public function indexUser(User $user)
@@ -70,12 +111,10 @@ class ProjectController extends Controller
     public function returnIndex()
     {
         $userId = auth()->id();
-
-        // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'emds'])
             ->where('user_id', $userId);
 
-        // All projects (paginated)
+        // All projects
         $projects = (clone $baseQuery)
             ->latest()
             ->paginate(20);
@@ -734,18 +773,17 @@ class ProjectController extends Controller
         //             ->paginate(10);
 
 
-        $projects = Project::
-         whereIn('status', ['bidding', 'accepted'])
-        ->where('user_id', auth()->id())
-        ->when($request->filled('fy'), function ($query) use ($request) {
+        $projects = Project::whereIn('status', ['bidding', 'accepted', 'awarded'])
+                    ->where('user_id', auth()->id())
+                    ->when($request->filled('fy'), function ($query) use ($request) {
 
-            $start = Carbon::create($request->fy, 4, 1)->startOfDay();
-            $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+                        $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+                        $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
 
-            $query->whereBetween('date_of_start', [$start, $end]);
-        })
-        ->latest()
-        ->paginate(20);            
+                        $query->whereBetween('date_of_start', [$start, $end]);
+                    })
+                    ->latest()
+                    ->paginate(20);
 
         return view('admin.acceptance.index', compact('projects'));
     }
@@ -771,9 +809,22 @@ class ProjectController extends Controller
             $query->whereBetween('date_of_start', [$start, $end]);
         })
         ->latest()
-        ->paginate(20);            
+        ->paginate(20);
 
         return view('admin.award.index', compact('projects'));
+    }
+
+    public function awardIndexs(Request $request)
+    {
+        $projects = Project::where('user_id', auth()->id())
+                    ->when($request->filled('fy'), function ($query) use ($request) {
+                        $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+                        $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+
+                        $query->whereBetween('date_of_start', [$start, $end]);
+                    })->latest()->paginate(20);
+
+        return view('admin.award.index2', compact('projects'));
     }
 
     public function agreementIndex(Request $request)

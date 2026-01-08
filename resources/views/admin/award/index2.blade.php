@@ -9,22 +9,6 @@
     <h3>Projects (Award)</h3>
 
 </div>
-{{-- <form method="GET" action="{{ route('admin.projects.award') }}">
-    <div class="row mb-3">
-        <div class="col-md-3">
-            <label class="fw-bold">Filter by Year (Created)</label>
-            <select name="year" class="form-select" onchange="this.form.submit()">
-                <option value="">All Years</option>
-                @for($y = 2025; $y <= 2050; $y++)
-                    <option value="{{ $y }}"
-                        {{ request('year') == $y ? 'selected' : '' }}>
-                        {{ $y }}
-                    </option>
-                @endfor
-            </select>
-        </div>
-    </div>
-</form> --}}
 @php
     use Carbon\Carbon;
 
@@ -60,17 +44,19 @@
 
         <thead >
             <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Name</th>
-                {{-- <th class="text-center">NIT No</th>
-                <th class="text-center">Date of Opening</th> --}}
-                <th class="text-center">Estimate Amt</th>
-                <th class="text-center">Tendered Amount</th>
-                <th class="text-center">Acceptance Letter No.</th>
-                <th class="text-center">Date</th>
-                <th class="text-center">Agreement Number</th>
-                <th class="text-center">Upload</th>
-                <th class="text-center">Action</th>
+                <th>#</th>
+                <th>Name</th>
+                <th>NIT No</th>
+                <th>Date of Opening</th>
+                <th>Estimate Amt</th>
+                <th>Tendered Amount</th>
+                <th>Acceptance Letter No.</th>
+                <th>Date</th>
+                <th>Award Letter No.</th>
+                <th>Award Date</th>
+                <th>Date of Start of Work</th>
+                <th>Upload</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -81,39 +67,40 @@
                @if (!empty($p->acceptance_letter_no))
                 <tr>
 
-                    <td class="text-center">{{ $i }}</td>
-                   <td style="
-                            text-align: justify;
-                            text-align-last: justify;
-                            text-justify: inter-word;
-                            hyphens: auto;
-                            word-break: break-word;
-                        ">
-
+                    <td>{{ $i }}</td>
+                    <td>
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
+                            array_chunk(explode(' ', $p->name), 8)
                         )) !!}
                     </td>
-
-                    {{-- <td>{{ $p->nit_number }}</td> --}}
+                    <td>{{ $p->nit_number }}</td>
                     {{-- <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> --}}
-                    {{-- <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td> --}}
-                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
-                    <td class="text-center">{{ number_format($p->tendered_amount,2) }}</td>
-                    <td class="text-center">{{ $p->acceptance_letter_no }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($p->date)) ?? '-' }}</td>
-
-
-                    <td class="text-center">
+                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
+                    <td>{{ number_format($p->estimated_amount,2) }}</td>
+                    <td>{{ number_format($p->tendered_amount,2) }}</td>
+                    <td>{{ $p->acceptance_letter_no }}</td>
+                    <td>{{ date('d-m-Y', strtotime($p->date)) ?? '-' }}</td>
+                    <td>
                         <input type="text"
-                            class="form-control form-control-sm agreement_no"
-                            value="{{ $p->agreement_no }}">
+                            class="form-control form-control-sm award_letter_no"
+                            value="{{ $p->award_letter_no }}">
+                    </td>
+                    <td>
+                        <input type="date"
+                            class="form-control form-control-sm award_date"
+                            value="{{ $p->award_date }}">
                     </td>
 
-                    <td class="text-center">
-                         @if($p->award_upload)
+                    <td>
+                        <input type="date"
+                            class="form-control form-control-sm date_ofstartof_work"
+                            value="{{ $p->date_ofstartof_work }}">
+                    </td>
+
+                    <td>
+                        @if($p->award_upload)
                             <a href="{{ Storage::url($p->award_upload) }}"
                             target="_blank"
                             class="btn btn-sm btn-outline-primary mb-1">
@@ -125,19 +112,12 @@
                     </td>
 
 
-                    <td class="text-center">
+                    <td>
                         <div class="d-flex gap-2">
                             <button class="btn btn-sm btn-success saveAwardBtn"
                                     data-id="{{ $p->id }}">
                                 Save
                             </button>
-                            {{-- @else
-                            <span class="badge bg-success">Saved</span>
-                            @endif --}}
-
-                             <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Add NOTE</a>
-
-                        <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
 
 
                         </div>

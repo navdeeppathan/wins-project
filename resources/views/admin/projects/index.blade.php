@@ -63,17 +63,17 @@
         <table id="projectTable" class="table table-bordered class-table nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>NIT No</th>
-                    {{-- <th>Location</th>
-                    <th>Department</th> --}}
-                    <th>Date of Opening</th>
-                    <th>Estimate Amt</th>
-                    <th>EMD Amt</th>
-                    <th>Qualified</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">NIT No</th>
+                    {{-- <th class="text-center">Location</th>
+                    <th class="text-center">Department</th> --}}
+                    <th class="text-center">Date of Opening</th>
+                    <th class="text-center">Estimate Amt</th>
+                    <th class="text-center">EMD Amt</th>
+                    <th class="text-center">Qualified</th>
 
-                    <th width="160">Actions</th>
+                    <th class="text-center" width="160">Actions</th>
                 </tr>
             </thead>
 
@@ -84,7 +84,13 @@
                 @foreach($projects as $p)
                 <tr>
                     <td>{{ $i }}</td>
-                <td class="text-start">
+                <td style="
+                            text-align: justify;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            word-break: break-word;
+                        ">
                         {!! implode('<br>', array_map(
                             fn($chunk) => implode(' ', $chunk),
                             array_chunk(explode(' ', $p->name), 10)

@@ -40,36 +40,36 @@
                         <table id="example" class="table class-table nowrap" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>NAME OF THE USER</th>
-                                    <th>DOJ</th>
-                                    <th>DOL</th>
-                                    <th>STATE</th>
-                                    <th>CONTACT NUMBER</th>
-                                    <th>EMAIL ID</th>
-                                    <th>DESIGNATION</th>
-                                    <th>MONTHLY SALARY </th>
-                                    <th>ACTION</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">NAME OF THE USER</th>
+                                    <th class="text-center">DOJ</th>
+                                    <th class="text-center">DOL</th>
+                                    <th class="text-center">STATE</th>
+                                    <th class="text-center">CONTACT NUMBER</th>
+                                    <th class="text-center">EMAIL ID</th>
+                                    <th class="text-center">DESIGNATION</th>
+                                    <th class="text-center">MONTHLY SALARY </th>
+                                    <th class="text-center">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($users as $user)
                                     <tr>
-                                        <td>
+                                        <td class="text-center">
                                                 {{ $loop->iteration }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             {{ $user->name }}
 
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             @if($user->state)
                                                     {{ $user->state }}
                                             @else
                                                 <span class="text-muted fst-italic">Not provided</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-center">
 
 
 
@@ -78,29 +78,29 @@
 
 
                                         </td>
-                                        <td>
+                                        <td class="text-center">
 
                                                 {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
 
 
                                         </td>
-                                        <td>
+                                        <td class="text-center">
 
                                                 {{ $user->phone ?? '-' }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
 
 
                                                 {{ $user->email }}
 
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                                 {{ $user->designation ?? '-' }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                                 {{ $user->monthly_salary ?? '-' }}
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <div class="d-flex align-items-center">
                                                 {{-- <a href="{{ route('superadmin.users.edit', $user->id) }}" class="btn btn-sm btn-primary me-2">
                                                     <i class="fas fa-edit"></i>

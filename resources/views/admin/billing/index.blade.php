@@ -38,19 +38,19 @@
         <table id="billingTable" class="table table-bordered class-table nowrap dataTable">
             <thead class="table-dark">
                 <tr>
-                    <th>#</th>
-                    <th>BILL NUMBER</th>
-                    <th>BILL TYPE</th>
-                    <th>BILL DATE</th>
-                    <th>MB NO</th>
-                    <th>PAGE</th>
-                    <th>GROSS AMOUNT</th>
-                    <th>RECOVERIES</th>
-                    <th>NET PAYABLE</th>
-                    <th>REMARKS</th>
-                    <th>FILE</th>
-                    <th>ACTION</th>
-                    <th >COMPLETION DATE</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">BILL NUMBER</th>
+                    <th class="text-center">BILL TYPE</th>
+                    <th class="text-center">BILL DATE</th>
+                    <th class="text-center">MB NO</th>
+                    <th class="text-center">PAGE</th>
+                    <th class="text-center">GROSS AMOUNT</th>
+                    <th class="text-center">RECOVERIES</th>
+                    <th class="text-center">NET PAYABLE</th>
+                    <th class="text-center">REMARKS</th>
+                    <th class="text-center">FILE</th>
+                    <th class="text-center">ACTION</th>
+                    <th class="text-center" >COMPLETION DATE</th>
                 </tr>
             </thead>
 

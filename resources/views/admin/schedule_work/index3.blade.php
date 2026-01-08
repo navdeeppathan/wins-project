@@ -53,7 +53,7 @@
         <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
     </div>
 
-    
+
    <div class="col-md-4 mb-2">
         <label>Date of Start</label>
         <input class="form-control" disabled
@@ -170,7 +170,7 @@
         <th>#</th>
 
         <th>DATE</th>
-        
+
         <th>STAFF</th>
 
         <th>CATEGORY</th>
@@ -179,8 +179,8 @@
         <th>QUANTITY</th>
         <th>RATE</th>
         <th>AMOUNT</th>
-        
-        
+
+
 
         <th width="">ACTION</th>
     </tr>
