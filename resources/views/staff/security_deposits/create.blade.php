@@ -37,8 +37,8 @@
                                     <option value="FDR">FDR</option>
                                     <option value="BG">BG</option>
                                     <option value="DD">DD</option>
-                                    <option value="Cheque">Challan</option>
-                                    <option value="Cheque">Cash</option>
+                                    <option value="CHALLAN">CHALLAN</option>
+                                    <option value="CASH">CASH</option>
                                 </select>
                             </div>
 
@@ -125,7 +125,7 @@
                     <td>{{ $p->instrument_date }}</td>
                     <td>{{ $p->amount }}</td>
                     <td>{{ $p->upload }}</td>
-                    
+
                 </tr>
             @php
                 $i++;
@@ -148,7 +148,7 @@
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -165,7 +165,7 @@
             );
         }
 
-        
+
     });
 </script>
 @endpush

@@ -37,8 +37,8 @@
                                     <option value="FDR">FDR</option>
                                     <option value="BG">BG</option>
                                     <option value="DD">DD</option>
-                                    <option value="Cheque">Challan</option>
-                                    <option value="Cheque">Cash</option>
+                                    <option value="CHALLAN">CHALLAN</option>
+                                    <option value="CASH">CASH</option>
                                 </select>
                             </div>
 
@@ -120,7 +120,7 @@
                     <td>{{ $p->instrument_date }}</td>
                     <td>{{ $p->amount }}</td>
                     <td>{{ $p->upload }}</td>
-                    
+
                 </tr>
             @empty
                 <tr><td colspan="13" class="text-center">No Security Deposits yet.</td></tr>

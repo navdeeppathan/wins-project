@@ -42,10 +42,10 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
-           <input type="number" step="0.01" name="estimated_amount" 
+           <input type="number" step="0.01" name="estimated_amount"
             id="estimated_amount"
-            value="{{ old('estimated_amount') }}" 
-            placeholder="Enter Estimated Cost" 
+            value="{{ old('estimated_amount') }}"
+            placeholder="Enter Estimated Cost"
             class="form-control" required>
         </div>
 
@@ -73,26 +73,26 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Submission</label>
-            <input 
-                type="date" 
-                name="date_of_start" 
+            <input
+                type="date"
+                name="date_of_start"
                 id="date_of_start"
-                value="{{ old('date_of_start') }}" 
+                value="{{ old('date_of_start') }}"
                 class="form-control"
             >
         </div>
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Date of Opening</label>
-            <input 
-                type="date" 
-                name="date_of_opening" 
+            <input
+                type="date"
+                name="date_of_opening"
                 id="date_of_opening"
-                value="{{ old('date_of_opening') }}" 
+                value="{{ old('date_of_opening') }}"
                 class="form-control"
             >
         </div>
-        
+
     </div>
 
     <!-- ---------------- EMD DETAILS MULTIPLE ROW SECTION ---------------- -->
@@ -116,13 +116,13 @@
             <tr>
                 <td>1</td>
                 <td>
-                 
+
                     <select name="emd[0][instrument_type]" class="form-select">
                         <option value="">Select</option>
                         <option value="FDR">FDR</option>
                         <option value="DD">DD</option>
                         <option value="BG">BG</option>
-                        <option value="Challan">Challan</option>
+                        <option value="CHALLAN">CHALLAN</option>
                     </select>
                 </td>
 
@@ -130,8 +130,8 @@
                 <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
                 {{-- <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control"></td> --}}
                 <td>
-                    <input type="number" step="0.01" 
-                        name="emd[0][amount]" 
+                    <input type="number" step="0.01"
+                        name="emd[0][amount]"
                         class="form-control emd-amount">
                 </td>
 
@@ -142,7 +142,7 @@
         </tbody>
     </table>
 
-   
+
 <div class="d-flex flex-column align-items-end">
     <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
         + Add More
@@ -207,9 +207,9 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
             <td><input type="text" name="emd[${emdIndex}][instrument_number]" class="form-control"></td>
             <td><input type="date" name="emd[${emdIndex}][instrument_date]" class="form-control"></td>
             <td>
-                <input type="number" step="0.01" 
-                       name="emd[${emdIndex}][amount]" 
-                       class="form-control emd-amount" 
+                <input type="number" step="0.01"
+                       name="emd[${emdIndex}][amount]"
+                       class="form-control emd-amount"
                        value="${(estimatedCost * 0.02).toFixed(2)}">
             </td>
             <td><input type="text" name="emd[${emdIndex}][remarks]" class="form-control"></td>

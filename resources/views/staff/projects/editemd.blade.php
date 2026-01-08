@@ -8,7 +8,7 @@
 
 <div class="table-responsive">
 <table id="emdTable" class="table class-table nowrap" style="width:100%">
-   
+
     {{-- <table class="table table-sm table-bordered" id="emdTable"> --}}
     <thead class="table-light">
         <tr>
@@ -19,7 +19,7 @@
             <th>Amount *</th>
             <th>Remarks</th>
             <th>Upload</th>
-            
+
         </tr>
     </thead>
 
@@ -33,7 +33,7 @@
         <td>
             <select name="emd[{{ $i }}][instrument_type]" class="form-select">
                 <option value="">Select</option>
-                @foreach(['FDR','DD','BG','Challan'] as $t)
+                @foreach(['FDR','DD','BG','CHALLAN'] as $t)
                     <option value="{{ $t }}" @selected($emd->instrument_type==$t)>
                         {{ $t }}
                     </option>
@@ -149,7 +149,7 @@ $('#addRow').click(function(){
         <td><input type="number" step="0.01" name="emd[${index}][amount]" class="form-control" required></td>
         <td><input type="text" name="emd[${index}][remarks]" class="form-control"></td>
         <td><input type="file" name="emd[${index}][upload]" class="form-control"></td>
-        
+
     </tr>`;
     $('#emdTable tbody').append(row);
     index++;
@@ -164,7 +164,7 @@ $(document).on('click','.removeRow',function(){
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -181,7 +181,7 @@ $(document).on('click','.removeRow',function(){
             );
         }
 
-        
+
     });
 </script>
 @endpush

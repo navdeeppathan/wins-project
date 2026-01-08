@@ -60,8 +60,8 @@
                     <option value="FDR" {{ $p->instrument_type=='FDR'?'selected':'' }}>FDR</option>
                     <option value="BG" {{ $p->instrument_type=='BG'?'selected':'' }}>BG</option>
                     <option value="DD" {{ $p->instrument_type=='DD'?'selected':'' }}>DD</option>
-                    <option value="Challan" {{ $p->instrument_type=='Challan'?'selected':'' }}>Challan</option>
-                    <option value="Cash" {{ $p->instrument_type=='Cash'?'selected':'' }}>Cash</option>
+                    <option value="CHALLAN" {{ $p->instrument_type=='CHALLAN'?'selected':'' }}>CHALLAN</option>
+                    <option value="CASH" {{ $p->instrument_type=='CASH'?'selected':'' }}>CASH</option>
                 </select>
             </td>
 
@@ -102,8 +102,8 @@
                     <option value="FDR">FDR</option>
                     <option value="BG">BG</option>
                     <option value="DD">DD</option>
-                    <option value="Challan">Challan</option>
-                    <option value="Cash">Cash</option>
+                    <option value="CHALLAN">CHALLAN</option>
+                    <option value="CASH">CASH</option>
                 </select>
             </td>
             <td><input class="form-control form-control-sm instrument_number"></td>
@@ -142,8 +142,8 @@ $('#addSecurityRow').on('click', function () {
             <option value="FDR">FDR</option>
             <option value="BG">BG</option>
             <option value="DD">DD</option>
-            <option value="Challan">Challan</option>
-            <option value="Cash">Cash</option>
+            <option value="CHALLAN">CHALLAN</option>
+            <option value="CASH">CASH</option>
         </select>`,
 
         `<input class="form-control form-control-sm instrument_number">`,
@@ -190,7 +190,7 @@ $(document).on('click', '.saveSecurity', function () {
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -207,7 +207,7 @@ $(document).on('click', '.saveSecurity', function () {
             );
         }
 
-        
+
     });
 </script>
 @endpush

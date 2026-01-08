@@ -20,7 +20,7 @@
                 <th>NIT No</th>
                 <th>Location</th>
                 <th>Department</th>
-                <th>Date of Opening</th>
+                {{-- <th>Date of Opening</th> --}}
                 <th>Estimate Amt</th>
                 <th>Tendered Amount</th>
                 <th>Acceptance Letter No.</th>
@@ -44,7 +44,7 @@
                     <td>{{ $p->nit_number }}</td>
                     <td>{{ $p->state->name ?? '' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
+                    {{-- <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td> --}}
                     <td>{{ number_format($p->estimated_amount,2) }}</td>
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>{{ $p->acceptance_letter_no }}</td>

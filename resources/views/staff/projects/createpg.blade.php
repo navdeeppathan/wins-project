@@ -47,7 +47,7 @@
     </div>
 
 
-    
+
 
     <div class="col-md-4 mb-3">
         <label>Estimated Amount</label>
@@ -57,7 +57,7 @@
     <div class="col-md-4 flex mb-3">
         <label>Time</label>
         <input type="text" class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
- 
+
     </div>
 
 
@@ -100,7 +100,7 @@
 
     <td>
         <select name="pg[{{ $i }}][instrument_type]" class="form-select">
-            @foreach(['FDR','DD','BG','Challan'] as $t)
+            @foreach(['FDR','DD','BG','CHALLAN'] as $t)
                 <option value="{{ $t }}" @selected($pg->instrument_type==$t)>{{ $t }}</option>
             @endforeach
         </select>
@@ -125,7 +125,7 @@
 <td>1</td>
 <td>
 <select name="pg[0][instrument_type]" class="form-select">
-    @foreach(['FDR','DD','BG','Challan'] as $t)
+    @foreach(['FDR','DD','BG','CHALLAN'] as $t)
         <option value="{{ $t }}">{{ $t }}</option>
     @endforeach
 </select>
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
-                    <option value="Challan">Challan</option>
+                    <option value="CHALLAN">CHALLAN</option>
                 </select>
             </td>
 

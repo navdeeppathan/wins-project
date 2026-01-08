@@ -33,7 +33,7 @@
         <td>
             <select name="emd[{{ $i }}][instrument_type]" class="form-select">
                 <option value="">Select</option>
-                @foreach(['FDR','DD','BG','Challan'] as $t)
+                @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED'] as $t)
                     <option value="{{ $t }}" @selected($emd->instrument_type==$t)>
                         {{ $t }}
                     </option>
