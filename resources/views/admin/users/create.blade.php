@@ -4,161 +4,16 @@
 
 @section('content')
 
-<style>
-    .gradient-bg {
-        background: #667eea;
-    }
-
-    .card-elegant {
-        border: none;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-
-    .form-control-elegant {
-        border: 2px solid #e8ecf1;
-        padding: 14px 20px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        background-color: #f8f9fa;
-    }
-
-    .form-control-elegant:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-        background-color: #fff;
-        transform: translateY(-2px);
-    }
-
-    .btn-gradient {
-        background: #667eea;
-        border: none;
-        padding: 14px 30px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .header-elegant {
-        background:  #667eea;
-        color: white;
-        padding: 10px 20px;
-    }
-
-    .header-elegant h5 {
-        margin: 0;
-        font-weight: 700;
-        font-size: 1.4rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .table-elegant {
-        margin: 0;
-    }
-
-    .table-elegant thead th {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: none;
-        padding: 18px 20px;
-        font-weight: 600;
-        color: #495057;
-        text-transform: uppercase;
-        font-size: 13px;
-        letter-spacing: 0.5px;
-    }
-
-    .table-elegant tbody tr {
-        transition: all 0.3s ease;
-        border-bottom: 1px solid #f1f3f5;
-    }
-    .table-elegant tbody td {
-        padding: 18px 20px;
-        vertical-align: middle;
-        border: none;
-        color: #495057;
-    }
-
-    .badge-elegant {
-        padding: 8px 16px;
-        font-weight: 500;
-        font-size: 13px;
-    }
-
-    .page-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        background: #667eea;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
-    .icon-wrapper {
-        width: 50px;
-        height: 50px;
-        background: #667eea;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-right: 15px;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    }
-
-    .empty-state {
-        padding: 60px 20px;
-        text-align: center;
-        color: #6c757d;
-    }
-
-    .empty-state i {
-        font-size: 4rem;
-        color: #dee2e6;
-        margin-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            font-size: 2rem;
-        }
-
-        .icon-wrapper {
-            display: none;
-        }
-    }
-
-        .password-toggle {
-            position: absolute;
-            right: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #6c757d;
-            transition: color 0.3s ease;
-        }
-
-
-
-</style>
-
 <div class="container-fluid py-4">
 
     <div class="row justify-content-center mb-5">
         <div class="col-lg-7 col-xl-12">
 
             <div class="card card-elegant">
-                <div class="header-elegant">
-                    <div class="d-flex align-items-center">
-                        <h5>Create User Account</h5>
-                    </div>
-                </div>
 
                 <div class="card-body  p-4 p-md-5">
+                    <h5>Create User Account</h5>
+                    <br>
                     <form action="{{ route('admin.users.store') }}" method="POST">
                         @csrf
 
@@ -314,15 +169,15 @@
                     </form>
                 </div>
             </div>
-                        <div class="d-flex align-items-center justify-content-between mt-2">
-                            <div class="small mt-2">
-                                © 2025 Developed by Solutions
-                                (solutions1401@gmail.com)
-                            </div>
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-                                Back
-                            </a>
-                        </div>
+            <div class="d-flex align-items-center justify-content-between mt-2">
+                <div class="small mt-2">
+                    © 2025 Developed by Solutions
+                    (solutions1401@gmail.com)
+                </div>
+                <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
+                    Back
+                </a>
+            </div>
         </div>
     </div>
 

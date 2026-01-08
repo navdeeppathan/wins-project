@@ -162,17 +162,17 @@
                 @forelse($inventories as $index => $i)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $i->date }}</td>
-                        <td>{{ $i->paid_to ?? '-' }}</td>
+                        <td class="text-center">{{ $i->date }}</td>
+                        <td class="text-center">{{ $i->paid_to ?? '-' }}</td>
 
-                        <td>{{ $i->category ?? '-' }}</td>
+                        <td class="text-center">{{ $i->category ?? '-' }}</td>
                         <td>{{ $i->voucher ?? '-' }}</td>
-                        <td>{{ $i->description ?? '-' }}</td>
-                        <td>{{ $i->quantity }}</td>
-                        <td>₹ {{ number_format($i->amount, 2) }}</td>
-                        <td>₹ {{ number_format($i->net_payable, 2) }}</td>
+                        <td class="text-center">{{ $i->description ?? '-' }}</td>
+                        <td class="text-center">{{ $i->quantity }}</td>
+                        <td class="text-center">₹ {{ number_format($i->amount, 2) }}</td>
+                        <td class="text-center">₹ {{ number_format($i->net_payable, 2) }}</td>
 
-                        <td>
+                        <td class="text-center">
                             <button class="btn btn-success btn-sm approveBtn"
                                     data-id="{{ $i->id }}"
                                     {{ $i->isApproved == 1 ? 'disabled' : '' }}>
