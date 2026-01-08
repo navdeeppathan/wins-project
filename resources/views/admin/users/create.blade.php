@@ -26,7 +26,7 @@
                             <input type="text"
                                     name="name"
                                     class="form-control form-control-elegant"
-                                    placeholder="Enter agency name"
+                                    placeholder="Enter Name of the Person"
                                     value="{{ old('name') }}"
                                     required>
                         </div>
