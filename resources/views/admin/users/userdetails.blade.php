@@ -5,11 +5,35 @@
 @section('content')
 
 <h3 class="mb-3">User Details</h3>
+<style>
+.summary-box {
+    background: #f8f9fa;
+    border-left: 6px solid #0d6efd;
+}
+
+.summary-value {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+.summary-value.balance {
+    color: #856404;
+}
+
+.summary-value.due {
+    color: #dc3545;
+}
+
+.summary-value.paid {
+    color: #198754;
+}
+</style>
 
 <div class="row">
 
     {{-- STATE --}}
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
         <label class="form-label">State</label>
         <input type="text"
                class="form-control"
@@ -17,18 +41,8 @@
                disabled>
     </div>
 
-   <div class="col-md-6 mb-3">
-        <label class="form-label">Balance</label>
-        <input type="text"
-            class="form-control fw-bold"
-            style="background:#fff3cd"
-            value="₹ {{ number_format($balanceAmount, 2) }}"
-            readonly>
-    </div>
-
-
     {{-- USER NAME --}}
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
         <label class="form-label">Name</label>
         <input type="text"
                class="form-control"
@@ -37,7 +51,7 @@
     </div>
 
     {{-- CONTACT NUMBER --}}
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
         <label class="form-label">Contact Number</label>
         <input type="text"
                class="form-control"
@@ -46,7 +60,7 @@
     </div>
 
     {{-- EMAIL --}}
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
         <label class="form-label">Email</label>
         <input type="email"
                class="form-control"
@@ -54,23 +68,39 @@
                disabled>
     </div>
 
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Total Due Amount</label>
-        <input type="text"
-            class="form-control"
-            value="₹ {{ number_format($totalNetPayable, 2) }}"
-            readonly>
-    </div>
-    <div class="col-md-6 mb-3">
-        <label class="form-label">Total Paid</label>
-        <input type="text"
-            class="form-control"
-            value="₹ {{ number_format($totalPaidNetPayable, 2) }}"
-            readonly>
-    </div>
 
 </div>
 
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-3 border rounded summary-box">
+            <div class="row text-center">
+
+                <div class="col-md-4 mb-2 mb-md-0">
+                    <label class="form-label text-muted">Balance</label>
+                    <div class="summary-value balance">
+                        ₹ {{ number_format($balanceAmount, 2) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-2 mb-md-0">
+                    <label class="form-label text-muted">Total Due</label>
+                    <div class="summary-value due">
+                        ₹ {{ number_format($totalNetPayable, 2) }}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label text-muted">Total Paid</label>
+                    <div class="summary-value paid">
+                        ₹ {{ number_format($totalPaidNetPayable, 2) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
