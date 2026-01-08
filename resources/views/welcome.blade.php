@@ -919,10 +919,11 @@
 
                 <div class="service-pricing">
 
-                  <span style="color: #fff; font-weight:500;">
-                    Price Starting @ ₹ 7,200/- plus GST annually
-                    </span><br>
-                    <span style="color: #fff;">Price Rs.8496/- GST Included</span>
+                    <span style="color: #fff; font-weight:500;">
+                        Price Starting @ ₹ 7,200/- plus GST annually
+                    </span>
+                    <br>
+                    <p style="color: #fff;">Price Rs.8496/- GST Included</p>
 
                 </div>
 
