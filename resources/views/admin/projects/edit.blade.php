@@ -53,8 +53,12 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
-            <input type="number" step="0.01" name="estimated_amount"
-                   value="{{ old('estimated_amount', $project->estimated_amount) }}" class="form-control" required>
+           <input type="number" step="0.01"
+                name="estimated_amount"
+                id="estimated_amount"
+                value="{{ old('estimated_amount', $project->estimated_amount) }}"
+                class="form-control"
+                required>
         </div>
 
        <div class="col-md-4 mb-3">
@@ -138,14 +142,20 @@
 
 
 <script>
-    const baseAmount = {{ (float) $project->estimated_amount }};
-
-    const rateSelect  = document.getElementById('emd_rate');
-    const displayAmt  = document.getElementById('emd_amount_display');
-    const hiddenAmt   = document.getElementById('emd_amount');
+    const rateSelect   = document.getElementById('emd_rate');
+    const displayAmt   = document.getElementById('emd_amount_display');
+    const hiddenAmt    = document.getElementById('emd_amount');
+    const estimateInput = document.getElementById('estimated_amount');
 
     function calculateEMD() {
         let rate = rateSelect.value;
+        let baseAmount = parseFloat(estimateInput.value);
+
+        if (!baseAmount || baseAmount <= 0) {
+            displayAmt.value = '';
+            hiddenAmt.value = '';
+            return;
+        }
 
         if (rate === 'other') {
             displayAmt.readOnly = false;
@@ -164,13 +174,16 @@
         }
     }
 
-    // On change
+    // Recalculate when rate changes
     rateSelect.addEventListener('change', calculateEMD);
 
-    // ✅ RUN ON PAGE LOAD
+    // 🔥 Recalculate when estimated amount changes
+    estimateInput.addEventListener('input', calculateEMD);
+
+    // Run on page load
     document.addEventListener('DOMContentLoaded', calculateEMD);
 
-    // Manual entry sync
+    // Manual EMD entry sync (for "OTHER")
     displayAmt.addEventListener('input', function () {
         if (!displayAmt.readOnly) {
             hiddenAmt.value = this.value;
