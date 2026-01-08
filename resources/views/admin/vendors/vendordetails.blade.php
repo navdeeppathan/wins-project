@@ -68,7 +68,7 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="p-3 border rounded summary-box">
-            <div class="row text-center">
+            <div class="row text-right">
 
                 <div class="col-md-4">
                     <label class="form-label text-muted">Balance</label>
