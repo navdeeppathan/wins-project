@@ -8,7 +8,7 @@
 
 <div class="table-responsive">
 <table id="emdTable" class="table class-table nowrap" style="width:100%">
-   
+
     {{-- <table class="table table-sm table-bordered" id="emdTable"> --}}
     <thead class="table-light">
         <tr>
@@ -17,7 +17,6 @@
             <th>Instrument No</th>
             <th>Instrument Date</th>
             <th>Amount *</th>
-            <th>Remarks</th>
             <th>Upload</th>
             <th>Action</th>
 
@@ -66,13 +65,6 @@
         </td>
 
         <td>
-            <input type="text"
-                name="emd[{{ $i }}][remarks]"
-                class="form-control"
-                value="{{ $emd->remarks }}">
-        </td>
-
-        <td>
             @if($emd->upload)
                 <a href="{{ asset('storage/'.$emd->upload) }}"
                 target="_blank"
@@ -112,7 +104,7 @@
                 <option value="FDR">FDR</option>
                 <option value="DD">DD</option>
                 <option value="BG">BG</option>
-                <option value="Challan">CHALLAN</option>
+                <option value="CHALLAN">CHALLAN</option>
                 <option value="EXEMPTED">EXEMPTED</option>
             </select>
         </td>
@@ -165,7 +157,7 @@ $('#addRow').click(function(){
                 <option value="FDR">FDR</option>
                 <option value="DD">DD</option>
                 <option value="BG">BG</option>
-                <option value="Challan">CHALLAN</option>
+                <option value="CHALLAN">CHALLAN</option>
                 <option value="EXEMPTED">EXEMPTED</option>
             </select>
         </td>
@@ -185,7 +177,7 @@ $('#addRow').click(function(){
             </button>
         </td>
 
-        
+
     </tr>`;
     $('#emdTable tbody').append(row);
     index++;
@@ -200,7 +192,7 @@ $(document).on('click','.removeRow',function(){
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        
+
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
@@ -217,7 +209,7 @@ $(document).on('click','.removeRow',function(){
             );
         }
 
-        
+
     });
 </script>
 @endpush

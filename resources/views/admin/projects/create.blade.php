@@ -150,7 +150,7 @@
                         <option value="FDR">FDR</option>
                         <option value="DD">DD</option>
                         <option value="BG">BG</option>
-                        <option value="Challan">CHALLAN</option>
+                        <option value="CHALLAN">CHALLAN</option>
                         <option value="EXEMPTED">EXEMPTED</option>
                     </select>
                 </td>
@@ -272,7 +272,7 @@ document.getElementById('addEmdRow').addEventListener('click', function () {
                     <option value="FDR">FDR</option>
                     <option value="DD">DD</option>
                     <option value="BG">BG</option>
-                    <option value="Challan">CHALLAN</option>
+                    <option value="CHALLAN">CHALLAN</option>
                     <option value="EXEMPTED">EXEMPTED</option>
                 </select>
             </td>
