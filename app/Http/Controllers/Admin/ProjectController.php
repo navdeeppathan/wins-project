@@ -30,7 +30,7 @@ class ProjectController extends Controller
     //         })
     //         ->latest()
     //         ->paginate(20);
-           
+
 
     //     return view('admin.projects.index', compact('projects'));
     // }
@@ -925,7 +925,7 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->validate([
-            'name'                => 'required|string|max:255',
+            'name'                => 'required',
             'emd_rate'=>'nullable|string|max:255',
             'nit_number'          => 'required|string|max:255',
             'department'          => 'required|exists:departments,id',
