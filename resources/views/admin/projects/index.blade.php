@@ -99,7 +99,7 @@
                     <td>{{ $p->departments->name ?? '-' }}</td> --}}
                     <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
                     <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
-                    <td class="text-center">{{ number_format($p->emds->sum('amount'),2) }}</td>
+                    <td class="text-center">{{ number_format($p->emd_amount,2) }}</td>
                     {{-- @if ($p->isQualified==0) --}}
                     <td class="text-center">
 
