@@ -31,7 +31,7 @@
                                     required>
                         </div>
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">State *</label>
                         <select name="state" class="form-select form-control-elegant" required>
                             <option value="">Select State</option>
@@ -41,7 +41,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-4 col-md-4">
+                    <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 Designation
                             </label>
@@ -53,7 +53,7 @@
                                    >
                     </div>
 
-                         <div class="mb-4 col-md-4">
+                         <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                Date of Joining
                             </label>
@@ -66,7 +66,7 @@
 
                         </div>
 
-                          <div class="mb-4 col-md-4">
+                          <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 Date of Leaving
                             </label>
@@ -78,7 +78,7 @@
                                    >
 
                         </div>
-                        <div class="mb-4 col-md-4">
+                        <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                Monthly Salary
                             </label>
@@ -90,7 +90,7 @@
                                 required>
 
                         </div>
-                        <div class="mb-4 col-md-4">
+                        <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 Contact Number
                             </label>
@@ -104,7 +104,7 @@
                         </div>
 
 
-                        <div class="mb-4 col-md-4">
+                        <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 Email Address
                             </label>
@@ -118,7 +118,7 @@
 
 
 
-                       <div class="mb-4 col-md-4">
+                       <div class="mb-4 col-md-3">
                             <label class="form-label fw-semibold text-muted mb-2">
                                 Password
                             </label>
