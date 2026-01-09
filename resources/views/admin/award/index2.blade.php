@@ -142,10 +142,10 @@ $(document).on('click', '.saveAwardBtn', function () {
         row.find('.date_ofstartof_work').val()
     );
 
-    formData.append(
-        'agreement_no',
-        row.find('.agreement_no').val()
-    );
+    // formData.append(
+    //     'agreement_no',
+    //     row.find('.agreement_no').val()
+    // );
 
     let fileInput = row.find('.award_upload')[0];
     if (fileInput.files.length > 0) {

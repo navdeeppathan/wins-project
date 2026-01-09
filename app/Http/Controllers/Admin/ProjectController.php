@@ -978,6 +978,7 @@ public function dashboard()
     }
 
 
+
      public function updateDocAndStatus2(Request $request, Project $project)
     {
         $request->validate([

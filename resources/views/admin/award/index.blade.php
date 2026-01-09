@@ -175,20 +175,20 @@ $(document).on('click', '.saveAwardBtn', function () {
 
 
 
-    formData.append(
-        'award_letter_no',
-        row.find('.award_letter_no').val()
-    );
+    // formData.append(
+    //     'award_letter_no',
+    //     row.find('.award_letter_no').val()
+    // );
 
-    formData.append(
-        'award_date',
-        row.find('.award_date').val()
-    );
+    // formData.append(
+    //     'award_date',
+    //     row.find('.award_date').val()
+    // );
 
-    formData.append(
-        'date_ofstartof_work',
-        row.find('.date_ofstartof_work').val()
-    );
+    // formData.append(
+    //     'date_ofstartof_work',
+    //     row.find('.date_ofstartof_work').val()
+    // );
 
     formData.append(
         'agreement_no',
