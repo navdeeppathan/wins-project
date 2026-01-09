@@ -84,7 +84,7 @@
                 @foreach($projects as $p)
                 <tr>
                     <td>{{ $i }}</td>
-                <td style="
+                {{-- <td style="
                             text-align: justify;
                             text-align-last: justify;
                             text-justify: inter-word;
@@ -95,7 +95,16 @@
                             fn($chunk) => implode(' ', $chunk),
                             array_chunk(explode(' ', $p->name), 10)
                         )) !!}
+                    </td> --}}
+
+                    <td style="
+                        text-align: justify;
+                        word-break: break-word;
+                        white-space: normal;
+                    ">
+                        {{ $p->name }}
                     </td>
+
 
 
 
@@ -107,7 +116,7 @@
                     <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                     <td class="text-center">{{ number_format($p->emd_amount,2) }}</td>
                     {{-- @if ($p->isQualified==0) --}}
-                    <td class="text-center">
+                    {{-- <td class="text-center">
 
                         <input type="checkbox"
                             class="form-check-input isQualifiedBox"
@@ -118,7 +127,25 @@
                             data-id="{{ $p->id }}">
                             Save
                         </button>
+                    </td> --}}
+
+                    <td class="text-center">
+                        @if(in_array($p->status, ['awarded', 'agreement', 'billing']))
+                            <span class="badge bg-success text-white">Qualified</span>
+                        @else
+                            <input type="checkbox"
+                                class="form-check-input isQualifiedBox"
+                                data-id="{{ $p->id }}"
+                                {{ $p->isQualified ? 'checked' : '' }}>
+                            &nbsp;&nbsp;
+                            <button class="btn btn-success btn-sm saveQualifiedBtn"
+                                data-id="{{ $p->id }}">
+                                Save
+                            </button>
+                        @endif
                     </td>
+
+
                     {{-- @else
                     <td  class="text-center ">
                         <span class="badge bg-success">Qualified</span>

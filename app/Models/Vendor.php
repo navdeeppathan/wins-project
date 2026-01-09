@@ -28,5 +28,9 @@ class Vendor extends Model
 
     ];
 
+    public function inventory(){
+        return $this->hasMany(Inventory::class,'paid_to','vendor_agency_name');
+    }
+
     
 }

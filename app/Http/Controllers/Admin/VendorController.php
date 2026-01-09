@@ -17,8 +17,11 @@ class VendorController extends Controller
     public function index()
     {
         $vendors = Vendor::where('user_id', auth()->id())
+            ->withCount('inventory')
             ->latest()
             ->paginate(20);
+
+           
 
         $states = State::all();
 

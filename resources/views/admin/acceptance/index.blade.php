@@ -130,10 +130,13 @@
 
                     </td>
                     <td class="text-center">
+
                             <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
                                 Add PG
                             </a>
-                            <a href="{{ route('admin.projects.awards') }}" class="btn btn-sm btn-primary ">Awards</a>
+                            @if (!empty($p->acceptance_letter_no) && $p->pgDetails->isEmpty())
+                            <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
+                            @endif
                     </td>
                 </tr>
                 @endif

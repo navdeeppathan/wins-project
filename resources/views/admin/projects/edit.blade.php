@@ -98,16 +98,15 @@
         </div>
 
         {{-- EMD AMOUNT --}}
-        <div class="col-md-2 mb-3">
+       <div class="col-md-2 mb-3">
             <label class="form-label">EMD Amount *</label>
-            <input type="text"
-                id="emd_amount_display"
+            <input type="number"
+                step="0.01"
+                name="emd_amount"
+                id="emd_amount"
                 class="form-control"
-                placeholder="EMD Amount"
-                value="{{ number_format($project->emd_amount) }}"
-                >
-
-            <input type="hidden" name="emd_amount" id="emd_amount">
+                value="{{ old('emd_amount', $project->emd_amount) }}"
+                required>
         </div>
 
         {{-- DATE OF SUBMISSION --}}
@@ -142,54 +141,45 @@
 
 
 <script>
-    const rateSelect   = document.getElementById('emd_rate');
-    const displayAmt   = document.getElementById('emd_amount_display');
-    const hiddenAmt    = document.getElementById('emd_amount');
-    const estimateInput = document.getElementById('estimated_amount');
+    const rateSelect     = document.getElementById('emd_rate');
+    const emdInput       = document.getElementById('emd_amount');
+    const estimateInput  = document.getElementById('estimated_amount');
+
+    let userInteracted = false; // 🔑 important flag
 
     function calculateEMD() {
-        let rate = rateSelect.value;
-        let baseAmount = parseFloat(estimateInput.value);
+        const rate = rateSelect.value;
+        const base = parseFloat(estimateInput.value);
 
-        if (!baseAmount || baseAmount <= 0) {
-            displayAmt.value = baseAmount;
-            hiddenAmt.value = baseAmount;
-            return;
-        }
+        if (!base || base <= 0) return;
 
         if (rate === 'other') {
-            displayAmt.readOnly = false;
-            displayAmt.value = baseAmount.toFixed(2);
-            hiddenAmt.value = baseAmount.toFixed(2);
+            // OTHER selected → manual entry allowed
             return;
         }
 
-        if (rate !== '') {
-            let emd = (baseAmount * rate) / 100;
-            emd = emd.toFixed(2);
-
-            displayAmt.readOnly = false;
-            displayAmt.value = emd;
-            hiddenAmt.value = emd;
+        const percent = parseFloat(rate);
+        if (!isNaN(percent)) {
+            const emd = ((base * percent) / 100).toFixed(2);
+            emdInput.value = emd;
         }
     }
 
-    // Recalculate when rate changes
-    rateSelect.addEventListener('change', calculateEMD);
-
-    // 🔥 Recalculate when estimated amount changes
-    estimateInput.addEventListener('input', calculateEMD);
-
-    // Run on page load
-    document.addEventListener('DOMContentLoaded', calculateEMD);
-
-    // Manual EMD entry sync (for "OTHER")
-    displayAmt.addEventListener('input', function () {
-        if (!displayAmt.readOnly) {
-            hiddenAmt.value = this.value;
-        }
+    // 🔹 User interaction detection
+    rateSelect.addEventListener('change', () => {
+        userInteracted = true;
+        calculateEMD();
     });
+
+    estimateInput.addEventListener('input', () => {
+        userInteracted = true;
+        calculateEMD();
+    });
+
+    // ❌ No auto calculation on page load
+    // Database value will remain untouched
 </script>
+
 
 
 @endsection

@@ -65,6 +65,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('users/create', [RegisterController::class, 'adminCreate'])->name('users.create');
     Route::post('users', [RegisterController::class, 'userCreate'])->name('users.store');
     Route::get('users/details/{user}', [RegisterController::class, 'adminUserDetails'])->name('users.details.index');
+    Route::get('users/{user}/edit', [RegisterController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [RegisterController::class, 'update'])->name('users.update');
 
     Route::get('daily-notes', [DailyNoteController::class, 'index'])->name('daily-notes.index');
     Route::post('daily-notes', [DailyNoteController::class, 'store'])->name('daily-notes.store');
@@ -72,7 +74,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('daily-notes/{id}/destroy', [DailyNoteController::class, 'destroy']);
     Route::get('/acceptance', [App\Http\Controllers\Admin\ProjectController::class, 'acceptanceIndex'])->name('projects.acceptance');
     Route::get('/award', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndex'])->name('projects.award');
-    Route::get('/awards', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndexs'])->name('projects.awards');
+    Route::get('/awards/{project}', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndexs'])->name('projects.awards');
     Route::get('/agreement', [App\Http\Controllers\Admin\ProjectController::class, 'agreementIndex'])->name('projects.agreement');
 
     Route::get('/projects/{project}/agreement-date', [App\Http\Controllers\Admin\ProjectController::class, 'agreementDateCreate'])->name('projects.agreementdate.create');

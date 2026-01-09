@@ -118,23 +118,41 @@
 
 
 
-                       <div class="mb-4 col-md-3">
-                            <label class="form-label fw-semibold text-muted mb-2">
-                                Password
-                            </label>
+                    <div class="mb-4 col-md-3">
+                        <label class="form-label fw-semibold text-muted mb-2">
+                            Password
+                        </label>
 
-                            <div class="position-relative">
-                                <input type="password"
-                                    id="password"
-                                    name="password"
-                                    class="form-control form-control-elegant"
-                                    placeholder="Password (same as contact)"
-                                    required>
+                        <div class="position-relative">
+                            <input type="password"
+                                id="password"
+                                name="password"
+                                class="form-control form-control-elegant pe-5"
+                                placeholder="Password (same as contact)"
+                                required>
 
-                                <i class="fas fa-eye password-toggle"
-                                onclick="togglePassword('password', this)"></i>
-                            </div>
+                            <i class="fas fa-eye password-toggle"
+                            onclick="togglePassword('password', this)"></i>
                         </div>
+                    </div>
+
+                    <style>
+                        .password-toggle {
+                            position: absolute;
+                            top: 50%;
+                            right: 12px;
+                            transform: translateY(-50%);
+                            cursor: pointer;
+                            color: #6c757d;
+                            font-size: 1rem;
+                        }
+
+                        .password-toggle:hover {
+                            color: #000;
+                        }
+
+                    </style>
+
 
                     <div class="form-check mt-2">
                         <input

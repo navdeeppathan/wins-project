@@ -44,7 +44,8 @@
                     class="btn btn-sm btn-success">Edit</a>
                     <a href="{{route('admin.vendors.details.index', $v->id)}}" class="btn btn-sm btn-primary">View</a>
 
-                @if($vendors->count() > 1)
+                
+               @if($v->inventory_count == 0)
                     <form action="{{ route('admin.vendors.destroy',$v->id) }}"
                         method="POST"
                         class="d-inline">

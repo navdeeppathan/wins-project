@@ -102,9 +102,9 @@
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex align-items-center">
-                                                {{-- <a href="{{ route('superadmin.users.edit', $user->id) }}" class="btn btn-sm btn-primary me-2">
-                                                    <i class="fas fa-edit"></i>
-                                                </a> --}}
+                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
+                                                   Edit
+                                                </a>
                                                 {{-- <form action="{{ route('superadmin.users.destroy', $user->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')

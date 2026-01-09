@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\ScheduleWork;
 use App\Models\User;
 use App\Models\Vendor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
@@ -65,10 +66,18 @@ class InventoryController extends Controller
             ->with(['project'])
             ->where('user_id', auth()->id())
             ->OrderBy('id', 'desc')
-            ->when($request->filled('year'), function ($query) use ($request) {
-                                    $query->whereYear('created_at', $request->year);
-                                })
+             ->when($request->filled('fy'), function ($query) use ($request) {
+
+                    // Financial year: April 1 to March 31
+                    $start = Carbon::create($request->fy, 4, 1)->startOfDay();
+                    $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
+
+                    // ✅ Filter by created_at
+                    $query->whereBetween('created_at', [$start, $end]);
+                })
             ->get();
+        
+         
 
         $projects = Project::where('user_id', auth()->id())->get();
         $project= Project::where('id', $projectId)->first();

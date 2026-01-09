@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>Projects (PG)</h3>
+    <h3>Projects (Withheld)</h3>
 </div>
     <div class="row mb-3">
         <div class="col-md-4">

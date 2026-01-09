@@ -125,4 +125,50 @@ class RegisterController extends Controller
         return redirect()->route('admin.users.index')->with('success','Account created successfully.');
     }
 
+    public function edit(User $user)
+    {
+        $states = State::orderBy('name')->get();
+
+        return view('admin.users.edit', compact('user', 'states'));
+    }
+
+    public function update(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'name' => 'required|string|max:50',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'password' => 'nullable|min:6',
+        'state' => 'nullable|string',
+        'monthly_salary' => 'nullable|numeric',
+        'date_of_joining' => 'required|date',
+        'date_of_leaving' => 'nullable|date',
+        'phone' => 'required|numeric',
+        'designation' => 'nullable|string',
+    ]);
+
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'state' => $request->state,
+        'date_of_joining' => $request->date_of_joining,
+        'date_of_leaving' => $request->date_of_leaving,
+        'phone' => $request->phone,
+        'designation' => $request->designation,
+        'monthly_salary' => $request->monthly_salary ?? 0,
+    ];
+
+    // Update password only if entered
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($request->password);
+    }
+
+    $user->update($data);
+
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', 'Account updated successfully.');
+}
+
 }

@@ -106,7 +106,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($activities as $index => $activity)
+                @forelse($allactivities as $index => $activity)
                 <tr data-id="{{ $activity->id }}">
                     <td>{{ $index+1 }}</td>
                     <td><textarea class="form-control activity_name">{{ $activity->activity_name }}</textarea></td>
@@ -147,7 +147,7 @@
 
                     <td >
                         <button class="btn btn-success btn-sm saveRow">Update</button>
-                        <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        {{-- <button class="btn btn-danger btn-sm removeRow">Del</button> --}}
                     </td>
                 </tr>
                 @empty
@@ -199,12 +199,81 @@
         <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
     </div>
 
-    <div class="card mb-4 mt-4">
-        <div class="card-header">Activity Progress Overview</div>
-        <div class="card-body">
-            <canvas id="progressChart" height="120"></canvas>
-        </div>
+   <div class="card mt-4">
+    <div class="card-header text-white" style="background:#1f4fd8">
+      
+        <small>All Construction Progress</small>
     </div>
+
+    <div class="card-body progress-wrapper">
+
+        @foreach($activities as $a)
+
+            <div class="activity-block">
+                <div class="activity-title">
+                    {{ $a['name'] }} ({{ $a['status'] }})
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill {{ $a['color'] }}"
+                         style="width: {{ $a['progress'] }}%">
+                    </div>
+                </div>
+            </div>
+
+        @endforeach
+
+    </div>
+</div>
+
+<style>
+.progress-wrapper {
+    background: linear-gradient(180deg, #1f4fd8, #4b8df8);
+    padding: 30px;
+   
+}
+
+.activity-block {
+    margin-bottom: 22px;
+}
+
+.activity-title {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+/* Track */
+.progress-track {
+    width: 100%;
+    height: 16px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Fill */
+.progress-fill {
+    height: 100%;
+    border-radius: 20px;
+}
+
+/* COLORS */
+.progress-fill.green {
+    background: #22c55e;
+}
+
+.progress-fill.yellow {
+    background: #facc15;
+}
+
+.progress-fill.red {
+    background: #ef4444;
+}
+</style>
+
 </div>
 
 @push('scripts')
@@ -355,63 +424,8 @@ $(document).ready(function () {
 
 
 
-<script>
-const chartData = @json($chartData);
 
-const labels = chartData.map(i => i.name);
-const weightage = chartData.map(i => i.weightage);
-const progress = chartData.map(i => i.progress);
 
-new Chart(document.getElementById('progressChart'), {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Weightage',
-                data: weightage,
-                backgroundColor: '#3B82F6',
-                barThickness: 18,
-                borderRadius: 6
-            },
-            {
-                label: 'Progress',
-                data: progress,
-                backgroundColor: '#22C55E',
-                barThickness: 18,
-                borderRadius: 6
-            }
-        ]
-    },
-    options: {
-        indexAxis: 'y',
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'bottom'
-            },
-            tooltip: {
-                callbacks: {
-                    label: ctx => `${ctx.dataset.label}: ${ctx.raw}%`
-                }
-            }
-        },
-        scales: {
-            x: {
-                max: 100,
-                ticks: {
-                    callback: value => value + '%'
-                }
-            },
-            y: {
-                grid: {
-                    display: false
-                }
-            }
-        }
-    }
-});
-</script>
 
 
 <script>

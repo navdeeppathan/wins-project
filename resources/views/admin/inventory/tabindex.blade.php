@@ -14,7 +14,7 @@
     @endif
 </h3>
 
-<form method="GET" action="{{ route('admin.inventory.tabindex') }}">
+{{-- <form method="GET" action="{{ route('admin.inventory.tabindex') }}">
     <div class="row mb-3">
         <div class="col-md-3">
             <label class="fw-bold">Filter by Year (Created)</label>
@@ -24,6 +24,35 @@
                     <option value="{{ $y }}"
                         {{ request('year') == $y ? 'selected' : '' }}>
                         {{ $y }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </div>
+</form> --}}
+@php
+    use Carbon\Carbon;
+
+    $startFY = 2011;
+
+    $today = Carbon::today();
+    $currentFY = $today->month >= 4
+        ? $today->year
+        : $today->year - 1;
+@endphp
+
+<form method="GET" action="{{ route('admin.inventory.tabindex') }}">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="fw-bold">Filter by Financial Year</label>
+            <select name="fy" class="form-select" onchange="this.form.submit()">
+                <option value="">All Financial Years</option>
+
+                @for ($fy = $startFY; $fy <= $currentFY; $fy++)
+                    @php $label = $fy . '-' . ($fy + 1); @endphp
+                    <option value="{{ $fy }}"
+                        {{ request('fy') == $fy ? 'selected' : '' }}>
+                        {{ $label }}
                     </option>
                 @endfor
             </select>

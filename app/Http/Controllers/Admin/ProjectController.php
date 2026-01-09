@@ -21,6 +21,7 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
 class ProjectController extends Controller
 {
     // public function index(Request $request)
@@ -38,44 +39,206 @@ class ProjectController extends Controller
     // }
 
 
-    public function dashboard()
-    {
+    // public function dashboard()
+    // {
 
 
-        $totalProjects = Project::where('user_id', auth()->id())->count();
-        $totalBidding = Project::where('user_id', auth()->id())->where('status', 'bidding')->count();
-        $totalAwarded = Project::where('user_id', auth()->id())->where('status', 'awarded')->count();
-        $totalCompleted = Project::where('user_id', auth()->id())->where('status', 'completed')->count();
+    //     $totalProjects = Project::where('user_id', auth()->id())->count();
+    //     $totalBidding = Project::where('user_id', auth()->id())->where('status', 'bidding')->count();
+    //     $totalAwarded = Project::where('user_id', auth()->id())->where('status', 'awarded')->count();
+    //     $totalCompleted = Project::where('user_id', auth()->id())->where('status', 'completed')->count();
 
-        $totalEmd = Project::where('user_id', auth()->id())->sum('emd_amount');
+    //     $totalEmd = Project::where('user_id', auth()->id())->sum('emd_amount');
 
-        $totalVendors = Vendor::where('user_id', auth()->id())->count();
-        $totalStaff = User::where('parent_id', auth()->id())->count();
+    //     $totalVendors = Vendor::where('user_id', auth()->id())->count();
+    //     $totalStaff = User::where('parent_id', auth()->id())->count();
 
-        $totalTopStock = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+    //     $totalTopStock = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
 
-        $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+    //     $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
 
-        $totalTopStaff = User::where('parent_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+    //     $totalTopStaff = User::where('parent_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
 
-        $totalTopProjects = Project::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+    //     $totalTopProjects = Project::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
 
-        $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
+    //     $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
 
-        return view('admin.dashboard', compact(
-            'totalProjects',
-            'totalBidding',
-            'totalAwarded',
-            'totalCompleted',
-            'totalEmd',
-            'totalVendors',
-            'totalStaff',
-            'totalTopStock',
-            'totalTopVendors',
-            'totalTopStaff',
-            'totalTopProjects'
-        ));
-    }
+    //     return view('admin.dashboard', compact(
+    //         'totalProjects',
+    //         'totalBidding',
+    //         'totalAwarded',
+    //         'totalCompleted',
+    //         'totalEmd',
+    //         'totalVendors',
+    //         'totalStaff',
+    //         'totalTopStock',
+    //         'totalTopVendors',
+    //         'totalTopStaff',
+    //         'totalTopProjects'
+    //     ));
+    // }
+
+ 
+
+public function dashboard()
+{
+    $userId = auth()->id();
+    $today = Carbon::today();
+    $nextMonth = Carbon::today()->addMonth();
+
+        $totalInventory = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+
+
+    /* =======================
+        PROJECT COUNTS
+    ======================= */
+
+    $totalProjects = Project::where('user_id', $userId)->count();
+
+    $totalBidding = Project::where('user_id', $userId)
+        ->where('status', 'bidding')
+        ->count();
+
+    $totalAwarded = Project::where('user_id', $userId)
+        ->where('status', 'awarded')
+        ->count();
+
+    $totalCompleted = Project::where('user_id', $userId)
+        ->where('status', 'completed')
+        ->count();
+
+    /* =======================
+        TOTAL WORK DONE (₹)
+    ======================= */
+
+    $totalWorkDone = Project::where('user_id', $userId)
+        ->where('status', 'completed')
+        ->sum('estimated_amount');
+
+    /* =======================
+        SECURITY / DUES
+        (Within next 1 month)
+    ======================= */
+
+    $totalEmdDue = Project::where('user_id', $userId)
+        ->whereHas('emds', function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        })
+        ->with(['emds' => function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        }])
+        ->get()
+        ->flatMap->emds
+        ->sum('emd_amount');
+
+
+    $totalPgDue = Project::where('user_id', $userId)
+        ->whereHas('pgDetails', function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        })
+        ->with(['pgDetails' => function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        }])
+        ->get()
+        ->flatMap->pgDetails
+        ->sum('pg_amount');
+
+
+    $totalSecurityDue = Project::where('user_id', $userId)
+        ->whereHas('securityDeposits', function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        })
+        ->with(['securityDeposits' => function ($q) use ($today, $nextMonth) {
+            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+        }])
+        ->get()
+        ->flatMap->securityDeposits
+        ->sum('security_amount');
+
+
+    /* =======================
+        PROJECT DATE ALERTS
+    ======================= */
+
+    // Projects completing in next 1 month
+    $projectsCompletingSoon = Project::where('user_id', $userId)
+        ->where('status', 'awarded')
+        ->whereBetween('stipulated_date_ofcompletion', [$today, $nextMonth])
+        ->count();
+
+    // Projects running beyond completion date
+    $projectsDelayed = Project::where('user_id', $userId)
+        ->where('status', 'awarded')
+        ->whereDate('stipulated_date_ofcompletion', '<', $today)
+        ->count();
+
+    /* =======================
+        VENDORS & STAFF
+    ======================= */
+
+    $totalVendors = Vendor::where('user_id', $userId)->count();
+
+    $totalStaff = User::where('parent_id', $userId)->count();
+
+    /* =======================
+        INVENTORY
+    ======================= */
+
+    // Total stock value
+    $totalStockValue = Inventory::where('user_id', $userId)
+        ->sum('amount');
+
+    // Top 5 high value items
+    $topInventoryItems = Inventory::where('user_id', $userId)
+        ->orderBy('amount', 'desc')
+        ->take(5)
+        ->get();
+
+    /* =======================
+        DASHBOARD LISTING DATA
+    ======================= */
+
+    $latestProjects = Project::where('user_id', $userId)
+        ->orderBy('id', 'desc')
+        ->take(5)
+        ->get();
+
+    $topVendors = Vendor::where('user_id', $userId)
+        ->orderBy('amount', 'desc')
+        ->take(5)
+        ->get();
+
+    /* =======================
+        RETURN VIEW
+    ======================= */
+
+    return view('admin.dashboard', compact(
+        'totalProjects',
+        'totalBidding',
+        'totalAwarded',
+        'totalCompleted',
+        'totalWorkDone',
+
+        'totalEmdDue',
+        'totalPgDue',
+        'totalSecurityDue',
+
+        'projectsCompletingSoon',
+        'projectsDelayed',
+
+        'totalVendors',
+        'totalStaff',
+
+        'totalStockValue',
+        'topInventoryItems',
+
+        'latestProjects',
+        'topVendors',
+
+        'totalInventory'
+    ));
+}
+
     public function index(Request $request)
     {
         $projects = Project::with(['departments', 'state', 'emds'])
@@ -566,34 +729,6 @@ class ProjectController extends Controller
 
 
 
-    // public function saveEmd(Request $request, Project $project)
-    // {
-    //     foreach ($request->emd as $row) {
-
-    //         $emd = !empty($row['id'])
-    //             ? EmdDetail::findOrFail($row['id'])
-    //             : new EmdDetail(['project_id' => $project->id]);
-
-    //         $emd->fill([
-    //             'instrument_type'   => $row['instrument_type'] ?? null,
-    //             'instrument_number' => $row['instrument_number'] ?? null,
-    //             'instrument_date'   => $row['instrument_date'] ?? null,
-    //             'amount'            => $row['amount'],
-    //             'remarks'           => $row['remarks'] ?? null,
-    //         ]);
-
-    //         if (!empty($row['upload'])) {
-    //             if ($emd->upload && Storage::disk('public')->exists($emd->upload)) {
-    //                 Storage::disk('public')->delete($emd->upload);
-    //             }
-    //             $emd->upload = $row['upload']->store('emd_docs','public');
-    //         }
-
-    //         $emd->save();
-    //     }
-
-    //     return back()->with('success','EMD saved successfully');
-    // }
 
     public function saveEmd(Request $request, Project $project)
     {
@@ -646,17 +781,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    //  public function updateReturned(Request $request, Project $project)
-    // {
-
-    //     $project->isReturned = $request->isReturned;
-    //     $project->save();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Project return updated.'
-    //     ]);
-    // }
+   
 
     public function updateReturned(Request $request, EmdDetail $emdDetail)
     {
@@ -703,17 +828,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    //  public function updateforfittedReturned(Request $request, Project $project)
-    // {
-
-    //     $project->isForfieted = $request->isForfitted;
-    //     $project->save();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Project forfitted updated.'
-    //     ]);
-    // }
+   
 
     public function updateforfittedReturned(Request $request, EmdDetail $emdDetail)
     {
@@ -764,13 +879,7 @@ class ProjectController extends Controller
 
     public function acceptanceIndex( Request $request)
     {
-        // $projects = Project::whereIn('status', ['bidding', 'accepted'])
-        //             ->where('user_id', auth()->id())
-        //             ->when($request->filled('year'), function ($query) use ($request) {
-        //                 $query->whereYear('created_at', $request->year);
-        //             })
-        //             ->latest()
-        //             ->paginate(10);
+       
 
 
         $projects = Project::whereIn('status', ['bidding', 'accepted', 'awarded'])
@@ -790,13 +899,7 @@ class ProjectController extends Controller
 
      public function awardIndex(Request $request)
     {
-        // whereIn('status', ['bidding', 'accepted','awarded','agreement','billing'])
-        // $projects = Project::where('user_id', auth()->id())
-        //             ->when($request->filled('year'), function ($query) use ($request) {
-        //                 $query->whereYear('created_at', $request->year);
-        //             })
-        //             ->latest()
-        //             ->paginate(10);
+       
 
         $projects = Project::
         //  whereIn('status', ['bidding', 'accepted'])
@@ -814,15 +917,19 @@ class ProjectController extends Controller
         return view('admin.award.index', compact('projects'));
     }
 
-    public function awardIndexs(Request $request)
+    public function awardIndexs(Request $request ,Project $project)
     {
-        $projects = Project::where('user_id', auth()->id())
+       
+        $projects = $project->where('user_id', auth()->id())
+                    ->where("id", $project->id)
                     ->when($request->filled('fy'), function ($query) use ($request) {
                         $start = Carbon::create($request->fy, 4, 1)->startOfDay();
                         $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
 
                         $query->whereBetween('date_of_start', [$start, $end]);
-                    })->latest()->paginate(20);
+                    })
+                
+                    ->latest()->paginate(20);
 
         return view('admin.award.index2', compact('projects'));
     }
@@ -967,7 +1074,7 @@ class ProjectController extends Controller
         return view('admin.projects.createagreementdate', compact('project'));
     }
 
-   public function updateDocAndStatus4(Request $request, Project $project)
+    public function updateDocAndStatus4(Request $request, Project $project)
     {
         $request->validate([
             'agreement_start_date' => 'nullable|date',
@@ -1004,26 +1111,25 @@ class ProjectController extends Controller
     {
         $data = $request->validate([
             'name'                => 'required',
-            'emd_rate'=>'nullable|string|max:255',
+            'emd_rate'            => 'nullable',
             'nit_number'          => 'required|string|max:255',
             'department'          => 'required|exists:departments,id',
             'location'            => 'required|exists:states,id',
             'estimated_amount'    => 'required|numeric|min:0',
             'time_allowed_number' => 'required|numeric|min:1',
-            'time_allowed_type'   => 'required|in:Days,Weeks,Months',
+            'time_allowed_type'   => 'required|in:Days,Weeks,Months,Years',
             'date_of_start'       => 'nullable|date',
             'date_of_opening'     => 'nullable|date',
-            'emd_amount'          => 'nullable|numeric|min:0',
+            'emd_amount'          => 'required|numeric|min:0',
         ]);
 
-
-        // \Log::info($data);
         $project->update($data);
 
         return redirect()
             ->route('admin.projects.index')
             ->with('success', 'Project updated successfully.');
     }
+
 
 
     public function destroy(Project $project)
