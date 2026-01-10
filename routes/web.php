@@ -22,7 +22,7 @@ use App\Http\Controllers\Staff\ScheduleWorkController as StaffScheduleWorkContro
 use App\Http\Controllers\Staff\SecurityDepositController as StaffSecurityDepositController;
 use App\Http\Controllers\Staff\TAndPController;
 use App\Http\Controllers\Staff\VendorController;
-
+use App\Http\Controllers\Admin\CqcVaultController;
 /*
 |--------------------------------------------------------------------------
 | AUTH PROTECTED ADMIN ROUTES
@@ -41,6 +41,41 @@ Route::get('/run-storage-link', function () {
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
     /* ===================== Dashboard ===================== */
+
+
+
+
+    // Show main index page
+    Route::get('cqc-vault', [CqcVaultController::class,'index'])->name('cqc-vault.index');
+    Route::get('admin/dashboard', [CqcVaultController::class,'dashboard']);
+    Route::get('admin/checklist-frequency', [CqcVaultController::class,'checklistfrequency']);
+    Route::get('admin/checklist-cqc', [CqcVaultController::class,'checklist']);
+
+    // Audit logs
+    Route::get('cqc-vault/audit-logs', [CqcVaultController::class,'auditLogs']);
+
+    // Folder creation
+    Route::get('cqc-vault/folder/create', [CqcVaultController::class,'createFolderPage']);
+    Route::post('cqc-vault/folder/create', [CqcVaultController::class,'createFolder']);
+
+    // Folder view (show documents & subfolders)
+    Route::get('cqc-vault/folder/{id}', [CqcVaultController::class,'viewFolder']);
+
+    // Upload document
+    Route::post('cqc-vault/upload', [CqcVaultController::class,'upload']);
+
+    // Document history
+    Route::get('cqc-vault/history/{id}', [CqcVaultController::class,'history']);
+
+    // Add multiple subfolders
+    Route::post('cqc-vault/folder/{id}/subfolders', [CqcVaultController::class,'addSubfolders']);
+
+    // Delete a folder
+    Route::delete('cqc-vault/folder/{id}', [CqcVaultController::class,'dFolder']);
+    Route::delete('cqc-vault/folder/{id}', [CqcVaultController::class,'deleteFolder']);
+    Route::delete('cqc-vault/document/{id}', [CqcVaultController::class, 'deleteDocument']);
+
+
     Route::get('/',[App\Http\Controllers\Admin\ProjectController::class, 'dashboard'])->name('dashboard');
 
     Route::get('materials', [App\Http\Controllers\Admin\InventoryController::class, 'materialTabs'])->name('materialTabs.index');

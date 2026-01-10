@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
     <style>
@@ -1241,14 +1242,9 @@
                 </a>
             </div>
 
-
-
-
-
-
             <div class="nav-item">
                 <a href="{{ route('admin.inventory.tabindex') }}"
-                class="nav-link {{ Request::is('admin/inventory/tab') ? 'active' : '' }}">
+                class="nav-link {{ Request::is('admin/inventory*') ? 'active' : '' }}">
 
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1261,68 +1257,128 @@
                 </a>
             </div>
 
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+
+            @php
+                $securitiesActive =
+                    Request::is('admin/emd*') ||
+                    Request::is('admin/pg*') ||
+                    Request::is('admin/security*') ||
+                    Request::is('admin/withheld*');
+            @endphp
+
+            <div class="nav-item {{ $securitiesActive ? 'open' : '' }}">
+                <a href="javascript:void(0)"
+                class="nav-link {{ $securitiesActive ? 'active' : '' }}"
+                onclick="toggleDropdown(this)">
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </span>
+
                     <span class="nav-text">SECURITIES</span>
-                    <span class="dropdown-arrow">
+
+                    <span class="dropdown-arrow {{ $securitiesActive ? 'rotate' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('admin.projects.returned.index') }}" class="dropdown-item nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">EMD</a>
 
-                    <a href="{{ route('admin.projects.pgreturned.index') }}" class="dropdown-item {{ Request::is('admin/pg*') ? 'active' : '' }}">PG</a>
+                <div class="sidebar-dropdown" style="{{ $securitiesActive ? 'display:block;' : '' }}">
+                    <a href="{{ route('admin.projects.returned.index') }}"
+                    class="dropdown-item {{ Request::is('admin/emd*') ? 'active' : '' }}">
+                        EMD
+                    </a>
 
-                    <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/security*') ? 'active' : '' }}">SECURITY DEPOSIT</a>
+                    <a href="{{ route('admin.projects.pgreturned.index') }}"
+                    class="dropdown-item {{ Request::is('admin/pg*') ? 'active' : '' }}">
+                        PG
+                    </a>
 
-                    <a href="{{ route('admin.projects.withheldreturned.index') }}" class="dropdown-item {{ Request::is('admin/withheld*') ? 'active' : '' }}">WITHHELD</a>
+                    <a href="{{ route('admin.projects.securityreturned.index') }}"
+                    class="dropdown-item {{ Request::is('admin/security*') ? 'active' : '' }}">
+                        SECURITY DEPOSIT
+                    </a>
+
+                    <a href="{{ route('admin.projects.withheldreturned.index') }}"
+                    class="dropdown-item {{ Request::is('admin/withheld*') ? 'active' : '' }}">
+                        WITHHELD
+                    </a>
                 </div>
             </div>
 
-             <div class="nav-item">
-                {{-- <a href="{{ route('admin.t-and-p.index') }}" --}}
+
+            <div class="nav-item">
                 <a href="{{ route('admin.materialTabs.index') }}"
-
-                class="nav-link {{ Request::is('admin/t-and-p*') ? 'active' : '' }}">
-
+                    class="nav-link {{ Request::is('admin/materials*') ? 'active' : '' }}">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
                     </span>
-
                     <span class="nav-text">MATERIAL</span>
                 </a>
             </div>
 
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+
+            @php
+                $establishmentActive =
+                    Request::is('departments*') ||
+                    Request::is('admin/vendors*') ||
+                    Request::is('admin/users*') ||
+                    Request::is('admin/cqc-vault*');
+            @endphp
+
+            <div class="nav-item {{ $establishmentActive ? 'open' : '' }}">
+                <a href="javascript:void(0)"
+                class="nav-link {{ $establishmentActive ? 'active' : '' }}"
+                onclick="toggleDropdown(this)">
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                         </svg>
                     </span>
+
                     <span class="nav-text">ESTABLISHMENT</span>
-                    <span class="dropdown-arrow">
+
+                    <span class="dropdown-arrow {{ $establishmentActive ? 'rotate' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    <a href="{{ route('departments.index') }}" class="dropdown-item {{ Request::is('departments*') ? 'active' : '' }}">DEPARTMENTS</a>
-                    <a href="{{ route('admin.vendors.index') }}" class="dropdown-item {{ Request::is('admin/vendors*') ? 'active' : '' }}">VENDORS</a>
-                    <a href="{{ route('admin.users.index') }}"class="dropdown-item {{ Request::is('admin/users*') ? 'active' : '' }}">STAFF</a>
+
+                <div class="sidebar-dropdown" style="{{ $establishmentActive ? 'display:block;' : '' }}">
+                    <a href="{{ route('departments.index') }}"
+                    class="dropdown-item {{ Request::is('departments*') ? 'active' : '' }}">
+                        DEPARTMENTS
+                    </a>
+
+                    <a href="{{ route('admin.vendors.index') }}"
+                    class="dropdown-item {{ Request::is('admin/vendors*') ? 'active' : '' }}">
+                        VENDORS
+                    </a>
+
+                    <a href="{{ route('admin.users.index') }}"
+                    class="dropdown-item {{ Request::is('admin/users*') ? 'active' : '' }}">
+                        STAFF
+                    </a>
+
+                    <a href="{{ route('admin.cqc-vault.index') }}"
+                    class="dropdown-item {{ Request::is('admin/cqc-vault*') ? 'active' : '' }}">
+                        E-Vault
+                    </a>
                 </div>
             </div>
+
 
 
             <div class="nav-item">
