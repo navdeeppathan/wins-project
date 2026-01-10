@@ -2,199 +2,527 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Daily Essentials Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Daily Essentials Shop</title>
     <style>
-        :root {
-            --green: #2ecc71;
-            --orange: #f39c12;
-            --dark: #333;
-            --light: #f9f9f9;
-        }
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            background: var(--light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
+            min-height: 100vh;
         }
 
         header {
-            background: linear-gradient(90deg, var(--green), var(--orange));
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .container {
-            padding: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        h2 {
-            margin-top: 30px;
-            color: var(--dark);
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            text-align: center;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .cart-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6f00;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4);
+        }
+
+        .cart-count {
+            background: white;
+            color: #ff6f00;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .categories {
+            margin: 40px 0;
+        }
+
+        .category {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .category-title {
+            color: #2e7d32;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ff6f00;
         }
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .product {
-            background: #fff;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
         }
 
-        .product img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 6px;
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.15);
+            border-color: #4caf50;
         }
 
-        .product h4 {
-            margin: 8px 0 5px;
-            font-size: 16px;
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
         }
 
-        .qty {
-            width: 60px;
-            padding: 5px;
-            margin-bottom: 5px;
+        .product-name {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        .btn {
-            background: var(--green);
-            color: #fff;
+        .product-price {
+            color: #ff6f00;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            background: #4caf50;
+            color: white;
             border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 5px;
+            padding: 12px 30px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
         }
 
-        .btn:hover {
-            background: var(--orange);
+        .add-to-cart:hover {
+            background: #45a049;
+            transform: scale(1.05);
         }
 
-        .cart {
+        .modal {
+            display: none;
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
-            right: 0;
-            background: #fff;
-            border-top: 2px solid var(--green);
-            padding: 10px;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
         }
 
-        .cart span {
+        .modal-title {
+            color: #2e7d32;
+            font-size: 1.8em;
+        }
+
+        .close {
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: #ff6f00;
             font-weight: bold;
         }
 
-        .order-btn {
-            background: var(--orange);
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        @media(max-width: 600px) {
-            header {
-                font-size: 18px;
-            }
+        .qty-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .qty-btn:hover {
+            background: #45a049;
+        }
+
+        .quantity {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-btn:hover {
+            background: #da190b;
+        }
+
+        .order-btn {
+            width: 100%;
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .order-btn:hover {
+            background: #1fbd58;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .total {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2e7d32;
+            text-align: right;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-
-<header>🛒 Daily Essentials Store</header>
-
-<div class="container">
-
-    <h2>🥦 Vegetables</h2>
-    <div class="products">
-        <div class="product">
-            <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce" alt="Potato">
-            <h4>Potato</h4>
-            <input type="number" class="qty" min="1" value="1">
-            <button class="btn" onclick="addToCart('Potato', this)">Add to Cart</button>
+    <header>
+        <div class="container">
+            <h1>🛒 Daily Essentials Shop</h1>
+            <p class="tagline">Fresh products delivered to your doorstep</p>
         </div>
+    </header>
 
-        <div class="product">
-            <img src="https://images.unsplash.com/photo-1582515073490-dc84fdbf07b9" alt="Tomato">
-            <h4>Tomato</h4>
-            <input type="number" class="qty" min="1" value="1">
-            <button class="btn" onclick="addToCart('Tomato', this)">Add to Cart</button>
-        </div>
-    </div>
+    <button class="cart-button" onclick="openCart()">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
 
-    <h2>🧴 Household</h2>
-    <div class="products">
-        <div class="product">
-            <img src="https://images.unsplash.com/photo-1583947581924-860bda6a26df" alt="Soap">
-            <h4>Bath Soap</h4>
-            <input type="number" class="qty" min="1" value="1">
-            <button class="btn" onclick="addToCart('Bath Soap', this)">Add to Cart</button>
-        </div>
+    <div class="container categories" id="categoriesContainer"></div>
 
-        <div class="product">
-            <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd" alt="Detergent">
-            <h4>Detergent</h4>
-            <input type="number" class="qty" min="1" value="1">
-            <button class="btn" onclick="addToCart('Detergent', this)">Add to Cart</button>
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Your Cart</h2>
+                <span class="close" onclick="closeCart()">&times;</span>
+            </div>
+            <div id="cartItems"></div>
         </div>
     </div>
 
-</div>
+    <script>
+        const products = {
+            "Fruits & Vegetables": [
+                { id: 1, name: "Fresh Apples", price: 120, icon: "🍎" },
+                { id: 2, name: "Bananas", price: 50, icon: "🍌" },
+                { id: 3, name: "Tomatoes", price: 40, icon: "🍅" },
+                { id: 4, name: "Onions", price: 30, icon: "🧅" },
+                { id: 5, name: "Carrots", price: 35, icon: "🥕" }
+            ],
+            "Dairy Products": [
+                { id: 6, name: "Fresh Milk", price: 60, icon: "🥛" },
+                { id: 7, name: "Butter", price: 80, icon: "🧈" },
+                { id: 8, name: "Cheese", price: 150, icon: "🧀" },
+                { id: 9, name: "Yogurt", price: 45, icon: "🥛" }
+            ],
+            "Bakery": [
+                { id: 10, name: "Bread", price: 40, icon: "🍞" },
+                { id: 11, name: "Croissant", price: 60, icon: "🥐" },
+                { id: 12, name: "Bagels", price: 50, icon: "🥯" }
+            ],
+            "Beverages": [
+                { id: 13, name: "Orange Juice", price: 90, icon: "🧃" },
+                { id: 14, name: "Coffee", price: 250, icon: "☕" },
+                { id: 15, name: "Tea", price: 180, icon: "🍵" },
+                { id: 16, name: "Water Bottles", price: 40, icon: "💧" }
+            ],
+            "Snacks": [
+                { id: 17, name: "Chips", price: 30, icon: "🥔" },
+                { id: 18, name: "Cookies", price: 50, icon: "🍪" },
+                { id: 19, name: "Nuts Mix", price: 120, icon: "🥜" }
+            ]
+        };
 
-<div class="cart">
-    <span id="cartCount">Items: 0</span>
-    <button class="order-btn" onclick="orderNow()">Order via WhatsApp</button>
-</div>
+        let cart = [];
 
-<script>
-    let cart = [];
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
 
-    function addToCart(product, btn) {
-        let qty = btn.previousElementSibling.value;
-        cart.push({ product, qty });
-        document.getElementById('cartCount').innerText = "Items: " + cart.length;
-        alert(product + " added to cart");
-    }
+            for (const [category, items] of Object.entries(products)) {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
 
-    function orderNow() {
-        if (cart.length === 0) {
-            alert("Cart is empty!");
-            return;
+                const categoryTitle = document.createElement('h2');
+                categoryTitle.className = 'category-title';
+                categoryTitle.textContent = category;
+
+                const productsDiv = document.createElement('div');
+                productsDiv.className = 'products';
+
+                items.forEach(product => {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'product';
+                    productDiv.innerHTML = `
+                        <div class="product-icon">${product.icon}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">₹${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                    `;
+                    productsDiv.appendChild(productDiv);
+                });
+
+                categoryDiv.appendChild(categoryTitle);
+                categoryDiv.appendChild(productsDiv);
+                container.appendChild(categoryDiv);
+            }
         }
 
-        let message = "🛒 *New Order* %0A%0A";
-        cart.forEach((item, index) => {
-            message += (index + 1) + ". " + item.product + " - Qty: " + item.qty + "%0A";
-        });
+        function addToCart(productId) {
+            const product = Object.values(products).flat().find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
 
-        let phone = "919575370343"; // 🔴 Replace with your WhatsApp number
-        let url = `https://wa.me/${phone}?text=${message}`;
-        window.open(url, "_blank");
-    }
-</script>
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
 
+            updateCartCount();
+            showNotification('Added to cart!');
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function openCart() {
+            renderCart();
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="item-details">
+                        <div class="item-name">${item.icon} ${item.name}</div>
+                        <div class="item-price">₹${item.price} × ${item.quantity} = ₹${item.price * item.quantity}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="decreaseQuantity(${item.id})">−</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="qty-btn" onclick="increaseQuantity(${item.id})">+</button>
+                        <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="total">Total: ₹${total}</div>
+                <button class="order-btn" onclick="orderOnWhatsApp()">
+                    📱 Order on WhatsApp
+                </button>
+            `;
+        }
+
+        function increaseQuantity(productId) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity++;
+                updateCartCount();
+                renderCart();
+            }
+        }
+
+        function decreaseQuantity(productId) {
+            const item = cart.find(i => i.id === productId);
+            if (item && item.quantity > 1) {
+                item.quantity--;
+                updateCartCount();
+                renderCart();
+            }
+        }
+
+        function removeItem(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            updateCartCount();
+            renderCart();
+        }
+
+        function orderOnWhatsApp() {
+            if (cart.length === 0) return;
+
+            let message = "🛒 *New Order - Daily Essentials*\n\n";
+
+            cart.forEach(item => {
+                message += `${item.icon} *${item.name}*\n`;
+                message += `   Quantity: ${item.quantity}\n`;
+                message += `   Price: ₹${item.price} × ${item.quantity} = ₹${item.price * item.quantity}\n\n`;
+            });
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += `💰 *Total Amount: ₹${total}*\n\n`;
+            message += "Please confirm my order. Thank you!";
+
+            const phoneNumber = "919171520657"; // Replace with your WhatsApp number
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappURL, '_blank');
+        }
+
+        function showNotification(message) {
+            // Simple notification - you can enhance this
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideIn 0.3s;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+
+        // Initialize
+        renderCategories();
+    </script>
 </body>
 </html>
