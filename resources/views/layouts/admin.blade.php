@@ -1311,7 +1311,6 @@
                 </div>
             </div>
 
-
             <div class="nav-item">
                 <a href="{{ route('admin.materialTabs.index') }}"
                     class="nav-link {{ Request::is('admin/materials*') ? 'active' : '' }}">

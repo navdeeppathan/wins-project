@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Essentials Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --green: #2ecc71;
+            --orange: #f39c12;
+            --dark: #333;
+            --light: #f9f9f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: var(--light);
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--green), var(--orange));
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 15px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            color: var(--dark);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .product {
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .product h4 {
+            margin: 8px 0 5px;
+            font-size: 16px;
+        }
+
+        .qty {
+            width: 60px;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--orange);
+        }
+
+        .cart {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-top: 2px solid var(--green);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+        }
+
+        .cart span {
+            font-weight: bold;
+        }
+
+        .order-btn {
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>🛒 Daily Essentials Store</header>
+
+<div class="container">
+
+    <h2>🥦 Vegetables</h2>
+    <div class="products">
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce" alt="Potato">
+            <h4>Potato</h4>
+            <input type="number" class="qty" min="1" value="1">
+            <button class="btn" onclick="addToCart('Potato', this)">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1582515073490-dc84fdbf07b9" alt="Tomato">
+            <h4>Tomato</h4>
+            <input type="number" class="qty" min="1" value="1">
+            <button class="btn" onclick="addToCart('Tomato', this)">Add to Cart</button>
+        </div>
+    </div>
+
+    <h2>🧴 Household</h2>
+    <div class="products">
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1583947581924-860bda6a26df" alt="Soap">
+            <h4>Bath Soap</h4>
+            <input type="number" class="qty" min="1" value="1">
+            <button class="btn" onclick="addToCart('Bath Soap', this)">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd" alt="Detergent">
+            <h4>Detergent</h4>
+            <input type="number" class="qty" min="1" value="1">
+            <button class="btn" onclick="addToCart('Detergent', this)">Add to Cart</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="cart">
+    <span id="cartCount">Items: 0</span>
+    <button class="order-btn" onclick="orderNow()">Order via WhatsApp</button>
+</div>
+
+<script>
+    let cart = [];
+
+    function addToCart(product, btn) {
+        let qty = btn.previousElementSibling.value;
+        cart.push({ product, qty });
+        document.getElementById('cartCount').innerText = "Items: " + cart.length;
+        alert(product + " added to cart");
+    }
+
+    function orderNow() {
+        if (cart.length === 0) {
+            alert("Cart is empty!");
+            return;
+        }
+
+        let message = "🛒 *New Order* %0A%0A";
+        cart.forEach((item, index) => {
+            message += (index + 1) + ". " + item.product + " - Qty: " + item.qty + "%0A";
+        });
+
+        let phone = "91XXXXXXXXXX"; // 🔴 Replace with your WhatsApp number
+        let url = `https://wa.me/${phone}?text=${message}`;
+        window.open(url, "_blank");
+    }
+</script>
+
+</body>
+</html>
