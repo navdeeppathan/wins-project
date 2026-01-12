@@ -36,7 +36,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Register - Project OverView (P.O.V.)</title>
+    <title>Register - DigiProject</title>
 
     <!-- Bootstrap + Font Awesome -->
     <link
@@ -370,7 +370,7 @@
     60.01% { background-image: url('/s4.jpg'); }
     80%    { background-image: url('/s4.jpg'); }
 
-   
+
 } */
     </style>
   </head>
@@ -395,7 +395,7 @@
           <i class="fas fa-crown crown-icon"></i>
         </div>
 
-        <h1 class="brand-name text-center">Project OverView (P.O.V.)</h1>
+        <h1 class="brand-name text-center">DigiProject</h1>
         <p class="brand-description">The best way to manage your projects.</p>
 
         {{-- <button class="learn-more-btn">Learn More</button> --}}

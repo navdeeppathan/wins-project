@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project OverView (P.O.V.)</title>
+    <title>DigiProject</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap5.css">
 
-    
+
     <style>
         * {
             margin: 0;
@@ -903,7 +903,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
-            <span class="brand-name">Project OverView (P.O.V.)</span>
+            <span class="brand-name">DigiProject</span>
             <button class="collapse-btn" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -927,7 +927,7 @@
              {{-- <div class="nav-item">
                 <a href="{{ route('departments.index') }}"
                 class="nav-link {{ Request::is('departments*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -941,7 +941,7 @@
             <div class="nav-item">
                 <a href="{{ route('superadmin.users.index') }}"
                 class="nav-link {{ Request::is('superadmin/users*') ? 'active' : '' }}">
-                    
+
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -953,7 +953,7 @@
                 </a>
             </div>
 
-            
+
 
 
 
@@ -983,14 +983,14 @@
                             font-weight: 600;
 
                             color: #000000;
-                            
+
 
                             border: none;
                             border-radius: 6px;
                             cursor: pointer;
 
                             transition: all 0.25s ease;
-                            
+
                         }
 
                         .logout-btn i {
@@ -1020,7 +1020,7 @@
                 </style>
             </form>
             </div>
-            
+
         </div>
     </aside>
 
@@ -1093,7 +1093,7 @@
 
             // Update chart colors
             updateChartColors();
-            
+
             // Save preference
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         }
@@ -1108,7 +1108,7 @@
 
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
-            
+
             // Close all dropdowns when sidebar is collapsed
             if (document.getElementById('sidebar').classList.contains('collapsed')) {
                 document.querySelectorAll('.nav-item.open').forEach(item => {
@@ -1119,15 +1119,15 @@
 
         function toggleDropdown(element) {
             const sidebar = document.getElementById('sidebar');
-            
+
             // Don't open dropdown if sidebar is collapsed
             if (sidebar.classList.contains('collapsed')) {
                 return;
             }
-            
+
             const navItem = element.closest('.nav-item');
             const wasOpen = navItem.classList.contains('open');
-            
+
             // Toggle current dropdown
             navItem.classList.toggle('open');
         }
@@ -1135,7 +1135,7 @@
         function toggleMobile() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
-            
+
             sidebar.classList.toggle('mobile-open');
             overlay.classList.toggle('active');
         }
@@ -1144,13 +1144,13 @@
         document.querySelectorAll('.nav-link:not([onclick]), .dropdown-item').forEach(link => {
             link.addEventListener('click', function(e) {
                 const route = this.getAttribute('data-route');
-                
+
                 // Remove active class from all links
                 document.querySelectorAll('.nav-link, .dropdown-item').forEach(l => l.classList.remove('active'));
-                
+
                 // Add active class to clicked link
                 this.classList.add('active');
-                
+
                 // If it's a dropdown item, also highlight parent
                 if (this.classList.contains('dropdown-item')) {
                     const parentNavItem = this.closest('.nav-item');
@@ -1158,9 +1158,9 @@
                         parentNavItem.querySelector('.nav-link').classList.add('active');
                     }
                 }
-                
-                
-                
+
+
+
                 // Close mobile menu if open
                 if (window.innerWidth <= 1024) {
                     toggleMobile();
@@ -1179,18 +1179,18 @@
 
         // Chart
         let chart;
-        
+
         function initChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
-            
+
             const gradient1 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient1.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
             gradient1.addColorStop(1, 'rgba(59, 130, 246, 0)');
-            
+
             const gradient2 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient2.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
             gradient2.addColorStop(1, 'rgba(16, 185, 129, 0)');
-            
+
             const gradient3 = ctx.createLinearGradient(0, 0, 0, 280);
             gradient3.addColorStop(0, 'rgba(245, 158, 11, 0.3)');
             gradient3.addColorStop(1, 'rgba(245, 158, 11, 0)');
@@ -1320,7 +1320,7 @@
         initChart();
     </script>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Sidebar toggle functionality
@@ -1335,7 +1335,7 @@
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('closed');
             mainContent.classList.toggle('expanded');
-            
+
             if (sidebar.classList.contains('closed')) {
                 toggleIcon.classList.remove('fa-angle-left');
                 toggleIcon.classList.add('fa-angle-right');
@@ -1349,7 +1349,7 @@
         mobileToggle.addEventListener('click', function() {
             sidebar.classList.toggle('mobile-open');
             sidebarOverlay.classList.toggle('active');
-            
+
             if (sidebar.classList.contains('mobile-open')) {
                 mobileToggle.querySelector('i').classList.remove('fa-bars');
                 mobileToggle.querySelector('i').classList.add('fa-times');
@@ -1421,7 +1421,7 @@ new DataTable('#example', {
 
 </script>
 
-  
+
     @stack('scripts')
 </body>
 </html>

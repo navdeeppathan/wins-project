@@ -123,65 +123,58 @@
     </div>
 
     <!-- ---------------- EMD DETAILS MULTIPLE ROW SECTION ---------------- -->
-    <h4 class="mt-4">EMD Details (Multiple)</h4>
+    {{-- <h4 class="mt-4">EMD Details (Multiple)</h4> --}}
 
-<div class="table-responsive">
-    <table class="table class-table example table-bordered" id="emdTable" style="width:100%">
-        <thead class="table-dark">
-            <tr>
-                <th>No.</th>
-                <th>Instrument Type</th>
-                <th>Instrument Number</th>
-                <th>Instrument Date</th>
-                <th>Amount</th>
-                {{-- <th>Remarks</th> --}}
-                <th>Upload (PDF)</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+        {{-- <div class="table-responsive">
+            <table class="table class-table example table-bordered" id="emdTable" style="width:100%">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Instrument Type</th>
+                        <th>Instrument Number</th>
+                        <th>Instrument Date</th>
+                        <th>Amount</th>
+                        <th>Upload (PDF)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
 
-                    <select name="emd[0][instrument_type]" class="form-select">
-                        <option value="">Select</option>
-                        <option value="FDR">FDR</option>
-                        <option value="DD">DD</option>
-                        <option value="BG">BG</option>
-                        <option value="CHALLAN">CHALLAN</option>
-                        <option value="EXEMPTED">EXEMPTED</option>
-                    </select>
-                </td>
+                            <select name="emd[0][instrument_type]" class="form-select">
+                                <option value="">Select</option>
+                                <option value="FDR">FDR</option>
+                                <option value="DD">DD</option>
+                                <option value="BG">BG</option>
+                                <option value="CHALLAN">CHALLAN</option>
+                                <option value="EXEMPTED">EXEMPTED</option>
+                            </select>
+                        </td>
 
-                <td><input type="text" name="emd[0][instrument_number]" class="form-control"></td>
-                <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
-                {{-- <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control"></td> --}}
-                <td>
-                    <input type="number" step="0.01"
-                        name="emd[0][amount]"
-                        class="form-control emd-amount">
-                </td>
+                        <td><input type="text" name="emd[0][instrument_number]" class="form-control"></td>
+                        <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
+                        <td>
+                            <input type="number" step="0.01"
+                                name="emd[0][amount]"
+                                class="form-control emd-amount">
+                        </td>
+                        <td><input type="file" name="emd[0][upload]" class="form-control"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> --}}
 
-                {{-- <td><input type="text" name="emd[0][remarks]" class="form-control"></td> --}}
-                <td><input type="file" name="emd[0][upload]" class="form-control"></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="d-flex align-items-end gap-2 justify-content-end" >
-
-     <button class="btn btn-success mb-3">Save Project</button>
-
-    <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
-        + Add More
-    </button>
-    <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mb-3">Back</a>
-
-</div>
+        <div class="d-flex align-items-end gap-2 justify-content-end" >
+            <button class="btn btn-success mb-3">Save Project</button>
+            {{-- <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
+                + Add More
+            </button> --}}
+            <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary mb-3">Back</a>
+        </div>
 
 
 </form>

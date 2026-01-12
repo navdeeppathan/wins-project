@@ -108,7 +108,7 @@
                 display: inline-block;
         }
 
-          
+
         @media (max-width: 768px) {
 
             body {
@@ -242,7 +242,7 @@
     60.01% { background-image: url('/s4.jpg'); }
     80%    { background-image: url('/s4.jpg'); }
 
-   
+
 } */
 
     </style>
@@ -269,7 +269,7 @@
             <div class="brand-logo">
                 <i class="fas fa-crown crown-icon"></i>
             </div>
-            <div class="brand-name text-center">Project OverView (P.O.V.)</div>
+            <div class="brand-name text-center">DigiProject</div>
             <p class="brand-description">
                 The best way to manage your projects.
                 {{-- <br>
@@ -299,12 +299,12 @@
 
                 {{-- EMAIL --}}
                 <div class="form-group">
-                    <input type="email" 
-                           name="email" 
+                    <input type="email"
+                           name="email"
                            value="{{ old('email') }}"
-                           class="form-control" 
+                           class="form-control"
                            placeholder="Email">
-                    
+
                     @error('email')
                         <div class="login-error">{{ $message }}</div>
                     @enderror
@@ -312,10 +312,10 @@
 
                 {{-- PASSWORD --}}
                 <div class="form-group password-group">
-                    <input type="password" 
-                           name="password" 
-                           id="password" 
-                           class="form-control" 
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           class="form-control"
                            placeholder="Password">
 
                     <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>

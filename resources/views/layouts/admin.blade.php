@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project OverView (P.O.V.)</title>
+    <title>DigiProject</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -1092,7 +1092,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div> --}}
-            <span class="brand-name">Project OverView (P.O.V.)</span>
+            <span class="brand-name">DigiProject</span>
             <button class="collapse-btn" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -1158,7 +1158,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">PROJECTS (AWARD)</span>
+                    <span class="nav-text">PROJECTS (AGREEMENT)</span>
                 </a>
             </div>
             {{-- <div class="nav-item">
@@ -1435,7 +1435,7 @@
             </div>
             <div>
 
-                    <span style="color: red;" class="topbar-title text-center text-red">YOUR Project OverView P.O.V. TRIAL PERIOD IS VALID UPTO 31/03/2026</span>
+                    <span style="color: red;" class="topbar-title text-center text-red">YOUR DigiProject TRIAL PERIOD IS VALID UPTO 31/03/2026</span>
 
 
             </div>

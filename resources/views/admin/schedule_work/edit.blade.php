@@ -1,15 +1,12 @@
 @extends('layouts.admin')
-
 @section('title','Edit Schedule of Work')
-
 @section('content')
+
 <div class="container">
     <div class="col-md-8 mx-auto">
-
         <div class="card">
             <div class="card-header">Edit Work Item</div>
             <div class="card-body">
-
                 <form method="POST" action="{{ route('admin.schedule-work.update', $scheduleWork) }}">
                     @csrf
                     @method('PUT')

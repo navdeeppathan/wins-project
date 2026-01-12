@@ -31,7 +31,7 @@ class ScheduleWorkController extends Controller
                 $query->whereBetween('date_of_start', [$start, $end]);
             })
             ->latest()
-            ->paginate(20);             
+            ->paginate(20);
 
         return view('admin.schedule_work.index', compact('projects'));
     }
@@ -47,11 +47,13 @@ class ScheduleWorkController extends Controller
     public function index3(Project $project,ScheduleWork $scheduleWork)
     {
         $inventories = $scheduleWork->inventories;
+        $totalnetpayable = $inventories->sum('net_payable');
+
         $allInventories = Inventory::where('user_id', auth()->id())->get();
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
 
-        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories','staffs'));
+        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories','staffs','totalnetpayable'));
     }
 
     // public function save(Request $request, Project $project)

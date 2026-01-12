@@ -1,84 +1,93 @@
 @extends('layouts.admin')
 @section('title','Schedule Of Work')
-
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
 <h4 class="mb-3">Schedule Of Work – {{ $project->name }}</h4>
 
-@php
-    $estimated = (float) $project->estimated_amount;
-    $tendered  = (float) $project->tendered_amount;
+    @php
+        $estimated = (float) $project->estimated_amount;
+        $tendered  = (float) $project->tendered_amount;
 
-    $percentageText = '-';
-    if ($estimated > 0 && $tendered > 0) {
-        $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
-        $percentageText = $percentage < 0
-            ? abs($percentage).' % BELOW'
-            : $percentage.' % ABOVE';
-    }
-@endphp
+        $percentageText = '-';
+        if ($estimated > 0 && $tendered > 0) {
+            $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+            $percentageText = $percentage < 0
+                ? abs($percentage).' % BELOW'
+                : $percentage.' % ABOVE';
+        }
+    @endphp
 
-{{-- PROJECT INFO --}}
-<div class="row mb-4">
-    <div class="col-md-4 mb-2">
-        <label>Department</label>
-        <input class="form-control" value="{{ $project->departments->name ?? '-' }}" disabled>
-    </div>
-    <div class="col-md-4 mb-2">
-        <label>State</label>
-        <input class="form-control" value="{{ $project->state->name ?? '-' }}" disabled>
-    </div>
-    <div class="col-md-4 mb-2">
-        <label>NIT Number</label>
-        <input class="form-control" value="{{ $project->nit_number }}" disabled>
-    </div>
-        {{--
-    <div class="col-md-12 mb-2">
-        <label>Project Name</label>
-        <input class="form-control" value="{{ $project->name }}" disabled>
-    </div> --}}
+    {{-- PROJECT INFO --}}
+    <div class="row mb-4">
+        <div class="col-md-4 mb-2">
+            <label>Department</label>
+            <input class="form-control" value="{{ $project->departments->name ?? '-' }}" disabled>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>State</label>
+            <input class="form-control" value="{{ $project->state->name ?? '-' }}" disabled>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>NIT Number</label>
+            <input class="form-control" value="{{ $project->nit_number }}" disabled>
+        </div>
+            {{--
+        <div class="col-md-12 mb-2">
+            <label>Project Name</label>
+            <input class="form-control" value="{{ $project->name }}" disabled>
+        </div> --}}
 
-    <div class="col-md-4 mb-2">
-        <label>Estimated Amount</label>
-        <input class="form-control" value="{{ $project->estimated_amount }}" disabled>
-    </div>
-    <div class="col-md-4 mb-2">
-        <label>Time Allowed</label>
-        <input class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
-    </div>
-    <div class="col-md-4 mb-2">
-        <label>Tender Amount</label>
-        <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
-    </div>
+        <div class="col-md-4 mb-2">
+            <label>Estimated Amount</label>
+            <input class="form-control" value="{{ $project->estimated_amount }}" disabled>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>Time Allowed</label>
+            <input class="form-control" value="{{ $project->time_allowed_number }} {{ $project->time_allowed_type }}" disabled>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label>Tender Amount</label>
+            <input class="form-control" value="{{ $project->tendered_amount }}" disabled>
+        </div>
 
-   <div class="col-md-4 mb-2">
-        <label>Date of Start</label>
-        <input class="form-control" disabled
-            value="{{
-                $project->date_ofstartof_work
-                    ? date('d-m-Y', strtotime($project->date_ofstartof_work))
-                    : $project->created_at->format('d-m-Y')
-            }}">
-    </div>
-    <div class="col-md-4 mb-2">
-        <label>Date of Completion</label>
-        <input class="form-control" disabled
-            value="{{
-                $project->stipulated_date_ofcompletion
-                    ? date('d-m-Y', strtotime($project->stipulated_date_ofcompletion))
-                    : $project->created_at->format('d-m-Y')
-            }}">
-    </div>
+        <div class="col-md-4 mb-2">
+                <label>Date of Start</label>
+                <input class="form-control" disabled
+                    value="{{
+                        $project->date_ofstartof_work
+                            ? date('d-m-Y', strtotime($project->date_ofstartof_work))
+                            : $project->created_at->format('d-m-Y')
+                    }}">
+            </div>
+            <div class="col-md-4 mb-2">
+                <label>Date of Completion</label>
+                <input class="form-control" disabled
+                    value="{{
+                        $project->stipulated_date_ofcompletion
+                            ? date('d-m-Y', strtotime($project->stipulated_date_ofcompletion))
+                            : $project->created_at->format('d-m-Y')
+                    }}">
+            </div>
 
-    <div class="col-md-4 mb-2">
-        <label>Percentage</label>
-        <input class="form-control {{ str_contains($percentageText,'BELOW')?'text-danger':'text-success' }}"
-               value="{{ $percentageText }}" disabled>
-    </div>
-</div>
+            <div class="col-md-4 mb-2">
+                <label>Percentage</label>
+                <input class="form-control {{ str_contains($percentageText,'BELOW')?'text-danger':'text-success' }}"
+                    value="{{ $percentageText }}" disabled>
+            </div>
+        </div>
 
+        <style>
+            .readonly-row {
+                background-color: #f1f1f1;
+            }
+
+            .readonly-row input,
+            .readonly-row textarea {
+                background-color: #e9ecef;
+                cursor: not-allowed;
+            }
+        </style>
 
 {{-- TABLE --}}
 <div class="table-responsive">
@@ -96,49 +105,90 @@
                 <th >Action</th>
             </tr>
         </thead>
-
         <tbody id="workTable">
+            @forelse($works as $i => $w)
+                <tr class="{{ $i == 0 ? 'readonly-row' : '' }}">
+                    <td>{{ $i+1 }}
+                        <input type="hidden" class="row-id" value="{{ $w->id }}">
+                    </td>
 
-    @forelse($works as $i => $w)
-        <tr>
-            <td>{{ $i+1 }}
-                <input type="hidden" class="row-id" value="{{ $w->id }}">
-            </td>
-            <td><textarea class="form-control description">{{ $w->description }}</textarea></td>
-            <td><input class="form-control qty" value="{{ $w->quantity }}"></td>
-            <td><input class="form-control unit" value="{{ $w->unit }}"></td>
-            <td><input class="form-control rate" value="{{ $w->rate }}"></td>
-            <td class="amount text-center">{{ number_format($w->amount,2) }}</td>
-            <td><input class="form-control measured_quantity" value="{{ $w->measured_quantity }}"></td>
-            <td> <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}" class="btn btn-primary btn-sm"> Add Inventory </a> </td>
-            <td>
-                <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
-                <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
-            </td>
-        </tr>
+                    <td>
+                        <textarea class="form-control description"
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                            {{ $w->description }}
+                        </textarea>
+                    </td>
 
-    @empty
-        {{-- DEFAULT EMPTY ROW --}}
-        <tr>
-            <td>1
-                <input type="hidden" class="row-id">
-            </td>
-            <td><textarea class="form-control description"></textarea></td>
-            <td><input class="form-control qty"></td>
-            <td><input class="form-control unit" value="1"></td>
-            <td><input class="form-control rate"></td>
-            <td class="amount text-center">0.00</td>
-            <td><input class="form-control measured_quantity"></td>
-            <td></td>
-            <td>
-                <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
-                <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
-            </td>
-        </tr>
-    @endforelse
+                    <td>
+                        <input class="form-control qty"
+                            value="{{ $w->quantity }}"
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                    </td>
 
-</tbody>
+                    <td>
+                        <input class="form-control unit"
+                            value="{{ $w->unit }}"
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                    </td>
 
+                    <td>
+                        <input class="form-control rate"
+                            value="{{ $w->rate }}"
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                    </td>
+
+                    <td class="amount text-center">
+                        {{ number_format($w->amount,2) }}
+                    </td>
+
+                    <td>
+                        <input class="form-control measured_quantity"
+                            value="{{ $w->measured_quantity }}"
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                    </td>
+
+                    <td>
+                        {{-- ✅ INVENTORY ALWAYS CLICKABLE --}}
+                        <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
+                        class="btn btn-primary btn-sm">
+                        Add Inventory
+                        </a>
+                    </td>
+
+                    <td>
+                        {{-- ❌ Disable actions for first row --}}
+                        <button type="button"
+                                class="btn btn-success btn-sm saveRow"
+                                {{ $i == 0 ? 'disabled' : '' }}>
+                            Save
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-danger btn-sm deleteRow"
+                                {{ $i == 0 ? 'disabled' : '' }}>
+                            ❌
+                        </button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td>1
+                        <input type="hidden" class="row-id">
+                    </td>
+                    <td><textarea class="form-control description"></textarea></td>
+                    <td><input class="form-control qty"></td>
+                    <td><input class="form-control unit" value="1"></td>
+                    <td><input class="form-control rate"></td>
+                    <td class="amount text-center">0.00</td>
+                    <td><input class="form-control measured_quantity"></td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
+                        <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
 </div>
 

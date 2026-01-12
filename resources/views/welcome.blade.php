@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Project OverView (P.O.V.)</title>
+    <title>DigiProject</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
@@ -365,7 +365,7 @@
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
                 </div> --}}
-                <div class="brand-text">Project OverView (P.O.V.)</div>
+                <div class="brand-text">DigiProject</div>
 
 
             </div>
@@ -422,7 +422,7 @@
                 <div class="hero-card shadow-sm" data-aos="fade-right" data-aos-delay="150">
                 <div class="eyebrow d-inline-flex align-items-center mb-3">
                     <i class="bi bi-stars me-2"></i>
-                    <span>Project OverView (P.O.V.): Elegance in Execution</span>
+                    <span>DigiProject: Elegance in Execution</span>
                 </div>
                 <div class="content">
                     <h2 class="display-5 fw-bold mb-3">
@@ -510,7 +510,7 @@
 
         <div class="container section-title" data-aos="fade-up">
             <h2>A Unified Intelligence Layer</h2>
-            <p>Project OverView (P.O.V.) serves as your central command center, seamlessly integrating every facet of your operations into one cohesive ecosystem. </p>
+            <p>DigiProject serves as your central command center, seamlessly integrating every facet of your operations into one cohesive ecosystem. </p>
         </div>
 
         <div class="row g-4">
@@ -578,7 +578,7 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>About</h2>
-            <p>Project OverView (P.O.V.): Elegance in Execution </p>
+            <p>DigiProject: Elegance in Execution </p>
         </div>
         <!-- End Section Title -->
 
@@ -617,7 +617,7 @@
                     Government, PSUs, Banking and the Private
                     Sector Units.
                    </p>
-                    <p>Project OverView (P.O.V.) eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
+                    <p>DigiProject eliminates the noise of traditional management tools. By focusing on essential functionalities and intuitive navigation, we deliver a smarter, non-confusing interface that transforms how you monitor projects and manage your workforce.</p>
 
                     <div class="feature-list row gy-3">
                     <div class="col-md-6" data-aos="fade-up" data-aos-delay="250">
@@ -899,7 +899,7 @@
               </div>
 
                <div class="service-content">
-                <h4>Project OverView (P.O.V.) Pricing</h4>
+                <h4>DigiProject Pricing</h4>
                 <p>
                   We believe in the power of our platform Project
                   OverView (P.O.V.), which is why we invite you to
@@ -907,7 +907,7 @@
                   hidden fees, No surprises, Annual price starting
                   at Rs.7,200/- plus GST for Basic Plan and
                   Rs.10,800/- plus GST for Advance Plan to ensure
-                  Project OverView (P.O.V.) aligns with your needs.
+                  DigiProject aligns with your needs.
                   We offer a FREE trial for first 3 months,
                   additionally, you can book a demo to get a
                   hands-on feel of its functionalities. Project
@@ -1385,7 +1385,7 @@
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
                 </div> --}}
-                <div class="brand-text">Project OverView (P.O.V.)</div>
+                <div class="brand-text">DigiProject</div>
 
 
             </div>

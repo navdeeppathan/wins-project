@@ -156,7 +156,7 @@
             <th class="text-center">Date</th>
             <th class="text-center">Paid To</th>
             <th class="text-center">Category</th>
-            <th class="text-center">Voucher Number</th>
+            <th class="text-center">Bill Number</th>
             <th class="text-center">Description of Item</th>
             <th class="text-center">Quantity</th>
             <th class="text-center">Rate</th>

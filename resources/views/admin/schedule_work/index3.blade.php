@@ -84,28 +84,26 @@
     <table id="example" class="table class-table nowrap" style="width:100%">
         <thead class="table-dark">
             <tr>
-                <th>#</th>
-
-                <th>DESCRIPTION</th>
-                <th>QUANTITY</th>
-                <th>UNIT</th>
-                <th>RATE</th>
-                <th>AMOUNT</th>
-                <th>Qty Issued</th>
-
+                <th class="text-center">#</th>
+                <th class="text-center">DESCRIPTION</th>
+                <th class="text-center">QUANTITY</th>
+                <th class="text-center">UNIT</th>
+                <th class="text-center">RATE</th>
+                <th class="text-center">AMOUNT</th>
+                <th class="text-center">Total Amount</th>
+                <th class="text-center">Qty Issued</th>
             </tr>
         </thead>
-
         <tbody id="workTable">
-            {{-- @foreach($scheduleWork as $w) --}}
             <tr>
-                <td>1</td>
-                <td>{{ $scheduleWork->description }}</td>
-                <td>{{ $scheduleWork->quantity }}</td>
-                <td>{{ $scheduleWork->unit }}</td>
-                <td>{{ number_format($scheduleWork->rate, 2) }}</td>
-                <td>{{ number_format($scheduleWork->amount, 2) }}</td>
-                <td>{{ $scheduleWork->measured_quantity }}</td>
+                <td class="text-center">1</td>
+                <td class="text-center">{{ $scheduleWork->description }}</td>
+                <td class="text-center">{{ $scheduleWork->quantity }}</td>
+                <td class="text-center">{{ $scheduleWork->unit }}</td>
+                <td class="text-center">{{ number_format($scheduleWork->rate, 2) }}</td>
+                <td class="text-center">{{ number_format($scheduleWork->amount, 2) }}</td>
+                <td class="text-center">{{ $totalnetpayable }}</td>
+                <td class="text-center">{{ $scheduleWork->measured_quantity }}</td>
             </tr>
             {{-- @endforeach --}}
         </tbody>
@@ -131,20 +129,18 @@
 
 
 <style>
-    /* ðŸ”¥ Allow full width inputs */
+
     #inventoryTable input.form-control,
     #inventoryTable select.form-select {
         min-width: 120px;
         width: 100%;
     }
 
-    /* ðŸ”¥ Paid To & Narration extra wide */
     #inventoryTable td:nth-child(3) input,
     #inventoryTable td:nth-child(5) input {
         min-width: 140px;
     }
 
-    /* ðŸ”¥ Disable text cutting */
     #inventoryTable input,
     #inventoryTable select {
         white-space: nowrap;
@@ -164,88 +160,139 @@
 
 
 <div class="table-responsive mt-3">
-<table id="inventoryTable" class="table class-table nowrap" style="width:100%">
-    <thead class="table-light">
-    <tr>
-        <th>#</th>
-
-        <th>DATE</th>
-
-        <th>STAFF</th>
-
-        <th>CATEGORY</th>
-
-        <th>DESCRIPTION OF ITEM</th>
-        <th>QUANTITY</th>
-        <th>RATE</th>
-        <th>AMOUNT</th>
-
-
-
-        <th width="">ACTION</th>
-    </tr>
-    </thead>
-
-    <tbody>
-        @forelse($inventories as $index => $i)
-            <tr data-id="{{ $i->id }}">
-                <td>{{ $index + 1 }}</td>
-
-                <input type="hidden" class="project_id" value="{{ $project->id }}">
-                <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
-
-                <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
-
-                <td width="">
-                    <select class="form-select staff_id">
-                        <option value="">Select Staff</option>
-                        @foreach($staffs as $staff)
-                            <option value="{{ $staff->id }}"
-                                {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
-                                {{ $staff->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </td>
-
-               <td>
-                    <select class="form-select category">
-                        <option value="">Select</option>
-                        @foreach($categories as $cat)
-                            <option value="{{ $cat }}" {{ $i->category === $cat ? 'selected' : '' }}>
-                                {{ $cat }}
-                            </option>
-                        @endforeach
-                    </select>
-                </td>
-
-                <td>
-                    <select class="form-select description" data-selected="{{ $i->description }}">
-                        <option value="">Select description</option>
-                    </select>
-                </td>
-
-
-
-
-                <td><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
-                <td><input type="number" step="0.01" class="form-control rate" value="{{ $i->amount }}"></td>
-                <td><input type="number" step="0.01" class="form-control amount" value="{{ $i->net_payable }}"></td>
-
-                <td>
-
-                    <button class="btn btn-success btn-sm saveRow">Update</button>
-                    <button class="btn btn-danger btn-sm removeRow">Del</button>
-                </td>
-            </tr>
-        @empty
+    <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
+        <thead class="table-light">
             <tr>
-                <td>1</td>
+                <th class="text-center">#</th>
+                <th class="text-center">DATE</th>
+                <th class="text-center">STAFF</th>
+                <th class="text-center">CATEGORY</th>
+                <th class="text-center">DESCRIPTION OF ITEM</th>
+                <th class="text-center">AMOUNT</th>
+                <th class="text-center" width="">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($inventories as $index => $i)
+                <tr data-id="{{ $i->id }}">
+                    <td>
+                        {{ $index + 1 }}
+                        <input type="hidden" class="project_id" value="{{ $project->id }}">
+                        <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
+                    </td>
+
+                    <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
+                    <td width="">
+                        <select class="form-select staff_id">
+                            <option value="">Select Staff</option>
+                            @foreach($staffs as $staff)
+                                <option value="{{ $staff->id }}"
+                                    {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
+                                    {{ $staff->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+
+                <td>
+                        <select class="form-select category">
+                            <option value="">Select</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat }}" {{ $i->category === $cat ? 'selected' : '' }}>
+                                    {{ $cat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select description" data-selected="{{ $i->description }}">
+                            <option value="">Select description</option>
+                        </select>
+                        <input type="hidden" class="form-control quantity" value="1">
+                        <input type="hidden" class="form-control amount" value="1">
+                    </td>
+                    <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $i->net_payable }}"></td>
+                    <td>
+                        <button class="btn btn-success btn-sm saveRow">Update</button>
+                        <button class="btn btn-danger btn-sm removeRow">Del</button>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td>
+                        1
+                        <input type="hidden" class="project_id" value="{{ $project->id }}">
+                        <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
+                    </td>
+
+                    <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+                    <td width="">
+                        <select class="form-select staff_id">
+                            <option value="">Select Staff</option>
+                            @foreach($staffs as $staff)
+                                <option value="{{ $staff->id }}">
+                                    {{ $staff->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select category">
+                            <option value="">Select</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat }}" {{ $cat === 'T&P' ? 'selected' : '' }}>
+                                    {{ $cat }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select description">
+                            <option value="">Select description</option>
+                        </select>
+                        <input type="hidden" class="form-control quantity" value="1">
+                        <input type="hidden" class="form-control amount" value="1">
+                    </td>
+
+                    <td><input type="number" class="form-control net_payable"></td>
+                    <td>
+                        <button class="btn btn-success btn-sm saveRow">Save</button>
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex align-items-center justify-content-end gap-4">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm mt-2">
+        Back
+    </a>
+    <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+</div>
+
+@push('scripts')
+<script>
+    const allInventories = @json($allInventories);
+</script>
 
 
-                <input type="hidden" class="project_id" value="{{ $project->id }}">
-                <input type="hidden" class="schedule_work_id" value="{{ $scheduleWork->id }}">
+<script>
+    $(function () {
 
+        let selectedProjectId = "{{ $project->id }}";
+        let schedule_workId = "{{ $scheduleWork->id }}";
+
+        // ADD ROW
+        $('#addRow').click(function () {
+
+            let index = $('#inventoryTable tbody tr').length + 1;
+
+            let row = `
+            <tr>
+                <td>${index}</td>
+                <input type="hidden" class="project_id" value="${selectedProjectId}">
+                <input type="hidden" class="schedule_work_id" value="${schedule_workId}">
                 <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
 
                 <td width="">
@@ -258,17 +305,15 @@
                         @endforeach
                     </select>
                 </td>
+
                 <td>
                     <select class="form-select category">
                         <option value="">Select</option>
                         @foreach($categories as $cat)
-                            <option value="{{ $cat }}" {{ $cat === 'T&P' ? 'selected' : '' }}>
-                                {{ $cat }}
-                            </option>
+                            <option value="{{ $cat }}">{{ $cat }}</option>
                         @endforeach
                     </select>
                 </td>
-
                 <td>
                     <select class="form-select description">
                         <option value="">Select description</option>
@@ -277,265 +322,180 @@
 
 
 
-                <td><input type="number" class="form-control quantity"></td>
-                <td><input type="number" class="form-control amount"></td>
+                <input type="number" class="form-control quantity">
+                <input type="number" class="form-control amount">
                 <td><input type="number" class="form-control net_payable"></td>
 
                 <td>
                     <button class="btn btn-success btn-sm saveRow">Save</button>
+                    <button class="btn btn-danger btn-sm removeRow">Del</button>
                 </td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
-</div>
+            </tr>`;
 
-<div class="d-flex align-items-center justify-content-end gap-4">
-<a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm mt-2">
-    Back
-</a>
-<button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
-</div>
+            $('#inventoryTable tbody').append(row);
+        });
 
+        // SAVE
+        $(document).on('click', '.saveRow', function () {
 
-@push('scripts')
-<script>
-    const allInventories = @json($allInventories);
-</script>
+            let row = $(this).closest('tr');
+            let id  = row.data('id') || null;
 
+            let formData = new FormData();
+            formData.append('_token', "{{ csrf_token() }}");
 
-<script>
-$(function () {
+            // âœ… SINGLE SOURCE OF PROJECT_ID
+            let projectId = row.find('.project_id').length
+                ? row.find('.project_id').val()
+                : row.find('.project_select').val();
 
-    let selectedProjectId = "{{ $project->id }}";
-    let schedule_workId = "{{ $scheduleWork->id }}";
+            let schedule_work_id = row.find('.schedule_work_id').val()
 
-    // ADD ROW
-    $('#addRow').click(function () {
+            formData.append('project_id', projectId);
+            formData.append('schedule_work_id', schedule_work_id);
+            formData.append('date', row.find('.date').val());
+            formData.append('category', row.find('.category').val());
+            formData.append('description', row.find('.description').val());
+            formData.append('quantity', row.find('.quantity').val());
+            formData.append('amount', row.find('.amount').val());
+            formData.append('net_payable', row.find('.net_payable').val());
+            formData.append('staff_id', row.find('.staff_id').val());
 
-        let index = $('#inventoryTable tbody tr').length + 1;
+            $.ajax({
+                url: id
+                    ? `/admin/inventory/${id}/update`
+                    : "{{ route('admin.inventory.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    location.reload();
+                }
+            });
+        });
 
-        let row = `
-        <tr>
-            <td>${index}</td>
-            <input type="hidden" class="project_id" value="${selectedProjectId}">
-            <input type="hidden" class="schedule_work_id" value="${schedule_workId}">
-            <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+        // DELETE
+        $(document).on('click', '.removeRow', function () {
+            let row = $(this).closest('tr');
+            let id  = row.data('id');
 
-            <td width="">
-                <select class="form-select staff_id">
-                    <option value="">Select Staff</option>
-                    @foreach($staffs as $staff)
-                        <option value="{{ $staff->id }}">
-                            {{ $staff->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </td>
-
-            <td>
-                <select class="form-select category">
-                    <option value="">Select</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat }}">{{ $cat }}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td>
-                <select class="form-select description">
-                    <option value="">Select description</option>
-                </select>
-            </td>
-
-
-
-            <td><input type="number" class="form-control quantity"></td>
-            <td><input type="number" class="form-control amount"></td>
-            <td><input type="number" class="form-control net_payable"></td>
-
-            <td>
-                <button class="btn btn-success btn-sm saveRow">Save</button>
-                <button class="btn btn-danger btn-sm removeRow">Del</button>
-            </td>
-        </tr>`;
-
-        $('#inventoryTable tbody').append(row);
-    });
-
-
-
-    // SAVE
-    $(document).on('click', '.saveRow', function () {
-
-        let row = $(this).closest('tr');
-        let id  = row.data('id') || null;
-
-        let formData = new FormData();
-        formData.append('_token', "{{ csrf_token() }}");
-
-        // âœ… SINGLE SOURCE OF PROJECT_ID
-        let projectId = row.find('.project_id').length
-            ? row.find('.project_id').val()
-            : row.find('.project_select').val();
-
-        let schedule_work_id = row.find('.schedule_work_id').val()
-
-        formData.append('project_id', projectId);
-        formData.append('schedule_work_id', schedule_work_id);
-        formData.append('date', row.find('.date').val());
-        formData.append('category', row.find('.category').val());
-        formData.append('description', row.find('.description').val());
-
-        formData.append('quantity', row.find('.quantity').val());
-        formData.append('amount', row.find('.amount').val());
-        formData.append('net_payable', row.find('.net_payable').val());
-
-        formData.append('staff_id', row.find('.staff_id').val());
-
-
-        $.ajax({
-            url: id
-                ? `/admin/inventory/${id}/update`
-                : "{{ route('admin.inventory.store') }}",
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function () {
-                location.reload();
+            if (id) {
+                if (confirm('Delete this item?')) {
+                    $.post(`/admin/inventory/${id}/destroy`,
+                        { _token: "{{ csrf_token() }}" },
+                        function () { row.remove(); }
+                    );
+                }
+            } else {
+                row.remove();
             }
         });
+
     });
 
-    // DELETE
-    $(document).on('click', '.removeRow', function () {
-        let row = $(this).closest('tr');
-        let id  = row.data('id');
-
-        if (id) {
-            if (confirm('Delete this item?')) {
-                $.post(`/admin/inventory/${id}/destroy`,
-                    { _token: "{{ csrf_token() }}" },
-                    function () { row.remove(); }
-                );
-            }
-        } else {
-            row.remove();
-        }
-    });
-
-});
-
-
- new DataTable('#inventoryTable', {
-          scrollX: true,
+    new DataTable('#inventoryTable', {
+        scrollX: true,
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-
-
-
-
-        /* ðŸ”¥ GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
-
         rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
+            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),
                 () => $('td', row).css('background-color', base)
             );
         }
-
-
     });
-</script>
-<script>
-document.addEventListener('change', function (e) {
-
-    // CATEGORY CHANGE
-    if (e.target.classList.contains('category')) {
-
-        let row = e.target.closest('tr');
-        let category = e.target.value;
-
-        let descSelect = row.querySelector('.description');
-        let qtyInput  = row.querySelector('.quantity');
-
-        // reset
-        descSelect.innerHTML = '<option value="">Select description</option>';
-        qtyInput.value = '';
-
-        if (!category) return;
-
-        // filter inventories by category
-        let matches = allInventories.filter(inv => inv.category === category);
-
-        matches.forEach(inv => {
-            let opt = document.createElement('option');
-            opt.value = inv.description;
-            opt.textContent = inv.description;
-            opt.dataset.quantity = inv.quantity;
-            descSelect.appendChild(opt);
-        });
-    }
-
-    // DESCRIPTION CHANGE → autofill quantity
-    if (e.target.classList.contains('description')) {
-
-        let row = e.target.closest('tr');
-        let selectedOption = e.target.selectedOptions[0];
-
-        if (!selectedOption) return;
-
-        let qty = selectedOption.dataset.quantity ?? '';
-        row.querySelector('.quantity').value = qty;
-    }
-
-});
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('change', function (e) {
 
-    document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
+        // CATEGORY CHANGE
+        if (e.target.classList.contains('category')) {
 
-        let categorySelect = row.querySelector('.category');
-        let descSelect     = row.querySelector('.description');
-        let qtyInput       = row.querySelector('.quantity');
+            let row = e.target.closest('tr');
+            let category = e.target.value;
 
-        if (!categorySelect || !descSelect) return;
+            let descSelect = row.querySelector('.description');
+            let qtyInput  = row.querySelector('.quantity');
 
-        let category = categorySelect.value;
-        let selectedDesc = descSelect.dataset.selected;
+            // reset
+            descSelect.innerHTML = '<option value="">Select description</option>';
+            // qtyInput.value = '';
 
-        if (!category) return;
+            if (!category) return;
 
-        descSelect.innerHTML = '<option value="">Select description</option>';
+            // filter inventories by category
+            let matches = allInventories.filter(inv => inv.category === category);
 
-        let matches = allInventories.filter(inv => inv.category === category);
+            matches.forEach(inv => {
+                let opt = document.createElement('option');
+                opt.value = inv.description;
+                opt.textContent = inv.description;
+                opt.dataset.quantity = inv.quantity;
+                opt.dataset.amount = inv.amount;
+                descSelect.appendChild(opt);
+            });
+        }
 
-        matches.forEach(inv => {
-            let opt = document.createElement('option');
-            opt.value = inv.description;
-            opt.textContent = inv.description;
-            opt.dataset.quantity = inv.quantity;
+        // DESCRIPTION CHANGE → autofill quantity
+        if (e.target.classList.contains('description')) {
 
-            if (inv.description === selectedDesc) {
-                opt.selected = true;
-                qtyInput.value = inv.quantity;
-            }
+            let row = e.target.closest('tr');
+            let selectedOption = e.target.selectedOptions[0];
 
-            descSelect.appendChild(opt);
-        });
+            if (!selectedOption) return;
+
+            let qty = selectedOption.dataset.quantity ?? '';
+            let amount = selectedOption.dataset.amount ?? '';
+            row.querySelector('.quantity').value = qty;
+            row.querySelector('.amount').value = amount;
+        }
 
     });
+</script>
 
-});
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
+
+            let categorySelect = row.querySelector('.category');
+            let descSelect     = row.querySelector('.description');
+            let qtyInput       = row.querySelector('.quantity');
+
+            if (!categorySelect || !descSelect) return;
+
+            let category = categorySelect.value;
+            let selectedDesc = descSelect.dataset.selected;
+
+            if (!category) return;
+
+            descSelect.innerHTML = '<option value="">Select description</option>';
+
+            let matches = allInventories.filter(inv => inv.category === category);
+
+            matches.forEach(inv => {
+                let opt = document.createElement('option');
+                opt.value = inv.description;
+                opt.textContent = inv.description;
+                opt.dataset.quantity = inv.quantity;
+
+                if (inv.description === selectedDesc) {
+                    opt.selected = true;
+                    qtyInput.value = inv.quantity;
+                }
+
+                descSelect.appendChild(opt);
+            });
+
+        });
+    });
 </script>
 
 

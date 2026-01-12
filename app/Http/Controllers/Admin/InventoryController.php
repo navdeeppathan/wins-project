@@ -76,8 +76,8 @@ class InventoryController extends Controller
                     $query->whereBetween('created_at', [$start, $end]);
                 })
             ->get();
-        
-         
+
+
 
         $projects = Project::where('user_id', auth()->id())->get();
         $project= Project::where('id', $projectId)->first();
@@ -100,11 +100,10 @@ class InventoryController extends Controller
             'description' => 'nullable|string',
             'paid_to'     => 'nullable|string|max:255',
             'voucher'     => 'nullable|string|max:100',
-            'quantity'    => 'nullable|numeric|min:0',
-            'amount'      => 'nullable|numeric|min:0',
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'schedule_work_id' => 'nullable',
+            'net_payable' => 'nullable  ',
             'staff_id' => 'nullable',
 
         ]);
@@ -113,9 +112,10 @@ class InventoryController extends Controller
         {
             $data['staff_id'] = auth()->id();
         }
-        
+
         // 🧮 Net Payable
-        $data['net_payable'] = ($data['quantity'] ?? 0) * ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
+        // $data['net_payable'] = ($data['quantity'] ?? 0) * ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
+        $data['net_payable'] = ($data['net_payable'] ?? 0);
         $data['user_id'] = auth()->id();
 
         // 📎 Save directly to public folder
@@ -129,7 +129,7 @@ class InventoryController extends Controller
             $data['upload'] = 'inventory_uploads/' . $fileName;
         }
 
-        
+
 
         Inventory::create($data);
 
@@ -145,7 +145,7 @@ class InventoryController extends Controller
 
     public function update(Request $request, Inventory $inventory)
     {
-       
+
         $data = $request->validate([
             'project_id'  => 'nullable|exists:projects,id',
             'vendor_id'   => 'nullable|exists:vendors,id',
@@ -159,12 +159,14 @@ class InventoryController extends Controller
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'schedule_work_id' => 'nullable',
+            'net_payable' => 'nullable',
             'staff_id' => 'nullable',
 
         ]);
 
         // 🧮 Net Payable
-        $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
+        // $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
+         $data['net_payable'] = ($data['net_payable'] ?? 0);
 
         // 📎 Replace file
         if ($request->hasFile('upload')) {

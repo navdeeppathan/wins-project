@@ -133,15 +133,22 @@
                         @if(in_array($p->status, ['awarded', 'agreement', 'billing']))
                             <span class="badge bg-success text-white">Qualified</span>
                         @else
+
                             <input type="checkbox"
                                 class="form-check-input isQualifiedBox"
                                 data-id="{{ $p->id }}"
                                 {{ $p->isQualified ? 'checked' : '' }}>
                             &nbsp;&nbsp;
-                            <button class="btn btn-success btn-sm saveQualifiedBtn"
-                                data-id="{{ $p->id }}">
-                                Save
-                            </button>
+                            @if($p->emds->count() != 0)
+                                <button class="btn btn-success btn-sm saveQualifiedBtn"
+                                    data-id="{{ $p->id }}">
+                                    Save
+                                </button>
+                            @else
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    Save
+                                </button>
+                            @endif
                         @endif
                     </td>
 
@@ -155,11 +162,11 @@
 
                     <td>
                         <a href="{{ route('admin.projects.edit', $p) }}"
-                        class="btn btn-warning btn-sm">Edit</a>
+                        class="btn btn-warning btn-sm">EMD</a>
 
                     <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
                             class="btn btn-primary btn-sm">
-                            Inventory
+                            INVENTORY
                         </a>
 
                     </td>

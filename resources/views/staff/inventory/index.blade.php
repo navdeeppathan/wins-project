@@ -105,7 +105,7 @@
         <th width="200px">Paid To</th>
         <th>Category</th>
         <th>Description of Item</th>
-        <th>Voucher Number</th>
+        <th>Bill Number</th>
         <th>Quantity</th>
         <th>Amount</th>
         <th>Deduction</th>

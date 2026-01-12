@@ -133,6 +133,7 @@
                             <th class="text-center">Description</th>
                             <th class="text-center">Stores</th>
                             <th class="text-center">Measured</th>
+                             <th class="text-center">Balance</th>
                             <th class="text-center">Dismantals</th>
                             <th class="text-center">Rate</th>
                             <th class="text-center">Amount</th>
@@ -140,46 +141,60 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        @if(!empty($items))
+                        @if($items->isNotEmpty())
                             @foreach($items as $index => $i)
+                                <tr data-id="{{ $i->id }}">
+                                    <td class="text-center">{{ $index + 1 }}</td>
 
-                                        <tr data-id="{{ $i->id }}">
-                                            <td class="text-center">{{ $index + 1 }}</td>
+                                    <td class="text-center">{{ $i->description }}</td>
 
-                                            <td class="text-center">{{ $i->description }}</td>
+                                    <td class="text-center">{{ $i->quantity }}</td>
 
-                                            <td class="text-center">{{ $i->quantity }}</td>
+                                    <td class="text-center">{{ $i->scheduleOfWorks->sum('measured_quantity') }}</td>
 
-                                            <td class="text-center">{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
-                                            <td class="text-center">
-                                                        <input type="number" step="0.01"
-                                                            class="form-control form-control-sm dismantals"
-                                                            value="{{ $i->dismantals }}" required>
-                                            </td>
+                                    <td class="text-center">
+                                        {{ $i->quantity - $i->scheduleOfWorks->sum('measured_quantity') }}
+                                        @php $balance = $i->quantity - $i->scheduleOfWorks->sum('measured_quantity'); @endphp
+                                    </td>
 
-                                            <td class="text-center">
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm dismantal_rate"
-                                                    value="{{ $i->dismantal_rate }}" required>
-                                            </td>
-                                            <td  class="dismantal_amount text-center">0.00</td>
+                                    <td class="text-center">
+                                        <input type="number"
+                                        step="0.01"
+                                        min="0"
+                                        max="{{ $balance }}"
+                                        data-max="{{ $balance }}"
+                                        class="form-control form-control-sm dismantals text-center"
+                                        value="{{ $i->dismantals }}"
+                                        required>
+                                    </td>
 
+                                    <td class="text-center">
+                                        <input type="number"
+                                            step="0.01"
+                                            class="form-control form-control-sm dismantal_rate text-center"
+                                            value="{{ $i->dismantal_rate }}"
+                                            required>
+                                    </td>
 
-                                            <td class="text-center">
-                                                        <button class="btn btn-sm btn-success saveDismantalBtn1"
-                                                                data-id="{{ $i->id }}">
-                                                            Save
-                                                        </button>
-                                            </td>
-                                        </tr>
+                                    <td class="dismantal_amount text-center">0.00</td>
 
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-success saveDismantalBtn1"
+                                                data-id="{{ $i->id }}">
+                                            Save
+                                        </button>
+                                    </td>
+                                </tr>
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="5" class="text-center">Data not Found</td>
+                                <td colspan="9" class="text-center text-muted">
+                                    Data not found
+                                </td>
                             </tr>
                         @endif
                     </tbody>
+
                 </table>
 
             </div>
@@ -252,8 +267,19 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-
 <script>
+$(document).on('input', '.dismantals', function () {
+    let max = parseFloat($(this).data('max'));
+    let val = parseFloat($(this).val()) || 0;
+
+    if (val > max) {
+        $(this).val(max);
+        alert('Value cannot exceed balance quantity');
+    }
+});
+</script>
+<script>
+
     $(document).ready(function() {
         var options = {
             responsive: true,
