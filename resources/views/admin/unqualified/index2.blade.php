@@ -14,7 +14,6 @@
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>
                 <th>Returned</th>
-                <th>Save</th>
             </tr>
         </thead>
         <tbody>
@@ -49,9 +48,7 @@
                             class="form-check-input isReturnedBox"
                             data-id="{{ $emd->id }}"
                             checked>
-                    </td>
-
-                    <td style="background:yellow;">
+                        &nbsp;&nbsp;
                         <button class="btn btn-sm btn-success saveisReturnedBtn"
                             data-id="{{ $emd->id }}">
                             Save

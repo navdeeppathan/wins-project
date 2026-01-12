@@ -55,9 +55,7 @@
                                 <th class="text-center">Instrument Number</th>
                                 <th class="text-center">Instrument Date</th>
                                 <th class="text-center">Return</th>
-                                <th class="text-center">Save</th>
                                 <th class="text-center">Forfeited</th>
-                                <th class="text-center">Save</th>
                                 {{-- <th>Status</th> --}}
                             </tr>
                         </thead>
@@ -92,9 +90,7 @@
                                             class="form-check-input isReturnedBox"
                                             data-id="{{ $emd->id }}"
                                             {{ $emd->isReturned ? 'checked' : '' }}>
-                                    </td>
-
-                                    <td class="text-center" style="background:yellow;">
+                                    &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-success saveisReturnedBtn"
                                             data-id="{{ $emd->id }}">
                                             Save
@@ -107,9 +103,7 @@
                                             class="form-check-input isForfietedBox"
                                             data-id="{{ $emd->id }}"
                                             {{ $emd->isForfieted ? 'checked' : '' }}>
-                                    </td>
-
-                                    <td class="text-center" style="background:yellow;">
+                                    &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-success saveisForfietedBtn"
                                             data-id="{{ $emd->id }}">
                                             Save
@@ -158,7 +152,6 @@
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>
                                 <th>Returned</th>
-                                <th>Save</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,9 +186,7 @@
                                             class="form-check-input isReturnedBox"
                                             data-id="{{ $emd->id }}"
                                             checked>
-                                    </td>
-
-                                    <td style="background:yellow;">
+                                        &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-success saveisReturnedBtn"
                                             data-id="{{ $emd->id }}">
                                             Save
@@ -236,7 +227,6 @@
                                 <th>EMD Amt</th>
                                 <th>Instrument Type/ Number/ Date</th>
                                 <th>Forfeited</th>
-                                <th>Save</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -269,9 +259,7 @@
                                             class="form-check-input isForfietedBox"
                                             data-id="{{ $emd->id }}"
                                             checked>
-                                    </td>
-
-                                    <td style="background:yellow;">
+                                        &nbsp;&nbsp;
                                         <button class="btn btn-sm btn-success saveisForfietedBtn"
                                             data-id="{{ $emd->id }}">
                                             Save

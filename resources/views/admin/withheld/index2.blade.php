@@ -30,7 +30,6 @@
 
                 <!-- NEW COLUMNS -->
                 <th class="text-center">Return</th>
-                <th class="text-center">Save</th>
                 {{-- <th>Status</th> --}}
 
                 {{-- <th width="160">Actions</th> --}}
@@ -79,10 +78,7 @@
                                 class="form-check-input isReturnedBox"
                                 data-id="{{ $emd->id }}"
                                 {{ $emd->isReturned ? 'checked' : '' }}>
-                        </td>
-
-                    <!-- SAVE BUTTON -->
-                    <td style="background:yellow;" class="text-center">
+                            &nbsp;&nbsp;
                         <button class="btn btn-sm btn-success saveisReturnedBtn"
                                 data-id="{{ $emd->id }}">
                             Save

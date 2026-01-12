@@ -53,9 +53,7 @@
                                     <th class="text-center">EMD Amt</th>
                                     <th class="text-center">Instrument Type/ Number/ Date</th>
                                     <th class="text-center">Return</th>
-                                    <th class="text-center">Save</th>
                                     <th class="text-center">Forfeited</th>
-                                    <th class="text-center">Save</th>
                                     {{-- <th class="text-center">Status</th> --}}
                                 </tr>
                             </thead>
@@ -88,9 +86,7 @@
                                                 class="form-check-input isReturnedBox"
                                                 data-id="{{ $emd->id }}"
                                                 {{ $emd->isReturned ? 'checked' : '' }}>
-                                        </td>
-
-                                        <td style="background:yellow;">
+                                            &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-success saveisReturnedBtn"
                                                 data-id="{{ $emd->id }}">
                                                 Save
@@ -103,9 +99,7 @@
                                                 class="form-check-input isForfietedBox"
                                                 data-id="{{ $emd->id }}"
                                                 {{ $emd->isForfieted ? 'checked' : '' }}>
-                                        </td>
-
-                                        <td style="background:yellow;">
+                                            &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-success saveisForfietedBtn"
                                                 data-id="{{ $emd->id }}">
                                                 Save
@@ -145,7 +139,6 @@
                                     <th class="text-center">#</th>
                                     <th class="text-center">Name</th>
                                     <th class="text-center">NIT No</th>
-
                                     <th class="text-center">Location</th>
                                     <th class="text-center">Department</th>
                                     <th class="text-center">Estimate Amt</th>
@@ -154,7 +147,6 @@
                                     <th class="text-center">Instrument Number</th>
                                     <th class="text-center">Instrument Date</th>
                                     <th class="text-center">Returned</th>
-                                    <th class="text-center">Save</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -189,9 +181,7 @@
                                                 class="form-check-input isReturnedBox"
                                                 data-id="{{ $emd->id }}"
                                                 checked>
-                                        </td>
-
-                                        <td style="background:yellow;">
+                                            &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-success saveisReturnedBtn"
                                                 data-id="{{ $emd->id }}">
                                                 Save
@@ -234,7 +224,6 @@
                                     <th class="text-center">Instrument Number</th>
                                     <th class="text-center">Instrument Date</th>
                                     <th class="text-center">Forfeited</th>
-                                    <th class="text-center">Save</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -269,9 +258,7 @@
                                                 class="form-check-input isForfietedBox"
                                                 data-id="{{ $emd->id }}"
                                                 checked>
-                                        </td>
-
-                                        <td style="background:yellow;">
+                                            &nbsp;&nbsp;
                                             <button class="btn btn-sm btn-success saveisForfietedBtn"
                                                 data-id="{{ $emd->id }}">
                                                 Save

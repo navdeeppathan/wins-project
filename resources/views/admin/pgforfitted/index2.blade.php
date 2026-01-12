@@ -29,8 +29,7 @@
 
 
                 <!-- NEW COLUMNS -->
-            <th>Forfieted</th>
-            <th>Save</th>
+                <th>Forfieted</th>
                 {{-- <th>Status</th> --}}
 
                 {{-- <th width="160">Actions</th> --}}
@@ -47,7 +46,7 @@
                     <td>{{  $project->state->name ?? '-' }}</td>
                     <td>{{  $project->department->name ?? '-' }}</td>
                     <td>{{  number_format( $emd->amount,2) }}</td>
-                <td>
+                    <td>
 
                             {{ $emd->instrument_type }}<br>
 
@@ -70,10 +69,7 @@
                                 class="form-check-input isForfietedBox"
                                 data-id="{{ $emd->id }}"
                                 {{ $emd->isForfieted ? 'checked' : '' }}>
-                        </td>
-
-                    <!-- SAVE BUTTON -->
-                    <td style="background:yellow;">
+                            &nbsp;&nbsp;
                         <button class="btn btn-sm btn-success saveisForfietedBtn"
                                 data-id="{{ $emd->id }}">
                             Save

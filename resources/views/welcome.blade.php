@@ -920,11 +920,9 @@
                 <div class="service-pricing">
                     <span style="color:#fff; font-weight:500;">
                         Price Starting @ ₹7,200 /- per year (Excl. GST)
+                        <br>
+                        Price : <strong>₹8,496 /-</strong> (GST Included)
                     </span>
-                    <br>
-                    <p style="color:#fff; margin:0;">
-                       Price : <strong>₹8,496 /-</strong> (GST Included)
-                    </p>
                 </div>
 
               </div>

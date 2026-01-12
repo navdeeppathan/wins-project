@@ -30,7 +30,6 @@
 
                 <!-- NEW COLUMNS -->
                 <th>Forfieted</th>
-                <th>Save</th>
                 {{-- <th>Status</th> --}}
 
                 {{-- <th width="160">Actions</th> --}}
@@ -78,10 +77,7 @@
                                 class="form-check-input isForfietedBox"
                                 data-id="{{ $emd->id }}"
                                 {{ $emd->isForfeited ? 'checked' : '' }}>
-                        </td>
-
-                    <!-- SAVE BUTTON -->
-                    <td style="background:yellow;">
+                        &nbsp;&nbsp;
                         <button class="btn btn-sm btn-success saveisForfietedBtn"
                                 data-id="{{ $emd->id }}">
                             Save
