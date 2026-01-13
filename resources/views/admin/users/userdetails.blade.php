@@ -204,6 +204,16 @@
                             {{ $i->isApproved == 1 ? 'disabled' : '' }}>
                         {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
                     </button>
+                    {{-- Delete Form --}}
+                    <form action="{{ route('admin.inventory.destroy', $i->id) }}" 
+                        method="POST" 
+                        class="d-inline"
+                        onsubmit="return confirm('Are you sure you want to delete this inventory?')">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Del
+                        </button>
+                    </form>
                 </td>
 
             </tr>
@@ -225,101 +235,96 @@
 
 
 @push('scripts')
-
 <script>
-$(document).on('change', '.paid_through', function () {
-    let row = $(this).closest('tr');
-    let type = $(this).val();
-    let refInput = row.find('.payment_ref');
+    $(document).on('change', '.paid_through', function () {
+        let row = $(this).closest('tr');
+        let type = $(this).val();
+        let refInput = row.find('.payment_ref');
 
-    refInput.val('');
+        refInput.val('');
 
-    if (type === 'CASH') {
-        refInput.attr('type','date');
-        refInput.attr('placeholder','Paid date');
-    }
-    else if (type === 'BANK') {
-        refInput.attr('type','text');
-        refInput.attr('placeholder','Cheque / RTGS number');
-    }
-    else if (type === 'ONLINE') {
-        refInput.attr('type','text');
-        refInput.attr('placeholder','UPI reference number');
-    }
-    else {
-        refInput.attr('type','text');
-        refInput.attr('placeholder','');
-    }
-});
+        if (type === 'CASH') {
+            refInput.attr('type','date');
+            refInput.attr('placeholder','Paid date');
+        }
+        else if (type === 'BANK') {
+            refInput.attr('type','text');
+            refInput.attr('placeholder','Cheque / RTGS number');
+        }
+        else if (type === 'ONLINE') {
+            refInput.attr('type','text');
+            refInput.attr('placeholder','UPI reference number');
+        }
+        else {
+            refInput.attr('type','text');
+            refInput.attr('placeholder','');
+        }
+    });
 </script>
-
 
 <script>
     $('.approveBtn').click(function () {
-    let row = $(this).closest('tr');
-    let id = $(this).data('id');
+        let row = $(this).closest('tr');
+        let id = $(this).data('id');
 
-    let paid_through = row.find('.paid_through').val();
-    let payment_ref = row.find('.payment_ref').val();
+        let paid_through = row.find('.paid_through').val();
+        let payment_ref = row.find('.payment_ref').val();
 
-    if (!paid_through) {
-        alert('Please select Paid Through');
-        return;
-    }
-
-    if (!payment_ref) {
-        alert('Please enter payment reference');
-        return;
-    }
-
-    $.ajax({
-        url: `/admin/inventory/${id}/approve`,
-        type: 'PATCH',
-        data: {
-            _token: '{{ csrf_token() }}',
-            isApproved: 1,
-            paid_through: paid_through,
-            payment_ref: payment_ref
-        },
-        success: function (res) {
-            alert(res.message);
-            window.location.reload();
+        if (!paid_through) {
+            alert('Please select Paid Through');
+            return;
         }
+
+        if (!payment_ref) {
+            alert('Please enter payment reference');
+            return;
+        }
+
+        $.ajax({
+            url: `/admin/inventory/${id}/approve`,
+            type: 'PATCH',
+            data: {
+                _token: '{{ csrf_token() }}',
+                isApproved: 1,
+                paid_through: paid_through,
+                payment_ref: payment_ref
+            },
+            success: function (res) {
+                alert(res.message);
+                window.location.reload();
+            }
+        });
     });
-});
+
+    new DataTable('#inventoryTable', {
+            scrollX: true,
+            scrollY:        600,
+            deferRender:    true,
+            scroller:       true,
+            scrollCollapse: true,
+            responsive: false,
+            autoWidth: false,
+            fixedHeader: true,
 
 
- new DataTable('#inventoryTable', {
-        scrollX: true,
-        scrollY:        600,
-        deferRender:    true,
-        scroller:       true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: false,
-        fixedHeader: true,
+            /* 🔥 GUARANTEED ROW COLOR FIX */
+            createdRow: function (row, data, index) {
+                let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+                $('td', row).css('background-color', bg);
+            },
 
+            rowCallback: function (row, data, index) {
+                let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
+                $(row).off('mouseenter mouseleave').hover(
+                    () => $('td', row).css('background-color', '#e9ecff'),
+                    () => $('td', row).css('background-color', base)
+                );
+            }
 
 
     });
 </script>
-
-
 @endpush
 
 

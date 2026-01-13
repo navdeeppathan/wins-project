@@ -402,6 +402,11 @@
     <script>
 
         $(document).on('click', '.saveisReturnedBtn', function () {
+
+            if (!confirm("Are you sure you want to update Returned status?")) {
+                return; // Stop if user clicks Cancel
+            }
+
             let id = $(this).data('id');
             let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
 
@@ -423,6 +428,10 @@
 
     <script>
         $(document).on('click', '.saveisForfietedBtn', function () {
+
+            if (!confirm("Are you sure you want to update Forfeited status?")) {
+                return;
+            }
 
             let id = $(this).data('id');
             let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;

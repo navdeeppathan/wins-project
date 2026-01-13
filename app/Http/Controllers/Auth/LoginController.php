@@ -26,9 +26,7 @@ class LoginController extends Controller
             {
                 return redirect()->route('superadmin.dashboard');
             }
-            else if (Auth::user()->role == 'staff'){
-                return redirect()->route('staff.dashboard');
-            }
+            
             return redirect()->route('admin.dashboard');
         }
 

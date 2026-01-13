@@ -1,29 +1,3 @@
-{{-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body style="font-family: Arial; background: #f4f4f4; padding:20px;">
-    <h2>Login</h2>
-
-    @if(session('error')) <p style="color:red">{{ session('error') }}</p> @endif
-    @if(session('success')) <p style="color:green">{{ session('success') }}</p> @endif
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <p>
-            <label>Email</label><br>
-            <input type="email" name="email" required>
-        </p>
-        <p>
-            <label>Password</label><br>
-            <input type="password" name="password" required>
-        </p>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html> --}}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -220,30 +194,30 @@
             font-weight: bold;
         }
         /* Background Slider Animation */
-.bg-slider {
-    position: relative;
-    overflow: hidden;
-    background-size: cover !important;
-    background-position: center !important;
-    animation: bgChange 25s infinite linear;
-}
+        .bg-slider {
+            position: relative;
+            overflow: hidden;
+            background-size: cover !important;
+            background-position: center !important;
+            animation: bgChange 25s infinite linear;
+        }
 
-/* 5 images × 5 seconds = 25 seconds total loop */
-/* @keyframes bgChange {
-    0%   { background-image: url('/s1.jpg'); }
-    20%  { background-image: url('/s1.jpg'); }
+        /* 5 images × 5 seconds = 25 seconds total loop */
+        /* @keyframes bgChange {
+            0%   { background-image: url('/s1.jpg'); }
+            20%  { background-image: url('/s1.jpg'); }
 
-    20.01% { background-image: url('/s2.jpg'); }
-    40%    { background-image: url('/s2.jpg'); }
+            20.01% { background-image: url('/s2.jpg'); }
+            40%    { background-image: url('/s2.jpg'); }
 
-    40.01% { background-image: url('/s3.jpg'); }
-    60%    { background-image: url('/s3.jpg'); }
+            40.01% { background-image: url('/s3.jpg'); }
+            60%    { background-image: url('/s3.jpg'); }
 
-    60.01% { background-image: url('/s4.jpg'); }
-    80%    { background-image: url('/s4.jpg'); }
+            60.01% { background-image: url('/s4.jpg'); }
+            80%    { background-image: url('/s4.jpg'); }
 
 
-} */
+        } */
 
     </style>
 </head>

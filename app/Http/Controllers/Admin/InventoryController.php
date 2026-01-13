@@ -213,40 +213,40 @@ class InventoryController extends Controller
     // }
 
     public function isApproved(Request $request, Inventory $inventory)
-{
-    $data = $request->validate([
-        'isApproved'   => 'required|boolean',
-        'paid_through'=> 'required|in:CASH,BANK,ONLINE',
-        'payment_ref' => 'required'
-    ]);
+    {
+        $data = $request->validate([
+            'isApproved'   => 'required|boolean',
+            'paid_through'=> 'required|in:CASH,BANK,ONLINE',
+            'payment_ref' => 'required'
+        ]);
 
-    if ($data['paid_through'] === 'CASH') {
-        $inventory->paid_date = $data['payment_ref'];
-        $inventory->bank_ref = null;
-        $inventory->upi_ref = null;
+        if ($data['paid_through'] === 'CASH') {
+            $inventory->paid_date = $data['payment_ref'];
+            $inventory->bank_ref = null;
+            $inventory->upi_ref = null;
+        }
+
+        if ($data['paid_through'] === 'BANK') {
+            $inventory->bank_ref = $data['payment_ref'];
+            $inventory->paid_date = null;
+            $inventory->upi_ref = null;
+        }
+
+        if ($data['paid_through'] === 'ONLINE') {
+            $inventory->upi_ref = $data['payment_ref'];
+            $inventory->paid_date = null;
+            $inventory->bank_ref = null;
+        }
+
+        $inventory->paid_through = $data['paid_through'];
+        $inventory->isApproved = 1;
+        $inventory->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment approved and saved successfully'
+        ]);
     }
-
-    if ($data['paid_through'] === 'BANK') {
-        $inventory->bank_ref = $data['payment_ref'];
-        $inventory->paid_date = null;
-        $inventory->upi_ref = null;
-    }
-
-    if ($data['paid_through'] === 'ONLINE') {
-        $inventory->upi_ref = $data['payment_ref'];
-        $inventory->paid_date = null;
-        $inventory->bank_ref = null;
-    }
-
-    $inventory->paid_through = $data['paid_through'];
-    $inventory->isApproved = 1;
-    $inventory->save();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Payment approved and saved successfully'
-    ]);
-}
 
 
 
@@ -255,10 +255,7 @@ class InventoryController extends Controller
     {
         $inventory->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Inventory item removed'
-        ]);
+        return redirect()->back()->with('success', 'Inventory item removed successfully');
     }
 
 

@@ -242,6 +242,8 @@
 </div> --}}
 
 {{-- ================= TOP INVENTORY ================= --}}
+@if($totalInventory->count() > 0)
+
 <div class="dashboard-section">
     <h4 class="section-title">Top Inventory</h4>
 
@@ -270,6 +272,11 @@
         </table>
     </div>
 </div>
+{{-- @else --}}
+    {{-- <div class="alert alert-warning text-center">
+        Data is not available. Start Your Projects.
+    </div> --}}
+@endif
 
 @endsection
 

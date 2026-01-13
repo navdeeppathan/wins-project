@@ -194,6 +194,16 @@
                                     {{ $i->isApproved == 1 ? 'disabled' : '' }}>
                                 {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
                             </button>
+                            {{-- Delete Form --}}
+                            <form action="{{ route('admin.inventory.destroy', $i->id) }}" 
+                                method="POST" 
+                                class="d-inline"
+                                onsubmit="return confirm('Are you sure you want to delete this inventory?')">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Del
+                                </button>
+                            </form>
                         </td>
 
                     </tr>

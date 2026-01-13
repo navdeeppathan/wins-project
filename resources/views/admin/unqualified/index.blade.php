@@ -357,8 +357,6 @@
 @push('scripts')
 
     <script>
-
-
         let currentType = 'emd';
         let currentTab  = 'tab-active';
 
@@ -393,7 +391,7 @@
 
             showContent();
 
-            // 🔥 FIX: adjust datatable columns after tab is visible
+            // FIX: adjust datatable columns after tab is visible
             setTimeout(() => {
                 if (tab === 'tab-active' && tableActive) {
                     tableActive.columns.adjust().draw(false);
@@ -418,10 +416,15 @@
         document.addEventListener('DOMContentLoaded', showContent);
     </script>
 
-
     <script>
 
         $(document).on('click', '.saveisReturnedBtn', function () {
+
+            
+            if (!confirm("Are you sure you want to update Returned status?")) {
+                return; // Stop if user clicks Cancel
+            }
+
             let id = $(this).data('id');
             let isReturned = $(this).closest('tr').find('.isReturnedBox').is(':checked') ? 1 : 0;
 
@@ -444,6 +447,10 @@
     <script>
         $(document).on('click', '.saveisForfietedBtn', function () {
 
+            if (!confirm("Are you sure you want to update Forfeited status?")) {
+                return;
+            }
+
             let id = $(this).data('id');
             let isForfieted = $(this).closest('tr').find('.isForfietedBox').is(':checked') ? 1 : 0;
 
@@ -464,65 +471,64 @@
 
     </script>
 
-
     <script>
-    let tableActive, tableReturned, tableForfeited;
+        let tableActive, tableReturned, tableForfeited;
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        tableActive = new DataTable('#emdactive', commonDTConfig());
-        tableReturned = new DataTable('#emdreturned', commonDTConfig());
-        tableForfeited = new DataTable('#emdforfieted', commonDTConfig());
+            tableActive = new DataTable('#emdactive', commonDTConfig());
+            tableReturned = new DataTable('#emdreturned', commonDTConfig());
+            tableForfeited = new DataTable('#emdforfieted', commonDTConfig());
 
-        // Project Name filter
-        $('#filterProjectName').on('keyup', function () {
-            applyFilter(1, this.value);
+            // Project Name filter
+            $('#filterProjectName').on('keyup', function () {
+                applyFilter(1, this.value);
+            });
+
+            // NIT filter
+            $('#filterNit').on('keyup', function () {
+                applyFilter(2, this.value);
+            });
+
+            // Department filter
+            $('#filterDepartment').on('keyup', function () {
+                applyFilter(5, this.value);
+            });
+
         });
 
-        // NIT filter
-        $('#filterNit').on('keyup', function () {
-            applyFilter(2, this.value);
-        });
+        function applyFilter(columnIndex, value) {
+            [tableActive, tableReturned, tableForfeited].forEach(table => {
+                if (table) {
+                    table.column(columnIndex).search(value).draw();
+                }
+            });
+        }
 
-        // Department filter
-        $('#filterDepartment').on('keyup', function () {
-            applyFilter(5, this.value);
-        });
+        function commonDTConfig() {
+            return {
+                scrollX: true,
+                responsive: false,
+                autoWidth: false,   // ✅ important
+                scrollCollapse: true,
 
-    });
+                createdRow: function (row, data, index) {
+                    let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+                    $('td', row).css('background-color', bg);
+                },
 
-    function applyFilter(columnIndex, value) {
-        [tableActive, tableReturned, tableForfeited].forEach(table => {
-            if (table) {
-                table.column(columnIndex).search(value).draw();
-            }
-        });
-    }
+                rowCallback: function (row, data, index) {
+                    let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
-    function commonDTConfig() {
-        return {
-            scrollX: true,
-            responsive: false,
-            autoWidth: false,   // ✅ important
-            scrollCollapse: true,
+                    $(row).off('mouseenter mouseleave').hover(
+                        () => $('td', row).css('background-color', '#e9ecff'),
+                        () => $('td', row).css('background-color', base)
+                    );
+                }
+            };
+        }
+    </script>
 
-            createdRow: function (row, data, index) {
-                let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-                $('td', row).css('background-color', bg);
-            },
-
-            rowCallback: function (row, data, index) {
-                let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-                $(row).off('mouseenter mouseleave').hover(
-                    () => $('td', row).css('background-color', '#e9ecff'),
-                    () => $('td', row).css('background-color', base)
-                );
-            }
-        };
-    }
-
-</script>
 @endpush
 
 
