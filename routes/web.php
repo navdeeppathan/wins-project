@@ -146,6 +146,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         [App\Http\Controllers\Admin\ProjectController::class, 'withheldreturnIndex']
     )->name('projects.withheldreturned.index');
 
+
+    Route::get(
+        '/allrecoveries',
+        [App\Http\Controllers\Admin\RecoveryController::class, 'tabRecoveries']
+    )->name('projects.recoveries.tabindex');
+
      Route::get(
         '/pgforfieted',
         [App\Http\Controllers\Admin\ProjectController::class, 'pgforfietedIndex']
@@ -553,6 +559,8 @@ Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () 
         '/pgreturned',
         [ProjectController::class, 'pgreturnIndex']
     )->name('projects.pgreturned.index');
+
+    
 
      Route::get(
         '/securityreturned',

@@ -63,6 +63,7 @@ class ActivityController extends Controller
         return [
             'name'     => $a->activity_name,
             'progress' => $progress,
+            'weightage' => (int) $a->weightage,
             'color'    => $color,
             'status'   => $status,
             'from'     => $a->from_date?->format('d M Y'),

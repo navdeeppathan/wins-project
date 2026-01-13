@@ -193,7 +193,8 @@
         <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
     </div>
 
-    <div class="card mt-4">
+
+    {{-- <div class="card mt-4">
         <div class="card-header text-white" style="background:#1f4fd8">
 
             <small>All Construction Progress</small>
@@ -267,7 +268,112 @@
             }
         </style>
 
+    </div> --}}
+
+    <div class="mt-4 mb-1 d-flex justify-content-end">
+        <button id="exportPdf" class="btn btn-secondary mb-3">
+        <i class="fa fa-file-pdf"></i> Export Progress PDF
+    </button>
     </div>
+    <div id="progressPdfArea">
+        <div class="card ">
+            <div class="card-header text-white" style="background:#1f4fd8">
+                <small>All Construction Progress</small>
+            </div>
+
+            <div class="card-body progress-wrapper">
+                @foreach($activities as $a)
+                    <div class="activity-block">
+                        <div class="activity-title">
+                            {{ $a['name'] }} ({{ $a['status'] }})
+                        </div>
+
+                        {{-- <div class="progress-track">
+                            <div class="progress-fill {{ $a['color'] }}"
+                                style="width: {{ $a['progress'] }}%">
+                            </div>
+                        </div> --}}
+                        <div class="progress-track">
+
+                            <!-- WEIGHTAGE (white area) -->
+                            <div class="weightage-base" style="width: {{ $a['weightage'] }}%">
+
+                                <!-- PROGRESS (percent of weightage) -->
+                                <div class="progress-fill {{ $a['color'] }}"
+                                    style="width: {{ $a['progress'] }}%">
+                                    
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+        <style>
+            .progress-wrapper {
+                background: linear-gradient(180deg, #1f4fd8, #4b8df8);
+                padding: 30px;
+
+            }
+
+            .activity-block {
+                margin-bottom: 22px;
+            }
+
+            .activity-title {
+                color: #fff;
+                font-weight: 500;
+                margin-bottom: 6px;
+                font-size: 15px;
+            }
+            .progress-track {
+                width: 100%;
+                height: 16px;
+                border-radius: 20px;
+                border: 2px solid rgba(255,255,255,0.6);
+                overflow: hidden;
+            }
+
+            /* White allocated weightage */
+            .weightage-base {
+                height: 100%;
+                background: rgb(255, 255, 255);
+                position: relative;
+            }
+
+            /* Actual progress */
+            .progress-fill {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Progress colors */
+            .progress-fill.green { background:#22c55e; }
+            .progress-fill.yellow { background:#facc15; }
+            .progress-fill.red { background:#ef4444; }
+
+            /* White text */
+            .bar-text {
+                color: white;
+                font-size: 11px;
+                font-weight: 600;
+                text-shadow: 0 0 4px rgba(0,0,0,0.6);
+                white-space: nowrap;
+            }
+
+
+        </style>
 
 @push('scripts')
     <script>
@@ -441,6 +547,7 @@
         });
     </script>
 
+
     <script>
         function calculateTotalWeightage() {
             let total = 0;
@@ -469,6 +576,51 @@
             }
         }
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        document.getElementById("exportPdf").addEventListener("click", function () {
+
+            const element = document.getElementById("progressPdfArea");
+
+            html2canvas(element, {
+                scale: 4,          // 🔥 Higher = sharper
+                useCORS: true,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
+
+                const imgData = canvas.toDataURL("image/png", 1.0);
+
+                // Normal compact page size
+                const pdfWidth  = 180;
+                const pdfHeight = 230;
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: "p",
+                    unit: "mm",
+                    format: [pdfWidth, pdfHeight]
+                });
+
+                const margin = 10;
+                const imgWidth = pdfWidth - margin * 2;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+
+                const y = (pdfHeight - imgHeight) / 2;
+
+                // High quality image insert
+                pdf.addImage(imgData, "PNG", margin, y, imgWidth, imgHeight, "", "FAST");
+
+                pdf.save("Construction_Progress.pdf");
+            });
+
+        });
+    </script>
+
+
+
 @endpush
 
 

@@ -236,6 +236,11 @@
                     class="dropdown-item {{ Request::is('admin/withheld*') ? 'active' : '' }}">
                         WITHHELD
                     </a>
+
+                    <a href="{{ route('admin.projects.recoveries.tabindex') }}"
+                    class="dropdown-item {{ Request::is('admin/allrecoveries*') ? 'active' : '' }}">
+                        Recoveries
+                    </a>
                 </div>
             </div>
             @endif

@@ -22,6 +22,25 @@ class RecoveryController extends Controller
         ));
     }
 
+
+    public function tabRecoveries()
+    {
+        $userId = auth()->id();
+
+        $projects = Project::with(['state','departments','billings.recoveries'])
+            ->where('user_id', $userId)
+            ->whereHas('billings.recoveries')   // 🔥 THIS LINE
+            ->latest()
+            ->get();
+
+        return view('admin.recoveries.tabRecoveries', compact('projects'));
+    }
+
+
+
+
+
+
     public function store(Request $request, Billing $billing)
     {
         $request->validate([
