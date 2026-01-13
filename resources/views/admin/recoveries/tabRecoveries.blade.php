@@ -47,61 +47,52 @@ $recoveryTabs = [
 
 @foreach($recoveryTabs as $tabKey=>$tab)
 <div class="content2 emd {{ $tabKey }} {{ $loop->first?'show':'' }}">
+    <table
+            class="table table-bordered recovery-table class-table recoverytablee"
+            data-tab="{{ $tabKey }}"
+        >
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Project</th>
+                <th class="text-center">Agreement</th>
+                <th class="text-center">State</th>
+                <th class="text-center">Department</th>
+                <th class="text-center">Estimate</th>
+                <th class="text-center">EMD</th>
+                <th class="text-center">{{ $tab['label'] }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php $i=0; @endphp
+           @foreach($projects as $row)
 
-<table class="table table-bordered recovery-table">
-<thead>
-<tr>
-    <th>#</th>
-    <th>Project</th>
-    <th>Agreement</th>
-    <th>State</th>
-    <th>Department</th>
-    <th>Estimate</th>
-    <th>EMD</th>
-    <th>{{ $tab['label'] }}</th>
-</tr>
-</thead>
-<tbody>
+                <tr>
+                   <td class="text-center" class="text-center">{{ $i }}</td>
+                    <td class="text-center" style="
+                            text-align: justify;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            word-break: break-word;
+                        ">
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $row->project_name), 10)
+                        )) !!}
+                    </td>
+                    <td class="text-center">{{ $row->agreement_no }}</td>
+                    <td class="text-center">{{ $row->state_name ?? '-' }}</td>
+                    <td class="text-center">{{ $row->department_name ?? '-' }}</td>
+                    <td class="text-center">{{ number_format($row->estimated_amount,2) }}</td>
+                    <td class="text-center">{{ number_format($row->emd_amount ?? 0,2) }}</td>
+                    <td class="text-center">{{ number_format($row->{$tab['field']} ?? 0,2) }}</td>
+                </tr>
+                @php $i++; @endphp
+            @endforeach
 
-    
-@foreach($projects as $project)
-
-
-
-    @foreach($project->billings as $billing)
-    
-   
-        @php
-            $recs = $billing->recoveries ?? collect();
-            
-        @endphp
-
-        @if($recs->isEmpty())
-            @continue
-        @endif
-
-        @foreach($recs as $rec)
-
-        <tr>
-            <td>{{ $project->id }}</td>
-            <td>{{ $project->name }}</td>
-            <td>{{ $project->agreement_no }}</td>
-            <td>{{ $project->state->name ?? '-' }}</td>
-            <td>{{ $project->departments->name ?? '-' }}</td>
-            <td>{{ number_format($project->estimated_amount,2) }}</td>
-            <td>{{ number_format($project->emd_amount ?? 0,2) }}</td>
-
-
-            {{-- dynamic recovery --}}
-            <td>{{ number_format($rec->{$tab['field']} ?? 0,2) }}</td>
-        </tr>
-        @endforeach
-    @endforeach
-@endforeach
-
-</tbody>
-</table>
-
+        </tbody>
+    </table>
 </div>
 @endforeach
 
@@ -119,14 +110,68 @@ $recoveryTabs = [
 
 @push('scripts')
 <script>
+
     let currentTab='tab-security'
 
-    function switchTab(tab,btn){
-        currentTab=tab
-        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
-        btn.classList.add('active')
-        document.querySelectorAll('.content2').forEach(c=>c.classList.remove('show'))
-        document.querySelector('.'+tab).classList.add('show')
+    let dataTables = {};
+
+    $(document).ready(function () {
+
+        $('.recoverytablee').each(function () {
+
+            let tabKey = $(this).data('tab');
+
+            // 🔥 FIX: destroy if already initialised
+            if ($.fn.DataTable.isDataTable(this)) {
+                $(this).DataTable().destroy();
+            }
+
+            dataTables[tabKey] = $(this).DataTable({
+                scrollX: true,
+                autoWidth: false,
+                pageLength: 10,
+                ordering: true,
+                searching: true,
+                 /* 🔥 GUARANTEED ROW COLOR FIX */
+                createdRow: function (row, data, index) {
+                    let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+                    $('td', row).css('background-color', bg);
+                },
+
+                rowCallback: function (row, data, index) {
+                    let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+                    $(row).off('mouseenter mouseleave').hover(
+                        () => $('td', row).css('background-color', '#e9ecff'),
+                        () => $('td', row).css('background-color', base)
+                    );
+                }
+            });
+
+        });
+
+    });
+
+    function switchTab(tab, btn) {
+
+        currentTab = tab;
+
+        // Activate tab button
+        document.querySelectorAll('.tab')
+            .forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show tab content
+        document.querySelectorAll('.content2')
+            .forEach(c => c.classList.remove('show'));
+        document.querySelector('.' + tab).classList.add('show');
+
+        // Adjust DataTable
+        setTimeout(() => {
+            if (dataTables[tab]) {
+                dataTables[tab].columns.adjust().draw(false);
+            }
+        }, 20);
     }
 
     $('#filterProject').on('keyup',function(){

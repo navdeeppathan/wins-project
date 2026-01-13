@@ -98,10 +98,13 @@ class InventoryController extends Controller
             'date'        => 'nullable|date',
             'category'    => 'nullable|string|max:100',
             'description' => 'nullable|string',
+            'quantity'    => 'nullable|numeric|min:0',
+            'amount'      => 'nullable|numeric|min:0',
             'paid_to'     => 'nullable|string|max:255',
             'voucher'     => 'nullable|string|max:100',
             'deduction'   => 'nullable|numeric|min:0',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'qty_issued' => 'nullable',
             'schedule_work_id' => 'nullable',
             'net_payable' => 'nullable  ',
             'staff_id' => 'nullable',
@@ -118,6 +121,7 @@ class InventoryController extends Controller
         // 🧮 Net Payable
         // $data['net_payable'] = ($data['quantity'] ?? 0) * ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
         $data['net_payable'] = ($data['net_payable'] ?? 0);
+        $data['qty_issued_status'] = $request->has('qty_issued') ? 1 : 0;
         $data['user_id'] = auth()->id();
 
         // 📎 Save directly to public folder
@@ -159,6 +163,7 @@ class InventoryController extends Controller
             'quantity'    => 'nullable|numeric|min:0',
             'amount'      => 'nullable|numeric|min:0',
             'deduction'   => 'nullable|numeric|min:0',
+            'qty_issued' => 'nullable',
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'schedule_work_id' => 'nullable',
             'net_payable' => 'nullable',
@@ -170,7 +175,7 @@ class InventoryController extends Controller
         // 🧮 Net Payable
         // $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
          $data['net_payable'] = ($data['net_payable'] ?? 0);
-
+        $data['qty_issued_status'] = $request->has('qty_issued') ? 1 : 0;
         // 📎 Replace file
         if ($request->hasFile('upload')) {
 

@@ -365,7 +365,14 @@
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
                 </div> --}}
-                <div class="brand-text">DigiProject</div>
+                <div class="brand-text">
+                    <img src="{{ asset('logo.jpeg') }}" alt="DigiProject Logo">
+                    <span style="font-size:10px; display:block; margin-top:-5px;">
+                        Centralise your data.
+                         Summarise your workflow.
+                          Utilise your resources.
+                        </span>
+                </div>
 
 
             </div>
@@ -1383,7 +1390,13 @@
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
                 </div> --}}
-                <div class="brand-text">DigiProject</div>
+
+                <div class="brand-text">
+                    <img src="{{asset('logo.jpeg')}}" alt="" style="height: 140px; width:160px;  margin-right:10px;">
+                    <span style="display: block; font-size: 15px;"> Centralise your data.
+                         Summarise your workflow.
+                          Utilise your resources.</span>
+                </div>
 
 
             </div>
@@ -1457,7 +1470,7 @@
         <div class="row">
           <div class="col-12">
             <div class="footer-bottom-content">
-              <p class="mb-0">© <span class="sitename">solution1401@gmail.com</span>. All rights reserved.</p>
+              <p class="mb-0">© <span class="sitename">solution1401@gmail.com ISO 9001:2015</span>. All rights reserved.</p>
               <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you've purchased the pro version. -->

@@ -135,7 +135,7 @@
                             <span class="badge bg-success">Saved</span>
                             @endif --}}
 
-                             <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Add NOTE</a>
+                             <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> + NOTE</a>
 
                         <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
 

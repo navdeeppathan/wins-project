@@ -52,7 +52,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div> --}}
-            <span class="brand-name">DigiProject</span>
+            <span class="brand-name">
+                <img src="{{asset('logo.jpeg')}}" alt="" style="height: 40px; width:50px;  margin-right:10px;">
+                DigiProject
+            </span>
             <button class="collapse-btn" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -61,7 +64,7 @@
         </div>
 
         <nav class="sidebar-nav">
-            
+
             @if(in_array($role, $menu['dashboard']))
             <div class="nav-item">
                 <a href="{{ url('/admin') }}"
@@ -128,7 +131,7 @@
                 </a>
             </div>
             @endif
-           
+
 
             @if(in_array($role, $menu['bill_of_quantity']))
             <div class="nav-item">
@@ -344,7 +347,7 @@
             </div>
             @endif
 
-           
+
 
 
         </nav>

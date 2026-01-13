@@ -14,6 +14,7 @@ class Inventory extends Model
         'sku',
         'remarks',
         'date',
+        'qty_issued_status',
                 'category',
                 'description',
                 'paid_to',

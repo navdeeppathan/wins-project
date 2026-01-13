@@ -27,11 +27,50 @@ class RecoveryController extends Controller
     {
         $userId = auth()->id();
 
-        $projects = Project::with(['state','departments','billings.recoveries'])
-            ->where('user_id', $userId)
-            ->whereHas('billings.recoveries')   // 🔥 THIS LINE
-            ->latest()
+        $projects = \DB::table('projects as p')
+            ->join('billings as b', 'b.project_id', '=', 'p.id')
+            ->join('recoveries as r', 'r.billing_id', '=', 'b.id')
+            ->leftJoin('departments as d', 'd.id', '=', 'p.department')
+            ->leftJoin('states as s', 's.id', '=', 'p.location')
+            ->where('p.user_id', auth()->id())
+            ->groupBy(
+                'p.id',
+                'p.name',
+                'p.agreement_no',
+                's.name',
+                'd.name',
+                'p.estimated_amount',
+                'p.emd_amount'
+            )
+            ->selectRaw('
+                p.id AS project_id,
+                p.name AS project_name,
+                p.agreement_no,
+                s.name AS state_name,
+                d.name AS department_name,
+                p.estimated_amount,
+                p.emd_amount,
+
+                SUM(r.security)      AS security,
+                SUM(r.income_tax)    AS income_tax,
+                SUM(r.labour_cess)   AS labour_cess,
+                SUM(r.water_charges) AS water_charges,
+                SUM(r.license_fee)   AS license_fee,
+                SUM(r.cgst)          AS cgst,
+                SUM(r.sgst)          AS sgst,
+                SUM(r.recovery)      AS recovery,
+                SUM(r.total)         AS total
+            ')
             ->get();
+
+        // $projects = Project::with([
+        //             'billings.recoveries',
+        //             'departments',
+        //             'state'
+        //         ])
+        //         ->whereHas('billings.recoveries')
+        //         ->where('user_id', auth()->id())
+        //         ->get();
 
         return view('admin.recoveries.tabRecoveries', compact('projects'));
     }

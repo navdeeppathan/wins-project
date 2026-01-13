@@ -190,85 +190,15 @@
             </tbody>
         </table>
 
-        <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+        <div class="d-flex justify-content-end">
+            <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+            <a href="{{ url('admin/award')}}" class="btn btn-secondary btn-sm mt-2 ms-2">Back</a>
+
+        </div>
+
     </div>
 
 
-    {{-- <div class="card mt-4">
-        <div class="card-header text-white" style="background:#1f4fd8">
-
-            <small>All Construction Progress</small>
-        </div>
-
-        <div class="card-body progress-wrapper">
-
-            @foreach($activities as $a)
-
-                <div class="activity-block">
-                    <div class="activity-title">
-                        {{ $a['name'] }} ({{ $a['status'] }})
-                    </div>
-
-                    <div class="progress-track">
-                        <div class="progress-fill {{ $a['color'] }}"
-                            style="width: {{ $a['progress'] }}%">
-                        </div>
-                    </div>
-                </div>
-
-            @endforeach
-
-        </div>
-
-        <style>
-            .progress-wrapper {
-                background: linear-gradient(180deg, #1f4fd8, #4b8df8);
-                padding: 30px;
-
-            }
-
-            .activity-block {
-                margin-bottom: 22px;
-            }
-
-            .activity-title {
-                color: #fff;
-                font-weight: 500;
-                margin-bottom: 6px;
-                font-size: 15px;
-            }
-
-            /* Track */
-            .progress-track {
-                width: 100%;
-                height: 16px;
-                background: transparent;
-                border: 2px solid rgba(255,255,255,0.6);
-                border-radius: 20px;
-                overflow: hidden;
-            }
-
-            /* Fill */
-            .progress-fill {
-                height: 100%;
-                border-radius: 20px;
-            }
-
-            /* COLORS */
-            .progress-fill.green {
-                background: #22c55e;
-            }
-
-            .progress-fill.yellow {
-                background: #facc15;
-            }
-
-            .progress-fill.red {
-                background: #ef4444;
-            }
-        </style>
-
-    </div> --}}
 
     <div class="mt-4 mb-1 d-flex justify-content-end">
         <button id="exportPdf" class="btn btn-secondary mb-3">
@@ -277,7 +207,7 @@
     </div>
     <div id="progressPdfArea">
         <div class="card ">
-            <div class="card-header text-white" style="background:#1f4fd8">
+            <div class="card-header text-white" style="background:#5c5d5e">
                 <small>All Construction Progress</small>
             </div>
 
@@ -301,7 +231,7 @@
                                 <!-- PROGRESS (percent of weightage) -->
                                 <div class="progress-fill {{ $a['color'] }}"
                                     style="width: {{ $a['progress'] }}%">
-                                    
+
                                 </div>
 
                             </div>
@@ -320,7 +250,7 @@
     </div>
         <style>
             .progress-wrapper {
-                background: linear-gradient(180deg, #1f4fd8, #4b8df8);
+                background: linear-gradient(180deg, #818285, #7a7b7c);
                 padding: 30px;
 
             }
@@ -346,7 +276,7 @@
             /* White allocated weightage */
             .weightage-base {
                 height: 100%;
-                background: rgb(255, 255, 255);
+                background: rgb(123, 155, 243);
                 position: relative;
             }
 
@@ -411,8 +341,10 @@
                     </td>
 
                     <td>
-                        <button class="btn btn-success btn-sm saveRow">Save</button>
-                        <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-success btn-sm saveRow">Save</button>
+                            <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        </div>
                     </td>
                 </tr>`;
                 $('#activitiesTable tbody').append(newRow);

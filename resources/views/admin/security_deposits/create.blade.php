@@ -70,6 +70,7 @@
     </div>
 </div>
 
+
 @push('scripts')
 <script>
 $(document).on('click', '.saveSecurity', function () {

@@ -26,7 +26,7 @@ class Billing extends Model
 
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class,'project_id', 'id');
     }
 
     public function items()
@@ -34,7 +34,11 @@ class Billing extends Model
         return $this->hasMany(BillingItem::class);
     }
 
-    
+    public function state()
+    {
+        return $this->belongsTo(State::class,'location','id');
+    }
+
     public function recoveries()
     {
         return $this->hasMany(Recovery::class);

@@ -19,17 +19,14 @@ class BillingController extends Controller
                     ->latest()
                     ->get();
 
-
-
-
         // dd($billings);
         return view('admin.billing.index', compact('project','billings'));
     }
 
      public function indexprojects(Request $request)
     {
-       
-        
+
+
         // $projects = Project::where('user_id', auth()->id())
         //                         ->where(function ($query) {
         //                             $query->where('status', 'agreement')
@@ -55,8 +52,8 @@ class BillingController extends Controller
                     })
                     ->latest()
                     ->paginate(20);
-                    
-        //  dd($projects);        
+
+        //  dd($projects);
         return view('admin.billing.indexprojects', compact('projects'));
     }
 
@@ -70,9 +67,7 @@ class BillingController extends Controller
             'page_number' => 'required',
             'gross_amount' => 'required|numeric',
             'net_payable' => 'required|numeric',
-            'remarks' => 'required|string',
             'bill_file' => 'nullable|mimes:pdf,jpg,png|max:4096',
-
             'completion_date' => 'nullable|date'
         ]);
 

@@ -12,25 +12,25 @@
 
             <div class="col-md-3">
                 <label>Security (2.5%)</label>
-                <input type="number" class="form-control security" 
+                <input type="number" class="form-control security"
                        value="{{ $recoveries->first()->security ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Income Tax (2%)</label>
-                <input type="number" class="form-control income_tax" 
+                <input type="number" class="form-control income_tax"
                        value="{{ $recoveries->first()->income_tax ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Labour Cess (1%)</label>
-                <input type="number" class="form-control labour_cess" 
+                <input type="number" class="form-control labour_cess"
                        value="{{ $recoveries->first()->labour_cess ?? '' }}">
             </div>
 
             <div class="col-md-3">
                 <label>Water Charges (1%)</label>
-                <input type="number" class="form-control water_charges" 
+                <input type="number" class="form-control water_charges"
                        value="{{ $recoveries->first()->water_charges ?? '0' }}">
             </div>
 
@@ -42,13 +42,13 @@
 
             <div class="col-md-3">
                 <label>CGST</label>
-                <input type="number" class="form-control cgst" 
+                <input type="number" class="form-control cgst"
                        value="{{ $recoveries->first()->cgst ?? '0' }}">
             </div>
 
             <div class="col-md-3">
                 <label>SGST</label>
-                <input type="number" class="form-control sgst" 
+                <input type="number" class="form-control sgst"
                        value="{{ $recoveries->first()->sgst ?? '0' }}">
             </div>
 
@@ -72,7 +72,7 @@
 
             <div class="col-md-3">
                 <label>Total</label>
-                <input type="number" class="form-control total" 
+                <input type="number" class="form-control total"
                        value="{{ $recoveries->first()->total ?? '0' }}">
             </div>
 
@@ -94,7 +94,72 @@
 </div>
 
 <div class="mt-4">
-    @include('admin.security_deposits.create')
+    {{-- @include('admin.security_deposits.create') --}}
+    <div class="card">
+    <div class="card-body">
+        <h5 class="mb-4">Security Deposit Details</h5>
+
+        @php
+            $sd = $securityDeposits->first();
+        @endphp
+
+        <div class="row g-3" id="securityForm">
+
+            <div class="col-md-4">
+                <label>Instrument Type</label>
+                <select class="form-select instrument_type">
+                    <option value="">Select</option>
+                    <option value="FDR" {{ ($sd->instrument_type ?? '')=='FDR'?'selected':'' }}>FDR</option>
+                    <option value="BG" {{ ($sd->instrument_type ?? '')=='BG'?'selected':'' }}>BG</option>
+                    <option value="DD" {{ ($sd->instrument_type ?? '')=='DD'?'selected':'' }}>DD</option>
+                    <option value="CHALLAN" {{ ($sd->instrument_type ?? '')=='CHALLAN'?'selected':'' }}>CHALLAN</option>
+                    <option value="FROM_BILL" {{ ($sd->instrument_type ?? '')=='FROM_BILL'?'selected':'' }}>FROM BILL</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Instrument Number</label>
+                <input class="form-control instrument_number"
+                       value="{{ $sd->instrument_number ?? '' }}">
+            </div>
+
+            <div class="col-md-4">
+                <label>Instrument Date</label>
+                <input type="date" class="form-control instrument_date"
+                       value="{{ isset($sd->instrument_date) ? \Carbon\Carbon::parse($sd->instrument_date)->format('Y-m-d') : '' }}">
+            </div>
+
+            <div class="col-md-4">
+                <label>Amount</label>
+                <input type="number" step="0.01" class="form-control amount"
+                       value="{{ $sd->amount ?? '' }}">
+            </div>
+
+            <div class="col-md-4">
+                <label>Upload</label>
+
+                @if(isset($sd->upload))
+                    <div class="mb-1">
+                        <a href="{{ Storage::url($sd->upload) }}"
+                           target="_blank"
+                           class="btn btn-sm btn-outline-primary">
+                            View Uploaded File
+                        </a>
+                    </div>
+                @endif
+
+                <input type="file" class="form-control upload">
+            </div>
+
+            <div class="col-md-12 mt-3">
+                <button class="btn btn-success btn-sm rounded-pill saveSecurity">
+                    {{ $sd ? 'Update' : 'Save' }}
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </div>
 
 <div class="mt-4">
@@ -103,6 +168,35 @@
 
 
 @push('scripts')
+
+<script>
+$(document).on('click', '.saveSecurity', function () {
+
+    let formData = new FormData();
+    formData.append('_token', "{{ csrf_token() }}");
+    formData.append('instrument_type', $('.instrument_type').val());
+    formData.append('instrument_number', $('.instrument_number').val());
+    formData.append('instrument_date', $('.instrument_date').val());
+    formData.append('amount', $('.amount').val());
+
+    let file = $('.upload')[0];
+    if (file && file.files.length) {
+        formData.append('upload', file.files[0]);
+    }
+
+    $.ajax({
+        url: "{{ route('admin.security-deposits.store', [$project->id, $billing->id]) }}",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            alert('Security Deposit saved successfully');
+            location.reload();
+        }
+    });
+});
+</script>
 <script>
 const tender = {{ $project->tendered_amount }};
 const gross  = {{ $billing->gross_amount }};

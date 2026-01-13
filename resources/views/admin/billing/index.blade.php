@@ -47,7 +47,7 @@
                     <th class="text-center">GROSS AMOUNT</th>
                     <th class="text-center">RECOVERIES</th>
                     <th class="text-center">NET PAYABLE</th>
-                    <th class="text-center">REMARKS</th>
+                    {{-- <th class="text-center">REMARKS</th> --}}
                     <th class="text-center">FILE</th>
                     <th class="text-center">ACTION</th>
                     <th class="text-center" >COMPLETION DATE</th>
@@ -83,7 +83,7 @@
                         </td>
 
                         <td><input type="number" step="0.01" class="form-control net_payable" value="{{ $bill->net_payable }}"></td>
-                        <td><input type="text" class="form-control remarks" value="{{ $bill->remarks }}"></td>
+                        {{-- <td><input type="text" class="form-control remarks" value="{{ $bill->remarks }}"></td> --}}
                         <td>
                             @if($bill->bill_file)
                                 <a href="{{ Storage::url($bill->bill_file) }}"
@@ -127,7 +127,7 @@
                         <td><input type="number" step="0.01" class="form-control gross_amount"></td>
                         <td>0.00</td>
                         <td><input type="number" step="0.01" class="form-control net_payable"></td>
-                        <td><input type="text" class="form-control remarks"></td>
+                        {{-- <td><input type="text" class="form-control remarks"></td> --}}
                         <td><input type="file" class="form-control bill_file"></td>
                         <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
                         <td >
@@ -210,7 +210,6 @@
             <td><input type="number" step="0.01" class="form-control gross_amount"></td>
             <td>0.00</td>
             <td><input type="number" step="0.01" class="form-control net_payable"></td>
-            <td><input type="text" class="form-control remarks"></td>
             <td><input type="file" class="form-control bill_file"></td>
             <td><button class="btn btn-success btn-sm saveRow">Save</button></td>
             <td class="completionCell" style="display:none;">
