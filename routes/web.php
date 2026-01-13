@@ -38,6 +38,19 @@ Route::get('/run-storage-link', function () {
     return 'Storage link created successfully';
 });
 
+
+Route::get('/key', function () {
+    Artisan::call('key:generate');
+    return "Key generated successfully";
+});
+Route::get('clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cache cleared successfully";
+});
+
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
     /* ===================== Dashboard ===================== */
@@ -560,7 +573,7 @@ Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () 
         [ProjectController::class, 'pgreturnIndex']
     )->name('projects.pgreturned.index');
 
-    
+
 
      Route::get(
         '/securityreturned',
