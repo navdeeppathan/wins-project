@@ -105,6 +105,8 @@ class InventoryController extends Controller
             'schedule_work_id' => 'nullable',
             'net_payable' => 'nullable  ',
             'staff_id' => 'nullable',
+            'description2' => 'nullable|string',
+
 
         ]);
 
@@ -161,6 +163,7 @@ class InventoryController extends Controller
             'schedule_work_id' => 'nullable',
             'net_payable' => 'nullable',
             'staff_id' => 'nullable',
+            'description2' => 'nullable|string',
 
         ]);
 
@@ -192,22 +195,59 @@ class InventoryController extends Controller
         ]);
     }
 
+    // public function isApproved(Request $request, Inventory $inventory)
+    // {
+    //     $data = $request->validate([
+    //         'isApproved' => 'required'
+    //     ]);
+
+    //     $inventory->update([
+    //         'isApproved' => $data['isApproved']
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'Inventory status updated successfully',
+    //         'status'  => $inventory->isApproved
+    //     ]);
+    // }
+
     public function isApproved(Request $request, Inventory $inventory)
-    {
-        $data = $request->validate([
-            'isApproved' => 'required'
-        ]);
+{
+    $data = $request->validate([
+        'isApproved'   => 'required|boolean',
+        'paid_through'=> 'required|in:CASH,BANK,ONLINE',
+        'payment_ref' => 'required'
+    ]);
 
-        $inventory->update([
-            'isApproved' => $data['isApproved']
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Inventory status updated successfully',
-            'status'  => $inventory->isApproved
-        ]);
+    if ($data['paid_through'] === 'CASH') {
+        $inventory->paid_date = $data['payment_ref'];
+        $inventory->bank_ref = null;
+        $inventory->upi_ref = null;
     }
+
+    if ($data['paid_through'] === 'BANK') {
+        $inventory->bank_ref = $data['payment_ref'];
+        $inventory->paid_date = null;
+        $inventory->upi_ref = null;
+    }
+
+    if ($data['paid_through'] === 'ONLINE') {
+        $inventory->upi_ref = $data['payment_ref'];
+        $inventory->paid_date = null;
+        $inventory->bank_ref = null;
+    }
+
+    $inventory->paid_through = $data['paid_through'];
+    $inventory->isApproved = 1;
+    $inventory->save();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Payment approved and saved successfully'
+    ]);
+}
+
 
 
     // ❌ DELETE

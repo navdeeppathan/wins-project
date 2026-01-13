@@ -4,6 +4,9 @@
 
 @section('content')
 
+
+
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Projects (PG)</h3>
 </div>
@@ -62,7 +65,22 @@
                         @forelse($actives as $project)
                             @foreach($project->securityDeposits as $emd)
                                 @if($emd->isReturned || $emd->isForfieted) @continue @endif
-                                <tr>
+
+                                @php
+                                     
+
+                                    $tenderAmount = $project->tendered_amount;
+                                    $completionDate = \Carbon\Carbon::parse($project->stipulated_date_ofcompletion);
+
+                                    if ($tenderAmount < 1000000) {     // 10 lakhs = 10,00,000
+                                        $pgExpiry = $completionDate->copy()->addMonths(3);
+                                    } else {
+                                        $pgExpiry = $completionDate->copy()->addMonths(12);
+                                    }
+
+                                    $isExpired = $pgExpiry->lt(\Carbon\Carbon::today());
+                                @endphp
+                                <tr class="{{ $isExpired ? 'expired-row' : '' }}">
                                     <td>{{ $project->id }}</td>
 
                                     <td>
@@ -287,6 +305,10 @@
 </div>
 
 <style>
+
+    .expired-row td{
+        background-color:#fff3cd !important;   /* light yellow */
+    }
     .top-buttons {
         display: flex;
         gap: 10px;

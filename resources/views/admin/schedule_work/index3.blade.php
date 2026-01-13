@@ -194,14 +194,17 @@
                         </select>
                     </td>
 
-                <td>
-                        <select class="form-select category">
+                    <td >
+                        <select class="form-select category mb-2">
                             <option value="">Select</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat }}" {{ $i->category === $cat ? 'selected' : '' }}>
                                     {{ $cat }}
                                 </option>
                             @endforeach
+                        </select>
+                         <select class="form-select description2"  data-selected="{{ $i->description2 ?? '' }}" style="display:none">
+                            <option value="">Select type</option>
                         </select>
                     </td>
                     <td>
@@ -237,13 +240,17 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-select category">
+                        
+                        <select class="form-select category mb-2">
                             <option value="">Select</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat }}" {{ $cat === 'T&P' ? 'selected' : '' }}>
                                     {{ $cat }}
                                 </option>
                             @endforeach
+                        </select>
+                         <select class="form-select description2" data-selected="{{ $i->description2 ?? '' }}" style="display:none">
+                            <option value="">Select type</option>
                         </select>
                     </td>
                     <td>
@@ -276,6 +283,51 @@
     const allInventories = @json($allInventories);
 </script>
 
+<script>
+const desc2Options = ["AGREEMENT", "EXTRA", "SUBSTITUTE", "DEVIATION"];
+
+$(document).on('change', '.category', function () {
+    let row = $(this).closest('tr');
+    let category = $(this).val();
+    let desc2 = row.find('.description2');
+
+    desc2.empty().append(`<option value="">Select type</option>`);
+
+    if (category === 'MATERIAL') {
+        desc2Options.forEach(opt => {
+            desc2.append(`<option value="${opt}">${opt}</option>`);
+        });
+        desc2.show();
+    } else {
+        desc2.hide();
+    }
+});
+
+// Load existing rows
+$(document).ready(function () {
+    $('.category').each(function () {
+        let row = $(this).closest('tr');
+        let category = $(this).val();
+        let desc2 = row.find('.description2');
+        let selected = desc2.data('selected');
+
+        desc2.empty().append(`<option value="">Select type</option>`);
+
+        if (category === 'MATERIAL') {
+            desc2Options.forEach(opt => {
+                let sel = (opt === selected) ? 'selected' : '';
+                desc2.append(`<option ${sel} value="${opt}">${opt}</option>`);
+            });
+            desc2.show();
+        } else {
+            desc2.hide();
+        }
+    });
+});
+
+</script>
+
+
 
 <script>
     $(function () {
@@ -307,11 +359,14 @@
                 </td>
 
                 <td>
-                    <select class="form-select category">
+                    <select class="form-select category mb-2">
                         <option value="">Select</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat }}">{{ $cat }}</option>
                         @endforeach
+                    </select>
+                     <select class="form-select description2" data-selected="{{ $i->description2 ?? '' }}" style="display:none">
+                            <option value="">Select type</option>
                     </select>
                 </td>
                 <td>
@@ -360,6 +415,8 @@
             formData.append('amount', row.find('.amount').val());
             formData.append('net_payable', row.find('.net_payable').val());
             formData.append('staff_id', row.find('.staff_id').val());
+            formData.append('description2', row.find('.description2').val());
+
 
             $.ajax({
                 url: id

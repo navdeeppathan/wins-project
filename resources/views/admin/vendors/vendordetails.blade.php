@@ -152,6 +152,8 @@
                     <th class="text-center">Quantity</th>
                     <th class="text-center">Rate</th>
                     <th class="text-center">Amount</th>
+                    <th class="text-center">Paid Through</th>
+                    <th class="text-center">Reference</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -170,6 +172,22 @@
                         <td class="text-center">₹ {{ number_format($i->amount, 2) }}</td>
                         <td class="text-center">₹ {{ number_format($i->net_payable, 2) }}</td>
 
+                                
+                        <td>
+                            <select class="form-select paid_through">
+                                <option value="">Select</option>
+                                <option value="CASH" {{ $i->paid_through=='CASH'?'selected':'' }}>CASH</option>
+                                <option value="BANK" {{ $i->paid_through=='BANK'?'selected':'' }}>BANK</option>
+                                <option value="ONLINE" {{ $i->paid_through=='ONLINE'?'selected':'' }}>ONLINE</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <input type="text"
+                                class="form-control payment_ref"
+                                value="{{ $i->paid_through=='CASH' ? $i->paid_date : ($i->paid_through=='BANK' ? $i->bank_ref : $i->upi_ref) }}"
+                                placeholder="Enter reference">
+                        </td>
                         <td class="text-center">
                             <button class="btn btn-success btn-sm approveBtn"
                                     data-id="{{ $i->id }}"
@@ -198,20 +216,65 @@
 
 
 @push('scripts')
+
+<script>
+$(document).on('change', '.paid_through', function () {
+    let row = $(this).closest('tr');
+    let type = $(this).val();
+    let refInput = row.find('.payment_ref');
+
+    refInput.val('');
+
+    if (type === 'CASH') {
+        refInput.attr('type','date');
+        refInput.attr('placeholder','Paid date');
+    }
+    else if (type === 'BANK') {
+        refInput.attr('type','text');
+        refInput.attr('placeholder','Cheque / RTGS number');
+    }
+    else if (type === 'ONLINE') {
+        refInput.attr('type','text');
+        refInput.attr('placeholder','UPI reference number');
+    }
+    else {
+        refInput.attr('type','text');
+        refInput.attr('placeholder','');
+    }
+});
+</script>
+
+
 <script>
     $('.approveBtn').click(function () {
+    let row = $(this).closest('tr');
     let id = $(this).data('id');
+
+    let paid_through = row.find('.paid_through').val();
+    let payment_ref = row.find('.payment_ref').val();
+
+    if (!paid_through) {
+        alert('Please select Paid Through');
+        return;
+    }
+
+    if (!payment_ref) {
+        alert('Please enter payment reference');
+        return;
+    }
 
     $.ajax({
         url: `/admin/inventory/${id}/approve`,
         type: 'PATCH',
         data: {
-            isApproved:1,
-            _token: '{{ csrf_token() }}'
+            _token: '{{ csrf_token() }}',
+            isApproved: 1,
+            paid_through: paid_through,
+            payment_ref: payment_ref
         },
         success: function (res) {
-            window.location.reload();
             alert(res.message);
+            window.location.reload();
         }
     });
 });

@@ -101,7 +101,7 @@
                 <th>Rate</th>
                 <th>Amount</th>
                 <th>Measured Qty</th>
-                <th>Add Inventory</th>
+                <th>Inventory</th>
                 <th >Action</th>
             </tr>
         </thead>
@@ -151,7 +151,7 @@
                         {{-- ✅ INVENTORY ALWAYS CLICKABLE --}}
                         <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
                         class="btn btn-primary btn-sm">
-                        Add Inventory
+                        Inventory
                         </a>
                     </td>
 

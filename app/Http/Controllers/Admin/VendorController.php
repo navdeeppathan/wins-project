@@ -33,7 +33,7 @@ class VendorController extends Controller
     {
 
         $inventories = Inventory::with('user')->where('paid_to', $vendor->vendor_agency_name)->get();
-        $totalNetPayable = $inventories->where('isApproved',0)->sum('net_payable');
+        $totalNetPayable = $inventories->sum('net_payable');
         $totalPaidNetPayable = $inventories->where('isApproved',1)->sum('net_payable');
         $balanceAmount = $totalNetPayable - $totalPaidNetPayable;
 

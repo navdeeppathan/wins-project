@@ -59,10 +59,15 @@
                             </thead>
                             <tbody>
 
+
                             @forelse($actives as $project)
                                 @foreach($project->emds as $emd)
                                     @if($emd->isReturned || $emd->isForfeited) @continue @endif
-                                    <tr>
+                                    @php
+                                        $isExpired = \Carbon\Carbon::parse($emd->instrument_date)->lt(\Carbon\Carbon::today());
+                                    @endphp
+
+                                    <tr class="{{ $isExpired ? 'expired-row' : '' }}">
                                         <td class="text-center">{{ $project->id }}</td>
 
                                         <td class="text-center">
@@ -286,6 +291,11 @@
     </div>
 
 <style>
+
+    .expired-row td{
+        background-color:#fff3cd !important;   /* light yellow */
+    }
+
     .top-buttons {
         display: flex;
         gap: 10px;

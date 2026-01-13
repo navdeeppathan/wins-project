@@ -62,7 +62,11 @@
                         @forelse($actives as $project)
                             @foreach($project->pgDetails as $emd)
                                 @if($emd->isReturned || $emd->isForfieted) @continue @endif
-                                <tr>
+                                 @php
+                                        $isExpired = \Carbon\Carbon::parse($project->stipulated_date_ofcompletion)->lt(\Carbon\Carbon::today());
+                                @endphp
+
+                                <tr class="{{ $isExpired ? 'expired-row' : '' }}">
                                     <td>{{ $project->id }}</td>
 
                                     <td>
@@ -289,6 +293,9 @@
 </div>
 
 <style>
+     .expired-row td{
+        background-color:#fff3cd !important;   /* light yellow */
+    }
     .top-buttons {
         display: flex;
         gap: 10px;

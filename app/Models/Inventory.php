@@ -29,7 +29,13 @@ class Inventory extends Model
                 'dismantal_rate',
                 'schedule_work_id',
                 'staff_id',
-                'isApproved'
+                'isApproved',
+                'description2',
+                'paid_through',
+                'paid_date',
+                'bank_ref',
+                'upi_ref',
+
 
 
     ];
