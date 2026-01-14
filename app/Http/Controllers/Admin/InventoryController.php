@@ -19,19 +19,30 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
 
+        $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $projectId = $request->query('project_id');
 
         $items = Inventory::query()
                 ->when($projectId, fn($q) => $q->where('project_id', $projectId))
                 ->with(['project'])
-                ->where('user_id', auth()->id())
+                ->whereIn('user_id', $userIds)
                 ->get();
 
-        $projects = Project::where('user_id', auth()->id())->get();
-        $project= Project::where('id', $projectId)->first();
-        $vendors  = Vendor::where('user_id', auth()->id())->get();
-        $notes = DailyNote::orderBy('note_date', 'desc')->get();
-        $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
+        $projects = Project::whereIn('user_id', $userIds)->get();
+        $project  = Project::where('id', $projectId)->first();
+        $vendors  = Vendor::whereIn('user_id', $userIds)->get();
+        $notes    = DailyNote::orderBy('note_date', 'desc')->get();
+        $staffs   =  User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
         return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs'));
     }

@@ -201,15 +201,20 @@
                 </td>
 
                 <td width="" class="text-center">
-                    <select class="form-select staff_id">
-                        <option value="">Select Staff</option>
-                        @foreach($staffs as $staff)
-                            <option value="{{ $staff->id }}"
-                                {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
-                                {{ $staff->name }}
-                            </option>
-                        @endforeach
-                    </select>
+                    @if(auth()->user()->role === 'staff')
+                        <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                        {{ auth()->user()->name }}
+                    @else
+                        <select class="form-select staff_id">
+                            <option value="">Select Staff</option>
+                            @foreach($staffs as $staff)
+                                <option value="{{ $staff->id }}"
+                                    {{ $i->staff_id == $staff->id ? 'selected' : '' }}>
+                                    {{ $staff->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                 </td>
                 <td class="text-center">
                     <select class="form-select category">
