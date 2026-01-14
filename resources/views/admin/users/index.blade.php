@@ -53,83 +53,89 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($users as $user)
+                                @if($users->count() > 0)
+                                    @forelse($users as $user)
+                                        <tr>
+                                            <td class="text-center">
+                                                    {{ $loop->iteration }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $user->name }}
+
+                                            </td>
+                                            <td class="text-center">
+                                                @if($user->state)
+                                                        {{ $user->state }}
+                                                @else
+                                                    <span class="text-muted fst-italic">Not provided</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+
+
+
+                                                    {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
+
+
+
+                                            </td>
+                                            <td class="text-center">
+
+                                                    {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
+
+
+                                            </td>
+                                            <td class="text-center">
+
+                                                    {{ $user->phone ?? '-' }}
+                                            </td>
+                                            <td class="text-center">
+
+
+                                                    {{ $user->email }}
+
+                                            </td>
+                                            <td class="text-center">
+                                                    {{ $user->designation ?? '-' }}
+                                            </td>
+                                            <td class="text-center">
+                                                    {{ $user->monthly_salary ?? '-' }}
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="d-flex align-items-center">
+                                                    <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
+                                                    Edit
+                                                    </a>
+                                                    {{-- <form action="{{ route('superadmin.users.destroy', $user->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form> --}}
+
+                                                    <a href="{{ route('admin.users.details.index', $user->id) }}"
+                                                        class="btn btn-sm btn-primary me-2">
+                                                        View
+                                                    </a>
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="empty-state">
+                                                <h5 class="mt-3 mb-2">No Users Found</h5>
+                                                <p class="text-muted mb-0">Start by creating your first user account above.</p>
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                @else
                                     <tr>
-                                        <td class="text-center">
-                                                {{ $loop->iteration }}
-                                        </td>
-                                        <td class="text-center">
-                                            {{ $user->name }}
-
-                                        </td>
-                                        <td class="text-center">
-                                            @if($user->state)
-                                                    {{ $user->state }}
-                                            @else
-                                                <span class="text-muted fst-italic">Not provided</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-
-
-
-                                                {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
-
-
-
-                                        </td>
-                                        <td class="text-center">
-
-                                                {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
-
-
-                                        </td>
-                                        <td class="text-center">
-
-                                                {{ $user->phone ?? '-' }}
-                                        </td>
-                                        <td class="text-center">
-
-
-                                                {{ $user->email }}
-
-                                        </td>
-                                        <td class="text-center">
-                                                {{ $user->designation ?? '-' }}
-                                        </td>
-                                        <td class="text-center">
-                                                {{ $user->monthly_salary ?? '-' }}
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="d-flex align-items-center">
-                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
-                                                   Edit
-                                                </a>
-                                                {{-- <form action="{{ route('superadmin.users.destroy', $user->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form> --}}
-
-                                                <a href="{{ route('admin.users.details.index', $user->id) }}"
-                                                    class="btn btn-sm btn-primary me-2">
-                                                    View
-                                                </a>
-
-
-                                            </div>
-                                        </td>
+                                        <td colspan="10" class="text-center">No Data Found</td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="empty-state">
-                                            <h5 class="mt-3 mb-2">No Users Found</h5>
-                                            <p class="text-muted mb-0">Start by creating your first user account above.</p>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                                @endif
                             </tbody>
                         </table>
                     </div>
