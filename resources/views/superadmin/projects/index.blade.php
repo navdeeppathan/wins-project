@@ -79,4 +79,7 @@
     <div class="mt-4">
         @include('superadmin.inventory.index')
     </div>
+    <div class="mt-4">
+        @include('superadmin.daily_notes.index')
+    </div>
 @endsection

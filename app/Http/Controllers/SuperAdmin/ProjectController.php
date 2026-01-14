@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
+use App\Models\DailyNote;
 use App\Models\Department;
 use App\Models\departments;
 use App\Models\EmdDetail;
@@ -23,8 +24,8 @@ class ProjectController extends Controller
     {
         $projects = Project::with(['departments', 'state','emds','user'])->where('user_id', $user->id)->latest()->paginate(20);
         $inventories = Inventory::where('user_id', $user->id)->latest()->paginate(20);
-       
-        return view('superadmin.projects.index', compact('projects','inventories'));
+        $notes = DailyNote::where('user_id', $user->id)->latest()->paginate(20);
+        return view('superadmin.projects.index', compact('projects','inventories','notes'));
     }
 
    

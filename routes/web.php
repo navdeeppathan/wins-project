@@ -944,8 +944,10 @@ Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(fu
     Route::get('users/create', [RegisterController::class, 'create'])->name('users.create');
     Route::get('users/{user}/allprojects', [App\Http\Controllers\SuperAdmin\ProjectController::class, 'index'])->name('users.allprojects');
     Route::get('users/{user}/allinventories', [App\Http\Controllers\SuperAdmin\InventoryController::class, 'index'])->name('users.allinventories');
+    Route::get('users/{user}/allusers', [RegisterController::class, 'indexUser'])->name('users.allusers');
     
     Route::get('users/projects/{project}/allbillings', [App\Http\Controllers\SuperAdmin\BillingController::class, 'index'])->name('users.projects.allbillings');
+    Route::get('users/projects/billing/{project}/{billing}/allrecoveries', [App\Http\Controllers\SuperAdmin\RecoveryController::class, 'index'])->name('users.projects.billing.allrecoveries');
    
 });
 

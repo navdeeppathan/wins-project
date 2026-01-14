@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\Inventory;
 use App\Models\State;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,8 +15,16 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where('parent_id',null)->latest()->paginate(10);
         return view('superadmin.users.index', compact('users'));
+    }
+
+     public function indexUser(User $user)
+    {
+        $users = User::where('parent_id',$user->id)->latest()->paginate(10);
+        $vendors =Vendor::where('user_id', $user->id)->latest()->paginate(10);
+        $departments = Department::where('user_id', $user->id)->latest()->paginate(10);
+        return view('superadmin.users.indexUsers', compact('users', 'vendors', 'departments'));
     }
 
 

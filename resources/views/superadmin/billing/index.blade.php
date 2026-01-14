@@ -76,8 +76,7 @@
                             {{ $bill->completion_date }}
                         </td>
                          <td>
-                           
-                            {{-- <a href="{{ route('admin.projects.recoveries.index', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Recoveries</a> --}}
+                            <a href="{{ route('superadmin.users.projects.billing.allrecoveries', [$project->id, $bill->id]) }}" class="btn btn-primary btn-sm">Recoveries & Security Deposits</a>
                         </td>
                     </tr>
                
@@ -98,6 +97,12 @@
 <div class="mt-4">
     @include('superadmin.schedule_of_work.index')
 </div>
+
+<div class="mt-4">
+    @include('superadmin.activities.index')
+</div>
+
+
 @endsection
 
 

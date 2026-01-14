@@ -10,7 +10,7 @@
      
     {{-- PAGE TITLE --}}
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <h2 class="page-title">User Management</h2>
+        <h2 class="page-title">All Users</h2>
     </div>
 
     <div class="card">
@@ -30,7 +30,8 @@
                                 <th>Email ID</th>
                                 <th>Designation</th>
                                 <th>Monthly Salary</th>
-                                <th>Action</th>
+                                <th>Actions</th>
+                                
                             </tr>
                         </thead>
 
@@ -76,9 +77,6 @@
                                     <td>
                                         <a href="{{ route('superadmin.users.allprojects', $user->id) }}"
                                            class="btn btn-sm btn-primary">Projects</a> 
-                                        
-                                        <a href="{{ route('superadmin.users.allusers', $user->id) }}"
-                                           class="btn btn-sm btn-primary">All Users</a>  
                                     </td>
                                 </tr>
                             @endforeach
@@ -94,6 +92,14 @@
         </div>
     </div>
 
+</div>
+
+
+<div class="mt-4">
+    @include('superadmin.vendors.index')
+</div>
+<div class="mt-4">
+    @include('superadmin.departments.index')
 </div>
 @endsection
 
