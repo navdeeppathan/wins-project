@@ -942,37 +942,11 @@ Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(fu
 
     Route::get('users', [RegisterController::class, 'index'])->name('users.index');
     Route::get('users/create', [RegisterController::class, 'create'])->name('users.create');
-    Route::get('users/{user}/projects', [App\Http\Controllers\SuperAdmin\ProjectController::class, 'index'])->name('users.projects');
-
-    /* ===================== PROJECTS (BIDDING) ===================== */
-    Route::resource('projects', App\Http\Controllers\SuperAdmin\ProjectController::class);
-
-
-
-
-
-
-
-
-    /* ===================== VENDORS ===================== */
-    Route::resource('vendors', App\Http\Controllers\SuperAdmin\VendorController::class)->only([
-        'index', 'store', 'destroy'
-    ]);
-
-    /* ===================== INVENTORY ===================== */
-    Route::resource('inventory', App\Http\Controllers\SuperAdmin\InventoryController::class)->only([
-        'index', 'store', 'destroy'
-    ]);
-
-    /* ===================== T & P ===================== */
-    Route::resource('tandp', App\Http\Controllers\SuperAdmin\TAndPController::class)->only([
-        'index', 'store'
-    ]);
-
-
-
-    /* ===================== Attachments (POLYMORPHIC) ===================== */
-    Route::post('attachments', [App\Http\Controllers\Admin\AttachmentController::class, 'store'] )->name('attachments.store');
+    Route::get('users/{user}/allprojects', [App\Http\Controllers\SuperAdmin\ProjectController::class, 'index'])->name('users.allprojects');
+    Route::get('users/{user}/allinventories', [App\Http\Controllers\SuperAdmin\InventoryController::class, 'index'])->name('users.allinventories');
+    
+    Route::get('users/projects/{project}/allbillings', [App\Http\Controllers\SuperAdmin\BillingController::class, 'index'])->name('users.projects.allbillings');
+   
 });
 
 

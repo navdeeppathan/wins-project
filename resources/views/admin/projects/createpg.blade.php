@@ -97,60 +97,60 @@
 <div class="table-responsive">
 
 <table id="example" class="table class-table nowrap" style="width:100%">
-<thead>
-<tr>
-    <th>#</th>
-    <th>INSTRUMENT TYPE</th>
-    <th>INSTRUMENT NUMBER</th>
-    <th>INSTRUMENT DATE</th>
-    <th>INSTRUMENT VALID UPTO</th>
-    <th>INSTRUMENT AMOUNT</th>
-    <th>UPLOAD</th>
-    <th>ACTION</th>
-</tr>
-</thead>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>INSTRUMENT TYPE</th>
+            <th>INSTRUMENT NUMBER</th>
+            <th>INSTRUMENT DATE</th>
+            <th>INSTRUMENT VALID UPTO</th>
+            <th>INSTRUMENT AMOUNT</th>
+            <th>UPLOAD</th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
 
 <tbody id="pgTable">
 @forelse($pgs as $i => $pg)
-<tr>
-    <td>{{ $i+1 }}</td>
+    <tr>
+        <td>{{ $i+1 }}</td>
 
-    <input type="hidden" name="pg[{{ $i }}][id]" value="{{ $pg->id }}">
+        <input type="hidden" name="pg[{{ $i }}][id]" value="{{ $pg->id }}">
 
-    <td>
-        <select name="pg[{{ $i }}][instrument_type]" class="form-select">
-            @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED','FROM BILL'] as $t)
-                <option value="{{ $t }}" @selected($pg->instrument_type==$t)>{{ $t }}</option>
-            @endforeach
-        </select>
-    </td>
+        <td>
+            <select name="pg[{{ $i }}][instrument_type]" class="form-select">
+                @foreach(['FDR','DD','BG','CHALLAN','EXEMPTED','FROM BILL'] as $t)
+                    <option value="{{ $t }}" @selected($pg->instrument_type==$t)>{{ $t }}</option>
+                @endforeach
+            </select>
+        </td>
 
-    <td><input name="pg[{{ $i }}][instrument_number]" value="{{ $pg->instrument_number }}" class="form-control"></td>
-    <td><input type="date" name="pg[{{ $i }}][instrument_date]" value="{{ $pg->instrument_date }}" class="form-control"></td>
-    <td><input type="date" name="pg[{{ $i }}][instrument_valid_upto]" value="{{ $pg->instrument_valid_upto }}" class="form-control"></td>
-    <td><input type="number" step="0.01" name="pg[{{ $i }}][amount]" value="{{ $pg->amount }}" class="form-control"></td>
+        <td><input name="pg[{{ $i }}][instrument_number]" value="{{ $pg->instrument_number }}" class="form-control"></td>
+        <td><input type="date" name="pg[{{ $i }}][instrument_date]" value="{{ $pg->instrument_date }}" class="form-control"></td>
+        <td><input type="date" name="pg[{{ $i }}][instrument_valid_upto]" value="{{ $pg->instrument_valid_upto }}" class="form-control"></td>
+        <td><input type="number" step="0.01" name="pg[{{ $i }}][amount]" value="{{ $pg->amount }}" class="form-control"></td>
 
-    <td>
-        @if($pg->upload)
-            <a href="{{ asset('storage/'.$pg->upload) }}" target="_blank">View</a>
-        @endif
-        <input type="file" name="pg[{{ $i }}][upload]" class="form-control">
-    </td>
+        <td>
+            @if($pg->upload)
+                <a href="{{ asset('storage/'.$pg->upload) }}" target="_blank">View</a>
+            @endif
+            <input type="file" name="pg[{{ $i }}][upload]" class="form-control">
+        </td>
 
-    <td>
-       
-        <button
-            type="submit"
-            name="row_index"
-            value="{{ $i }}"
-            class="btn btn-success btn-sm">
-            Save
-        </button>
+        <td>
+        
+            <button
+                type="submit"
+                name="row_index"
+                value="{{ $i }}"
+                class="btn btn-success btn-sm">
+                Save
+            </button>
 
 
-        {{-- <button type="button" class="btn btn-danger removeRow">X</button> --}}
-    </td>
-</tr>
+            {{-- <button type="button" class="btn btn-danger removeRow">X</button> --}}
+        </td>
+    </tr>
 @empty
 <tr>
 <td>1</td>

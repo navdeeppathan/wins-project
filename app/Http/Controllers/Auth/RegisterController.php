@@ -13,7 +13,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        $users = User::where('parent_id', auth()->user()->id)->get();
+        $users = User::all();
         return view('superadmin.users.index', compact('users'));
     }
 
