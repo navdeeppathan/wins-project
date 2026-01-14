@@ -731,8 +731,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Skip unwanted input types
         const skipTypes = ['button', 'submit', 'reset', 'hidden', 'checkbox', 'radio', 'file'];
         if (el.tagName === 'INPUT' && skipTypes.includes(el.type)) return;
-
-        // Skip if placeholder already exists (like date, amount)
         if (el.hasAttribute('placeholder')) return;
 
         const td = el.closest('td');
@@ -740,21 +738,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const table = el.closest('table');
 
         if (!td || !tr || !table) return;
-
-        // Get column index
         const colIndex = Array.from(tr.children).indexOf(td);
-
-        // Get corresponding table header
         const th = table.querySelector(`thead tr th:nth-child(${colIndex + 1})`);
         if (!th) return;
 
         let headerText = th.textContent.trim();
-
-        // Clean text
         headerText = headerText.replace(/[*:\n]/g, '').trim();
 
         if (headerText) {
-            el.setAttribute('placeholder', 'ENTER ' + headerText.toUpperCase());
+            // First letter uppercase, rest lowercase
+            const formattedText =
+                headerText.charAt(0).toUpperCase() +
+                headerText.slice(1).toLowerCase();
+
+            el.setAttribute('placeholder', 'Enter ' + formattedText);
         }
     });
 
