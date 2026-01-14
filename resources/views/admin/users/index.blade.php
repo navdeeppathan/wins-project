@@ -43,7 +43,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($users->count() > 0)
                                     @php $serial = 1; @endphp
                                         @foreach($users as $user)
                                             <tr>
@@ -114,14 +113,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="empty-state">
-                                                    <h5 class="mt-3 mb-2">No Users Found</h5>
-                                                    <p class="text-muted mb-0">Start by creating your first user account above.</p>
-                                                </td>
-                                            </tr>
-                                        @endforelse
+                                        @endforeach
                                     @else
                                         <tr>
                                             <td colspan="10" class="text-center">No Data Found</td>
