@@ -27,28 +27,38 @@ class ProjectController extends Controller
 
     public function dashboard()
     {
-        $userId = auth()->id();
+        $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $today = Carbon::today();
         $nextMonth = Carbon::today()->addMonth();
 
-            $totalInventory = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
+            $totalInventory = Inventory::whereIn('user_id', $userIds)->orderBy('amount', 'desc')->take(5)->get();
 
 
         /* =======================
             PROJECT COUNTS
         ======================= */
 
-        $totalProjects = Project::where('user_id', $userId)->count();
+        $totalProjects = Project::whereIn('user_id', $userId)->count();
 
-        $totalBidding = Project::where('user_id', $userId)
+        $totalBidding = Project::whereIn('user_id', $userId)
             ->where('status', 'bidding')
             ->count();
 
-        $totalAwarded = Project::where('user_id', $userId)
+        $totalAwarded = Project::whereIn('user_id', $userId)
             ->where('status', 'awarded')
             ->count();
 
-        $totalCompleted = Project::where('user_id', $userId)
+        $totalCompleted = Project::whereIn('user_id', $userId)
             ->where('status', 'completed')
             ->count();
 
@@ -56,7 +66,7 @@ class ProjectController extends Controller
             TOTAL WORK DONE (₹)
         ======================= */
 
-        $totalWorkDone = Project::where('user_id', $userId)
+        $totalWorkDone = Project::whereIn('user_id', $userId)
             ->where('status', 'completed')
             ->sum('estimated_amount');
 
@@ -65,7 +75,7 @@ class ProjectController extends Controller
             (Within next 1 month)
         ======================= */
 
-        $totalEmdDue = Project::where('user_id', $userId)
+        $totalEmdDue = Project::whereIn('user_id', $userId)
             ->whereHas('emds', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -77,7 +87,7 @@ class ProjectController extends Controller
             ->sum('emd_amount');
 
 
-        $totalPgDue = Project::where('user_id', $userId)
+        $totalPgDue = Project::whereIn('user_id', $userId)
             ->whereHas('pgDetails', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -89,7 +99,7 @@ class ProjectController extends Controller
             ->sum('pg_amount');
 
 
-        $totalSecurityDue = Project::where('user_id', $userId)
+        $totalSecurityDue = Project::whereIn('user_id', $userId)
             ->whereHas('securityDeposits', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -106,13 +116,13 @@ class ProjectController extends Controller
         ======================= */
 
         // Projects completing in next 1 month
-        $projectsCompletingSoon = Project::where('user_id', $userId)
+        $projectsCompletingSoon = Project::whereIn('user_id', $userId)
             ->where('status', 'awarded')
             ->whereBetween('stipulated_date_ofcompletion', [$today, $nextMonth])
             ->count();
 
         // Projects running beyond completion date
-        $projectsDelayed = Project::where('user_id', $userId)
+        $projectsDelayed = Project::whereIn('user_id', $userId)
             ->where('status', 'awarded')
             ->whereDate('stipulated_date_ofcompletion', '<', $today)
             ->count();
@@ -121,9 +131,9 @@ class ProjectController extends Controller
             VENDORS & STAFF
         ======================= */
 
-        $totalVendors = Vendor::where('user_id', $userId)->count();
+        $totalVendors = Vendor::whereIn('user_id', $userId)->count();
 
-        $totalStaff = User::where('parent_id', $userId)->count();
+        $totalStaff = User::whereIn('parent_id', $userId)->count();
 
         /* =======================
             INVENTORY

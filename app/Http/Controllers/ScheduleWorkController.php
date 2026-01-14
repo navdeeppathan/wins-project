@@ -13,16 +13,21 @@ class ScheduleWorkController extends Controller
 {
     public function index(Request $request)
     {
-        // $projects = Project::with(['departments', 'state','emds'])
-        //             ->where('user_id', auth()->id())
-        //             ->when($request->filled('year'), function ($query) use ($request) {
-        //                 $query->whereYear('created_at', $request->year);
-        //             })
-        //             ->latest()->paginate(20);
+
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
 
         $projects = Project::with(['departments', 'state','emds'])
         //  whereIn('status', ['bidding', 'accepted'])
-            ->where('user_id', auth()->id())
+            ->whereIn('user_id', $userIds)
             ->when($request->filled('fy'), function ($query) use ($request) {
 
                 $start = Carbon::create($request->fy, 4, 1)->startOfDay();

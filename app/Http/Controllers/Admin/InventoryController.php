@@ -18,13 +18,14 @@ class InventoryController extends Controller
 {
     public function index(Request $request)
     {
+
         $projectId = $request->query('project_id');
 
         $items = Inventory::query()
-            ->when($projectId, fn($q) => $q->where('project_id', $projectId))
-            ->with(['project'])
-            ->where('user_id', auth()->id())
-            ->get();
+                ->when($projectId, fn($q) => $q->where('project_id', $projectId))
+                ->with(['project'])
+                ->where('user_id', auth()->id())
+                ->get();
 
         $projects = Project::where('user_id', auth()->id())->get();
         $project= Project::where('id', $projectId)->first();
