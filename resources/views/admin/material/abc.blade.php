@@ -123,7 +123,6 @@
         <div class="tab-pane fade show active" id="cloud-tab-pane" role="tabpanel">
             @if($items->count() > 0)
                 <div class="table-responsive mt-4">
-
                     <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
                         <thead class="table-light text-center">
                             <tr>
@@ -190,6 +189,7 @@
                                         Data not found
                                     </td>
                                 </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
