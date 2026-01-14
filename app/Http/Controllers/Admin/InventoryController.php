@@ -51,15 +51,25 @@ class InventoryController extends Controller
      public function materialTabs()
     {
 
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
 
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $items = Inventory::query()
-            ->where('user_id', auth()->id())
+            ->whereIn('user_id', $userIds)
             ->where('category', 'Material')
             ->with(['project','scheduleOfWorks'])
             ->get();
 
         $schedules = Inventory::query()
-            ->where('user_id', auth()->id())
+            ->whereIn('user_id', $userIds)
             ->where('category', 'T&P')
             ->with(['project','scheduleOfWorks'])
             ->get();
@@ -76,7 +86,7 @@ class InventoryController extends Controller
         $items = Inventory::query()
             ->when($projectId, fn($q) => $q->where('project_id', $projectId))
             ->with(['project'])
-            ->where('user_id', auth()->id())
+            ->whereIn('user_id', $userIds)
             ->OrderBy('id', 'desc')
              ->when($request->filled('fy'), function ($query) use ($request) {
 
@@ -91,9 +101,9 @@ class InventoryController extends Controller
 
 
 
-        $projects = Project::where('user_id', auth()->id())->get();
+        $projects = Project::whereIn('user_id', $userIds)->get();
         $project= Project::where('id', $projectId)->first();
-        $vendors  = Vendor::where('user_id', auth()->id())->get();
+        $vendors  = Vendor::whereIn('user_id', $userIds)->get();
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
