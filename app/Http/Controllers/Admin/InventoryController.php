@@ -81,6 +81,17 @@ class InventoryController extends Controller
 
     public function tabindex(Request $request)
     {
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $projectId = $request->query('project_id');
 
         $items = Inventory::query()
