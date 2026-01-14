@@ -121,86 +121,83 @@
 
         {{-- Cloud --}}
         <div class="tab-pane fade show active" id="cloud-tab-pane" role="tabpanel">
+            @if($items->count() > 0)
+                <div class="table-responsive mt-4">
 
-            <div class="table-responsive mt-4">
-
-                <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
-                    <thead class="table-light text-center">
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Description</th>
-                            <th class="text-center">Stores</th>
-                            <th class="text-center">Measured</th>
-                             <th class="text-center">Balance</th>
-                            <th class="text-center">Dismantals</th>
-                            <th class="text-center">Rate</th>
-                            <th class="text-center">Amount</th>
-                            <th class="text-center" width="">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @if($items->count() > 0)
-                            @if($items->isNotEmpty())
-                                @foreach($items as $index => $i)
-                                    <tr data-id="{{ $i->id }}">
-                                        <td class="text-center">{{ $index + 1 }}</td>
-
-                                        <td class="text-center">{{ $i->description }}</td>
-
-                                        <td class="text-center">{{ $i->quantity }}</td>
-
-                                        <td class="text-center">{{ $i->scheduleOfWorks->sum('measured_quantity') }}</td>
-
-                                        <td class="text-center">
-                                            {{ $i->quantity - $i->scheduleOfWorks->sum('measured_quantity') }}
-                                            @php $balance = $i->quantity - $i->scheduleOfWorks->sum('measured_quantity'); @endphp
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="number"
-                                            step="0.01"
-                                            min="0"
-                                            max="{{ $balance }}"
-                                            data-max="{{ $balance }}"
-                                            class="form-control form-control-sm dismantals text-center"
-                                            value="{{ $i->dismantals }}"
-                                            required>
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="number"
+                    <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Stores</th>
+                                <th class="text-center">Measured</th>
+                                <th class="text-center">Balance</th>
+                                <th class="text-center">Dismantals</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Amount</th>
+                                <th class="text-center" width="">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @if($items->count() > 0)
+                                @if($items->isNotEmpty())
+                                    @foreach($items as $index => $i)
+                                        <tr data-id="{{ $i->id }}">
+                                            <td class="text-center">{{ $index + 1 }}</td>
+                                            <td class="text-center">{{ $i->description }}</td>
+                                            <td class="text-center">{{ $i->quantity }}</td>
+                                            <td class="text-center">{{ $i->scheduleOfWorks->sum('measured_quantity') }}</td>
+                                            <td class="text-center">
+                                                {{ $i->quantity - $i->scheduleOfWorks->sum('measured_quantity') }}
+                                                @php $balance = $i->quantity - $i->scheduleOfWorks->sum('measured_quantity'); @endphp
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="number"
                                                 step="0.01"
-                                                class="form-control form-control-sm dismantal_rate text-center"
-                                                value="{{ $i->dismantal_rate }}"
+                                                min="0"
+                                                max="{{ $balance }}"
+                                                data-max="{{ $balance }}"
+                                                class="form-control form-control-sm dismantals text-center"
+                                                value="{{ $i->dismantals }}"
                                                 required>
-                                        </td>
-
-                                        <td class="dismantal_amount text-center">0.00</td>
-
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-success saveDismantalBtn1"
-                                                    data-id="{{ $i->id }}">
-                                                Save
-                                            </button>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="number"
+                                                    step="0.01"
+                                                    class="form-control form-control-sm dismantal_rate text-center"
+                                                    value="{{ $i->dismantal_rate }}"
+                                                    required>
+                                            </td>
+                                            <td class="dismantal_amount text-center">0.00</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-success saveDismantalBtn1"
+                                                        data-id="{{ $i->id }}">
+                                                    Save
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="9" class="text-center text-muted">
+                                            Data not found
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endif
                             @else
                                 <tr>
                                     <td colspan="9" class="text-center text-muted">
                                         Data not found
                                     </td>
                                 </tr>
-                            @endif
-                        @else
-                            <tr>
-                                <td colspan="9" class="text-center text-muted">
-                                    Data not found
-                                </td>
-                            </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="text-center p-4">
+                    <h5>No Material Found</h5>
+                </div>
+            @endif
         </div>
 
         {{-- purchase vms --}}
@@ -225,24 +222,19 @@
 
                                     <tr data-id="{{ $i->id }}">
                                         <td>{{ $index + 1 }}</td>
-
                                         <td>{{ $i->description }}</td>
-
                                         <td>{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
-
                                         <td>
                                                     <input type="number" step="0.01"
                                                         class="form-control form-control-sm dismantals"
                                                         value="{{ $i->dismantals }}" required>
                                         </td>
-
                                         <td>
                                                     <input type="number" step="0.01"
                                                         class="form-control form-control-sm dismantal_rate"
                                                         value="{{ $i->dismantal_rate }}" required>
                                         </td>
                                         <td class="dismantal_amount">0.00</td>
-
                                         <td>
                                                     <button class="btn btn-sm btn-success saveDismantalBtn2"
                                                             data-id="{{ $i->id }}">
