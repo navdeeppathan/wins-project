@@ -80,164 +80,164 @@ class ProjectController extends Controller
 
  
 
-public function dashboard()
-{
-    $userId = auth()->id();
-    $today = Carbon::today();
-    $nextMonth = Carbon::today()->addMonth();
+    public function dashboard()
+    {
+        $userId = auth()->id();
+        $today = Carbon::today();
+        $nextMonth = Carbon::today()->addMonth();
 
-        $totalInventory = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
-
-
-    /* =======================
-        PROJECT COUNTS
-    ======================= */
-
-    $totalProjects = Project::where('user_id', $userId)->count();
-
-    $totalBidding = Project::where('user_id', $userId)
-        ->where('status', 'bidding')
-        ->count();
-
-    $totalAwarded = Project::where('user_id', $userId)
-        ->where('status', 'awarded')
-        ->count();
-
-    $totalCompleted = Project::where('user_id', $userId)
-        ->where('status', 'completed')
-        ->count();
-
-    /* =======================
-        TOTAL WORK DONE (₹)
-    ======================= */
-
-    $totalWorkDone = Project::where('user_id', $userId)
-        ->where('status', 'completed')
-        ->sum('estimated_amount');
-
-    /* =======================
-        SECURITY / DUES
-        (Within next 1 month)
-    ======================= */
-
-    $totalEmdDue = Project::where('user_id', $userId)
-        ->whereHas('emds', function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        })
-        ->with(['emds' => function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        }])
-        ->get()
-        ->flatMap->emds
-        ->sum('emd_amount');
+            $totalInventory = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
 
 
-    $totalPgDue = Project::where('user_id', $userId)
-        ->whereHas('pgDetails', function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        })
-        ->with(['pgDetails' => function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        }])
-        ->get()
-        ->flatMap->pgDetails
-        ->sum('pg_amount');
+        /* =======================
+            PROJECT COUNTS
+        ======================= */
+
+        $totalProjects = Project::where('user_id', $userId)->count();
+
+        $totalBidding = Project::where('user_id', $userId)
+            ->where('status', 'bidding')
+            ->count();
+
+        $totalAwarded = Project::where('user_id', $userId)
+            ->where('status', 'awarded')
+            ->count();
+
+        $totalCompleted = Project::where('user_id', $userId)
+            ->where('status', 'completed')
+            ->count();
+
+        /* =======================
+            TOTAL WORK DONE (₹)
+        ======================= */
+
+        $totalWorkDone = Project::where('user_id', $userId)
+            ->where('status', 'completed')
+            ->sum('estimated_amount');
+
+        /* =======================
+            SECURITY / DUES
+            (Within next 1 month)
+        ======================= */
+
+        $totalEmdDue = Project::where('user_id', $userId)
+            ->whereHas('emds', function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            })
+            ->with(['emds' => function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            }])
+            ->get()
+            ->flatMap->emds
+            ->sum('emd_amount');
 
 
-    $totalSecurityDue = Project::where('user_id', $userId)
-        ->whereHas('securityDeposits', function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        })
-        ->with(['securityDeposits' => function ($q) use ($today, $nextMonth) {
-            $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
-        }])
-        ->get()
-        ->flatMap->securityDeposits
-        ->sum('security_amount');
+        $totalPgDue = Project::where('user_id', $userId)
+            ->whereHas('pgDetails', function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            })
+            ->with(['pgDetails' => function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            }])
+            ->get()
+            ->flatMap->pgDetails
+            ->sum('pg_amount');
 
 
-    /* =======================
-        PROJECT DATE ALERTS
-    ======================= */
+        $totalSecurityDue = Project::where('user_id', $userId)
+            ->whereHas('securityDeposits', function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            })
+            ->with(['securityDeposits' => function ($q) use ($today, $nextMonth) {
+                $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
+            }])
+            ->get()
+            ->flatMap->securityDeposits
+            ->sum('security_amount');
 
-    // Projects completing in next 1 month
-    $projectsCompletingSoon = Project::where('user_id', $userId)
-        ->where('status', 'awarded')
-        ->whereBetween('stipulated_date_ofcompletion', [$today, $nextMonth])
-        ->count();
 
-    // Projects running beyond completion date
-    $projectsDelayed = Project::where('user_id', $userId)
-        ->where('status', 'awarded')
-        ->whereDate('stipulated_date_ofcompletion', '<', $today)
-        ->count();
+        /* =======================
+            PROJECT DATE ALERTS
+        ======================= */
 
-    /* =======================
-        VENDORS & STAFF
-    ======================= */
+        // Projects completing in next 1 month
+        $projectsCompletingSoon = Project::where('user_id', $userId)
+            ->where('status', 'awarded')
+            ->whereBetween('stipulated_date_ofcompletion', [$today, $nextMonth])
+            ->count();
 
-    $totalVendors = Vendor::where('user_id', $userId)->count();
+        // Projects running beyond completion date
+        $projectsDelayed = Project::where('user_id', $userId)
+            ->where('status', 'awarded')
+            ->whereDate('stipulated_date_ofcompletion', '<', $today)
+            ->count();
 
-    $totalStaff = User::where('parent_id', $userId)->count();
+        /* =======================
+            VENDORS & STAFF
+        ======================= */
 
-    /* =======================
-        INVENTORY
-    ======================= */
+        $totalVendors = Vendor::where('user_id', $userId)->count();
 
-    // Total stock value
-    $totalStockValue = Inventory::where('user_id', $userId)
-        ->sum('amount');
+        $totalStaff = User::where('parent_id', $userId)->count();
 
-    // Top 5 high value items
-    $topInventoryItems = Inventory::where('user_id', $userId)
-        ->orderBy('amount', 'desc')
-        ->take(5)
-        ->get();
+        /* =======================
+            INVENTORY
+        ======================= */
 
-    /* =======================
-        DASHBOARD LISTING DATA
-    ======================= */
+        // Total stock value
+        $totalStockValue = Inventory::where('user_id', $userId)
+            ->sum('amount');
 
-    $latestProjects = Project::where('user_id', $userId)
-        ->orderBy('id', 'desc')
-        ->take(5)
-        ->get();
+        // Top 5 high value items
+        $topInventoryItems = Inventory::where('user_id', $userId)
+            ->orderBy('amount', 'desc')
+            ->take(5)
+            ->get();
 
-    $topVendors = Vendor::where('user_id', $userId)
-        ->orderBy('amount', 'desc')
-        ->take(5)
-        ->get();
+        /* =======================
+            DASHBOARD LISTING DATA
+        ======================= */
 
-    /* =======================
-        RETURN VIEW
-    ======================= */
+        $latestProjects = Project::where('user_id', $userId)
+            ->orderBy('id', 'desc')
+            ->take(5)
+            ->get();
 
-    return view('admin.dashboard', compact(
-        'totalProjects',
-        'totalBidding',
-        'totalAwarded',
-        'totalCompleted',
-        'totalWorkDone',
+        $topVendors = Vendor::where('user_id', $userId)
+            ->orderBy('amount', 'desc')
+            ->take(5)
+            ->get();
 
-        'totalEmdDue',
-        'totalPgDue',
-        'totalSecurityDue',
+        /* =======================
+            RETURN VIEW
+        ======================= */
 
-        'projectsCompletingSoon',
-        'projectsDelayed',
+        return view('admin.dashboard', compact(
+            'totalProjects',
+            'totalBidding',
+            'totalAwarded',
+            'totalCompleted',
+            'totalWorkDone',
 
-        'totalVendors',
-        'totalStaff',
+            'totalEmdDue',
+            'totalPgDue',
+            'totalSecurityDue',
 
-        'totalStockValue',
-        'topInventoryItems',
+            'projectsCompletingSoon',
+            'projectsDelayed',
 
-        'latestProjects',
-        'topVendors',
+            'totalVendors',
+            'totalStaff',
 
-        'totalInventory'
-    ));
-}
+            'totalStockValue',
+            'topInventoryItems',
+
+            'latestProjects',
+            'topVendors',
+
+            'totalInventory'
+        ));
+    }
 
     public function index(Request $request)
     {
@@ -545,10 +545,25 @@ public function dashboard()
 
     public function create()
     {
-        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
+        $user = auth()->user();
+
+        // Collect allowed user IDs
+        $userIds = [$user->id];
+
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
+        }
+
+        $departments = Department::whereIn('user_id', $userIds)
+            ->orderBy('name')
+            ->get();
+
         $states = State::orderBy('name')->get();
-        return view('admin.projects.create', compact('departments','states'));
+
+        return view('admin.projects.create', compact('departments', 'states'));
     }
+
+
 
 
     public function commonCreate(Project $project)
@@ -602,7 +617,7 @@ public function dashboard()
             return view('admin.pgreturn.indexdetails', compact('project', 'pgDetails', 'forfieteds', 'returneds', 'actives'));
         }
 
-          public function securityreturnedCreate(Project $project)
+        public function securityreturnedCreate(Project $project)
         {
             $securityDeposits = $project->securityDeposits;
             $actives = $project->securityDeposits()

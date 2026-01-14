@@ -180,41 +180,71 @@
 </form>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const rateSelect = document.getElementById('emd_rate');
+        const displayAmt = document.getElementById('emd_amount_display');
+        const hiddenAmt  = document.getElementById('emd_amount');
+        const estInput   = document.getElementById('estimated_amount');
+
+        let userEdited = false;
+
+        function calculateEMD() {
+            let rate = rateSelect.value;
+            let baseAmount = parseFloat(estInput.value) || 0;
+
+            // Auto calculation only if user has not edited manually
+            if (!userEdited && rate !== 'other' && baseAmount > 0) {
+                let emd = (baseAmount * rate) / 100;
+                emd = emd.toFixed(2);
+
+                displayAmt.value = emd;
+                hiddenAmt.value  = emd;
+            }
+        }
+
+        // Detect manual edit
+        displayAmt.addEventListener('input', function () {
+            userEdited = true;
+            hiddenAmt.value = this.value;
+        });
+
+        // Reset manual flag when rate changes
+        rateSelect.addEventListener('change', function () {
+            userEdited = false;
+            calculateEMD();
+        });
+
+        // Recalculate when estimated amount changes
+        estInput.addEventListener('input', function () {
+            if (!userEdited) {
+                calculateEMD();
+            }
+        });
+
+        // Initial run
+        calculateEMD();
+
+    });
+</script>
+
+<script>
 document.addEventListener('DOMContentLoaded', function () {
 
-    const rateSelect = document.getElementById('emd_rate');
-    const displayAmt = document.getElementById('emd_amount_display');
-    const hiddenAmt  = document.getElementById('emd_amount');
-    const estInput   = document.getElementById('estimated_amount');
+    const submission = document.getElementById('date_of_start');
+    const opening    = document.getElementById('date_of_opening');
 
-    function calculateEMD() {
-        let rate = rateSelect.value;
-        let baseAmount = parseFloat(estInput.value) || 0;
+    let openingManuallyChanged = false;
 
-        if (rate === 'other') {
-            displayAmt.readOnly = false;
-            displayAmt.value = '';
-            hiddenAmt.value = '';
-            displayAmt.focus();
-            return;
-        }
+    // Mark opening as manually edited
+    opening.addEventListener('input', function () {
+        openingManuallyChanged = true;
+    });
 
-        if (rate !== '' && baseAmount > 0) {
-            let emd = (baseAmount * rate) / 100;
-            emd = emd.toFixed(2);
-
-            displayAmt.readOnly = true;
-            displayAmt.value = emd;
-            hiddenAmt.value = emd;
-        }
-    }
-
-    rateSelect.addEventListener('change', calculateEMD);
-    estInput.addEventListener('input', calculateEMD);
-
-    displayAmt.addEventListener('input', function () {
-        if (!displayAmt.readOnly) {
-            hiddenAmt.value = this.value;
+    // Auto-fill opening when submission changes
+    submission.addEventListener('change', function () {
+        if (!openingManuallyChanged || opening.value === '') {
+            opening.value = submission.value;
         }
     });
 
