@@ -19,7 +19,7 @@
 
             @if($users->count() > 0)
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered table-striped nowrap w-100">
+                    <table class="table table-bordered table-striped nowrap w-100 example class-table">
                         <thead>
                             <tr>
                                 <th>#</th>
