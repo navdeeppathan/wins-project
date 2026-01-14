@@ -1,125 +1,111 @@
 @extends('layouts.admin')
 
-@section('title', 'Create User')
+@section('title', 'User Management')
 
 @section('content')
 
-
 <div class="container-fluid py-4">
 
-    {{-- ================= PAGE TITLE ================= --}}
-   <div class="d-flex align-items-center justify-content-between flex-wrap">
-     <h2 class="page-title">User Management</h2>
-     <button class="btn btn-primary">
-       <a href="{{ route('admin.users.create') }}" class="text-white text-decoration-none"><i class="fas fa-plus-circle me-2"></i>Create User</a>
-     </button>
-   </div>
+    {{-- PAGE TITLE --}}
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="page-title">User Management</h2>
+        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-2"></i>Create User
+        </a>
+    </div>
 
+    <div class="card">
+        <div class="card-body">
 
+            @if($users->count() > 0)
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered table-striped nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name of User</th>
+                                <th>DOJ</th>
+                                <th>DOL</th>
+                                <th>State</th>
+                                <th>Contact Number</th>
+                                <th>Email ID</th>
+                                <th>Designation</th>
+                                <th>Monthly Salary</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            @foreach($users as $index => $user)
+                                <tr>
+                                    {{-- 1 --}}
+                                    <td>{{ $index + 1 }}</td>
 
-    {{-- ================= USERS LIST ================= --}}
-    <div class="row">
-        <div class="col-12">
+                                    {{-- 2 --}}
+                                    <td>{{ $user->name }}</td>
 
-            <div class="card card-elegant ">
+                                    {{-- 3 DOJ --}}
+                                    <td>
+                                        {{ $user->date_of_joining
+                                            ? date('d M Y', strtotime($user->date_of_joining))
+                                            : '-' }}
+                                    </td>
 
-                <div class="card-body p-0">
-                    @if($users->count() > 0)
-                        <div class="table-responsive">
-                            <table id="example" class="table class-table nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th >#</th>
-                                        <th class="text-center">NAME OF THE USER</th>
-                                        <th class="text-center">STATE</th>
-                                        <th class="text-center">DOJ</th>
-                                        <th class="text-center">DOL</th>
-                                        <th class="text-center">CONTACT NUMBER</th>
-                                        <th class="text-center">EMAIL ID</th>
-                                        <th class="text-center">DESIGNATION</th>
-                                        <th class="text-center">MONTHLY SALARY </th>
-                                        <th class="text-center">ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $serial = 1; @endphp
-                                        @foreach($users as $user)
-                                            <tr>
-                                                <td class="text-center">
-                                                        {{ $serial++ }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{ $user->name }}
-                                                </td>
-                                                <td class="text-center">
-                                                    @if($user->state)
-                                                            {{ $user->state }}
-                                                    @else
-                                                        <span class="text-muted fst-italic">Not provided</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                        {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
-                                                </td>
-                                                <td class="text-center">
-                                                        {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{ $user->phone ?? '-' }}
-                                                </td>
-                                                <td class="text-center">
-                                                        {{ $user->email }}
-                                                </td>
-                                                <td class="text-center">
-                                                        {{ $user->designation ?? '-' }}
-                                                </td>
-                                                <td class="text-center">
-                                                        {{ $user->monthly_salary ?? '-' }}
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex align-items-center">
-                                                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning me-2">
-                                                        Edit
-                                                        </a>
-                                                        {{-- <form action="{{ route('superadmin.users.destroy', $user->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form> --}}
+                                    {{-- 4 DOL --}}
+                                    <td>
+                                        {{ $user->date_of_leaving
+                                            ? date('d M Y', strtotime($user->date_of_leaving))
+                                            : '-' }}
+                                    </td>
 
-                                                        <a href="{{ route('admin.users.details.index', $user->id) }}"
-                                                            class="btn btn-sm btn-primary me-2">
-                                                            View
-                                                        </a>
+                                    {{-- 5 STATE --}}
+                                    <td>{{ $user->state ?? 'Not provided' }}</td>
 
+                                    {{-- 6 CONTACT --}}
+                                    <td>{{ $user->phone ?? '-' }}</td>
 
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="10" class="text-center">No Data Found</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    @else
-                        <div class="p-4 text-center">
-                            <h5 class="mb-3">No Users Found</h5>
-                        </div>
-                    @endif
+                                    {{-- 7 EMAIL --}}
+                                    <td>{{ $user->email }}</td>
+
+                                    {{-- 8 DESIGNATION --}}
+                                    <td>{{ $user->designation ?? '-' }}</td>
+
+                                    {{-- 9 SALARY --}}
+                                    <td>{{ $user->monthly_salary ?? '-' }}</td>
+
+                                    {{-- 10 ACTION --}}
+                                    <td>
+                                        <a href="{{ route('admin.users.edit', $user->id) }}"
+                                           class="btn btn-sm btn-warning">Edit</a>
+
+                                        <a href="{{ route('admin.users.details.index', $user->id) }}"
+                                           class="btn btn-sm btn-primary">View</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-
-            </div>
+            @else
+                <div class="text-center p-4">
+                    <h5>No Users Found</h5>
+                </div>
+            @endif
 
         </div>
     </div>
 
 </div>
-
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            responsive: true,
+            autoWidth: false,
+            pageLength: 10
+        });
+    });
+</script>
+@endpush
