@@ -118,6 +118,15 @@
                             {{ $w->description }}
                         </textarea>
                     </td>
+                    <style>
+                        #example textarea.form-control {
+                            display: block !important;
+                            align-self: flex-start !important;
+                            text-align: left !important;
+                            vertical-align: top !important;
+                            padding-top: 8px !important;
+                        }
+                    </style>
 
                     <td>
                         <input class="form-control qty"

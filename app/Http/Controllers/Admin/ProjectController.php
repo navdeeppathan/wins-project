@@ -1148,9 +1148,9 @@ class ProjectController extends Controller
         $request->validate([
 
             'agreement_no'  => 'nullable|string|max:255',
-
             'stipulated_date_ofcompletion' => 'nullable|date',
             'agreement_upload'     => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:5120',
+            'date_ofstartof_work'       => 'nullable|date',
         ]);
 
         $project->status = 'agreement';
@@ -1158,6 +1158,8 @@ class ProjectController extends Controller
         $project->agreement_no = $request->agreement_no;
 
         $project->stipulated_date_ofcompletion = $request->stipulated_date_ofcompletion;
+
+        $project->date_ofstartof_work = $request->date_ofstartof_work;
 
         if ($request->hasFile('agreement_upload')) {
             $project->agreement_upload = $request->agreement_upload

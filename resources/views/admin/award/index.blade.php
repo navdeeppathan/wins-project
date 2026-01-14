@@ -61,7 +61,7 @@
                     </td>
                     <td>
                         <input type="date"
-                            class="form-control form-control-sm agreement_start_date"
+                            class="form-control form-control-sm date_ofstartof_work"
                             value="{{ $p->date_ofstartof_work }}">
                     </td>
                     <td>
@@ -123,7 +123,7 @@
 
 @push('scripts')
 <script>
-$(document).on('click', '.saveAgreementBtn', function () {
+$(document).on('click', '.saveAwardBtn', function () {
 
     let btn = $(this);
     let row = btn.closest('tr');
@@ -144,6 +144,16 @@ $(document).on('click', '.saveAgreementBtn', function () {
     //     'agreement_start_date',
     //     row.find('.agreement_start_date').val()
     // );
+
+    formData.append(
+        'stipulated_date_ofcompletion',
+        row.find('.stipulated_date_ofcompletion').val()
+    );
+
+    formData.append(
+        'date_ofstartof_work',
+        row.find('.date_ofstartof_work').val()
+    )
 
 
 

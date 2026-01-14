@@ -110,6 +110,7 @@
 
         $categories = [
             'MATERIAL',
+            'SERVICES',
             'WAGES',
             'LOGISTIC',
             'MAINTENANCE',
@@ -178,6 +179,10 @@
 
                         <td><input type="date" class="form-control date" value="{{ $i->date }}"></td>
                         <td width="">
+                            @if(auth()->user()->role === 'staff')
+                                <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                                {{ auth()->user()->name }}
+                            @else
                             <select class="form-select staff_id">
                                 <option value="">Select Staff</option>
                                 @foreach($staffs as $staff)
@@ -187,9 +192,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @endif
                         </td>
 
                             <td >
+                                
                                 <select class="form-select category mb-2">
                                     <option value="">Select</option>
                                     @foreach($categories as $cat)
@@ -235,6 +242,7 @@
                     </tr>
                 @empty
                     <tr>
+
                         <td>
                             1
                             <input type="hidden" class="project_id" value="{{ $project->id }}">
@@ -243,6 +251,10 @@
 
                         <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
                         <td width="">
+                             @if(auth()->user()->role === 'staff')
+                                <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                                {{ auth()->user()->name }}
+                            @else
                             <select class="form-select staff_id">
                                 <option value="">Select Staff</option>
                                 @foreach($staffs as $staff)
@@ -251,6 +263,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @endif
                         </td>
                         <td>
 
@@ -368,6 +381,10 @@
                     <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
 
                     <td width="">
+                        @if(auth()->user()->role === 'staff')
+                            <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                            {{ auth()->user()->name }}
+                        @else
                         <select class="form-select staff_id">
                             <option value="">Select Staff</option>
                             @foreach($staffs as $staff)
@@ -376,6 +393,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        @endif
                     </td>
 
                     <td>

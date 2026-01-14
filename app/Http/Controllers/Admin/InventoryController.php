@@ -21,15 +21,12 @@ class InventoryController extends Controller
 
         $user = auth()->user();
         // Admin → own + staff projects
-        if ($user->role === 'admin') {
-            $userIds = \App\Models\User::where('parent_id', $user->id)
-                        ->pluck('id')
-                        ->toArray();
+        $userIds = [$user->id];
 
-            $userIds[] = $user->id;
-        }else {
-            $userIds = [$user->id];
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
         }
+
         $projectId = $request->query('project_id');
 
         $items = Inventory::query()
@@ -53,15 +50,12 @@ class InventoryController extends Controller
 
          $user = auth()->user();
         // Admin → own + staff projects
-        if ($user->role === 'admin') {
-            $userIds = \App\Models\User::where('parent_id', $user->id)
-                        ->pluck('id')
-                        ->toArray();
+        $userIds = [$user->id];
 
-            $userIds[] = $user->id;
-        }else {
-            $userIds = [$user->id];
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
         }
+
         $items = Inventory::query()
             ->whereIn('user_id', $userIds)
             ->where('category', 'Material')
@@ -81,17 +75,18 @@ class InventoryController extends Controller
 
     public function tabindex(Request $request)
     {
-         $user = auth()->user();
+        
         // Admin → own + staff projects
-        if ($user->role === 'admin') {
-            $userIds = \App\Models\User::where('parent_id', $user->id)
-                        ->pluck('id')
-                        ->toArray();
+        $user = auth()->user();
 
-            $userIds[] = $user->id;
-        }else {
-            $userIds = [$user->id];
+        // Collect allowed user IDs
+        $userIds = [$user->id];
+
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
         }
+
+       
         $projectId = $request->query('project_id');
 
         $items = Inventory::query()
@@ -114,7 +109,10 @@ class InventoryController extends Controller
 
         $projects = Project::whereIn('user_id', $userIds)->get();
         $project= Project::where('id', $projectId)->first();
+       
         $vendors  = Vendor::whereIn('user_id', $userIds)->get();
+
+   
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
@@ -139,7 +137,7 @@ class InventoryController extends Controller
             'upload'      => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'qty_issued' => 'nullable',
             'schedule_work_id' => 'nullable',
-            'net_payable' => 'nullable  ',
+            'net_payable' => 'nullable',
             'staff_id' => 'nullable',
             'description2' => 'nullable|string',
 

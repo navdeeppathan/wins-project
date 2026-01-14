@@ -54,7 +54,29 @@ class ScheduleWorkController extends Controller
         $inventories = $scheduleWork->inventories;
         $totalnetpayable = $inventories->sum('net_payable');
 
-        $allInventories = Inventory::where('user_id', auth()->id())->get();
+       
+
+        $user = auth()->user();
+
+        // Collect allowed user IDs
+        $userIds = [$user->id];
+
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
+            $userIds[] = $user->id;
+        }
+        
+        if ($user->role === 'admin') {
+           auth()->user()->children->each(function ($child) use (&$userIds) {
+               $userIds[] = $child->id;
+           });
+          
+        }
+      
+
+        $allInventories = Inventory::whereIn('user_id', $userIds)->get();
+        
+
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
 
 

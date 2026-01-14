@@ -96,6 +96,7 @@
 
     $categories = [
         'MATERIAL',
+        'SERVICES',
         'WAGES',
         'LOGISTIC',
         'MAINTENANCE',
@@ -234,7 +235,12 @@
                 <td class="text-center"><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
                 <!-- <td><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> -->
 
-                <td class="net_payable text-center">{{ number_format($i->net_payable,2) }}</td>
+                {{-- <td class="net_payable text-center">{{ number_format($i->net_payable,2) }}</td> --}}
+
+                <td class="net_payable text-center"
+                    data-db="{{ $i->net_payable }}">
+                    {{ number_format($i->net_payable,2) }}
+                </td>
 
                 <td class="text-center">
                     @if($i->upload)
@@ -276,6 +282,10 @@
                 </td>
 
                 <td>
+                    @if(auth()->user()->role === 'staff')
+                        <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                        {{ auth()->user()->name }}
+                    @else
                     <select class="form-select staff_id">
                         <option value="">Select Staff</option>
                         @foreach($staffs as $staff)
@@ -284,6 +294,8 @@
                             </option>
                         @endforeach
                     </select>
+                    @endif
+
                 </td>
 
 
@@ -360,6 +372,10 @@ $(function () {
             </td>
 
             <td>
+                @if(auth()->user()->role === 'staff')
+                        <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                        {{ auth()->user()->name }}
+                @else
                 <select class="form-select staff_id">
                     <option value="">Select Staff</option>
                     @foreach($staffs as $staff)
@@ -368,6 +384,7 @@ $(function () {
                         </option>
                     @endforeach
                 </select>
+                @endif
             </td>
             <td>
                 <select class="form-select category">
@@ -383,7 +400,7 @@ $(function () {
 
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
-            // <td><input type="number" class="form-control deduction"></td>
+            
             <td class="net_payable">0.00</td>
             <td><input type="file" class="form-control upload"></td>
             <td>
@@ -396,13 +413,24 @@ $(function () {
     });
 
     // NET PAYABLE
-    $(document).on('input', '.amount, .deduction', function () {
+   $(document).on('input', '.amount, .quantity, .deduction', function () {
         let row = $(this).closest('tr');
-        let a = parseFloat(row.find('.amount').val()) || 0;
-        let c = parseFloat(row.find('.quantity').val()) || 0;
-        let d = parseFloat(row.find('.deduction').val()) || 0;
-        row.find('.net_payable').text((a * c - d).toFixed(2));
+        recalcRow(row);
     });
+
+    function recalcRow(row)
+    {
+        let amount   = parseFloat(row.find('.amount').val()) || 0;
+        let qty      = parseFloat(row.find('.quantity').val()) || 1;
+        let deduct   = parseFloat(row.find('.deduction').val()) || 0;
+
+        let net = (amount * qty) - deduct;
+
+        row.find('.net_payable')
+            .text(net.toFixed(2))
+            .data('db', net);
+    }
+
 
     // SAVE
     $(document).on('click', '.saveRow', function () {
@@ -428,6 +456,7 @@ $(function () {
         formData.append('amount', row.find('.amount').val());
         // formData.append('deduction', row.find('.deduction').val());
         formData.append('staff_id', row.find('.staff_id').val());
+        formData.append('net_payable', row.find('.net_payable').data('db'));
 
         let file = row.find('.upload')[0];
         if (file && file.files.length) {
@@ -468,6 +497,7 @@ $(function () {
 });
 
 
+
  new DataTable('#inventoryTable', {
         scrollX: true,
         scrollY:        600,
@@ -479,6 +509,17 @@ $(function () {
         fixedHeader: true,
 
 
+        /* Restore DB net_payable after DT render */
+        initComplete: function () {
+            $('#inventoryTable tbody tr').each(function () {
+                let cell = $(this).find('.net_payable');
+                let dbValue = cell.data('db');
+
+                if (dbValue !== undefined) {
+                    cell.text(parseFloat(dbValue).toFixed(2));
+                }
+            });
+        },
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';

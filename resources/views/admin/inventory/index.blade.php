@@ -52,7 +52,6 @@
 
         'WAGES',
         'LOGISTIC',
-
         'FEE',
         'TOURS',
         'OTHERS',
@@ -153,6 +152,10 @@
                         </select>
                     </td>
                     <td class="text-center" width="">
+                        @if(auth()->user()->role === 'staff')
+                            <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                            {{ auth()->user()->name }}
+                        @else
                         <select class="form-select staff_id">
                             <option value="">Select Staff</option>
                             @foreach($staffs as $staff)
@@ -162,6 +165,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        @endif
                     </td>
 
                     <td class="text-center">
@@ -179,7 +183,10 @@
                     <td class="text-center"><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
                     <td class="text-center"><input type="number" step="0.01" class="form-control amount" value="{{ $i->amount }}"></td>
                     {{-- <td class="text-center"><input type="number" step="0.01" class="form-control deduction" value="{{ $i->deduction }}"></td> --}}
-                    <td class="text-center" class="net_payable">{{ number_format($i->net_payable,2) }}</td>
+                    <td class="text-center net_payable">
+                        {{ number_format($i->net_payable,2) }}
+                    </td>
+
                     <td class="text-center">
                         @if($i->upload)
                             <a href="{{ asset($i->upload) }}" target="_blank"
@@ -214,6 +221,10 @@
                     </td>
 
                     <td>
+                        @if(auth()->user()->role === 'staff')
+                            <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                            {{ auth()->user()->name }}
+                        @else
                         <select class="form-select staff_id">
                             <option value="">Select Staff</option>
                             @foreach($staffs as $staff)
@@ -222,6 +233,7 @@
                                 </option>
                             @endforeach
                         </select>
+                        @endif
                     </td>
 
                     <td>
@@ -290,6 +302,10 @@ $(function () {
             </td>
 
             <td>
+                @if(auth()->user()->role === 'staff')
+                    <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                    {{ auth()->user()->name }}
+                @else
                 <select class="form-select staff_id">
                     <option value="">Select Staff</option>
                     @foreach($staffs as $staff)
@@ -298,6 +314,7 @@ $(function () {
                         </option>
                     @endforeach
                 </select>
+                @endif
             </td>
 
             <td>
@@ -358,6 +375,8 @@ $(function () {
         formData.append('amount', row.find('.amount').val());
         // formData.append('deduction', row.find('.deduction').val());
         formData.append('staff_id', row.find('.staff_id').val());
+        formData.append('net_payable', row.find('.net_payable').text());
+
 
         let file = row.find('.upload')[0];
         if (file && file.files.length) {
