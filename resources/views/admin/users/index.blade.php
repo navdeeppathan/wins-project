@@ -54,10 +54,11 @@
                             </thead>
                             <tbody>
                                 @if($users->count() > 0)
-                                    @forelse($users as $user)
+                                @php $serial = 1; @endphp
+                                    @foreach($users as $user)
                                         <tr>
                                             <td class="text-center">
-                                                    {{ $loop->iteration }}
+                                                    {{ $serial++ }}
                                             </td>
                                             <td class="text-center">
                                                 {{ $user->name }}
