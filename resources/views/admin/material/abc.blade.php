@@ -202,61 +202,67 @@
 
         {{-- purchase vms --}}
         <div class="tab-pane fade" id="purchase-tab-pane" role="tabpanel">
-            <div class="table-responsive mt-4">
-                <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
-                    <thead class="table-light text-center">
-                        <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Description</th>
-                            <th class="text-center">T&P</th>
-                            <th class="text-center">Dismantals</th>
-                            <th class="text-center">Rate</th>
-                            <th class="text-center">Amount</th>
-                            <th class="text-center" width="">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @if($schedules->count() > 0)
-                            @if(!empty($schedules))
-                                @foreach($schedules as $index => $i)
+            @if($schedules->count() > 0)
+                <div class="table-responsive mt-4">
+                    <table id="quotes-table" class="table table-hover class-table align-middle" style="width:100%">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">T&P</th>
+                                <th class="text-center">Dismantals</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Amount</th>
+                                <th class="text-center" width="">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @if($schedules->count() > 0)
+                                @if(!empty($schedules))
+                                    @foreach($schedules as $index => $i)
 
-                                    <tr data-id="{{ $i->id }}">
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $i->description }}</td>
-                                        <td>{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
-                                        <td>
-                                                    <input type="number" step="0.01"
-                                                        class="form-control form-control-sm dismantals"
-                                                        value="{{ $i->dismantals }}" required>
-                                        </td>
-                                        <td>
-                                                    <input type="number" step="0.01"
-                                                        class="form-control form-control-sm dismantal_rate"
-                                                        value="{{ $i->dismantal_rate }}" required>
-                                        </td>
-                                        <td class="dismantal_amount">0.00</td>
-                                        <td>
-                                                    <button class="btn btn-sm btn-success saveDismantalBtn2"
-                                                            data-id="{{ $i->id }}">
-                                                        Save
-                                                    </button>
-                                        </td>
+                                        <tr data-id="{{ $i->id }}">
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $i->description }}</td>
+                                            <td>{{$i->scheduleOfWorks->sum('measured_quantity')}}</td>
+                                            <td>
+                                                        <input type="number" step="0.01"
+                                                            class="form-control form-control-sm dismantals"
+                                                            value="{{ $i->dismantals }}" required>
+                                            </td>
+                                            <td>
+                                                        <input type="number" step="0.01"
+                                                            class="form-control form-control-sm dismantal_rate"
+                                                            value="{{ $i->dismantal_rate }}" required>
+                                            </td>
+                                            <td class="dismantal_amount">0.00</td>
+                                            <td>
+                                                        <button class="btn btn-sm btn-success saveDismantalBtn2"
+                                                                data-id="{{ $i->id }}">
+                                                            Save
+                                                        </button>
+                                            </td>
+                                        </tr>
+
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5" class="text-center">No Data Found</td>
                                     </tr>
-
-                                @endforeach
+                                @endif
                             @else
                                 <tr>
                                     <td colspan="5" class="text-center">No Data Found</td>
                                 </tr>
                             @endif
-                        @else
-                            <tr>
-                                <td colspan="5" class="text-center">No Data Found</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="text-center p-4">
+                    <h5>No Tools And Machinery Found</h5>
+                </div>
+            @endif
         </div>
     </div>
 
