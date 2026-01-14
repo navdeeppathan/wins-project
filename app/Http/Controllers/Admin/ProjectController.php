@@ -48,17 +48,17 @@ class ProjectController extends Controller
             PROJECT COUNTS
         ======================= */
 
-        $totalProjects = Project::whereIn('user_id', $userId)->count();
+        $totalProjects = Project::whereIn('user_id', $userIds)->count();
 
-        $totalBidding = Project::whereIn('user_id', $userId)
+        $totalBidding = Project::whereIn('user_id', $userIds)
             ->where('status', 'bidding')
             ->count();
 
-        $totalAwarded = Project::whereIn('user_id', $userId)
+        $totalAwarded = Project::whereIn('user_id', $userIds)
             ->where('status', 'awarded')
             ->count();
 
-        $totalCompleted = Project::whereIn('user_id', $userId)
+        $totalCompleted = Project::whereIn('user_id', $userIds)
             ->where('status', 'completed')
             ->count();
 
@@ -66,7 +66,7 @@ class ProjectController extends Controller
             TOTAL WORK DONE (₹)
         ======================= */
 
-        $totalWorkDone = Project::whereIn('user_id', $userId)
+        $totalWorkDone = Project::whereIn('user_id', $userIds)
             ->where('status', 'completed')
             ->sum('estimated_amount');
 
@@ -75,7 +75,7 @@ class ProjectController extends Controller
             (Within next 1 month)
         ======================= */
 
-        $totalEmdDue = Project::whereIn('user_id', $userId)
+        $totalEmdDue = Project::whereIn('user_id', $userIds)
             ->whereHas('emds', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -87,7 +87,7 @@ class ProjectController extends Controller
             ->sum('emd_amount');
 
 
-        $totalPgDue = Project::whereIn('user_id', $userId)
+        $totalPgDue = Project::whereIn('user_id', $userIds)
             ->whereHas('pgDetails', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -99,7 +99,7 @@ class ProjectController extends Controller
             ->sum('pg_amount');
 
 
-        $totalSecurityDue = Project::whereIn('user_id', $userId)
+        $totalSecurityDue = Project::whereIn('user_id', $userIds)
             ->whereHas('securityDeposits', function ($q) use ($today, $nextMonth) {
                 $q->whereBetween('releaseDueDate', [$today, $nextMonth]);
             })
@@ -116,13 +116,13 @@ class ProjectController extends Controller
         ======================= */
 
         // Projects completing in next 1 month
-        $projectsCompletingSoon = Project::whereIn('user_id', $userId)
+        $projectsCompletingSoon = Project::whereIn('user_id', $userIds)
             ->where('status', 'awarded')
             ->whereBetween('stipulated_date_ofcompletion', [$today, $nextMonth])
             ->count();
 
         // Projects running beyond completion date
-        $projectsDelayed = Project::whereIn('user_id', $userId)
+        $projectsDelayed = Project::whereIn('user_id', $userIds)
             ->where('status', 'awarded')
             ->whereDate('stipulated_date_ofcompletion', '<', $today)
             ->count();
@@ -131,20 +131,20 @@ class ProjectController extends Controller
             VENDORS & STAFF
         ======================= */
 
-        $totalVendors = Vendor::whereIn('user_id', $userId)->count();
+        $totalVendors = Vendor::whereIn('user_id', $userIds)->count();
 
-        $totalStaff = User::whereIn('parent_id', $userId)->count();
+        $totalStaff = User::whereIn('parent_id', $userIds)->count();
 
         /* =======================
             INVENTORY
         ======================= */
 
         // Total stock value
-        $totalStockValue = Inventory::where('user_id', $userId)
+        $totalStockValue = Inventory::where('user_id', $userIds)
             ->sum('amount');
 
         // Top 5 high value items
-        $topInventoryItems = Inventory::where('user_id', $userId)
+        $topInventoryItems = Inventory::where('user_id', $userIds)
             ->orderBy('amount', 'desc')
             ->take(5)
             ->get();
@@ -153,12 +153,12 @@ class ProjectController extends Controller
             DASHBOARD LISTING DATA
         ======================= */
 
-        $latestProjects = Project::where('user_id', $userId)
+        $latestProjects = Project::where('user_id', $userIds)
             ->orderBy('id', 'desc')
             ->take(5)
             ->get();
 
-        $topVendors = Vendor::where('user_id', $userId)
+        $topVendors = Vendor::where('user_id', $userIds)
             ->orderBy('amount', 'desc')
             ->take(5)
             ->get();
