@@ -32,9 +32,9 @@
                                     <tr>
                                         <th >#</th>
                                         <th class="text-center">NAME OF THE USER</th>
+                                        <th class="text-center">STATE</th>
                                         <th class="text-center">DOJ</th>
                                         <th class="text-center">DOL</th>
-                                        <th class="text-center">STATE</th>
                                         <th class="text-center">CONTACT NUMBER</th>
                                         <th class="text-center">EMAIL ID</th>
                                         <th class="text-center">DESIGNATION</th>
@@ -46,12 +46,11 @@
                                     @php $serial = 1; @endphp
                                         @foreach($users as $user)
                                             <tr>
-                                                <td >
+                                                <td class="text-center">
                                                         {{ $serial++ }}
                                                 </td>
                                                 <td class="text-center">
                                                     {{ $user->name }}
-
                                                 </td>
                                                 <td class="text-center">
                                                     @if($user->state)
@@ -61,29 +60,16 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-
-
-
                                                         {{ $user->date_of_joining ? date('d M Y', strtotime($user->date_of_joining)) : '-' }}
-
-
-
                                                 </td>
                                                 <td class="text-center">
-
                                                         {{ $user->date_of_leaving ? date('d M Y', strtotime($user->date_of_leaving)) : '-' }}
-
-
                                                 </td>
                                                 <td class="text-center">
-
-                                                        {{ $user->phone ?? '-' }}
+                                                    {{ $user->phone ?? '-' }}
                                                 </td>
                                                 <td class="text-center">
-
-
                                                         {{ $user->email }}
-
                                                 </td>
                                                 <td class="text-center">
                                                         {{ $user->designation ?? '-' }}
