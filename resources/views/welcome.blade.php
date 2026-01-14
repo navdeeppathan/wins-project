@@ -829,6 +829,8 @@
                 {{-- <p>Modern frameworks and technologies</p> --}}
               </div><!-- End Skills Item -->
 
+
+
               <div class="skill-item">
                 <div class="skill-header">
                   <h4>Reduction in Manual Reporting</h4>

@@ -85,7 +85,7 @@ class RegisterController extends Controller
         //also login
         // auth()->login($user);
 
-        return redirect()->route('/login')->with('success','Account created, please login.');
+        return redirect()->route('login.form')->with('success','Account created, please login.');
     }
 
     public function userCreate(Request $request)

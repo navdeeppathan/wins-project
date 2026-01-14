@@ -43,6 +43,7 @@ Route::get('/key', function () {
     Artisan::call('key:generate');
     return "Key generated successfully";
 });
+
 Route::get('clear-cache', function() {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
