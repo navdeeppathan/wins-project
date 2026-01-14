@@ -23,37 +23,31 @@ class BillingController extends Controller
         return view('admin.billing.index', compact('project','billings'));
     }
 
-     public function indexprojects(Request $request)
+    public function indexprojects(Request $request)
     {
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
 
-
-        // $projects = Project::where('user_id', auth()->id())
-        //                         ->where(function ($query) {
-        //                             $query->where('status', 'agreement')
-        //                                 ->orWhere('status', 'billing');
-        //                         })
-        //                         ->when($request->filled('year'), function ($query) use ($request) {
-        //                             $query->whereYear('created_at', $request->year);
-        //                         })
-        //                         ->latest()
-        //                         ->paginate(10);
-
-         $projects = Project::where('user_id', auth()->id())
+        $projects = Project::with(['departments', 'state','emds','user'])->whereIn('user_id', $userIds)
                     ->where(function ($query) {
                                     $query->where('status', 'agreement')
                                         ->orWhere('status', 'billing');
                                 })
                     ->when($request->filled('fy'), function ($query) use ($request) {
-
                         $start = Carbon::create($request->fy, 4, 1)->startOfDay();
                         $end   = Carbon::create($request->fy + 1, 3, 31)->endOfDay();
-
                         $query->whereBetween('date_of_start', [$start, $end]);
                     })
                     ->latest()
                     ->paginate(20);
 
-        //  dd($projects);
         return view('admin.billing.indexprojects', compact('projects'));
     }
 

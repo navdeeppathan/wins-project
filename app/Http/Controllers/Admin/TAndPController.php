@@ -18,7 +18,18 @@ class TAndPController extends Controller
             ->orderBy('id')
             ->get();
 
-        $projects = Project::where('user_id', auth()->id())->get();
+             $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::whereIn('user_id', $userIds)->get();
 
         return view('admin.tandp.index', compact('items', 'projects'));
     }
@@ -70,7 +81,7 @@ class TAndPController extends Controller
     private function validatedData(Request $request)
     {
         return $request->validate([
-            
+
             'date'        => 'nullable|date',
             'category'    => 'nullable|string|max:50',
             'description' => 'nullable|string',

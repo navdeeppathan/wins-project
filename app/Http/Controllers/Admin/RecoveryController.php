@@ -26,13 +26,23 @@ class RecoveryController extends Controller
     public function tabRecoveries()
     {
         $userId = auth()->id();
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
 
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $projects = \DB::table('projects as p')
             ->join('billings as b', 'b.project_id', '=', 'p.id')
             ->join('recoveries as r', 'r.billing_id', '=', 'b.id')
             ->leftJoin('departments as d', 'd.id', '=', 'p.department')
             ->leftJoin('states as s', 's.id', '=', 'p.location')
-            ->where('p.user_id', auth()->id())
+            ->whereIn('p.user_id', $userIds)
             ->groupBy(
                 'p.id',
                 'p.name',

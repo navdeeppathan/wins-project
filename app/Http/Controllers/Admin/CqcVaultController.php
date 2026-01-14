@@ -112,6 +112,7 @@ class CqcVaultController extends Controller
         ]);
 
         $folder = Folder::create([
+            'user_id'   => auth()->id() ?? 1,
             'name'      => $request->name,
             'parent_id' => $request->parent_id ?: null,
             'year'      => $request->year ?: null
@@ -155,8 +156,10 @@ class CqcVaultController extends Controller
             'names.*' => 'required|string|max:255',
         ]);
 
+
         foreach ($request->names as $name) {
             $sub = Folder::create([
+                'user_id' => auth()->id() ?? 1,
                 'name' => $name,
                 'parent_id' => $folderId,
             ]);

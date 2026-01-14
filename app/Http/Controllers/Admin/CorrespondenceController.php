@@ -12,8 +12,19 @@ class CorrespondenceController extends Controller
 {
     public function index()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
-        
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','emds'])->whereIn('user_id', $userIds)->latest()->paginate(20);
+
         return view('admin.correspondence.index', compact('projects'));
     }
     // Show form (create + edit together)
@@ -63,7 +74,7 @@ class CorrespondenceController extends Controller
 
         return response()->json([
             'success' => true
-            
+
         ]);
 
     }

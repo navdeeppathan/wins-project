@@ -149,83 +149,83 @@
 @if($inventories->count() > 0)
 
 <div class="table-responsive">
-<table id="inventoryTable" class="table class-table nowrap" style="width:100%">
-    <thead class="table-light">
-        <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Paid To</th>
-            <th class="text-center">Category</th>
-            <th class="text-center">Bill Number</th>
-            <th class="text-center">Description of Item</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Rate</th>
-            <th class="text-center">Amount</th>
-            <th class="text-center">Paid Through</th>
-            <th class="text-center">Reference</th>
-
-            <th class="text-center">Action</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @forelse($inventories as $index => $i)
+    <table id="inventoryTable" class="table class-table nowrap" style="width:100%">
+        <thead class="table-light">
             <tr>
-                <td class="text-center">{{ $index + 1 }}</td>
-                <td class="text-center">{{ $i->date }}</td>
-                <td class="text-center">{{ $i->paid_to ?? '-' }}</td>
+                <th class="text-center">#</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Paid To</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Bill Number</th>
+                <th class="text-center">Description of Item</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Rate</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Paid Through</th>
+                <th class="text-center">Reference</th>
 
-                <td class="text-center">{{ $i->category ?? '-' }}</td>
-                <td class="text-center">{{ $i->voucher ?? '-' }}</td>
-                <td class="text-center">{{ $i->description ?? '-' }}</td>
-                <td class="text-center">{{ $i->quantity }}</td>
-                <td class="text-center">₹ {{ number_format($i->amount, 2) }}</td>
-                <td class="text-center">₹ {{ number_format($i->net_payable, 2) }}</td>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
 
-                <td>
-                    <select class="form-select paid_through">
-                        <option value="">Select</option>
-                        <option value="CASH" {{ $i->paid_through=='CASH'?'selected':'' }}>CASH</option>
-                        <option value="BANK" {{ $i->paid_through=='BANK'?'selected':'' }}>BANK</option>
-                        <option value="ONLINE" {{ $i->paid_through=='ONLINE'?'selected':'' }}>ONLINE</option>
-                    </select>
-                </td>
+        <tbody>
+            @forelse($inventories as $index => $i)
+                <tr>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td class="text-center">{{ $i->date }}</td>
+                    <td class="text-center">{{ $i->paid_to ?? '-' }}</td>
 
-                <td>
-                    <input type="text"
-                        class="form-control payment_ref"
-                        value="{{ $i->paid_through=='CASH' ? $i->paid_date : ($i->paid_through=='BANK' ? $i->bank_ref : $i->upi_ref) }}"
-                        placeholder="Enter reference">
-                </td>
+                    <td class="text-center">{{ $i->category ?? '-' }}</td>
+                    <td class="text-center">{{ $i->voucher ?? '-' }}</td>
+                    <td class="text-center">{{ $i->description ?? '-' }}</td>
+                    <td class="text-center">{{ $i->quantity }}</td>
+                    <td class="text-center">₹ {{ number_format($i->amount, 2) }}</td>
+                    <td class="text-center">₹ {{ number_format($i->net_payable, 2) }}</td>
 
-                <td class="text-center">
-                    <button class="btn btn-success btn-sm approveBtn"
-                            data-id="{{ $i->id }}"
-                            {{ $i->isApproved == 1 ? 'disabled' : '' }}>
-                        {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
-                    </button>
-                    {{-- Delete Form --}}
-                    <form action="{{ route('admin.inventory.destroy', $i->id) }}" 
-                        method="POST" 
-                        class="d-inline"
-                        onsubmit="return confirm('Are you sure you want to delete this inventory?')">
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            Del
+                    <td>
+                        <select class="form-select paid_through">
+                            <option value="">Select</option>
+                            <option value="CASH" {{ $i->paid_through=='CASH'?'selected':'' }}>CASH</option>
+                            <option value="BANK" {{ $i->paid_through=='BANK'?'selected':'' }}>BANK</option>
+                            <option value="ONLINE" {{ $i->paid_through=='ONLINE'?'selected':'' }}>ONLINE</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="text"
+                            class="form-control payment_ref"
+                            value="{{ $i->paid_through=='CASH' ? $i->paid_date : ($i->paid_through=='BANK' ? $i->bank_ref : $i->upi_ref) }}"
+                            placeholder="Enter reference">
+                    </td>
+
+                    <td class="text-center">
+                        <button class="btn btn-success btn-sm approveBtn"
+                                data-id="{{ $i->id }}"
+                                {{ $i->isApproved == 1 ? 'disabled' : '' }}>
+                            {{ $i->isApproved == 1 ? 'Approved' : 'Approve' }}
                         </button>
-                    </form>
-                </td>
+                        {{-- Delete Form --}}
+                        <form action="{{ route('admin.inventory.destroy', $i->id) }}"
+                            method="POST"
+                            class="d-inline"
+                            onsubmit="return confirm('Are you sure you want to delete this inventory?')">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Del
+                            </button>
+                        </form>
+                    </td>
 
-            </tr>
-        @empty
-            <tr>
-                <td colspan="11" class="text-center text-muted">
-                    No records found
-                </td>
-            </tr>
-        @endforelse
-    </tbody>
-</table>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="11" class="text-center text-muted">
+                        No records found
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
 @else
 <div class="alert alert-warning text-center">

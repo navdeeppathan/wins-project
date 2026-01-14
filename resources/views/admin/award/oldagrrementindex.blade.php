@@ -1,0 +1,288 @@
+@extends('layouts.admin')
+
+@section('title','Projects')
+
+@section('content')
+
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Projects (Award)</h3>
+
+</div>
+{{-- <form method="GET" action="{{ route('admin.projects.award') }}">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label class="fw-bold">Filter by Year (Created)</label>
+            <select name="year" class="form-select" onchange="this.form.submit()">
+                <option value="">All Years</option>
+                @for($y = 2025; $y <= 2050; $y++)
+                    <option value="{{ $y }}"
+                        {{ request('year') == $y ? 'selected' : '' }}>
+                        {{ $y }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </div>
+</form> --}}
+@php
+    use Carbon\Carbon;
+
+    $startFY = 2011;
+
+    $today = Carbon::today();
+    $currentFY = $today->month >= 4
+        ? $today->year
+        : $today->year - 1;
+@endphp
+
+<form method="GET" action="{{ route('admin.projects.award') }}">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="fw-bold">Filter by Financial Year</label>
+            <select name="fy" class="form-select" onchange="this.form.submit()">
+                <option value="">All Financial Years</option>
+
+                @for ($fy = $startFY; $fy <= $currentFY; $fy++)
+                    @php $label = $fy . '-' . ($fy + 1); @endphp
+                    <option value="{{ $fy }}"
+                        {{ request('fy') == $fy ? 'selected' : '' }}>
+                        {{ $label }}
+                    </option>
+                @endfor
+            </select>
+        </div>
+    </div>
+</form>
+@if($projects->count() > 0)
+<div class="table-responsive">
+    <table id="example" class="table class-table nowrap" style="width:100%">
+
+        <thead >
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                {{-- <th class="text-center">NIT No</th>
+                <th class="text-center">Date of Opening</th> --}}
+                <th class="text-center">Estimate Amt</th>
+                <th class="text-center">Tendered Amount</th>
+
+                <th class="text-center">Award Letter No.</th>
+                <th class="text-center">Award Letter Date</th>
+                <th class="text-center">Stipulated Date of Completion</th>
+                <th class="text-center">Date of Start of Work</th>
+                <th class="text-center">Agreement Number</th>
+                <th class="text-center">Upload</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+             @php
+                $i=1;
+            @endphp
+            @forelse($projects as $p)
+               @if (!empty($p->acceptance_letter_no))
+                <tr>
+
+                    <td class="text-center">{{ $i }}</td>
+                   <td style="
+                            text-align: justify;
+                            text-align-last: justify;
+                            text-justify: inter-word;
+                            hyphens: auto;
+                            word-break: break-word;
+                        ">
+
+                        {!! implode('<br>', array_map(
+                            fn($chunk) => implode(' ', $chunk),
+                            array_chunk(explode(' ', $p->name), 10)
+                        )) !!}
+                    </td>
+
+                    {{-- <td>{{ $p->nit_number }}</td> --}}
+                    {{-- <td>{{ $p->state->name ?? '' }}</td>
+                    <td>{{ $p->departments->name ?? '-' }}</td> --}}
+                    {{-- <td>{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td> --}}
+                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
+                    <td class="text-center">{{ number_format($p->tendered_amount,2) }}</td>
+
+                    <td>{{ $p->award_letter_no }}</td>
+                    <td> {{ $p->award_date
+                            ? \Carbon\Carbon::parse($p->award_date)->format('d-m-Y')
+                            : \Carbon\Carbon::now()->format('d-m-Y')
+                        }}
+                    </td>
+                    <td>
+                        {{ $p->stipulated_date_ofcompletion
+                            ? \Carbon\Carbon::parse($p->stipulated_date_ofcompletion)->format('d-m-Y')
+                            : \Carbon\Carbon::now()->format('d-m-Y')
+                        }}
+                    </td>
+
+                    <td><input type="date" class="form-control form-control-sm date_ofstartof_work" value="{{ date('d-m-Y', strtotime($p->date_ofstartof_work)) }}"></td>
+                    <td class="text-center">
+                        <input type="text"
+                            class="form-control form-control-sm agreement_no"
+                            value="{{ $p->agreement_no }}">
+                    </td>
+
+                    <td class="text-center">
+                         @if($p->award_upload)
+                            <a href="{{ Storage::url($p->award_upload) }}"
+                            target="_blank"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                                View
+                            </a>
+                        @endif
+                        <input type="file"
+                            class="form-control form-control-sm award_upload">
+                    </td>
+
+
+                    <td class="text-center">
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-success saveAwardBtn"
+                                    data-id="{{ $p->id }}">
+                                Save
+                            </button>
+                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> + NOTE</a>
+                            <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
+                        </div>
+
+
+                    </td>
+                </tr>
+                @endif
+            @php
+                $i++;
+            @endphp
+            @empty
+                <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+@else
+    <div class="alert alert-warning text-center">
+        Data is not available.
+    </div>
+@endif
+
+@push('scripts')
+<script>
+$(document).on('click', '.saveAwardBtn', function () {
+
+    let btn = $(this);
+    let row = btn.closest('tr');
+    let projectId = btn.data('id');
+
+    let formData = new FormData();
+    formData.append('_method', 'PUT'); // spoof PUT
+    formData.append('_token', "{{ csrf_token() }}");
+
+
+
+    // formData.append(
+    //     'award_letter_no',
+    //     row.find('.award_letter_no').val()
+    // );
+
+    // formData.append(
+    //     'award_date',
+    //     row.find('.award_date').val()
+    // );
+
+    // formData.append(
+    //     'date_ofstartof_work',
+    //     row.find('.date_ofstartof_work').val()
+    // );
+
+    formData.append(
+        'agreement_no',
+        row.find('.agreement_no').val()
+    );
+
+    let fileInput = row.find('.award_upload')[0];
+    if (fileInput.files.length > 0) {
+        formData.append('award_upload', fileInput.files[0]);
+    }
+
+    btn.prop('disabled', true).text('Saving...');
+
+    $.ajax({
+        url: "/admin/projects/" + projectId + "/award-update",
+        type: "POST", // IMPORTANT
+        data: formData,
+        processData: false, // required for FormData
+        contentType: false, // required for FormData
+        success: function (response) {
+            btn.prop('disabled', false).text('Save');
+
+            if (response.success) {
+                window.location.reload();
+                alert(response.message);
+                row.find('.badge')
+                   .removeClass('bg-info')
+                   .addClass('bg-success')
+                   .text('Awarded');
+            } else {
+                alert('Update failed');
+            }
+        },
+        error: function (xhr) {
+            btn.prop('disabled', false).text('Save');
+            alert('Server error');
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+
+
+$(document).on('change', '.award_date', function () {
+
+    let awardDateInput = $(this);
+    let row = awardDateInput.closest('tr');
+    let startDateInput = row.find('.date_ofstartof_work');
+
+    if (!awardDateInput.val()) return;
+
+    let awardDate = new Date(awardDateInput.val());
+
+    // SAME DAY (minimum allowed)
+    let yyyy = awardDate.getFullYear();
+    let mm = String(awardDate.getMonth() + 1).padStart(2, '0');
+    let dd = String(awardDate.getDate()).padStart(2, '0');
+    let sameDay = `${yyyy}-${mm}-${dd}`;
+
+    // NEXT DAY (auto-fill value)
+    let nextDayDate = new Date(awardDate);
+    nextDayDate.setDate(nextDayDate.getDate() + 1);
+
+    let ny = nextDayDate.getFullYear();
+    let nm = String(nextDayDate.getMonth() + 1).padStart(2, '0');
+    let nd = String(nextDayDate.getDate()).padStart(2, '0');
+    let nextDay = `${ny}-${nm}-${nd}`;
+
+    // Auto-fill → next day
+    startDateInput.val(nextDay);
+
+    // Minimum allowed → same day
+    startDateInput.attr('min', sameDay);
+});
+
+
+
+
+</script>
+
+
+
+
+@endpush
+
+
+
+{{ $projects->links() }}
+
+@endsection

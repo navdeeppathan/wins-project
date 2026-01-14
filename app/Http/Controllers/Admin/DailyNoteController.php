@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 class DailyNoteController extends Controller
 {
     public function index() {
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
         return view('admin.daily_notes.index', compact('notes'));
     }

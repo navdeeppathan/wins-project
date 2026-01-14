@@ -21,7 +21,7 @@ class VendorController extends Controller
             ->latest()
             ->paginate(20);
 
-           
+
 
         $states = State::all();
 

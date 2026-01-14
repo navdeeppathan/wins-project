@@ -52,6 +52,10 @@ class Project extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // Project has one Acceptance
     public function acceptance()

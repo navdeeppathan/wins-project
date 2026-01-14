@@ -33,10 +33,8 @@
                 <th class="text-center">Tendered Amount</th>
                 <th class="text-center">Agreement Number</th>
                 <th class="text-center">Date of Start of Work</th>
-                {{-- <th>Agreement Start Date</th> --}}
-
                 <th class="text-center">Upload</th>
-                <th class="text-center">Save</th>
+                <th class="text-center">Action</th>
             </tr>
         </thead>
         <tbody>

@@ -23,12 +23,12 @@
             <label class="form-label">NIT Number *</label>
             <input type="text" name="nit_number" value="{{ old('nit_number', $project->nit_number) }}" class="form-control" required>
         </div>
-
         <div class="col-md-4 mb-3">
             <label class="form-label">Department *</label>
             <select name="department" class="form-select" required>
                 <option value="">Select Department</option>
                 @foreach($departments as $dept)
+
                     <option value="{{ $dept->id }}"
                         {{ old('department', $project->department) == $dept->id ? 'selected' : '' }}>
                         {{ $dept->name }}

@@ -11,6 +11,7 @@ class DepartmentController extends Controller
 {
     public function index()
     {
+
         $departments = Department::where('user_id', auth()->id())->latest()->get();
         return view('departments.index', compact('departments'));
     }

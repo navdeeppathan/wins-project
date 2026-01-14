@@ -24,61 +24,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $projects = Project::with(['departments', 'state', 'emds'])
-    //         ->where('user_id', auth()->id())
-    //         ->when($request->filled('year'), function ($query) use ($request) {
-    //             $query->whereYear('created_at', $request->year);
-    //         })
-    //         ->latest()
-    //         ->paginate(20);
-
-
-    //     return view('admin.projects.index', compact('projects'));
-    // }
-
-
-    // public function dashboard()
-    // {
-
-
-    //     $totalProjects = Project::where('user_id', auth()->id())->count();
-    //     $totalBidding = Project::where('user_id', auth()->id())->where('status', 'bidding')->count();
-    //     $totalAwarded = Project::where('user_id', auth()->id())->where('status', 'awarded')->count();
-    //     $totalCompleted = Project::where('user_id', auth()->id())->where('status', 'completed')->count();
-
-    //     $totalEmd = Project::where('user_id', auth()->id())->sum('emd_amount');
-
-    //     $totalVendors = Vendor::where('user_id', auth()->id())->count();
-    //     $totalStaff = User::where('parent_id', auth()->id())->count();
-
-    //     $totalTopStock = Inventory::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
-
-    //     $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('amount', 'desc')->take(5)->get();
-
-    //     $totalTopStaff = User::where('parent_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
-
-    //     $totalTopProjects = Project::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
-
-    //     $totalTopVendors = Vendor::where('user_id', auth()->id())->orderBy('id', 'desc')->take(5)->get();
-
-    //     return view('admin.dashboard', compact(
-    //         'totalProjects',
-    //         'totalBidding',
-    //         'totalAwarded',
-    //         'totalCompleted',
-    //         'totalEmd',
-    //         'totalVendors',
-    //         'totalStaff',
-    //         'totalTopStock',
-    //         'totalTopVendors',
-    //         'totalTopStaff',
-    //         'totalTopProjects'
-    //     ));
-    // }
-
- 
 
     public function dashboard()
     {
@@ -241,8 +186,19 @@ class ProjectController extends Controller
 
     public function index(Request $request)
     {
-        $projects = Project::with(['departments', 'state', 'emds'])
-            ->where('user_id', auth()->id())
+        $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state', 'emds','user'])
+            ->whereIn('user_id', $userIds)
             ->when($request->filled('fy'), function ($query) use ($request) {
 
                 $start = Carbon::create($request->fy, 4, 1)->startOfDay();
@@ -259,7 +215,18 @@ class ProjectController extends Controller
 
     public function indexUser(User $user)
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', $user->id)->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','emds','user'])->whereIn('user_id', $userIds)->latest()->paginate(20);
 
         return view('admin.users.projects', compact('projects', 'user'));
     }
@@ -267,15 +234,36 @@ class ProjectController extends Controller
 
     public function commonIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','emds','user'])->whereIn('user_id', $userIds)->latest()->paginate(20);
         return view('admin.common.index', compact('projects'));
     }
 
     public function returnIndex()
     {
-        $userId = auth()->id();
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $baseQuery = Project::with(['departments', 'state', 'emds'])
-            ->where('user_id', $userId);
+            ->whereIn('user_id', $userIds);
 
         // All projects
         $projects = (clone $baseQuery)
@@ -323,7 +311,18 @@ class ProjectController extends Controller
 
      public function forfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','emds','user'])->whereIn('user_id', $userIds)->latest()->paginate(20);
         return view('admin.forfitted.index', compact('projects'));
     }
 
@@ -332,11 +331,21 @@ class ProjectController extends Controller
     {
         // $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
 
-        $userId = auth()->id();
 
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'pgDetails'])
-            ->where('user_id', $userId);
+            ->whereIn('user_id', $userIds);
 
 
 
@@ -374,15 +383,10 @@ class ProjectController extends Controller
             ->latest()
             ->get();
 
-            // dd($actives);
-
         // All EMD-related project details
         $pgDetails = (clone $baseQuery)
             ->latest()
             ->get();
-
-            // dd($pgDetails);
-
 
         return view('admin.pgreturn.index', compact(
             'projects',
@@ -396,10 +400,20 @@ class ProjectController extends Controller
 
      public function securityreturnIndex()
     {
-        $userId = auth()->id();
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
 
         $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
-            ->where('user_id', $userId);
+            ->whereIn('user_id', $userIds);
 
 
 
@@ -460,11 +474,21 @@ class ProjectController extends Controller
      public function withheldreturnIndex()
     {
         // $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
-         $userId = auth()->id();
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
 
         // Base query to avoid repetition
         $baseQuery = Project::with(['departments', 'state', 'securityDeposits'])
-            ->where('user_id', $userId);
+            ->whereIn('user_id', $userIds);
 
 
 
@@ -525,20 +549,54 @@ class ProjectController extends Controller
 
      public function pgforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+
+        $projects = Project::with(['departments', 'state','emds'])->whereIn('user_id', $userIds)->latest()->paginate(20);
         return view('admin.pgforfitted.index', compact('projects'));
     }
 
      public function securityforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','emds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','emds'])->whereIn('user_id', $userIds)->latest()->paginate(20);
         return view('admin.securitydeposite_forfieted.index', compact('projects'));
     }
 
 
      public function withheldforfietedIndex()
     {
-        $projects = Project::with(['departments', 'state','withhelds'])->where('user_id', auth()->id())->latest()->paginate(20);
+         $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::with(['departments', 'state','withhelds'])->whereIn('user_id', $userIds)->latest()->paginate(20);
         return view('admin.withheld_forfieted.index', compact('projects'));
     }
 
@@ -796,7 +854,7 @@ class ProjectController extends Controller
         ]);
     }
 
-   
+
 
     public function updateReturned(Request $request, EmdDetail $emdDetail)
     {
@@ -843,7 +901,7 @@ class ProjectController extends Controller
         ]);
     }
 
-   
+
 
     public function updateforfittedReturned(Request $request, EmdDetail $emdDetail)
     {
@@ -894,11 +952,21 @@ class ProjectController extends Controller
 
     public function acceptanceIndex( Request $request)
     {
-       
 
 
-        $projects = Project::whereIn('status', ['bidding', 'accepted', 'awarded'])
-                    ->where('user_id', auth()->id())
+        $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
+        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded'])
+                    ->whereIn('user_id', $userIds)
                     ->when($request->filled('fy'), function ($query) use ($request) {
 
                         $start = Carbon::create($request->fy, 4, 1)->startOfDay();
@@ -914,11 +982,21 @@ class ProjectController extends Controller
 
      public function awardIndex(Request $request)
     {
-       
 
+
+      $user = auth()->user();
+        // Admin → own + staff projects
+        if ($user->role === 'admin') {
+            $userIds = \App\Models\User::where('parent_id', $user->id)
+                        ->pluck('id')
+                        ->toArray();
+
+            $userIds[] = $user->id;
+        }else {
+            $userIds = [$user->id];
+        }
         $projects = Project::
-        //  whereIn('status', ['bidding', 'accepted'])
-        where('user_id', auth()->id())
+        whereIn('user_id', $userIds)
         ->when($request->filled('fy'), function ($query) use ($request) {
 
             $start = Carbon::create($request->fy, 4, 1)->startOfDay();
@@ -934,7 +1012,7 @@ class ProjectController extends Controller
 
     public function awardIndexs(Request $request ,Project $project)
     {
-       
+
         $projects = $project->where('user_id', auth()->id())
                     ->where("id", $project->id)
                     ->when($request->filled('fy'), function ($query) use ($request) {
@@ -943,7 +1021,7 @@ class ProjectController extends Controller
 
                         $query->whereBetween('date_of_start', [$start, $end]);
                     })
-                
+
                     ->latest()->paginate(20);
 
         return view('admin.award.index2', compact('projects'));
@@ -1118,8 +1196,16 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
+        $user = auth()->user();
+        $userIds = [$user->id];
+        if ($user->role === 'staff' && $user->parent_id) {
+            $userIds[] = $user->parent_id;
+        }
+
         $states = State::orderBy('name')->get();
-        $departments = Department::where('user_id', auth()->id())->orderBy('name')->get();
+        $departments = Department::whereIn('user_id', $userIds)->orderBy('name')->get();
+
+
         return view('admin.projects.edit', compact('project', 'states', 'departments'));
     }
 

@@ -87,7 +87,7 @@
                     </td>
                     <td class="text-center">{{ $p->nit_number }}</td>
                     <td class="text-center">{{  $p->state->name ?? '-' }}</td>
-                    <td class="text-center">{{ $p->departments->name }}</td>
+                    <td class="text-center">{{ $p->departments->name ?? '-' }}</td>
                     <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                     <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                     <td class="text-center">
