@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - KING</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -18,6 +18,7 @@
             justify-content:center; padding:20px; position:relative;
             overflow-x:hidden;
         }
+        /* linear-gradient(135deg,#2d3561 0%, #1a1f3a 100%) */
         .floating-shapes{position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;}
         .shape{position:absolute; opacity:0.1; animation:float 15s infinite ease-in-out;}
         .shape:nth-child(1){top:10%; left:10%; font-size:100px; animation-delay:0s;}
@@ -26,7 +27,7 @@
         @keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-20px) rotate(10deg);}}
         .auth-container{display:flex; max-width:1000px; width:100%; background:rgba(255, 255, 255, 0.872); border-radius:30px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,0.3); position:relative; z-index:2; animation:slideUp 0.6s ease-out;}
         @keyframes slideUp{from{opacity:0; transform:translateY(30px);}to{opacity:1; transform:translateY(0);}}
-        .left-panel{flex:1; background:linear-gradient(135deg,#2d3561 0%, #1a1f3a 100%); padding:60px 40px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; position:relative; overflow:hidden;}
+        .left-panel{flex:1; background:white; padding:60px 40px; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; position:relative; overflow:hidden;}
         .left-panel::before{content:''; position:absolute; top:-50%; right:-50%; width:200%; height:200%; background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation:pulse 8s infinite;}
         @keyframes pulse{0%,100%{transform:scale(1); opacity:0.5;}50%{transform:scale(1.1); opacity:0.3;}}
         .brand-logo{width:80px; height:80px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:30px; box-shadow:0 10px 30px rgba(0,0,0,0.3); animation:bounce 2s infinite; position:relative; z-index:1;}
@@ -240,11 +241,13 @@
 
         <!-- LEFT PANEL -->
        <div class="left-panel bg-slider">
-            <div class="brand-logo">
-                <i class="fas fa-crown crown-icon"></i>
-            </div>
-            <div class="brand-name text-center">DigiProject</div>
-            <p class="brand-description">
+            <img src="{{ asset('logo.jpeg') }}" alt="DigiProject Logo" style=" height: 150px;">
+                <span style="font-size:10px;" >
+                        Centralise your data.
+                         Summarise your workflow.
+                          Utilise your resources.
+                        </span>
+            <p class="brand-description text-black">
                 The best way to manage your projects.
                 {{-- <br>
                 We are deeply grateful to Shri Sanjeev Kumar, Assistant Engineer (Civil), whose expert

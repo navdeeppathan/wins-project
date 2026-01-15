@@ -138,9 +138,9 @@
       /* Left Panel */
       .left-panel {
         flex: 1;
-        background: linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%);
+        background: white;
         padding: 60px 30px;
-        color: #fff;
+        color: black;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -391,14 +391,15 @@
 
       <!-- LEFT PANEL -->
       <div class="left-panel bg-slider">
-        <div class="brand-logo">
-          <i class="fas fa-crown crown-icon"></i>
-        </div>
-
-        <h1 class="brand-name text-center">DigiProject</h1>
-        <p class="brand-description">The best way to manage your projects.</p>
-
-        {{-- <button class="learn-more-btn">Learn More</button> --}}
+            <img src="{{ asset('logo.jpeg') }}" alt="DigiProject Logo" style=" height: 150px;">
+                <span style="font-size:10px; " >
+                        Centralise your data.
+                         Summarise your workflow.
+                          Utilise your resources.
+                        </span>
+            <p class="brand-description text-black">
+                The best way to manage your projects.
+            </p>
       </div>
 
       <!-- RIGHT PANEL -->

@@ -148,12 +148,12 @@
     </style>
 
     <style>
-                    .brand-vertical {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        gap: 10px;
-                        animation: fadeUp 1s ease forwards;
+                        .brand-vertical {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            gap: 10px;
+                            animation: fadeUp 1s ease forwards;
                         }
 
                         /* White circle */
@@ -1394,7 +1394,7 @@
                 </div> --}}
 
                 <div class="brand-text">
-                    <img src="{{asset('logo.jpeg')}}" alt="" style="height: 140px; width:160px;  margin-right:10px;">
+                    <img src="{{asset('logo.jpeg')}}" alt="" style="height: 54px;  margin-right:10px;">
                     <span style="display: block; font-size: 15px;"> Centralise your data.
                          Summarise your workflow.
                           Utilise your resources.</span>
