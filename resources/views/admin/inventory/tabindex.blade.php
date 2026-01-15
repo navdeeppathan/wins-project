@@ -97,7 +97,7 @@
     $categories = [
         'MATERIAL',
         'SERVICES',
-        'WAGES',
+        'LABOUR',
         'LOGISTIC',
         'MAINTENANCE',
         'OFFICE',
@@ -400,7 +400,7 @@ $(function () {
 
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
-            
+
             <td class="net_payable">0.00</td>
             <td><input type="file" class="form-control upload"></td>
             <td>

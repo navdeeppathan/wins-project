@@ -50,7 +50,7 @@
 
     $categories = [
 
-        'WAGES',
+        'LABOUR',
         'LOGISTIC',
         'FEE',
         'TOURS',

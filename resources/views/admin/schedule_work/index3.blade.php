@@ -111,7 +111,7 @@
         $categories = [
             'MATERIAL',
             'SERVICES',
-            'WAGES',
+            'LABOUR',
             'LOGISTIC',
             'MAINTENANCE',
             'OFFICE',
@@ -196,7 +196,7 @@
                         </td>
 
                             <td >
-                                
+
                                 <select class="form-select category mb-2">
                                     <option value="">Select</option>
                                     @foreach($categories as $cat)

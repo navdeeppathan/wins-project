@@ -187,11 +187,8 @@
 
                         /* Brand name */
                         .brand-text {
-                        font-size: 34px;
-                        font-weight: 700;
-                        color: #dd3209;
-                        letter-spacing: 1px;
-                        text-shadow: 0 6px 18px rgba(0,0,0,0.4);
+                            font-size: 34px;
+                            letter-spacing: 1px;
                         }
 
                         /* Animations */
@@ -921,8 +918,8 @@
                   OverView (P.O.V.), which is why we invite you to
                   experience it firsthand - completely risk-free. No
                   hidden fees, No surprises, Annual price starting
-                  at Rs.7,200/- plus GST for Basic Plan and
-                  Rs.10,800/- plus GST for Advance Plan to ensure
+                  at Rs.60,000/- plus GST for Basic Plan and
+                  Rs.90,000/- plus GST for Advance Plan to ensure
                   DigiProject aligns with your needs.
                   We offer a FREE trial for first 3 months,
                   additionally, you can book a demo to get a
@@ -935,9 +932,9 @@
 
                 <div class="service-pricing">
                     <span style="color:#fff; font-weight:500;">
-                        Price Starting @ ₹7,200 /- per year (Excl. GST)
+                        Price Starting @ ₹60,000 /- per year (Excl. GST)
                         <br>
-                        Price : <strong>₹8,496 /-</strong> (GST Included)
+                        Price : <strong>₹70,800 /-</strong> (GST Included)
                     </span>
                 </div>
 

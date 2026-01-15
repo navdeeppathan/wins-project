@@ -491,7 +491,7 @@ class ProjectController extends Controller
         ScheduleWork::create([
             'project_id'        => $project->id,
             'section_name'      => 'GENERAL',
-            'description'       =>'Project Contingency',
+            'description'       =>'SUNDRY',
             'quantity'          => 1,
             'unit'              => 1,
             'rate'              => 1,

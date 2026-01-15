@@ -80,7 +80,11 @@
                                 <td class="text-center">{{ number_format($p->emd_amount,2) }}</td>
                                 <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) ?? '-' }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">Add SOW</a>
+                                    <div class="d-felx justify-between">
+                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ SOW</a>
+                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ MB</a>
+                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ Inventory</a>
+                                    </div>
                                 </td>
                             </tr>
                         @php

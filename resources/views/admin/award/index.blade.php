@@ -98,7 +98,7 @@
                                     data-id="{{ $p->id }}">
                                 Save
                             </button>
-                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> + NOTE</a>
+                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Diary</a>
                             <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
                         </div>
 

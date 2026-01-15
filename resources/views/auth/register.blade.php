@@ -372,6 +372,15 @@
 
 
 } */
+    .tagline {
+            display: block;
+            font-family: 'Cinzel', serif; /* or Trajan Pro if licensed */
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #555;
+            margin-top: 4px;
+        }
     </style>
   </head>
 
@@ -392,11 +401,9 @@
       <!-- LEFT PANEL -->
       <div class="left-panel bg-slider">
             <img src="{{ asset('logo.jpeg') }}" alt="DigiProject Logo" style=" height: 150px;">
-                <span style="font-size:10px; " >
-                        Centralise your data.
-                         Summarise your workflow.
-                          Utilise your resources.
-                        </span>
+            <span class="tagline" >
+                Centralise your data. Summarise your workflow. Utilise your resources.
+            </span>
             <p class="brand-description text-black">
                 The best way to manage your projects.
             </p>

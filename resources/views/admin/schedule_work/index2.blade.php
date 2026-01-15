@@ -88,7 +88,15 @@
                 cursor: not-allowed;
             }
         </style>
-
+        <style>
+            #example textarea.form-control {
+                display: block !important;
+                align-self: flex-start !important;
+                text-align: left !important;
+                vertical-align: top !important;
+                padding-top: 8px !important;
+            }
+        </style>
 {{-- TABLE --}}
 <div class="table-responsive">
     <table id="example" class="table class-table table-bordered nowrap" style="width:100%">
@@ -113,20 +121,12 @@
                     </td>
 
                     <td>
-                        <textarea class="form-control description"
+                        <textarea class="form-control description text-left"
                             {{ $i == 0 ? 'readonly' : '' }}>
                             {{ $w->description }}
                         </textarea>
                     </td>
-                    <style>
-                        #example textarea.form-control {
-                            display: block !important;
-                            align-self: flex-start !important;
-                            text-align: left !important;
-                            vertical-align: top !important;
-                            padding-top: 8px !important;
-                        }
-                    </style>
+
 
                     <td>
                         <input class="form-control qty"
