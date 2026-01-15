@@ -46,13 +46,18 @@
         }
 
         .hero-bg-slider .slide {
-          position: absolute;
-          inset: 0;
-          background-size: cover;
-          background-position: center;
-          
-          transform: scale(1.08);
-          transition: opacity 1.5s ease-in-out, transform 6s ease;
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 1.5s ease-in-out, transform 6s ease;
+        }
+
+        .hero-bg-slider .slide.active {
+        opacity: 1;
+        transform: scale(1);
         }
 
         .hero-bg-slider .slide.active {
