@@ -40,19 +40,19 @@
         }
 
         .hero-bg-slider {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
+          position: absolute;
+          inset: 0;
+          z-index: 1;
         }
 
         .hero-bg-slider .slide {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transform: scale(1.08);
-        transition: opacity 1.5s ease-in-out, transform 6s ease;
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
+          
+          transform: scale(1.08);
+          transition: opacity 1.5s ease-in-out, transform 6s ease;
         }
 
         .hero-bg-slider .slide.active {
@@ -420,9 +420,11 @@
     <section id="hero" class="hero section dark-background">
         <!-- Background Slider -->
         <div class="hero-bg-slider">
-            <div class="slide active" style="background-image:url('s1.jpg')"></div>
-            <div class="slide" style="background-image:url('s2.jpg')"></div>
-            <div class="slide" style="background-image:url('s3.jpg')"></div>
+            <div class="slide active" style="background-image:url('assets/img/p1.jpeg')"></div>
+            <div class="slide" style="background-image:url('assets/img/p2.jpeg')"></div>
+            <div class="slide" style="background-image:url('assets/img/p3.jpeg')"></div>
+            <div class="slide" style="background-image:url('assets/img/p4.jpeg')"></div>
+            <div class="slide" style="background-image:url('assets/img/p5.jpeg')"></div>
         </div>
         <!-- Overlay -->
         <div class="hero-overlay"></div>
@@ -508,7 +510,7 @@
                 slides[current].classList.remove("active");
                 current = (current + 1) % slides.length;
                 slides[current].classList.add("active");
-            }, 5000); // change every 5s
+            }, 2000); // change every 5s
         </script>
 
     </section>
