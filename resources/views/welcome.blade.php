@@ -24,7 +24,16 @@
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
     <style>
-        /* HERO BACKGROUND SLIDER */
+        .tagline {
+            display: block;
+            font-family: 'Cinzel', serif; /* or Trajan Pro if licensed */
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #555;
+            margin-top: 4px;
+        }
+                /* HERO BACKGROUND SLIDER */
         .hero {
         position: relative;
         overflow: hidden;
@@ -367,11 +376,9 @@
                 </div> --}}
                 <div class="brand-text">
                     <img src="{{ asset('logo.jpeg') }}" alt="DigiProject Logo">
-                    <span style="font-size:10px; display:block; margin-top:-5px;">
-                        Centralise your data.
-                         Summarise your workflow.
-                          Utilise your resources.
-                        </span>
+                    <span class="tagline" >
+                        Centralise your data. Summarise your workflow. Utilise your resources.
+                    </span>
                 </div>
 
 
@@ -1395,9 +1402,9 @@
 
                 <div class="brand-text">
                     <img src="{{asset('logo.jpeg')}}" alt="" style="height: 54px;  margin-right:10px;">
-                    <span style="display: block; font-size: 15px;"> Centralise your data.
-                         Summarise your workflow.
-                          Utilise your resources.</span>
+                    <span class="tagline">
+                        Centralise your data. Summarise your workflow. Utilise your resources.
+                        </span>
                 </div>
 
 
