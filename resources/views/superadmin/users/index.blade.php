@@ -7,7 +7,7 @@
 
 <div class="container-fluid py-4">
 
-     
+
     {{-- PAGE TITLE --}}
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="page-title">User Management</h2>
@@ -28,8 +28,6 @@
                                 <th>State</th>
                                 <th>Contact Number</th>
                                 <th>Email ID</th>
-                                <th>Designation</th>
-                                <th>Monthly Salary</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,42 +41,30 @@
                                     {{-- 2 --}}
                                     <td>{{ $user->name }}</td>
 
-                                    {{-- 3 DOJ --}}
                                     <td>
                                         {{ $user->date_of_joining
                                             ? date('d M Y', strtotime($user->date_of_joining))
                                             : '-' }}
                                     </td>
-
-                                    {{-- 4 DOL --}}
                                     <td>
                                         {{ $user->date_of_leaving
                                             ? date('d M Y', strtotime($user->date_of_leaving))
                                             : '-' }}
                                     </td>
-
-                                    {{-- 5 STATE --}}
                                     <td>{{ $user->state ?? 'Not provided' }}</td>
-
-                                    {{-- 6 CONTACT --}}
                                     <td>{{ $user->phone ?? '-' }}</td>
-
-                                    {{-- 7 EMAIL --}}
                                     <td>{{ $user->email }}</td>
-
-                                    {{-- 8 DESIGNATION --}}
-                                    <td>{{ $user->designation ?? '-' }}</td>
-
-                                    {{-- 9 SALARY --}}
-                                    <td>{{ $user->monthly_salary ?? '-' }}</td>
-
-                                    {{-- 10 ACTION --}}
                                     <td>
-                                        <a href="{{ route('superadmin.users.allprojects', $user->id) }}"
-                                           class="btn btn-sm btn-primary">Projects</a> 
-                                        
-                                        <a href="{{ route('superadmin.users.allusers', $user->id) }}"
-                                           class="btn btn-sm btn-primary">All Users</a>  
+                                        {{-- <a href="{{ route('superadmin.users.allprojects', $user->id) }}"
+                                           class="btn btn-sm btn-primary">Projects</a>  --}}
+                                        <div class="d-flex justify-between gap-2" >
+                                            <a href="{{ route('superadmin.users.allusers', $user->id) }}"
+                                            class="btn btn-sm btn-primary">All Users</a>
+                                            <a href="{{ route('superadmin.users.transactions', $user->id) }}"
+                                                class="btn btn-sm btn-success">
+                                                Transactions
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

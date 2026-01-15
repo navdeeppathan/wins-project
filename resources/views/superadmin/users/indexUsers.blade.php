@@ -7,7 +7,7 @@
 
 <div class="container-fluid py-4">
 
-     
+
     {{-- PAGE TITLE --}}
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h2 class="page-title">All Users</h2>
@@ -30,8 +30,7 @@
                                 <th>Email ID</th>
                                 <th>Designation</th>
                                 <th>Monthly Salary</th>
-                                <th>Actions</th>
-                                
+
                             </tr>
                         </thead>
 
@@ -74,10 +73,10 @@
                                     <td>{{ $user->monthly_salary ?? '-' }}</td>
 
                                     {{-- 10 ACTION --}}
-                                    <td>
-                                        <a href="{{ route('superadmin.users.allprojects', $user->id) }}"
-                                           class="btn btn-sm btn-primary">Projects</a> 
-                                    </td>
+
+                                        {{-- <a href="{{ route('superadmin.users.allprojects', $user->id) }}"
+                                           class="btn btn-sm btn-primary">Projects</a>  --}}
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -96,10 +95,10 @@
 
 
 <div class="mt-4">
-    @include('superadmin.vendors.index')
+    {{-- @include('superadmin.vendors.index') --}}
 </div>
 <div class="mt-4">
-    @include('superadmin.departments.index')
+    {{-- @include('superadmin.departments.index') --}}
 </div>
 @endsection
 

@@ -53,8 +53,8 @@
                 </svg>
             </div> --}}
             <span class="brand-name">
-                <img src="{{asset('logo.jpeg')}}" alt="" style="height: 40px; width:50px;  margin-right:10px;">
-                DigiProject
+                <img src="{{asset('logo.jpeg')}}" alt="" style="height: 40px;  margin-right:10px;">
+
             </span>
             <button class="collapse-btn" onclick="toggleSidebar()">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
@@ -77,7 +77,7 @@
                 </a>
             </div>
 
-             
+
             <div class="nav-item">
                 <a href="{{ route('superadmin.users.index') }}"
                 class="nav-link {{ Request::is('superadmin/users*') ? 'active' : '' }}">
