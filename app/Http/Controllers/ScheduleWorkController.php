@@ -48,6 +48,21 @@ class ScheduleWorkController extends Controller
         return view('admin.schedule_work.index2', compact('project','works','inventories'));
     }
 
+    
+    public function mbindex(Project $project)
+    {
+        $works = $project->scheduleWorks; 
+        $inventories = $project->inventory;
+        return view('admin.schedule_work.mbindex', compact('project','works','inventories'));
+    }
+
+    public function inventoryindex(Project $project)
+    {
+        $works = $project->scheduleWorks; 
+        $inventories = $project->inventory;
+        return view('admin.schedule_work.inventoryindex', compact('project','works','inventories'));
+    }
+
 
     public function index3(Project $project,ScheduleWork $scheduleWork)
     {

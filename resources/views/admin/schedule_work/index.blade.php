@@ -82,8 +82,8 @@
                                 <td class="text-center">
                                     <div class="d-felx justify-between">
                                     <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ SOW</a>
-                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ MB</a>
-                                    <a href="{{ route('admin.projects.schedule-work', $p) }}" class="btn btn-sm btn-primary">+ Inventory</a>
+                                    <a href="{{ route('admin.projects.schedule-work.mbindex', $p) }}" class="btn btn-sm btn-primary">+ MB</a>
+                                    <a href="{{ route('admin.projects.schedule-work.inventoryindex', $p) }}" class="btn btn-sm btn-primary">+ Inventory</a>
                                     </div>
                                 </td>
                             </tr>

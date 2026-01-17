@@ -28,7 +28,7 @@ class ScheduleWork extends Model
         'category',
         'inventory_id',
         'dismantals',
-        
+        'cmb_reference'
     ];
 
     // If you want to disable timestamps
@@ -54,6 +54,11 @@ class ScheduleWork extends Model
     public function inventories()
     {
         return $this->hasMany(Inventory::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(ScheduleWorkItem::class);
     }
     
 }

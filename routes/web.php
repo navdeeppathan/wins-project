@@ -58,8 +58,6 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     /* ===================== Dashboard ===================== */
 
 
-
-
     // Show main index page
     Route::get('cqc-vault', [CqcVaultController::class,'index'])->name('cqc-vault.index');
     Route::get('admin/dashboard', [CqcVaultController::class,'dashboard']);
@@ -485,12 +483,25 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 
 
+    Route::get('/schedule-work/items/{project}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'index'])->name('schedule-work-items.index');
+    Route::post('/schedule-work/items/store', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'store'])->name('schedule-work-items.store');
+    Route::post('/schedule-work/items/update/{id}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'update'])->name('schedule-work-items.update');
+    Route::delete('/schedule-work/items/delete/{id}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'destroy'])->name('schedule-work-items.destroy');
+
 
 
     Route::get('/schedule-work', [ScheduleWorkController::class, 'index'])->name('schedule-work.index');
     Route::get('schedule-work/{project}',
         [ScheduleWorkController::class,'index2']
         )->name('projects.schedule-work');
+
+    Route::get('schedule-work/{project}/mbindex',
+        [ScheduleWorkController::class,'mbindex']
+        )->name('projects.schedule-work.mbindex');
+    
+    Route::get('schedule-work/{project}/inventoryindex',
+        [ScheduleWorkController::class,'inventoryindex']
+        )->name('projects.schedule-work.inventoryindex');  
 
     Route::get('schedule-work/{project}/{scheduleWork}',
         [ScheduleWorkController::class,'index3']
@@ -509,6 +520,12 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('attachments',
         [App\Http\Controllers\Admin\AttachmentController::class, 'store']
     )->name('attachments.store');
+
+
+
+    
+
+   
 });
 
 

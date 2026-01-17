@@ -98,6 +98,12 @@
             }
         </style>
 {{-- TABLE --}}
+<div class="d-flex justify-content-end">
+    <a href="{{ route('admin.schedule-work-items.index', [$project->id]) }}"
+                        class="btn btn-primary btn-sm">
+                        Measurment Sheet
+                        </a>
+</div>
 <div class="table-responsive">
     <table id="example" class="table class-table table-bordered nowrap" style="width:100%">
         <thead class="table-dark">
@@ -105,11 +111,11 @@
                 <th>#</th>
                 <th>Description</th>
                 <th>Quantity</th>
+                <th>CMB Reference</th>
                 <th>Unit</th>
                 <th>Rate</th>
                 <th>Amount</th>
-                {{-- <th>Measured Qty</th>
-                <th>Inventory</th> --}}
+                
                 <th >Action</th>
             </tr>
         </thead>
@@ -135,6 +141,12 @@
                     </td>
 
                     <td>
+                        <input class="form-control cmb_reference"
+                            value="{{ $w->cmb_reference }}"
+                            >
+                    </td>
+
+                    <td>
                         <input class="form-control unit"
                             value="{{ $w->unit }}"
                             >
@@ -150,22 +162,10 @@
                         {{ number_format($w->amount,2) }}
                     </td>
 
-                    {{-- <td>
-                        <input class="form-control measured_quantity"
-                            value="{{ $w->measured_quantity }}"
-                           >
-                    </td> --}}
-
-                    {{-- <td>
-                        
-                        <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
-                        class="btn btn-primary btn-sm">
-                        Inventory
-                        </a>
-                    </td> --}}
+                    
 
                     <td>
-                        
+                        {{-- ❌ Disable actions for first row --}}
                         <button type="button"
                                 class="btn btn-success btn-sm saveRow"
                                 >
@@ -189,8 +189,8 @@
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
-                    {{-- <td><input class="form-control measured_quantity"></td> --}}
-                    {{-- <td></td> --}}
+                    
+                    <td></td>
                     <td>
                         <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
                         <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
@@ -222,7 +222,9 @@
             <td class="amount text-center">0.00</td>
 
             
-        
+            <td>
+
+            </td>
             <td>
                 <button type="button" class="btn btn-success btn-sm saveRow">save</button>
                 <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>

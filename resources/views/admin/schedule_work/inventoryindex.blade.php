@@ -108,21 +108,21 @@
                 <th>Unit</th>
                 <th>Rate</th>
                 <th>Amount</th>
-                {{-- <th>Measured Qty</th>
-                <th>Inventory</th> --}}
+                <th>Measured Qty</th>
+                <th>Inventory</th>
                 <th >Action</th>
             </tr>
         </thead>
         <tbody id="workTable">
-            @forelse($works->slice(1) as $i => $w)
-                <tr >
+            @forelse($works as $i => $w)
+                <tr class="{{ $i == 0 ? 'readonly-row' : '' }}">
                     <td>{{ $i+1 }}
                         <input type="hidden" class="row-id" value="{{ $w->id }}">
                     </td>
 
                     <td>
                         <textarea class="form-control description text-left"
-                            >
+                            {{ $i == 0 ? 'readonly' : '' }}>
                             {{ $w->description }}
                         </textarea>
                     </td>
@@ -131,50 +131,50 @@
                     <td>
                         <input class="form-control qty"
                             value="{{ $w->quantity }}"
-                            >
+                            {{ $i == 0 ? 'readonly' : '' }}>
                     </td>
 
                     <td>
                         <input class="form-control unit"
                             value="{{ $w->unit }}"
-                            >
+                            {{ $i == 0 ? 'readonly' : '' }}>
                     </td>
 
                     <td>
                         <input class="form-control rate"
                             value="{{ $w->rate }}"
-                            >
+                            {{ $i == 0 ? 'readonly' : '' }}>
                     </td>
 
                     <td class="amount text-center">
                         {{ number_format($w->amount,2) }}
                     </td>
 
-                    {{-- <td>
+                    <td>
                         <input class="form-control measured_quantity"
                             value="{{ $w->measured_quantity }}"
-                           >
-                    </td> --}}
+                            {{ $i == 0 ? 'readonly' : '' }}>
+                    </td>
 
-                    {{-- <td>
-                        
+                    <td>
+                        {{-- ✅ INVENTORY ALWAYS CLICKABLE --}}
                         <a href="{{ route('admin.projects.schedule-work.index3', [$project, $w]) }}"
                         class="btn btn-primary btn-sm">
                         Inventory
                         </a>
-                    </td> --}}
+                    </td>
 
                     <td>
-                        
+                        {{-- ❌ Disable actions for first row --}}
                         <button type="button"
                                 class="btn btn-success btn-sm saveRow"
-                                >
+                                {{ $i == 0 ? 'disabled' : '' }}>
                             Save
                         </button>
 
                         <button type="button"
                                 class="btn btn-danger btn-sm deleteRow"
-                                >
+                                {{ $i == 0 ? 'disabled' : '' }}>
                             ❌
                         </button>
                     </td>
@@ -189,8 +189,8 @@
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
-                    {{-- <td><input class="form-control measured_quantity"></td> --}}
-                    {{-- <td></td> --}}
+                    <td><input class="form-control measured_quantity"></td>
+                    <td></td>
                     <td>
                         <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
                         <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
@@ -221,8 +221,10 @@
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
 
-            
-        
+            <td><input class="form-control measured_quantity"></td>
+            <td>
+
+            </td>
             <td>
                 <button type="button" class="btn btn-success btn-sm saveRow">save</button>
                 <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
@@ -252,7 +254,7 @@
             quantity: row.querySelector('.qty').value,
             unit: row.querySelector('.unit').value,
             rate: row.querySelector('.rate').value,
-            // measured_quantity: row.querySelector('.measured_quantity').value,
+            measured_quantity: row.querySelector('.measured_quantity').value,
             // category: row.querySelector('.category').value,
         };
 
