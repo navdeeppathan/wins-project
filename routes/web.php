@@ -927,6 +927,7 @@ Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () 
 });
 
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::resource('departments', DepartmentController::class);
 
@@ -946,6 +947,21 @@ Route::get('register', [RegisterController::class, 'registerForm'])->name('regis
 Route::post('register', [RegisterController::class, 'register'])->name('register');
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [ForgotPasswordController::class, 'reset'])
+    ->name('password.update');
 
 /* ========== PROTECTED ADMIN ROUTES ========== */
 Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(function () {

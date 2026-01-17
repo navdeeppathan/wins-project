@@ -154,7 +154,8 @@ class ScheduleWorkController extends Controller
             'amount'            => $amount,
             'measured_quantity' => $row['measured_quantity'] ?? 0,
             'category'          => $row['category'] ?? null,
-            'inventory_id'      => $row['inventory_id'] ?? null
+            'inventory_id'      => $row['inventory_id'] ?? null,
+            'cmb_reference'     => $row['cmb_reference'] ?? null
         ];
 
         // UPDATE

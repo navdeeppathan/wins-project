@@ -58,8 +58,9 @@
         .password-group{position:relative;}
         .toggle-password{position:absolute; right:20px; top:50%; transform:translateY(-50%); cursor:pointer; color:#999; transition:color 0.3s;}
         .toggle-password:hover{color:#666;}
-        .remember-forgot{display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; font-size:14px;}
-        .forgot-link{color:#999; text-decoration:none;}
+        .remember-forgot{display:flex; justify-content:end; align-items:center; margin-bottom:25px; font-size:14px;}
+        .remember-forgot:hover{color:#c76d8e; text-decoration:underline;}
+        .forgot-link{color:#c76d8e; text-decoration:none; transition:color 0.3s;}
         .login-btn{width:100%; padding:15px; background:linear-gradient(135deg,#c76d8e 0%, #a85672 100%); color:white; border:none; border-radius:50px; font-size:16px; font-weight:600; cursor:pointer;}
         .register-link{text-align:center; margin-top:25px; color:#666;}
         .login-btn {
@@ -318,11 +319,17 @@
                 </div>
 
                 {{-- REMEMBER --}}
-                <div class="remember-forgot">
+                {{-- <div class="remember-forgot">
                     <label>
                         <input type="checkbox" name="remember">
                         Remember me
                     </label>
+                </div> --}}
+
+                <div class="remember-forgot">
+                    <a href="{{ route('password.request') }}" class="forgot-link">
+                        Forgot Password?
+                    </a>
                 </div>
 
                 {{-- LOGIN BUTTON --}}
