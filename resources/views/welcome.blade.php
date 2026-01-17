@@ -607,7 +607,7 @@
             <div class="col-lg-5 order-lg-2" data-aos="fade-left" data-aos-delay="200">
                 <aside class="showcase">
                 <figure class="showcase-main">
-                    <img src="/state.jpeg" alt="Our Journey" class="img-fluid" style="object-fit: fill !important">
+                    <img src="/state.jpeg" alt="Our Journey" class="img-fluid" style="object-fit: contain !important">
                     {{-- <figcaption class="badge-note" data-aos="zoom-in" data-aos-delay="350">
                     <i class="bi bi-graph-up-arrow"></i>
                     <div>
