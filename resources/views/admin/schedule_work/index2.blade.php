@@ -137,6 +137,7 @@
 
                     <td>
                         <input class="form-control gst"
+                        placeholder="₹ 100"
                             value="{{ $w->gst }}"
                             >
                     </td>
@@ -193,7 +194,7 @@
                     </td>
                     <td><textarea class="form-control description"></textarea></td>
                     <td><input class="form-control qty"></td>
-                    <td><input class="form-control gst"></td>
+                    <td><input class="form-control gst" placeholder="₹ 100"></td>
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
@@ -225,7 +226,7 @@
 
             <td><textarea class="form-control description"></textarea></td>
             <td><input class="form-control qty"></td>
-            <td><input class="form-control gst"></td>
+            <td><input class="form-control gst" placeholder="₹ 100"></td>
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
