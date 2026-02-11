@@ -186,6 +186,7 @@
                     </td>
                     <td><textarea class="form-control description"></textarea></td>
                     <td><input class="form-control qty"></td>
+                    <td><input class="form-control cmb_reference"></td>
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
@@ -217,14 +218,14 @@
 
             <td><textarea class="form-control description"></textarea></td>
             <td><input class="form-control qty"></td>
+            <td><input class="form-control cmb_reference"></td>
+
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
 
             
-            <td>
-
-            </td>
+            
             <td>
                 <button type="button" class="btn btn-success btn-sm saveRow">save</button>
                 <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>

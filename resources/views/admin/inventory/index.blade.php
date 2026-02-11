@@ -56,6 +56,19 @@
         'TOURS',
         'OTHERS',
     ];
+
+    $subCategories = [
+        // 'MATERIAL' => ['Raw Material', 'Finished Material'],
+        // 'SERVICES' => ['Professional', 'Support'],
+        'LABOUR' => ['Skilled', 'Unskilled'],
+        'LOGISTIC' => ['Transport', 'Fuel'],
+        // 'MAINTENANCE' => ['Repair', 'Servicing'],
+        // 'OFFICE' => ['Utilities', 'Stationery'],
+        // 'T&P' => ['Tools', 'Plants'],
+        'FEE' => ['Government', 'Professional'],
+        'TOURS' => ['Travel', 'Accommodation'],
+        'OTHERS' => ['Miscellaneous', 'Contingency'],
+    ];
 @endphp
 
 <style>
@@ -101,6 +114,7 @@
             <th class="text-center" width="">Paid To</th>
             <th class="text-center">Staff</th>
             <th class="text-center">Category</th>
+            <th class="text-center">Sub Category</th>
 
             <th class="text-center">Bill Number</th>
             <th class="text-center">Description of Item</th>
@@ -178,6 +192,19 @@
                             @endforeach
                         </select>
                     </td>
+                    <td class="text-center">
+                        <select class="form-select sub_category">
+                            <option value="">Select</option>
+                            @if(isset($subCategories[$i->category]))
+                                @foreach($subCategories[$i->category] as $sub)
+                                    <option value="{{ $sub }}"
+                                        {{ $i->subCategory === $sub ? 'selected' : '' }}>
+                                        {{ $sub }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </td>
                     <td class="text-center"><input type="text" placeholder="Bill Number" class="form-control voucher" value="{{ $i->voucher }}"></td>
                     <td class="text-center"><input type="text" class="form-control description" value="{{ $i->description }}"></td>
                     <td class="text-center"><input type="number" step="0.01" class="form-control quantity" value="{{ $i->quantity }}"></td>
@@ -244,6 +271,11 @@
                                     {{ $cat }}
                                 </option>
                             @endforeach
+                        </select>
+                    </td>
+                     <td>
+                    <select class="form-select sub_category">
+                            <option value="">Select</option>
                         </select>
                     </td>
 
@@ -325,6 +357,11 @@ $(function () {
                     @endforeach
                 </select>
             </td>
+             <td>
+                <select class="form-select sub_category">
+                    <option value="">Select</option>
+                </select>
+            </td>
             <td><input type="text" class="form-control description"></td>
 
             <td><input type="text" class="form-control voucher"></td>
@@ -376,6 +413,7 @@ $(function () {
         // formData.append('deduction', row.find('.deduction').val());
         formData.append('staff_id', row.find('.staff_id').val());
         formData.append('net_payable', row.find('.net_payable').text());
+        formData.append('subCategory', row.find('.sub_category').val());
 
 
         let file = row.find('.upload')[0];
@@ -443,5 +481,22 @@ $(function () {
 
 
     });
+</script>
+<script>
+const SUB_CATEGORIES = @json($subCategories);
+$(document).on('change', '.category', function () {
+    let row = $(this).closest('tr');
+    let category = $(this).val();
+    let subSelect = row.find('.sub_category');
+
+    subSelect.empty().append('<option value="">Select</option>');
+
+    if (SUB_CATEGORIES[category]) {
+        SUB_CATEGORIES[category].forEach(function (sub) {
+            subSelect.append(`<option value="${sub}">${sub}</option>`);
+        });
+    }
+});
+
 </script>
 @endpush

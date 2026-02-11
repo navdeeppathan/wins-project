@@ -120,6 +120,18 @@
             'TOURS',
             'OTHERS',
         ];
+        $subCategories = [
+            'MATERIAL' => ['Raw Material', 'Finished Material'],
+            'SERVICES' => ['Professional', 'Support'],
+            'LABOUR' => ['Skilled', 'Unskilled'],
+            'LOGISTIC' => ['Transport', 'Fuel'],
+            'MAINTENANCE' => ['Repair', 'Servicing'],
+            'OFFICE' => ['Utilities', 'Stationery'],
+            'T&P' => ['Tools', 'Plants'],
+            'FEE' => ['Government', 'Professional'],
+            'TOURS' => ['Travel', 'Accommodation'],
+            'OTHERS' => ['Miscellaneous', 'Contingency'],
+        ];
     @endphp
 
 
@@ -162,6 +174,8 @@
                     <th class="text-center">DATE</th>
                     <th class="text-center">STAFF</th>
                     <th class="text-center">CATEGORY</th>
+                    <th class="text-center">SUB CATEGORY</th>
+
                     <th class="text-center">DESCRIPTION OF ITEM</th>
                     <th class="text-center">QUANTITY</th>
                     <th class="text-center">AMOUNT</th>
@@ -195,7 +209,7 @@
                             @endif
                         </td>
 
-                            <td >
+                        <td >
 
                                 <select class="form-select category mb-2">
                                     <option value="">Select</option>
@@ -209,8 +223,8 @@
                                 <select class="form-select description2"  data-selected="{{ $i->description2 ?? '' }}" style="display:none">
                                     <option value="">Select type</option>
                                 </select>
-                            <div class="form-check qty-issued-wrapper" style="display:none">
-                                <input
+                                <div class="form-check qty-issued-wrapper" style="display:none">
+                                    <input
                                         class="form-check-input qty-issued"
                                         type="checkbox"
                                         value="1"
@@ -220,7 +234,20 @@
                                         Qty Issued
                                     </label>
                                 </div>
-                            </td>
+                        </td>
+                        <td class="text-center">
+                            <select class="form-select sub_category">
+                                <option value="">Select</option>
+                                @if(isset($subCategories[$i->category]))
+                                    @foreach($subCategories[$i->category] as $sub)
+                                        <option value="{{ $sub }}"
+                                            {{ $i->subCategory === $sub ? 'selected' : '' }}>
+                                            {{ $sub }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </td>
                         <td>
                             <select class="form-select description" data-selected="{{ $i->description }}">
                                 <option value="">Select description</option>
@@ -284,6 +311,11 @@
                                     Qty Issued
                                 </label>
                             </div>
+                        </td>
+                        <td>
+                            <select class="form-select sub_category">
+                                <option value="">Select</option>
+                            </select>
                         </td>
                         <td>
                             <select class="form-select description">
@@ -414,6 +446,11 @@
                         </div>
                     </td>
                     <td>
+                        <select class="form-select sub_category">
+                            <option value="">Select</option>
+                        </select>
+                    </td>
+                    <td>
                         <select class="form-select description">
                             <option value="">Select description</option>
                         </select>
@@ -464,6 +501,7 @@
                 formData.append('staff_id', row.find('.staff_id').val());
                 formData.append('description2', row.find('.description2').val());
                 formData.append('qty_issued',row.find('.qty-issued').is(':checked') ? 1 : 0);
+                formData.append('subCategory', row.find('.sub_category').val());
 
                 $.ajax({
                     url: id
@@ -648,6 +686,24 @@
         });
 
     </script>
+
+    <script>
+const SUB_CATEGORIES = @json($subCategories);
+$(document).on('change', '.category', function () {
+    let row = $(this).closest('tr');
+    let category = $(this).val();
+    let subSelect = row.find('.sub_category');
+
+    subSelect.empty().append('<option value="">Select</option>');
+
+    if (SUB_CATEGORIES[category]) {
+        SUB_CATEGORIES[category].forEach(function (sub) {
+            subSelect.append(`<option value="${sub}">${sub}</option>`);
+        });
+    }
+});
+
+</script>
     @endpush
 
     @endsection

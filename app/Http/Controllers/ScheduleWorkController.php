@@ -142,7 +142,13 @@ class ScheduleWorkController extends Controller
 
         $row = $request->work[0];
 
-        $amount = ($row['quantity'] ?? 0) * ($row['rate'] ?? 0);
+        // $amount = ($row['quantity'] ?? 0) * ($row['rate'] ?? 0);
+        $qty = (float) ($row['quantity'] ?? 0);
+        $rate = (float) ($row['rate'] ?? 0);
+        $gst = (float) ($row['gst'] ?? 0);
+
+        $amount = ($qty * $rate) + $gst;
+
 
         $data = [
             'project_id'        => $project->id,
@@ -155,7 +161,9 @@ class ScheduleWorkController extends Controller
             'measured_quantity' => $row['measured_quantity'] ?? 0,
             'category'          => $row['category'] ?? null,
             'inventory_id'      => $row['inventory_id'] ?? null,
-            'cmb_reference'     => $row['cmb_reference'] ?? null
+            'cmb_reference'     => $row['cmb_reference'] ?? null,
+            'gst'               => $row['gst'] ?? null,
+
         ];
 
         // UPDATE

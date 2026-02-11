@@ -36,6 +36,7 @@ class Inventory extends Model
                 'paid_date',
                 'bank_ref',
                 'upi_ref',
+                'subCategory',
 
 
 

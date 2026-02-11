@@ -140,6 +140,7 @@ class InventoryController extends Controller
             'net_payable' => 'nullable',
             'staff_id' => 'nullable',
             'description2' => 'nullable|string',
+            'subCategory' => 'nullable|string',
 
 
         ]);
@@ -200,12 +201,15 @@ class InventoryController extends Controller
             'net_payable' => 'nullable',
             'staff_id' => 'nullable',
             'description2' => 'nullable|string',
+            'subCategory' => 'nullable|string',
 
         ]);
 
         // 🧮 Net Payable
         // $data['net_payable'] = ($data['amount'] ?? 0) - ($data['deduction'] ?? 0);
-         $data['net_payable'] = ($data['net_payable'] ?? 0);
+        //  $data['net_payable'] = ($data['net_payable'] ?? 0);
+        
+        $data['net_payable'] = (float) str_replace(',', '', $request->net_payable ?? 0);
         $data['qty_issued_status'] = $request->has('qty_issued') ? 1 : 0;
         // 📎 Replace file
         if ($request->hasFile('upload')) {

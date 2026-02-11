@@ -105,6 +105,7 @@
                 <th>#</th>
                 <th>Description</th>
                 <th>Quantity</th>
+                <th>GST</th>
                 <th>Unit</th>
                 <th>Rate</th>
                 <th>Amount</th>
@@ -131,6 +132,12 @@
                     <td>
                         <input class="form-control qty"
                             value="{{ $w->quantity }}"
+                            >
+                    </td>
+
+                    <td>
+                        <input class="form-control gst"
+                            value="{{ $w->gst }}"
                             >
                     </td>
 
@@ -186,6 +193,7 @@
                     </td>
                     <td><textarea class="form-control description"></textarea></td>
                     <td><input class="form-control qty"></td>
+                    <td><input class="form-control gst"></td>
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
@@ -217,6 +225,7 @@
 
             <td><textarea class="form-control description"></textarea></td>
             <td><input class="form-control qty"></td>
+            <td><input class="form-control gst"></td>
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
@@ -232,14 +241,31 @@
         index++;
     };
 
+    // document.addEventListener('input', e => {
+    //     if (e.target.classList.contains('qty') || e.target.classList.contains('rate')) {
+    //         let row = e.target.closest('tr');
+    //         let q = parseFloat(row.querySelector('.qty').value)||0;
+    //         let r = parseFloat(row.querySelector('.rate').value)||0;
+    //         let gst = parseFloat(row.querySelector('.gst').value)||0;
+    //         row.querySelector('.amount').innerText = (q*r+gst).toFixed(2);
+    //     }
+    // });
     document.addEventListener('input', e => {
-        if (e.target.classList.contains('qty') || e.target.classList.contains('rate')) {
+        if (
+            e.target.classList.contains('qty') ||
+            e.target.classList.contains('rate') ||
+            e.target.classList.contains('gst')
+        ) {
             let row = e.target.closest('tr');
-            let q = parseFloat(row.querySelector('.qty').value)||0;
-            let r = parseFloat(row.querySelector('.rate').value)||0;
-            row.querySelector('.amount').innerText = (q*r).toFixed(2);
+
+            let q = parseFloat(row.querySelector('.qty')?.value) || 0;
+            let r = parseFloat(row.querySelector('.rate')?.value) || 0;
+            let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+
+            row.querySelector('.amount').innerText = (q * r + gst).toFixed(2);
         }
     });
+
 
     document.addEventListener('click', e => {
         if (!e.target.classList.contains('saveRow')) return;
@@ -250,6 +276,7 @@
             id: row.querySelector('.row-id').value,
             description: row.querySelector('.description').value,
             quantity: row.querySelector('.qty').value,
+            gst: row.querySelector('.gst').value,
             unit: row.querySelector('.unit').value,
             rate: row.querySelector('.rate').value,
             // measured_quantity: row.querySelector('.measured_quantity').value,

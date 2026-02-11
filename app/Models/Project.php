@@ -42,7 +42,8 @@ class Project extends Model
         'total_work_done',
         'total_work_tobe_done',
         'date_ofstartof_work',
-        'pg_submission_date'
+        'pg_submission_date',
+        'tender_fee'
 
     ];
 

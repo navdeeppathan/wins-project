@@ -96,7 +96,16 @@
                 <input type="hidden" name="emd_amount" id="emd_amount">
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-2 mb-3">
+            <label class="form-label">Tender Fee</label>
+           <input type="number" step="0.01" name="tender_fee"
+            id="tender_fee"
+            value="{{ old('tender_fee') }}"
+            placeholder="Enter Estimated Cost"
+            class="form-control" >
+        </div>
+
+        <div class="col-md-3 mb-3">
             <label class="form-label">Date of Submission *</label>
             <input
                 type="date"
@@ -108,7 +117,7 @@
             >
         </div>
 
-        <div class="col-md-4 mb-3">
+        <div class="col-md-3 mb-3">
             <label class="form-label">Date of Opening *</label>
             <input
                 type="date"

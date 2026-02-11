@@ -1235,6 +1235,7 @@ class ProjectController extends Controller
             'date_of_start'       => 'nullable|date',
             'date_of_opening'     => 'nullable|date',
             'emd_amount'          => 'required|numeric|min:0',
+            'tender_fee'          => 'nullable|numeric|min:0',
         ]);
 
         $project->update($data);

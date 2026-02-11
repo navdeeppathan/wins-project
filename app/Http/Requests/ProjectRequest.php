@@ -30,6 +30,7 @@ class ProjectRequest extends FormRequest
             'date_of_opening' => 'nullable|date',
             'date_of_start' => 'nullable|date',
             'stipulated_completion' => 'nullable|date',
+            'tender_fee' => 'nullable|numeric',
         ];
     }
 }
