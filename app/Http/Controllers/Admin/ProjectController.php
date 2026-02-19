@@ -791,7 +791,7 @@ class ProjectController extends Controller
             }
         }
 
-        ScheduleWork::create([
+        $schedule = ScheduleWork::create([
             'project_id'        => $project->id,
             'section_name'      => 'GENERAL',
             'description'       =>'SUNDRY',
@@ -801,6 +801,19 @@ class ProjectController extends Controller
             'amount'            => 1,
             'measured_quantity' => 1,
         ]);
+
+        Inventory::create([
+            'project_id'        => $project->id,
+            'schedule_work_id'  => $schedule->id,
+            'date'              => Carbon::now(),
+            'net_payable'       => 1,
+            'item_name'         => 'TENDER FEE',
+            'description'       => 'Auto created from Schedule Work',
+            'quantity'          => 1,
+            'amount'            => $project->tender_fee,
+            'user_id'           => Auth::id(),
+        ]);
+
 
 
 

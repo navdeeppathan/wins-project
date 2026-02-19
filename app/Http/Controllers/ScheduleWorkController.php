@@ -142,12 +142,45 @@ class ScheduleWorkController extends Controller
 
         $row = $request->work[0];
 
-        // $amount = ($row['quantity'] ?? 0) * ($row['rate'] ?? 0);
-        $qty = (float) ($row['quantity'] ?? 0);
-        $rate = (float) ($row['rate'] ?? 0);
-        $gst = (float) ($row['gst'] ?? 0);
+        $estimated = (float) $project->estimated_amount;
+        $tendered  = (float) $project->tendered_amount;
 
-        $amount = ($qty * $rate) + $gst;
+        
+
+        // $amount = ($row['quantity'] ?? 0) * ($row['rate'] ?? 0);
+        $qty  = (float) ($row['quantity'] ?? 0);
+        $rate = (float) ($row['rate'] ?? 0);
+        $gst  = (float) ($row['gst'] ?? 0);
+
+        /* ---------- Base amount ---------- */
+        $baseAmount = $qty * $rate;
+
+        /* ---------- GST as % ---------- */
+        $gstAmount = ($baseAmount * $gst) / 100;
+
+        $amount = $baseAmount + $gstAmount;
+
+        $abate_amount=$amount;
+
+
+        /* ---------- Abatement ---------- */
+        $abatementPercentage = 0;
+
+        if ($estimated > 0 && $tendered > 0) {
+
+            // percentage (can be negative or positive)
+            $abatementPercentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+
+            // apply on amount
+            if ($abatementPercentage < 0) {
+                // minus
+                $abate_amount -= ($abate_amount * abs($abatementPercentage)) / 100;
+            } else {
+                // plus
+                $abate_amount += ($abate_amount * $abatementPercentage) / 100;
+            }
+        }
+
 
 
         $data = [
@@ -163,9 +196,13 @@ class ScheduleWorkController extends Controller
             'inventory_id'      => $row['inventory_id'] ?? null,
             'cmb_reference'     => $row['cmb_reference'] ?? null,
             'gst'               => $row['gst'] ?? null,
+            'abatement'     => $abate_amount 
+            
 
         ];
 
+
+        
         // UPDATE
         if (!empty($row['id'])) {
             ScheduleWork::where('id', $row['id'])->update($data);

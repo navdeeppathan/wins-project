@@ -102,16 +102,19 @@
     <table id="example" class="table class-table table-bordered nowrap" style="width:100%">
         <thead class="table-dark">
             <tr>
-                <th>#</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>GST</th>
-                <th>Unit</th>
-                <th>Rate</th>
-                <th>Amount</th>
+                <th style="text-align: center">#</th>
+                <th style="text-align: center">Description</th>
+                <th style="text-align: center">Quantity</th>
+                <th style="text-align: center">GST</th>
+                <th style="text-align: center">Unit</th>
+                <th style="text-align: center">Rate</th>
+                <th style="text-align: center">Amount</th>
+                <th style="text-align: center">Abatement Amount</th>
+
+
                 {{-- <th>Measured Qty</th>
                 <th>Inventory</th> --}}
-                <th >Action</th>
+                <th style="text-align: center" >Action</th>
             </tr>
         </thead>
         <tbody id="workTable">
@@ -121,11 +124,10 @@
                         <input type="hidden" class="row-id" value="{{ $w->id }}">
                     </td>
 
-                    <td>
-                        <textarea class="form-control description text-left"
-                            >
-                            {{ $w->description }}
-                        </textarea>
+                    <td style="text-align: left">
+                        <input class="form-control description text-left"
+                            value="{{ $w->description }}"
+                        />
                     </td>
 
 
@@ -135,12 +137,29 @@
                             >
                     </td>
 
-                    <td>
+                    {{-- <td>
                         <input class="form-control gst"
-                        placeholder="₹ 100"
+                        placeholder="18%"
                             value="{{ $w->gst }}"
                             >
+                    </td> --}}
+                    <td>
+                        @if($w->gst !== null && $w->gst !== '')
+                            {{-- GST exists → show input directly --}}
+                            <input class="form-control gst" value="{{ $w->gst }}">
+                        @else
+                            {{-- GST empty → show checkbox first --}}
+                            <div class="gst-wrapper">
+                                <label class="d-flex align-items-center gap-2">
+                                    <input type="checkbox" class="gst-toggle">
+                                    GST
+                                </label>
+
+                                <input class="form-control gst mt-1 d-none" placeholder="18%">
+                            </div>
+                        @endif
                     </td>
+
 
                     <td>
                         <input class="form-control unit"
@@ -156,6 +175,10 @@
 
                     <td class="amount text-center">
                         {{ number_format($w->amount,2) }}
+                    </td>
+
+                    <td @disabled(true) class="amount text-center">
+                        {{ number_format($w->abatement,2) }}
                     </td>
 
                     {{-- <td>
@@ -194,7 +217,21 @@
                     </td>
                     <td><textarea class="form-control description"></textarea></td>
                     <td><input class="form-control qty"></td>
-                    <td><input class="form-control gst" placeholder="₹ 100"></td>
+                    {{-- <td><input class="form-control gst" placeholder="18%"></td> --}}
+                    <td>
+                        
+                            {{-- GST empty → show checkbox first --}}
+                            <div class="gst-wrapper">
+                                <label class="d-flex align-items-center gap-2">
+                                    <input type="checkbox" class="gst-toggle">
+                                    GST
+                                </label>
+
+                                <input class="form-control gst mt-1 d-none" placeholder="18%">
+                            </div>
+                        
+                    </td>
+
                     <td><input class="form-control unit" value="1"></td>
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
@@ -226,7 +263,15 @@
 
             <td><textarea class="form-control description"></textarea></td>
             <td><input class="form-control qty"></td>
-            <td><input class="form-control gst" placeholder="₹ 100"></td>
+            <td>
+                <div class="gst-wrapper">
+                    <label class="d-flex align-items-center gap-2">
+                        <input type="checkbox" class="gst-toggle"> GST
+                    </label>
+                    <input class="form-control gst mt-1 d-none" placeholder="18%">
+                </div>
+            </td>
+
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
@@ -251,6 +296,37 @@
     //         row.querySelector('.amount').innerText = (q*r+gst).toFixed(2);
     //     }
     // });
+    // document.addEventListener('input', e => {
+    //     if (
+    //         e.target.classList.contains('qty') ||
+    //         e.target.classList.contains('rate') ||
+    //         e.target.classList.contains('gst')
+    //     ) {
+    //         let row = e.target.closest('tr');
+
+    //         let q = parseFloat(row.querySelector('.qty')?.value) || 0;
+    //         let r = parseFloat(row.querySelector('.rate')?.value) || 0;
+    //         let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+
+    //         row.querySelector('.amount').innerText = (q * r + gst).toFixed(2);
+    //     }
+    // });
+
+     document.addEventListener('change', e => {
+        if (!e.target.classList.contains('gst-toggle')) return;
+
+        let wrapper = e.target.closest('.gst-wrapper');
+        let input = wrapper.querySelector('.gst');
+
+        if (e.target.checked) {
+            input.classList.remove('d-none');
+            input.focus();
+        } else {
+            input.classList.add('d-none');
+            input.value = '';
+        }
+    });
+
     document.addEventListener('input', e => {
         if (
             e.target.classList.contains('qty') ||
@@ -261,9 +337,18 @@
 
             let q = parseFloat(row.querySelector('.qty')?.value) || 0;
             let r = parseFloat(row.querySelector('.rate')?.value) || 0;
-            let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+            // let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+            let gstInput = row.querySelector('.gst');
+            let gst = gstInput && !gstInput.classList.contains('d-none')
+                ? parseFloat(gstInput.value) || 0
+                : 0;
 
-            row.querySelector('.amount').innerText = (q * r + gst).toFixed(2);
+
+            let amount = q * r;
+            let gstAmount = amount * gst / 100;
+            let finalAmount = amount + gstAmount;
+
+            row.querySelector('.amount').innerText = finalAmount.toFixed(2);
         }
     });
 
