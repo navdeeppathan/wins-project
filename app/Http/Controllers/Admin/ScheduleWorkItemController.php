@@ -37,7 +37,9 @@ class ScheduleWorkItemController extends Controller
             'height' => 'nullable|numeric',
         ]);
 
-        ScheduleWorkItem::create($request->all());
+        $quantity = $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
+
+        ScheduleWorkItem::create(array_merge($request->all(), ['quantity' => $quantity]));
 
         return redirect()->back()->with('success', 'Item added successfully');
     }

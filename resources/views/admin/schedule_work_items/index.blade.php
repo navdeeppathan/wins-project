@@ -90,23 +90,23 @@
                                 </td>
 
                                 <td>
-    <input type="text" name="height" class="form-control" placeholder="Enter Height">
-</td>
+                                    <input type="text" name="height" class="form-control" placeholder="Enter Height">
+                                </td>
 
-<td>
-    <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
-</td>
+                                <td>
+                                    <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
+                                </td>
 
-<td>
-    <input type="text" name="qty" class="form-control" placeholder="Enter Qty">
-</td>
+                                <td>
+                                    <input type="text" name="qty" class="form-control" placeholder="Enter Qty">
+                                </td>
 
-<td>
-    <button class="btn btn-sm btn-success">Save</button>
-</td>
+                                <td>
+                                    <button class="btn btn-sm btn-success">Save</button>
+                                </td>
 
-</form>
-</tr>
+                                </form>
+                                </tr>
                         @endforelse
 
                     </tbody>
