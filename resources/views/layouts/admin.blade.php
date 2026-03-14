@@ -387,7 +387,7 @@
             </div>
             <div>
 
-                    <span style="color: red;" class="topbar-title text-center text-red">YOUR DigiProject TRIAL PERIOD IS VALID UPTO 31/03/2026</span>
+                    <span style="color: red;" class="topbar-title text-center text-red">YOUR DigiProject TRIAL PERIOD IS VALID UPTO 31/07/2026</span>
 
 
             </div>
