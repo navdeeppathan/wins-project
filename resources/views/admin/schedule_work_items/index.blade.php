@@ -64,25 +64,49 @@
                         @empty
                             {{-- DEFAULT ROW IF NO ITEMS --}}
                             <tr>
-                                <form method="POST"
-                                      action="{{ route('admin.schedule-work-items.store') }}">
-                                    @csrf
-                                    <input type="hidden" name="schedule_work_id"
-                                           value="{{ $scheduleWork->id }}">
+                                <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
+                                @csrf
 
-                                    <td><input name="sr_no" class="form-control"></td>
-                                    <td><input name="description" class="form-control"></td>
-                                    <td><input name="no_of_items" class="form-control"></td>
-                                    <td><input name="length" class="form-control"></td>
-                                    <td><input name="width" class="form-control"></td>
-                                    <td><input name="height" class="form-control"></td>
-                                    <td><input name="factor" class="form-control"></td>
-                                    <td><input name="qty" class="form-control"></td>
-                                    <td>
-                                        <button class="btn btn-sm btn-success">Save</button>
-                                    </td>
-                                </form>
-                            </tr>
+                                <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
+
+                                <td>
+                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter Sr No">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="description" class="form-control" placeholder="Enter Number">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="no_of_items" class="form-control" placeholder="Enter Slides">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="length" class="form-control" placeholder="Enter Length">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="width" class="form-control" placeholder="Enter Width">
+                                </td>
+
+                                <td>
+    <input type="text" name="height" class="form-control" placeholder="Enter Height">
+</td>
+
+<td>
+    <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
+</td>
+
+<td>
+    <input type="text" name="qty" class="form-control" placeholder="Enter Qty">
+</td>
+
+<td>
+    <button class="btn btn-sm btn-success">Save</button>
+</td>
+
+</form>
+</tr>
                         @endforelse
 
                     </tbody>
