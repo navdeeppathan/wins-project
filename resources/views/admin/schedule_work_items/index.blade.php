@@ -18,9 +18,9 @@
 
                     <thead class="table-light">
                         <tr>
-                            <th>Sr</th>
-                            <th>Description</th>
-                            <th>No</th>
+                            <th>Sr No</th>
+                            <th>Number</th>
+                            <th>Slides</th>
                             <th>Length</th>
                             <th>Width</th>
                             <th>Height</th>
