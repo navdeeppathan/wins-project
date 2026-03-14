@@ -27,8 +27,8 @@
 <thead>
 <tr>
     <th>#</th>
-    <th>Letter Subject</th>
-    <th>Letter Date</th>
+    <th>Activity</th>
+    <th>Date</th>
     <th>Upload</th>
     <th>Action</th>
 </tr>
