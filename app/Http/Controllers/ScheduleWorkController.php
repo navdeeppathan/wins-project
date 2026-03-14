@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Project;
 use App\Models\ScheduleWork;
 use Illuminate\Http\Request;
@@ -93,9 +94,11 @@ class ScheduleWorkController extends Controller
         
 
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
+        $categories = Category::with('subcategories')->where('status', 1)->get();
 
 
-        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories','staffs','totalnetpayable'));
+
+        return view('admin.schedule_work.index3', compact('project','scheduleWork','inventories','allInventories','staffs','totalnetpayable','categories'));
     }
 
     // public function save(Request $request, Project $project)
@@ -136,6 +139,7 @@ class ScheduleWorkController extends Controller
 
     public function save(Request $request, Project $project)
     {
+        
         if (!$request->has('work')) {
             return response()->json(['status' => false]);
         }
@@ -151,6 +155,7 @@ class ScheduleWorkController extends Controller
         $qty  = (float) ($row['quantity'] ?? 0);
         $rate = (float) ($row['rate'] ?? 0);
         $gst  = (float) ($row['gst'] ?? 0);
+        
 
         /* ---------- Base amount ---------- */
         $baseAmount = $qty * $rate;

@@ -143,6 +143,7 @@
                             value="{{ $w->gst }}"
                             >
                     </td> --}}
+                    
                     <td>
                         @if($w->gst !== null && $w->gst !== '')
                             {{-- GST exists → show input directly --}}
@@ -177,7 +178,7 @@
                         {{ number_format($w->amount,2) }}
                     </td>
 
-                    <td @disabled(true) class="amount text-center">
+                    <td class="amount text-center">
                         {{ number_format($w->abatement,2) }}
                     </td>
 
@@ -236,7 +237,7 @@
                     <td><input class="form-control rate"></td>
                     <td class="amount text-center">0.00</td>
                     {{-- <td><input class="form-control measured_quantity"></td> --}}
-                    {{-- <td></td> --}}
+                    <td  class="amount text-center">0</td>
                     <td>
                         <button type="button" class="btn btn-success btn-sm saveRow">Save</button>
                         <button type="button" class="btn btn-danger btn-sm deleteRow">❌</button>
@@ -275,6 +276,7 @@
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
             <td class="amount text-center">0.00</td>
+            <td  class="amount text-center">0</td>
 
             
         
@@ -357,17 +359,19 @@
         if (!e.target.classList.contains('saveRow')) return;
 
         let row = e.target.closest('tr');
-
+        let gstValue = row.querySelector('.gst').value.replace('%','');
         let payload = {
             id: row.querySelector('.row-id').value,
             description: row.querySelector('.description').value,
             quantity: row.querySelector('.qty').value,
-            gst: row.querySelector('.gst').value,
+            gst: gstValue,
             unit: row.querySelector('.unit').value,
             rate: row.querySelector('.rate').value,
             // measured_quantity: row.querySelector('.measured_quantity').value,
             // category: row.querySelector('.category').value,
         };
+
+        console.log(payload);
 
         fetch("{{ route('admin.projects.schedule-work.save',$project) }}", {
             method: "POST",

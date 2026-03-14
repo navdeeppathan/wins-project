@@ -51,7 +51,7 @@
            <input type="number" step="0.01" name="estimated_amount"
             id="estimated_amount"
             value="{{ old('estimated_amount') }}"
-            placeholder="Enter Estimated Cost"
+            placeholder="Enter Estimated Amount"
             class="form-control" required>
         </div>
 
@@ -91,7 +91,7 @@
             <input type="text"
                     id="emd_amount_display"
                     class="form-control"
-                    placeholder="EMD Amount">
+                    placeholder="Enter EMD Amount">
 
                 <input type="hidden" name="emd_amount" id="emd_amount">
         </div>
@@ -101,7 +101,7 @@
            <input type="number" step="0.01" name="tender_fee"
             id="tender_fee"
             value="{{ old('tender_fee') }}"
-            placeholder="Enter Estimated Cost"
+            placeholder="Enter Tender Fee"
             class="form-control" >
         </div>
 

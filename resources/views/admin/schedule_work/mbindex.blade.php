@@ -127,10 +127,7 @@
                     </td>
 
                     <td>
-                        <textarea class="form-control description text-left"
-                            >
-                            {{ $w->description }}
-                        </textarea>
+                        <textarea class="form-control description text-start">{{ $w->description }}</textarea>
                     </td>
 
 

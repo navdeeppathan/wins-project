@@ -29,7 +29,8 @@ class ScheduleWork extends Model
         'inventory_id',
         'dismantals',
         'cmb_reference',
-        'abatement'
+        'abatement',
+        'gst'
     ];
 
     // If you want to disable timestamps

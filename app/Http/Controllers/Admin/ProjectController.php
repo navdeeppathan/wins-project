@@ -795,21 +795,21 @@ class ProjectController extends Controller
             'project_id'        => $project->id,
             'section_name'      => 'GENERAL',
             'description'       =>'SUNDRY',
-            'quantity'          => 1,
-            'unit'              => 1,
-            'rate'              => 1,
-            'amount'            => 1,
-            'measured_quantity' => 1,
+            'quantity'          => 0,
+            'unit'              => 0,
+            'rate'              => 0,
+            'amount'            => 0,
+            'measured_quantity' => 0,
         ]);
 
         Inventory::create([
             'project_id'        => $project->id,
             'schedule_work_id'  => $schedule->id,
             'date'              => Carbon::now(),
-            'net_payable'       => 1,
+            'net_payable'       => 0,
             'item_name'         => 'TENDER FEE',
             'description'       => 'Auto created from Schedule Work',
-            'quantity'          => 1,
+            'quantity'          => 0,
             'amount'            => $project->tender_fee,
             'user_id'           => Auth::id(),
         ]);

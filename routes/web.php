@@ -23,6 +23,8 @@ use App\Http\Controllers\Staff\SecurityDepositController as StaffSecurityDeposit
 use App\Http\Controllers\Staff\TAndPController;
 use App\Http\Controllers\Staff\VendorController;
 use App\Http\Controllers\Admin\CqcVaultController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\Superadmin\UserTransactionController;
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,16 @@ Route::get('clear-cache', function() {
     Artisan::call('view:clear');
     return "Cache cleared successfully";
 });
+
+Route::resource('categories', CategoryController::class);
+
+Route::post('/subcategories/store', [SubcategoryController::class, 'store'])->name('subcategories.store');
+Route::delete('/subcategories/{id}', [SubcategoryController::class, 'destroy'])->name('subcategories.delete');
+
+Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
+Route::post('/categories/status/{id}', [CategoryController::class,'status'])->name('categories.status');
+
+Route::post('/subcategories/status/{id}', [SubcategoryController::class,'status'])->name('subcategories.status');
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 

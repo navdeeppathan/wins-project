@@ -283,6 +283,8 @@
             @php
                 $establishmentActive =
                     Request::is('departments*') ||
+                    Request::is('categories*') ||
+
                     Request::is('admin/vendors*') ||
                     Request::is('admin/users*') ||
                     Request::is('admin/cqc-vault*');
@@ -315,6 +317,10 @@
                     <a href="{{ route('departments.index') }}"
                     class="dropdown-item {{ Request::is('departments*') ? 'active' : '' }}">
                         DEPARTMENTS
+                    </a>
+                    <a href="{{ route('categories.index') }}"
+                    class="dropdown-item {{ Request::is('categories*') ? 'active' : '' }}">
+                        CATEGORIES
                     </a>
 
                     <a href="{{ route('admin.vendors.index') }}"

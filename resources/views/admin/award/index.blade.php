@@ -21,8 +21,9 @@
                 <th class="text-center">Award Letter Date</th>
                 <th class="text-center">Estimate Amt</th>
                 <th class="text-center">Tendered Amount</th>
-                <th class="text-center">Stipulated Date of Completion</th>
                 <th class="text-center">Date of Start of Work</th>
+                <th class="text-center">Stipulated Date of Completion</th>
+                
                 <th class="text-center">Agreement Number</th>
                 <th class="text-center">Upload</th>
                 <th class="text-center">Action</th>
@@ -55,15 +56,16 @@
                     <td>{{ number_format($p->tendered_amount,2) }}</td>
                     <td>
                         <input type="date"
+                            class="form-control form-control-sm date_ofstartof_work"
+                            value="{{ $p->date_ofstartof_work }}">
+                    </td>
+                    <td>
+                        <input type="date"
                             class="form-control form-control-sm stipulated_date_ofcompletion"
                             value="{{ $p->stipulated_date_ofcompletion }}">
 
                     </td>
-                    <td>
-                        <input type="date"
-                            class="form-control form-control-sm date_ofstartof_work"
-                            value="{{ $p->date_ofstartof_work }}">
-                    </td>
+                    
                     <td>
                         <input type="text"
                             class="form-control form-control-sm agreement_no"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\DailyNote;
 use App\Models\Inventory;
 use App\Models\Project;
@@ -40,8 +41,9 @@ class InventoryController extends Controller
         $vendors  = Vendor::whereIn('user_id', $userIds)->get();
         $notes    = DailyNote::orderBy('note_date', 'desc')->get();
         $staffs   =  User::where('parent_id', auth()->id())->where('role', 'staff')->get();
+        $categories = Category::with('subcategories')->where('status', 1)->get();
 
-        return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs'));
+        return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs', 'categories'));
     }
 
 
@@ -115,8 +117,9 @@ class InventoryController extends Controller
    
         $notes = DailyNote::orderBy('note_date', 'desc')->get();
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
+        $categories = Category::with('subcategories')->where('status', 1)->get();
 
-        return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs'));
+        return view('admin.inventory.tabindex', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs', 'categories'));
     }
     // ✅ STORE (Create new row)
 

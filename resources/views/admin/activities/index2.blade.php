@@ -38,9 +38,11 @@
                 disabled>
         </div>
 
+        {{-- {{dd($project)}} --}}
+
         <div class="col-md-4 mb-3">
-            <label>NIT Number</label>
-            <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
+            <label>Agreement No</label>
+            <input type="text" class="form-control" value="{{ $project->agreement_no }}" disabled>
         </div>
 
         {{-- <div class="col-md-12 mb-3">
@@ -207,8 +209,10 @@
     </div>
     <div id="progressPdfArea">
         <div class="card ">
-            <div class="card-header text-white" style="background:#5c5d5e">
-                <small>All Construction Progress</small>
+            <div class="card-header d-flex flex-column  text-white" style="background:#5c5d5e">
+                <small class="mb-1">All Construction Progress</small>
+                <small class="mb-1">{{ $project->name }}</small>
+                <small class="mb-1">{{ $project->agreement_no }}</small>
             </div>
 
             <div class="card-body progress-wrapper">

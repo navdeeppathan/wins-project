@@ -185,6 +185,7 @@
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
+        paging: false,
 
 
         /* 🔥 GUARANTEED ROW COLOR FIX */

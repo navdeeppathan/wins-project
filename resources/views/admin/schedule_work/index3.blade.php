@@ -106,7 +106,7 @@
 
 
 
-    @php
+    {{-- @php
 
         $categories = [
             'MATERIAL',
@@ -132,7 +132,7 @@
             'TOURS' => ['Travel', 'Accommodation'],
             'OTHERS' => ['Miscellaneous', 'Contingency'],
         ];
-    @endphp
+    @endphp --}}
 
 
     <style>
@@ -211,13 +211,25 @@
 
                         <td >
 
-                                <select class="form-select category mb-2">
+                                {{-- <select class="form-select category mb-2">
                                     <option value="">Select</option>
                                     @foreach($categories as $cat)
                                         <option value="{{ $cat }}" {{ $i->category === $cat ? 'selected' : '' }}>
                                             {{ $cat }}
                                         </option>
                                     @endforeach
+                                </select> --}}
+
+                                <select class="form-select category">
+                                    <option value="">Select</option>
+
+                                    @foreach($categories as $cat)
+                                    <option value="{{ $cat->name }}"
+                                    {{ $i->category == $cat->name ? 'selected' : '' }}>
+                                    {{ $cat->name }}
+                                    </option>
+                                    @endforeach
+
                                 </select>
 
                                 <select class="form-select description2"  data-selected="{{ $i->description2 ?? '' }}" style="display:none">
@@ -236,7 +248,7 @@
                                 </div>
                         </td>
                         <td class="text-center">
-                            <select class="form-select sub_category">
+                            {{-- <select class="form-select sub_category">
                                 <option value="">Select</option>
                                 @if(isset($subCategories[$i->category]))
                                     @foreach($subCategories[$i->category] as $sub)
@@ -246,6 +258,20 @@
                                         </option>
                                     @endforeach
                                 @endif
+                            </select> --}}
+                            <select class="form-select sub_category">
+
+                                <option value="">Select</option>
+
+                                @if($i->category)
+                                @foreach($categories->where('name',$i->category)->first()?->subcategories ?? [] as $sub)
+                                <option value="{{ $sub->name }}"
+                                {{ $i->subCategory == $sub->name ? 'selected' : '' }}>
+                                {{ $sub->name }}
+                                </option>
+                                @endforeach
+                                @endif
+
                             </select>
                         </td>
                         <td>
@@ -294,14 +320,26 @@
                         </td>
                         <td>
 
-                            <select class="form-select category mb-2">
+                            {{-- <select class="form-select category mb-2">
                                 <option value="">Select</option>
                                 @foreach($categories as $cat)
                                     <option value="{{ $cat }}" {{ $cat === 'T&P' ? 'selected' : '' }}>
                                         {{ $cat }}
                                     </option>
                                 @endforeach
+                            </select> --}}
+
+                            <select class="form-select category mb-2">
+                                <option value="">Select</option>
+
+                                @foreach($categories as $cat)
+                                <option value="{{ $cat->name }}" {{$cat->name==='T&P' ? 'selected' : '' }}>
+                                {{ $cat->name }}
+                                </option>
+                                @endforeach
+
                             </select>
+
                             <select class="form-select description2" data-selected="{{ $i->description2 ?? '' }}" style="display:none">
                                 <option value="">Select type</option>
                             </select>
@@ -431,9 +469,13 @@
                     <td>
                         <select class="form-select category mb-2">
                             <option value="">Select</option>
+
                             @foreach($categories as $cat)
-                                <option value="{{ $cat }}">{{ $cat }}</option>
+                            <option value="{{ $cat->name }}">
+                            {{ $cat->name }}
+                            </option>
                             @endforeach
+
                         </select>
                         <select class="form-select description2" data-selected="{{ $i->description2 ?? '' }}" style="display:none">
                                 <option value="">Select type</option>
@@ -687,7 +729,7 @@
 
     </script>
 
-    <script>
+    {{-- <script>
 const SUB_CATEGORIES = @json($subCategories);
 $(document).on('change', '.category', function () {
     let row = $(this).closest('tr');
@@ -703,7 +745,35 @@ $(document).on('change', '.category', function () {
     }
 });
 
+</script> --}}
+<script>
+const CATEGORIES = @json($categories);
+
+$(document).on('change', '.category', function () {
+
+    let row = $(this).closest('tr');
+    let categoryName = $(this).val();
+    let subSelect = row.find('.sub_category');
+
+    subSelect.empty().append('<option value="">Select</option>');
+
+    let category = CATEGORIES.find(c => c.name == categoryName);
+
+    if(category){
+        category.subcategories.forEach(function(sub){
+
+            if(sub.status == 1){
+                subSelect.append(
+                    `<option value="${sub.name}">${sub.name}</option>`
+                );
+            }
+
+        });
+    }
+
+});
 </script>
+
     @endpush
 
     @endsection
