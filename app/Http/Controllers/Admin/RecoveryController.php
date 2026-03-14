@@ -27,7 +27,7 @@ class RecoveryController extends Controller
     {
         $userId = auth()->id();
          $user = auth()->user();
-        // Admin → own + staff projects
+
         if ($user->role === 'admin') {
             $userIds = \App\Models\User::where('parent_id', $user->id)
                         ->pluck('id')
@@ -106,9 +106,9 @@ class RecoveryController extends Controller
             'total'          => 'numeric',
         ]);
 
-        // Create NEW recovery row (important change)
-        Recovery::create([
-            'billing_id'     => $billing->id,
+        // updateonly
+
+        $billing->recoveries()->update([
             'security'       => $request->security,
             'income_tax'     => $request->income_tax,
             'labour_cess'    => $request->labour_cess,
@@ -121,6 +121,21 @@ class RecoveryController extends Controller
             'recovery'       => $request->recovery,
             'total'          => $request->total,
         ]);
+
+        // Recovery::create([
+        //     'billing_id'     => $billing->id,
+        //     'security'       => $request->security,
+        //     'income_tax'     => $request->income_tax,
+        //     'labour_cess'    => $request->labour_cess,
+        //     'water_charges'  => $request->water_charges,
+        //     'license_fee'    => $request->license_fee,
+        //     'cgst'           => $request->cgst,
+        //     'sgst'           => $request->sgst,
+        //     'withheld_1'     => $request->withheld_1,
+        //     'withheld_2'     => $request->withheld_2,
+        //     'recovery'       => $request->recovery,
+        //     'total'          => $request->total,
+        // ]);
 
         // Recalculate totals from ALL recoveries
         $totalRecovery = $billing->recoveries()->sum('total');
