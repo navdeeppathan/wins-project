@@ -39,7 +39,7 @@ class ScheduleWorkItemController extends Controller
 
         $quantity = $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
 
-        ScheduleWorkItem::create(array_merge($request->all(), ['quantity' => $quantity]));
+        ScheduleWorkItem::create(array_merge($request->all(), ['qty' => $quantity]));
 
         return redirect()->back()->with('success', 'Item added successfully');
     }
@@ -51,6 +51,9 @@ class ScheduleWorkItemController extends Controller
     {
         $item = ScheduleWorkItem::findOrFail($id);
 
+        $quantity = $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
+
+        $request->merge(['qty' => $quantity]);
         $item->update($request->all());
 
         return redirect()->back()->with('success', 'Item updated successfully');
