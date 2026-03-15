@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.superadmin')
 
 @section('content')
 
@@ -17,7 +17,7 @@
 <div class="card-header">Add Category</div>
 <div class="card-body">
 
-<form method="POST" action="{{ route('categories.store') }}">
+<form method="POST" action="{{ route('superadmin.categories.store') }}">
 @csrf
 
 <div class="row">
@@ -49,9 +49,9 @@
 <tr>
 <th>ID</th>
 <th>Name</th>
-<th>Status</th>
+{{-- <th>Status</th> --}}
 <th>Subcategories</th>
-<th>Action</th>
+{{-- <th>Action</th> --}}
 </tr>
 </thead>
 
@@ -65,27 +65,27 @@
 
 <td>{{ $category->name }}</td>
 
-<td>
+{{-- <td>
 
 
-<form action="{{ route('categories.status',$category->id) }}" method="POST">
-@csrf
+    <form action="{{ route('categories.status',$category->id) }}" method="POST">
+    @csrf
 
-<div class="form-check form-switch">
+    <div class="form-check form-switch">
 
-<input 
-class="form-check-input"
-type="checkbox"
-onchange="this.form.submit()"
-{{ $category->status ? 'checked' : '' }}>
+    <input 
+    class="form-check-input"
+    type="checkbox"
+    onchange="this.form.submit()"
+    {{ $category->status ? 'checked' : '' }}>
 
-</div>
+    </div>
 
-</form>
+    </form>
 
 
 
-</td>
+</td> --}}
 
 <td>
 
@@ -97,7 +97,7 @@ onchange="this.form.submit()"
 
 {{ $sub->name }}
 
-@if($sub->status)
+{{-- @if($sub->status)
 
 <form action="{{ route('subcategories.status',$sub->id) }}" method="POST">
 @csrf
@@ -114,13 +114,13 @@ onchange="this.form.submit()"
 
 </form>
 
-@endif
+@endif --}}
 
-<form action="{{ route('subcategories.delete',$sub->id) }}" method="POST" style="display:inline;">
+{{-- <form action="{{ route('subcategories.delete',$sub->id) }}" method="POST" style="display:inline;">
 @csrf
 @method('DELETE')
 <button class="btn btn-sm btn-danger">Delete</button>
-</form>
+</form> --}}
 
 </li>
 
@@ -130,7 +130,7 @@ onchange="this.form.submit()"
 
 {{-- ADD SUBCATEGORY --}}
 
-<form method="POST" action="{{ route('subcategories.store') }}">
+<form method="POST" action="{{ route('superadmin.subcategories.store') }}">
 @csrf
 
 <input type="hidden" name="category_id" value="{{ $category->id }}">
@@ -151,29 +151,29 @@ onchange="this.form.submit()"
 
 </td>
 
-<td>
+{{-- <td> --}}
 
-{{-- EDIT CATEGORY --}}
+    {{-- EDIT CATEGORY --}}
 
-<button class="btn btn-warning btn-sm"
-data-bs-toggle="modal"
-data-bs-target="#editCategory{{ $category->id }}">
-Edit
-</button>
+    {{-- <button class="btn btn-warning btn-sm"
+    data-bs-toggle="modal"
+    data-bs-target="#editCategory{{ $category->id }}">
+    Edit
+    </button> --}}
 
-{{-- DELETE CATEGORY --}}
+    {{-- DELETE CATEGORY --}}
 
-<form action="{{ route('categories.destroy',$category->id) }}" method="POST" style="display:inline;">
-@csrf
-@method('DELETE')
+    {{-- <form action="{{ route('categories.destroy',$category->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
 
-<button class="btn btn-danger btn-sm">
-Delete
-</button>
+    <button class="btn btn-danger btn-sm">
+    Delete
+    </button>
 
-</form>
+    </form> --}}
 
-</td>
+{{-- </td> --}}
 
 </tr>
 
@@ -185,7 +185,7 @@ Delete
 
 <div class="modal-content">
 
-<form method="POST" action="{{ route('categories.update',$category->id) }}">
+<form method="POST" action="{{ route('superadmin.categories.update',$category->id) }}">
 
 @csrf
 @method('PUT')

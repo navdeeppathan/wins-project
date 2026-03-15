@@ -47,7 +47,7 @@
                                 <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
                                 <td><input name="height" value="{{ $item->height }}" class="form-control"></td>
                                 <td><input name="factor" value="{{ $item->factor }}" class="form-control"></td>
-                                <td><input name="qty" value="{{ $item->qty }}" class="form-control"></td>
+                                <td><input name="qty" readonly value="{{ $item->qty }}" class="form-control"></td>
 
                                 <td class="d-flex gap-1">
                                     <button class="btn btn-sm btn-primary">Update</button>
@@ -98,7 +98,7 @@
                                 </td>
 
                                 <td>
-                                    <input type="text" name="qty" class="form-control" placeholder="Enter Qty">
+                                    <input type="text" name="qty" readonly class="form-control" placeholder="Enter Qty">
                                 </td>
 
                                 <td>
@@ -136,4 +136,56 @@
     @endforeach
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".add-row-btn").forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            let scheduleId = this.dataset.schedule;
+
+            let table = document.querySelector(
+                '.schedule-table[data-schedule="'+scheduleId+'"] tbody'
+            );
+
+            let row = `
+            <tr>
+                <td colspan="9">
+                    <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
+                        @csrf
+                        <input type="hidden" name="schedule_work_id" value="${scheduleId}">
+
+                        <div class="d-flex gap-1">
+
+                            <input type="text" name="sr_no" class="form-control" placeholder="Enter Sr No">
+                            <input type="text" name="description" class="form-control" placeholder="Enter Number">
+                            <input type="text" name="no_of_items" class="form-control"  placeholder="Enter Slides">
+                            <input type="text" name="length" class="form-control" placeholder="Enter Length">
+                            <input type="text" name="width" class="form-control" placeholder="Enter Width">
+                            <input type="text" name="height" class="form-control" placeholder="Enter Height">
+                            <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
+                            <input type="text" name="qty" readonly class="form-control" placeholder="Enter Qty">
+
+                            <button type="submit" class="btn btn-success btn-sm">
+                                Save
+                            </button>
+
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            `;
+
+            table.insertAdjacentHTML("beforeend", row);
+
+        });
+
+    });
+
+});
+</script>
 @endsection
+
+

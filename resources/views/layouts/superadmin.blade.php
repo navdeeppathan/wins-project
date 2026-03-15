@@ -93,6 +93,32 @@
                 </a>
             </div>
 
+            
+            <div class="nav-item">
+                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">ESTIMATE</span>
+                    <span class="dropdown-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="sidebar-dropdown">
+                    
+                    <a href="{{ route('superadmin.categories.index') }}"
+                    class="dropdown-item {{ Request::is('superadmin/categories*') ? 'active' : '' }}">
+                        CATEGORIES
+                    </a>
+                    
+                </div>
+            </div>
+            
+
 
 
 

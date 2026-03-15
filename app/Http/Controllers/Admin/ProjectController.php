@@ -809,7 +809,9 @@ class ProjectController extends Controller
             'net_payable'       => $project->tender_fee,
             'item_name'         => 'TENDER FEE',
             'description'       => 'TENDER FEE',
-            'category'          => '3',
+            'category'          => 'FEE',
+            'subCategory'          => 'GOVERNMENT',
+
             'quantity'          => 1,
             'amount'            => $project->tender_fee,
             'user_id'           => Auth::id(),

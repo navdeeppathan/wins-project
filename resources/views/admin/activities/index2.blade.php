@@ -93,7 +93,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>#</th>
-                    <th>Activity Name *</th>
+                    <th style="text-align: left;">Activity Name *</th>
                     <th>From Date *</th>
                     <th>To Date *</th>
                     <th>Target *</th>
@@ -210,9 +210,9 @@
     <div id="progressPdfArea">
         <div class="card ">
             <div class="card-header d-flex flex-column  text-white" style="background:#5c5d5e">
-                <small class="mb-1">All Construction Progress</small>
-                <small class="mb-1">{{ $project->name }}</small>
-                <small class="mb-1">{{ $project->agreement_no }}</small>
+                <small class="mb-1" style="font-size: 2rem;">Bar Progress</small>
+                <small class="mb-1" style="font-size: 1.5rem;">{{ $project->name }}</small>
+                <small class="mb-1" style="font-size: 1.5rem;">{{ $project->agreement_no }}</small>
             </div>
 
             <div class="card-body progress-wrapper">

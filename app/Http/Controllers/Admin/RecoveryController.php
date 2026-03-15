@@ -107,7 +107,9 @@ class RecoveryController extends Controller
         ]);
 
         // updateonly
+ 
 
+        if($request->recovery_id){
         $billing->recoveries()->update([
             'security'       => $request->security,
             'income_tax'     => $request->income_tax,
@@ -121,21 +123,23 @@ class RecoveryController extends Controller
             'recovery'       => $request->recovery,
             'total'          => $request->total,
         ]);
+        }else{
 
-        // Recovery::create([
-        //     'billing_id'     => $billing->id,
-        //     'security'       => $request->security,
-        //     'income_tax'     => $request->income_tax,
-        //     'labour_cess'    => $request->labour_cess,
-        //     'water_charges'  => $request->water_charges,
-        //     'license_fee'    => $request->license_fee,
-        //     'cgst'           => $request->cgst,
-        //     'sgst'           => $request->sgst,
-        //     'withheld_1'     => $request->withheld_1,
-        //     'withheld_2'     => $request->withheld_2,
-        //     'recovery'       => $request->recovery,
-        //     'total'          => $request->total,
-        // ]);
+        Recovery::create([
+            'billing_id'     => $billing->id,
+            'security'       => $request->security,
+            'income_tax'     => $request->income_tax,
+            'labour_cess'    => $request->labour_cess,
+            'water_charges'  => $request->water_charges,
+            'license_fee'    => $request->license_fee,
+            'cgst'           => $request->cgst,
+            'sgst'           => $request->sgst,
+            'withheld_1'     => $request->withheld_1,
+            'withheld_2'     => $request->withheld_2,
+            'recovery'       => $request->recovery,
+            'total'          => $request->total,
+        ]);
+        }
 
         // Recalculate totals from ALL recoveries
         $totalRecovery = $billing->recoveries()->sum('total');

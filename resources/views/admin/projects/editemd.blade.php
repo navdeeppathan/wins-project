@@ -108,7 +108,7 @@
 
                         <td><input type="text" name="emd[0][instrument_number]" class="form-control"></td>
                         <td><input type="date" name="emd[0][instrument_date]" class="form-control"></td>
-                        <td><input type="number" step="0.01" name="emd[0][amount]" class="form-control" required></td>
+                        <td><input type="number" step="0.01" name="emd[0][amount]" value="{{$project->emd_amount}}" class="form-control" required></td>
                         <td><input type="file" name="emd[0][upload]" class="form-control"></td>
                         <td>
                             <button
@@ -155,7 +155,7 @@
 
             <td><input type="text" name="emd[${index}][instrument_number]" class="form-control"></td>
             <td><input type="date" name="emd[${index}][instrument_date]" class="form-control"></td>
-            <td><input type="number" step="0.01" name="emd[${index}][amount]" class="form-control" required></td>
+            <td><input type="number" step="0.01" name="emd[${index}][amount]" value="{{$project->emd_amount}}" class="form-control" required></td>
             <td><input type="text" name="emd[${index}][remarks]" class="form-control"></td>
             <td><input type="file" name="emd[${index}][upload]" class="form-control"></td>
             <td>

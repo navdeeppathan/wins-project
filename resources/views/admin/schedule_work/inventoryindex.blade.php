@@ -121,10 +121,7 @@
                     </td>
 
                     <td>
-                        <textarea class="form-control description text-left"
-                            {{ $i == 0 ? 'readonly' : '' }}>
-                            {{ $w->description }}
-                        </textarea>
+                        <textarea class="form-control description text-left" {{ $i == 0 ? 'readonly' : '' }}>{{ $w->description }}</textarea>
                     </td>
 
 

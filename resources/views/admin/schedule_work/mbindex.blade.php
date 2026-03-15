@@ -100,9 +100,9 @@
 {{-- TABLE --}}
 <div class="d-flex justify-content-end">
     <a href="{{ route('admin.schedule-work-items.index', [$project->id]) }}"
-                        class="btn btn-primary btn-sm">
-                        Measurment Sheet
-                        </a>
+        class="btn btn-primary btn-sm">
+        Measurment Sheet
+    </a>
 </div>
 <div class="table-responsive">
     <table id="example" class="table class-table table-bordered nowrap" style="width:100%">

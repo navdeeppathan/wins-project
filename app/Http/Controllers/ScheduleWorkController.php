@@ -90,7 +90,10 @@ class ScheduleWorkController extends Controller
         }
       
 
-        $allInventories = Inventory::whereIn('user_id', $userIds)->get();
+        // $allInventories = Inventory::whereIn('user_id', $userIds)->get();
+        $allInventories = Inventory::whereIn('user_id', $userIds)
+                ->whereNull('schedule_work_id')
+                ->get();
         
 
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();

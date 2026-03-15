@@ -55,15 +55,7 @@ Route::get('clear-cache', function() {
     return "Cache cleared successfully";
 });
 
-Route::resource('categories', CategoryController::class);
 
-Route::post('/subcategories/store', [SubcategoryController::class, 'store'])->name('subcategories.store');
-Route::delete('/subcategories/{id}', [SubcategoryController::class, 'destroy'])->name('subcategories.delete');
-
-Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
-Route::post('/categories/status/{id}', [CategoryController::class,'status'])->name('categories.status');
-
-Route::post('/subcategories/status/{id}', [SubcategoryController::class,'status'])->name('subcategories.status');
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
@@ -1008,6 +1000,15 @@ Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(fu
     Route::get('users/projects/{project}/allbillings', [App\Http\Controllers\SuperAdmin\BillingController::class, 'index'])->name('users.projects.allbillings');
     Route::get('users/projects/billing/{project}/{billing}/allrecoveries', [App\Http\Controllers\SuperAdmin\RecoveryController::class, 'index'])->name('users.projects.billing.allrecoveries');
 
+    Route::resource('categories', CategoryController::class);
+
+    Route::post('/subcategories/store', [SubcategoryController::class, 'store'])->name('subcategories.store');
+    Route::delete('/subcategories/{id}', [SubcategoryController::class, 'destroy'])->name('subcategories.delete');
+
+    Route::get('/get-subcategories/{id}', [CategoryController::class, 'getSubcategories']);
+    Route::post('/categories/status/{id}', [CategoryController::class,'status'])->name('categories.status');
+
+    Route::post('/subcategories/status/{id}', [SubcategoryController::class,'status'])->name('subcategories.status');
 });
 
 

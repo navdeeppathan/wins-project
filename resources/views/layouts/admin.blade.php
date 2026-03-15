@@ -84,7 +84,7 @@
             @if(in_array($role, $menu['projects']))
             <div class="nav-item">
                 <a href="{{ route('admin.projects.index') }}"
-                class="nav-link {{ Request::is('admin/projects*') ? 'active' : '' }}">
+                class="nav-link {{ Request::is('admin/projects*', 'admin/inventory?project_id=*') ? 'active' : '' }}">
 
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,7 +189,7 @@
             @if(in_array($role, $menu['inventory']))
             <div class="nav-item">
                 <a href="{{ route('admin.inventory.tabindex') }}"
-                class="nav-link {{ Request::is('admin/inventory*') ? 'active' : '' }}">
+                class="nav-link {{ Request::is('admin/inventory/tab') ? 'active' : '' }}">
 
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -283,7 +283,7 @@
             @php
                 $establishmentActive =
                     Request::is('departments*') ||
-                    Request::is('categories*') ||
+                    // Request::is('categories*') ||
 
                     Request::is('admin/vendors*') ||
                     Request::is('admin/users*') ||
@@ -318,10 +318,7 @@
                     class="dropdown-item {{ Request::is('departments*') ? 'active' : '' }}">
                         DEPARTMENTS
                     </a>
-                    <a href="{{ route('categories.index') }}"
-                    class="dropdown-item {{ Request::is('categories*') ? 'active' : '' }}">
-                        CATEGORIES
-                    </a>
+                    
 
                     <a href="{{ route('admin.vendors.index') }}"
                     class="dropdown-item {{ Request::is('admin/vendors*') ? 'active' : '' }}">

@@ -14,7 +14,7 @@
                     <label>Security (2.5%)</label>
                     <input type="number" class="form-control security"
                         value="{{ $recoveries->first()->security ?? '' }}">
-                    <input type="hidden" class="recovery_id" value="{{ $recoveries->first()->id }}">
+                    <input type="hidden" class="recovery_id" value="{{ $recoveries->first()->id ?? '' }}">
                 </div>
 
                 <div class="col-md-3">
@@ -164,7 +164,7 @@
     </div>
 
     <div class="mt-4">
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+        <a href="{{ url('admin/bill/' . $project->id . '/billing') }}" class="btn btn-secondary">Back</a>
     </div>
 
 

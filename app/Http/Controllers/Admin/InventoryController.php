@@ -19,7 +19,7 @@ class InventoryController extends Controller
 {
     public function index(Request $request)
     {
-
+       
         $user = auth()->user();
         // Admin → own + staff projects
         $userIds = [$user->id];
