@@ -161,13 +161,24 @@
                     @endif --}}
 
                     <td>
-                        <a href="{{ route('admin.projects.edit', $p) }}"
-                        class="btn btn-warning btn-sm">EMD</a>
-
-                    <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
-                            class="btn btn-primary btn-sm">
-                            INVENTORY
-                        </a>
+                        @if(in_array($p->status, ['awarded', 'agreement', 'billing']))
+                            <a href="{{ route('admin.projects.edit', $p) }}"
+                            class="btn btn-warning btn-sm disabled">EMD</a>
+                        @else
+                            <a href="{{ route('admin.projects.editemd', $p) }}"
+                                class="btn btn-warning btn-sm">EMD</a>
+                        @endif
+                            @if(in_array($p->status, ['awarded', 'agreement', 'billing']))
+                                <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
+                                    class="btn btn-primary btn-sm disabled">
+                                    INVENTORY
+                                </a>
+                            @else
+                                <a href="{{ route('admin.inventory.index') }}?project_id={{ $p->id }}"
+                                    class="btn btn-primary btn-sm">
+                                    INVENTORY
+                                </a>
+                            @endif
 
                     </td>
                 </tr>
