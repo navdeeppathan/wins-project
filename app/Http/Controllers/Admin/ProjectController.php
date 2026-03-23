@@ -665,7 +665,7 @@ class ProjectController extends Controller
             return view('admin.unqualified.indexdetails', compact('project', 'emdDetails', 'forfieteds', 'returneds', 'actives'));
         }
 
-          public function pgreturnedCreate(Project $project)
+        public function pgreturnedCreate(Project $project)
         {
             $pgDetails = $project->pgDetails;
 
@@ -704,7 +704,7 @@ class ProjectController extends Controller
             return view('admin.security_deposits.indexdetails', compact('project', 'securityDeposits', 'forfieteds', 'returneds', 'actives'));
         }
 
-           public function withheldreturnedCreate(Project $project)
+        public function withheldreturnedCreate(Project $project)
         {
             $withhelds = $project->withhelds;
 
@@ -805,8 +805,8 @@ class ProjectController extends Controller
         ]);
 
         $defaultStaffId = User::
-        where('id', Auth::id())
-        ->where('isDefault', 1)->first()->id;
+        where('parent_id', Auth::id())
+        ->where('isDefault', 1)->first();
 
         $defaultVendorId =Vendor::
         where('user_id', Auth::id())
@@ -821,8 +821,8 @@ class ProjectController extends Controller
             'description'       => 'TENDER FEE',
             'category'          => 'FEE',
             'subCategory'          => 'GOVERNMENT',
-            'staff_id'          => $defaultStaffId,
-            'vendor_id'         => $defaultVendorId->id,
+            'staff_id'          => $defaultStaffId->id ?? null,
+            'vendor_id'         => $defaultVendorId->id ?? null,
             'paid_to'           => $defaultVendorId->vendor_agency_name,
             'quantity'          => 1,
             'amount'            => $project->tender_fee,
