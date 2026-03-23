@@ -248,9 +248,10 @@
     </table>
 </div>
 
+
 <div class="text-end mt-3">
     <a href="{{ route('admin.schedule-work.index') }}"
-        class="btn btn-primary">
+        class="btn btn-secondary">
         Back    
     </a>
 </div>

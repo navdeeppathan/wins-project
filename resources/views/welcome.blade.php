@@ -447,8 +447,7 @@
                       The Minimalistic Intelligence Hub for Business
                     Owners
                     </h2>
-                    <p class="lead mb-4">In an era of digital complexity, Project OverView
-                    (P.O.V.) offers a sophisticated alternative; a
+                    <p class="lead mb-4">In an era of digital complexity,DigiProject offers a sophisticated alternative; a
                     streamlined, high-performance web solution
                     designed specifically for business owners
                     navigating the demanding landscapes of
@@ -627,8 +626,8 @@
                 </div>
 
                 <div class="intro-body">
-                    <p class="lead">In an era of digital complexity, Project OverView
-                    (P.O.V.) offers a sophisticated alternative; a
+                    <p class="lead">In an era of digital complexity, DigiProject
+                    (D.P.) offers a sophisticated alternative; a
                     streamlined, high-performance web solution
                     designed specifically for business owners
                     navigating the demanding landscapes of
@@ -921,8 +920,7 @@
                <div class="service-content">
                 <h4>DigiProject Pricing</h4>
                 <p>
-                  We believe in the power of our platform Project
-                  OverView (P.O.V.), which is why we invite you to
+                  We believe in the power of our platform  DigiProject, which is why we invite you to
                   experience it firsthand - completely risk-free. No
                   hidden fees, No surprises, Annual price starting
                   at Rs.60,000/- plus GST for Basic Plan and
@@ -930,8 +928,8 @@
                   DigiProject aligns with your needs.
                   We offer a FREE trial for first 3 months,
                   additionally, you can book a demo to get a
-                  hands-on feel of its functionalities. Project
-                  OverView (P.O.V.) prides itself on robust technical
+                  hands-on feel of its functionalities. DigiProject
+                   prides itself on robust technical
                   support, whether you prefer email, chat or
                   phone, our team is ready to assist and ensuring a
                   seamless user experience.
@@ -1208,7 +1206,7 @@
                   </div>
 
                   <h2 data-aos="fade-up" data-aos-delay="300">
-                    Begin Your Project OverView (P.O.V) Journey.
+                    Begin Your DigiProject Journey.
                     <span class="accent-text">No Pre-payment required</span>
                   </h2>
 
