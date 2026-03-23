@@ -208,6 +208,8 @@
     </button>
     </div>
     <div id="progressPdfArea">
+          <small class="mb-1" style="font-size: 2rem;">Bar Progress</small>
+                <small class="mb-1" style="font-size: 1.5rem;">{{ $project->name }}</small>
         <div class="card ">
             <div class="card-header d-flex flex-column  text-white" style="background:#5c5d5e">
                 <small class="mb-1" style="font-size: 2rem;">Bar Progress</small>
