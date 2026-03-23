@@ -208,12 +208,13 @@
     </button>
     </div>
     <div id="progressPdfArea">
-          
-        <br>
-        <small class="mb-1" style="font-size: 1.5rem;">{{ $project->name }}</small>
-        <br>
-        <small class="mb-1" style="font-size: 1.5rem;">{{ $project->agreement_no }}</small>
-
+        <div style="text-align: center; margin-bottom: 50px;">
+            <br>
+                <small class="mb-1" style="font-size: 1.5rem;">Project Name:- {{ $project->name }}</small>
+            <br>
+                <small class="mb-1" style="font-size: 1.5rem;">Agreement No:- {{ $project->agreement_no }}</small>
+            <br>
+        </div>
         <div class="card ">
             <div class="card-header d-flex flex-column  text-white" style="background:#5c5d5e">
                 <small class="mb-1" style="font-size: 2rem;">Bar Progress</small>
