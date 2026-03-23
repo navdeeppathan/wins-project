@@ -249,6 +249,14 @@
 </div>
 
 <div class="text-end mt-3">
+    <a href="{{ route('admin.schedule-work.index') }}"
+        class="btn btn-primary">
+        Back    
+    </a>
+</div>
+
+
+<div class="text-end mt-3">
     <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
 </div>
 {{-- SCRIPT --}}
