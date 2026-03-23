@@ -208,7 +208,7 @@
     </button>
     </div>
     <div id="progressPdfArea">
-        <div style="text-align: center; margin-bottom: 50px;">
+        <div style="text-align: center; margin-bottom: 80px;">
             <br>
                 <small class="mb-1" style="font-size: 1.5rem;">Project Name:- {{ $project->name }}</small>
             <br>
