@@ -249,7 +249,11 @@
 
                     <td class="text-center">
 
+                        @if(in_array($project->status, ['awarded', 'agreement', 'billing']))
+                        <button disabled class="btn btn-secondary btn-sm">Update</button>
+                        @else
                         <button class="btn btn-success btn-sm saveRow">Update</button>
+                        @endif
                         <button class="btn btn-danger btn-sm removeRow">Del</button>
                     </td>
                 </tr>
@@ -314,9 +318,10 @@
                         </select>
                     </td>
 
+                    <td><input type="text" class="form-control voucher"></td>
+
                     <td><input type="text" class="form-control description"></td>
 
-                    <td><input type="text" class="form-control voucher"></td>
                     <td><input type="number" class="form-control quantity"></td>
                     <td><input type="number" class="form-control amount"></td>
                     {{-- <td><input type="number" class="form-control deduction"></td> --}}
@@ -334,7 +339,10 @@
 
 <div class="d-flex align-items-center justify-content-end gap-4">
  <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>
-<button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New</button>
+
+@if(!in_array($project->status, ['awarded', 'agreement', 'billing']))
+ <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New</button>
+@endif
 </div>
 @endsection
 
@@ -401,9 +409,10 @@ $(function () {
                     <option value="">Select</option>
                 </select>
             </td>
+            <td><input type="text" class="form-control voucher"></td>
             <td><input type="text" class="form-control description"></td>
 
-            <td><input type="text" class="form-control voucher"></td>
+            
             <td><input type="number" class="form-control quantity"></td>
             <td><input type="number" class="form-control amount"></td>
 

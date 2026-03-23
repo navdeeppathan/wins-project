@@ -98,12 +98,7 @@
             }
         </style>
 {{-- TABLE --}}
-<div class="d-flex justify-content-end">
-    <a href="{{ route('admin.schedule-work-items.index', [$project->id]) }}"
-        class="btn btn-primary btn-sm">
-        Measurment Sheet
-    </a>
-</div>
+
 <div class="table-responsive">
     <table id="example" class="table class-table table-bordered nowrap" style="width:100%">
         <thead class="table-dark">
@@ -115,6 +110,7 @@
                 <th>Unit</th>
                 <th>Rate</th>
                 <th>Amount</th>
+                <th>Measurement</th>
                 
                 <th >Action</th>
             </tr>
@@ -157,6 +153,13 @@
 
                     <td class="amount text-center">
                         {{ number_format($w->amount,2) }}
+                    </td>
+
+                    <td>
+                       <a href="{{ route('admin.schedule-work-items.index', [$project->id, $w->id]) }}"
+                        class="btn btn-primary btn-sm">
+                        Measurement Sheet
+                        </a>
                     </td>
 
                     

@@ -53,7 +53,7 @@
                 </svg>
             </div> --}}
             <span class="brand-name">
-                <img src="{{asset('logo.jpeg')}}" alt="" style="height: 40px;   margin-right:10px;">
+                <a href="/"><img src="{{asset('logo.jpeg')}}" alt="" style="height: 40px;   margin-right:10px;"></a>
 
             </span>
             <button class="collapse-btn" onclick="toggleSidebar()">
@@ -778,7 +778,8 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Sidebar toggle functionality

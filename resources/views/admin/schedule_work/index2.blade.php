@@ -28,10 +28,19 @@
             <label>State</label>
             <input class="form-control" value="{{ $project->state->name ?? '-' }}" disabled>
         </div>
-        <div class="col-md-4 mb-2">
-            <label>NIT Number</label>
-            <input class="form-control" value="{{ $project->nit_number }}" disabled>
+
+
+         @if($project->agreement_no)
+        <div class="col-md-4 mb-3">
+            <label>Agreement Number</label>
+            <input type="text" class="form-control" value="{{ $project->agreement_no }}" disabled>
         </div>
+        @else
+        <div class="col-md-4 mb-3">
+            <label>NIT Number</label>
+            <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
+        </div>
+        @endif
             {{--
         <div class="col-md-12 mb-2">
             <label>Project Name</label>
@@ -249,17 +258,18 @@
 </div>
 
 
-<div class="text-end mt-3">
+<div class="d-flex align-items-center justify-content-end gap-2 mt-3">
     <a href="{{ route('admin.schedule-work.index') }}"
         class="btn btn-secondary">
         Back    
     </a>
+    <div class="text-end">
+        <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
+    </div>
 </div>
 
 
-<div class="text-end mt-3">
-    <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
-</div>
+
 {{-- SCRIPT --}}
 <script>
     let index = {{ $works->count() }};

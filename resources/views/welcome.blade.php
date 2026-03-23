@@ -371,7 +371,7 @@
     <div class="container-fluid container-xl position-relative">
 
       <div class="top-row d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="/" class="logo d-flex align-items-center">
           <div class="brand-vertical">
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
@@ -1396,7 +1396,7 @@
 
         <div class="col-lg-4">
           <div class="footer-brand">
-            <a href="index.html" class="logo d-flex align-items-center mb-3">
+            <a href="/" class="logo d-flex align-items-center mb-3">
            <div class="brand-vertical">
                 {{-- <div class="logo-circle">
                     <i class="fas fa-crown"></i>
@@ -1481,13 +1481,13 @@
         <div class="row">
           <div class="col-12">
             <div class="footer-bottom-content">
-              <p class="mb-0">© <span class="sitename">solution1401@gmail.com ISO 9001:2015</span>. All rights reserved.</p>
+              <p class="mb-0">© <span class="sitename">solution1401@gmail.com (An ISO 9001:2015 Organisation)</span>. All rights reserved.</p>
               <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you've purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://wa.me/919575370343" target="_blank" class="text-decoration-none"">infoharry</a>
+                Designed by <a href="https://wa.me/919575370343" target="_blank" class="text-decoration-none">infoharry.in</a>
               </div>
             </div>
           </div>

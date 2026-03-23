@@ -25,12 +25,12 @@
     <table id="example" class="table class-table nowrap" style="width:100%">
     
 <thead>
-<tr>
-    <th>#</th>
-    <th>Activity</th>
-    <th>Date</th>
-    <th>Upload</th>
-    <th>Action</th>
+<tr >
+    <th class="text-center">#</th>
+    <th class="text-center">Activity</th>
+    <th class="text-center">Date</th>
+    <th class="text-center">Upload</th>
+    <th class="text-center">Action</th>
 </tr>
 </thead>
 
@@ -106,12 +106,11 @@
 </table>
 </div>
 
-<div class="d-flex justify-content-between mt-3">
+<div class="d-flex align-items-center justify-content-end gap-2 mt-3">
     <button type="button" id="addRow" class="btn btn-primary btn-sm">
         + Add More
     </button>
-
-    
+    <a href="/admin/award" class="btn btn-secondary">Back</a>
 </div>
 
 </form>

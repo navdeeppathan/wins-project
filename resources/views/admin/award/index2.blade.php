@@ -113,6 +113,9 @@
     </div>
 @endif
 
+    <a href="/admin/acceptance" class="btn btn-secondary mt-4">Back</a>
+
+
 @push('scripts')
 <script>
 $(document).on('click', '.saveAwardBtn', function () {

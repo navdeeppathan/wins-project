@@ -25,6 +25,7 @@ class Vendor extends Model
                 'contact_number',
                 'email_id',
                 'gst_number',
+                'isDefault'
 
     ];
 

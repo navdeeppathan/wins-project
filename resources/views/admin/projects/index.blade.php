@@ -106,9 +106,6 @@
                     </td>
 
 
-
-
-
                     <td class="text-start">{{ $p->nit_number }}</td>
                     {{-- <td>{{ $p->state->name ?? '-' }}</td>
                     <td>{{ $p->departments->name ?? '-' }}</td> --}}

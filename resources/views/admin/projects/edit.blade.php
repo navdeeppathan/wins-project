@@ -144,7 +144,9 @@
 
     </div>
 
+    @if(!in_array($project->status, ['awarded', 'agreement', 'billing']))
     <button class="btn btn-success">Update Project</button>
+    @endif
     <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary">Back</a>
 </form>
 

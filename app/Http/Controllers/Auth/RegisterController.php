@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -90,6 +91,38 @@ class RegisterController extends Controller
             'password'=> Hash::make($request->password),
             'role' => 'admin',
 
+        ]);
+
+        $vendor = Vendor::create([
+            'user_id'=> $user->id,  
+            'state' => 'Delhi',
+            'vendor_agency_name'=>'Default Vendor',
+            'contact_person'=> 'Default Contact Person',
+            'contact_number'=> '0000000000',
+            'email'=> $user->email,
+            'gst_number' => $user->gst_number,
+            'isDefault' => 1
+            
+        ]);
+
+
+        $staff = User::create([
+            'name'=> 'Default Staff',
+            'state' => 'Delhi',
+            'designation' => 'Default Designation',
+            'date_of_joining' => date('Y-m-d'),
+            'date_of_leaving'=> date('Y-m-d'),
+            'monthly_salary'=> 0,
+            'email' => Str::before($request->email, '@') 
+                        . time() 
+                        . '@' 
+                        . Str::after($request->email, '@'),
+            'phone'=> '0000000000',
+            
+            'password'=> Hash::make($request->password),
+            'role' => 'staff',
+            'parent_id' => $user->id,
+            'isDefault' => 1
         ]);
 
         //also login

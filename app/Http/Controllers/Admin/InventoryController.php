@@ -41,7 +41,7 @@ class InventoryController extends Controller
         $vendors  = Vendor::whereIn('user_id', $userIds)->get();
         $notes    = DailyNote::orderBy('note_date', 'desc')->get();
         $staffs   =  User::where('parent_id', auth()->id())->where('role', 'staff')->get();
-        $categories = Category::with('subcategories')->where('status', 1)->get();
+        $categories = Category::with('subcategories')->where('status', 1)->limit(3)->get();
 
         return view('admin.inventory.index', compact('items', 'projects', 'vendors', 'notes', 'project', 'staffs', 'categories'));
     }
@@ -171,6 +171,13 @@ class InventoryController extends Controller
         }
 
 
+        if($data['project_id'] != null)
+        {
+           
+            $schedules = ScheduleWork::where('project_id', $data['project_id'])->where('description', 'SUNDRY')->first();
+
+            $data['schedule_work_id'] = $schedules->id ?? null;
+        }
 
         Inventory::create($data);
 
@@ -229,6 +236,8 @@ class InventoryController extends Controller
 
             $data['upload'] = 'inventory_uploads/' . $fileName;
         }
+
+
 
         $inventory->update($data);
 

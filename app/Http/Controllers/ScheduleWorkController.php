@@ -97,7 +97,7 @@ class ScheduleWorkController extends Controller
         
 
         $staffs =User::where('parent_id', auth()->id())->where('role', 'staff')->get();
-        $categories = Category::with('subcategories')->where('status', 1)->get();
+        $categories = Category::with('subcategories')->where('name', '!=', 'ORGANIZATION')->where('status', 1)->get();
 
 
 

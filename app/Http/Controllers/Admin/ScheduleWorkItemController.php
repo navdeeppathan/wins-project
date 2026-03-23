@@ -13,15 +13,14 @@ class ScheduleWorkItemController extends Controller
     /**
      * Show items list + create form
      */
-    public function index(Project $project)
+    public function index(Project $project, ScheduleWork $scheduleWork)
     {
         
-       $scheduleWorks = ScheduleWork::where('project_id', $project->id)->with('items')
-        ->orderBy('id')
-        ->get();
+    
+       $scheduleWorkItems = ScheduleWorkItem::where('schedule_work_id', $scheduleWork->id)->get();
+// dd($scheduleWorks);
 
-
-        return view('admin.schedule_work_items.index', compact('scheduleWorks'));
+        return view('admin.schedule_work_items.index', compact('scheduleWork', 'scheduleWorkItems'));
     }
 
     /**

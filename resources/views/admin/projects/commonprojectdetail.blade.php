@@ -36,10 +36,17 @@
                disabled>
     </div>
 
+    @if($project->agreement_no)
+    <div class="col-md-4 mb-3">
+        <label>Agreement Number</label>
+        <input type="text" class="form-control" value="{{ $project->agreement_no }}" disabled>
+    </div>
+    @else
     <div class="col-md-4 mb-3">
         <label>NIT Number</label>
         <input type="text" class="form-control" value="{{ $project->nit_number }}" disabled>
     </div>
+    @endif
 
      {{-- <div class="col-md-12 mb-3">
         <label>Project Name</label>

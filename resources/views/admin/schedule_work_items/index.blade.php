@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 
-    @foreach($scheduleWorks->slice(1) as $scheduleWork)
+    {{-- @foreach($scheduleWorks->slice(1) as $scheduleWork) --}}
 
         {{-- SCHEDULE WORK HEADER --}}
         <div class="card mb-2">
@@ -18,8 +18,8 @@
 
                     <thead class="table-light">
                         <tr>
-                            <th>Sr No</th>
                             <th>Number</th>
+                            <th>Description</th>
                             <th>Slides</th>
                             <th>Length</th>
                             <th>Width</th>
@@ -33,7 +33,7 @@
                     <tbody>
 
                         {{-- EXISTING ROWS --}}
-                        @forelse($scheduleWork->items as $item)
+                        @forelse($scheduleWorkItems as $item)
                         <tr>
                             <form method="POST"
                                   action="{{ route('admin.schedule-work-items.update', $item->id) }}">
@@ -41,7 +41,7 @@
                                 @method('POST')
 
                                 <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
-                                <td><input name="description" value="{{ $item->description }}" class="form-control"></td>
+                                <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
                                 <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
                                 <td><input name="length" value="{{ $item->length }}" class="form-control"></td>
                                 <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
@@ -70,11 +70,11 @@
                                 <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
 
                                 <td>
-                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter Sr No">
+                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
                                 </td>
 
                                 <td>
-                                    <input type="text" name="description" class="form-control" placeholder="Enter Number">
+                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
                                 </td>
 
                                 <td>
@@ -133,7 +133,7 @@
             </div>
         </div>
 
-    @endforeach
+    {{-- @endforeach --}}
 
 </div>
 
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <div class="d-flex gap-1">
 
-                            <input type="text" name="sr_no" class="form-control" placeholder="Enter Sr No">
+                            <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
                             <input type="text" name="description" class="form-control" placeholder="Enter Number">
                             <input type="text" name="no_of_items" class="form-control"  placeholder="Enter Slides">
                             <input type="text" name="length" class="form-control" placeholder="Enter Length">
@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// 
 </script>
 @endsection
 

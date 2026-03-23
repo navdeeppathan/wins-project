@@ -126,7 +126,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('daily-notes/{id}/destroy', [DailyNoteController::class, 'destroy']);
     Route::get('/acceptance', [App\Http\Controllers\Admin\ProjectController::class, 'acceptanceIndex'])->name('projects.acceptance');
     Route::get('/award', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndex'])->name('projects.award');
-    Route::get('/awards/{project}', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndexs'])->name('projects.awards');
+    Route::get('/acceptance/award/{project}', [App\Http\Controllers\Admin\ProjectController::class, 'awardIndexs'])->name('projects.awards');
     Route::get('/agreement', [App\Http\Controllers\Admin\ProjectController::class, 'agreementIndex'])->name('projects.agreement');
 
     Route::get('/projects/{project}/agreement-date', [App\Http\Controllers\Admin\ProjectController::class, 'agreementDateCreate'])->name('projects.agreementdate.create');
@@ -487,7 +487,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 
 
-    Route::get('/schedule-work/items/{project}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'index'])->name('schedule-work-items.index');
+
+    Route::get('/schedule-work/items/{project}/{scheduleWork}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'index'])->name('schedule-work-items.index');
     Route::post('/schedule-work/items/store', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'store'])->name('schedule-work-items.store');
     Route::post('/schedule-work/items/update/{id}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'update'])->name('schedule-work-items.update');
     Route::delete('/schedule-work/items/delete/{id}', [App\Http\Controllers\Admin\ScheduleWorkItemController::class, 'destroy'])->name('schedule-work-items.destroy');

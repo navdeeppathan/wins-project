@@ -189,10 +189,12 @@
 </tbody>
 </table>
 
-<div class="d-flex  align-items-center justify-content-end">
-<button type="button" class="btn btn-primary mb-3" id="addPgRow">
+<div class="d-flex  align-items-center justify-content-end gap-2">
+<button type="button" class="btn btn-primary " id="addPgRow">
     + Add More
 </button>
+<a href="/admin/acceptance" class="btn btn-secondary">Back</a>
+
 </div>
 <div class="d-flex  align-items-center justify-content-end">
 

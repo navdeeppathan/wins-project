@@ -791,6 +791,8 @@ class ProjectController extends Controller
             }
         }
 
+
+
         $schedule = ScheduleWork::create([
             'project_id'        => $project->id,
             'section_name'      => 'GENERAL',
@@ -802,6 +804,14 @@ class ProjectController extends Controller
             'measured_quantity' => 0,
         ]);
 
+        $defaultStaffId = User::
+        where('id', Auth::id())
+        ->where('isDefault', 1)->first()->id;
+
+        $defaultVendorId =Vendor::
+        where('user_id', Auth::id())
+        ->where('isDefault', 1)->first();
+
         Inventory::create([
             'project_id'        => $project->id,
             'schedule_work_id'  => $schedule->id,
@@ -811,10 +821,13 @@ class ProjectController extends Controller
             'description'       => 'TENDER FEE',
             'category'          => 'FEE',
             'subCategory'          => 'GOVERNMENT',
-
+            'staff_id'          => $defaultStaffId,
+            'vendor_id'         => $defaultVendorId->id,
+            'paid_to'           => $defaultVendorId->vendor_agency_name,
             'quantity'          => 1,
             'amount'            => $project->tender_fee,
             'user_id'           => Auth::id(),
+            'voucher'           => 'NONE',
         ]);
 
 
