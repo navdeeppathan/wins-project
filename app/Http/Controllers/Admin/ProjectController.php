@@ -823,7 +823,7 @@ class ProjectController extends Controller
             'subCategory'          => 'GOVERNMENT',
             'staff_id'          => $defaultStaffId->id ?? null,
             'vendor_id'         => $defaultVendorId->id ?? null,
-            'paid_to'           => $defaultVendorId->vendor_agency_name,
+            'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
             'quantity'          => 1,
             'amount'            => $project->tender_fee,
             'user_id'           => Auth::id(),
