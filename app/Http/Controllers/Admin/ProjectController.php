@@ -804,13 +804,9 @@ class ProjectController extends Controller
             'measured_quantity' => 0,
         ]);
 
-        $defaultStaffId = User::
-        where('parent_id', Auth::id())
-        ->where('isDefault', 1)->first();
+        $defaultStaffId = User::where('parent_id', Auth::id())->where('isDefault', 1)->first();
 
-        $defaultVendorId =Vendor::
-        where('user_id', Auth::id())
-        ->where('isDefault', 1)->first();
+        $defaultVendorId =Vendor::where('user_id', Auth::id())->where('isDefault', 1)->first();
 
         Inventory::create([
             'project_id'        => $project->id,
@@ -828,19 +824,9 @@ class ProjectController extends Controller
             'amount'            => $project->tender_fee,
             'user_id'           => Auth::id(),
             'voucher'           => 'NONE',
-        ]);
-
-
-
-
-        return redirect()->route('admin.projects.index')
-            ->with('success', 'Project created.');
+        ]); 
+        return redirect()->route('admin.projects.index')->with('success', 'Project created.');
     }
-
-
-
-
-
 
     public function saveEmd(Request $request, Project $project)
     {
