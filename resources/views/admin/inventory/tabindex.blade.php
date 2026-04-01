@@ -614,7 +614,7 @@ $(function () {
 
  new DataTable('#inventoryTable', {
         scrollX: true,
-        scrollY:        600,
+        scrollY:   800,
         deferRender:    true,
         scroller:       true,
         scrollCollapse: true,
