@@ -25,7 +25,7 @@ use App\Http\Controllers\Staff\VendorController;
 use App\Http\Controllers\Admin\CqcVaultController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
-use App\Http\Controllers\Superadmin\UserTransactionController;
+use App\Http\Controllers\SuperAdmin\UserTransactionController;
 /*
 |--------------------------------------------------------------------------
 | AUTH PROTECTED ADMIN ROUTES
