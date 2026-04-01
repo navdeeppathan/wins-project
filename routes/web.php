@@ -26,13 +26,6 @@ use App\Http\Controllers\Admin\CqcVaultController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\SuperAdmin\UserTransactionController;
-/*
-|--------------------------------------------------------------------------
-| AUTH PROTECTED ADMIN ROUTES
-|--------------------------------------------------------------------------
-*/
-
-
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/run-storage-link', function () {
