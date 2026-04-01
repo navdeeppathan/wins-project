@@ -808,23 +808,39 @@ class ProjectController extends Controller
 
         $defaultVendorId =Vendor::where('user_id', Auth::id())->where('isDefault', 1)->first();
 
-        Inventory::create([
-            'project_id'        => $project->id,
-            'schedule_work_id'  => $schedule->id,
-            'date'              => Carbon::now(),
-            'net_payable'       => $project->tender_fee,
-            'item_name'         => 'TENDER FEE',
-            'description'       => 'TENDER FEE',
-            'category'          => 'FEE',
-            'subCategory'          => 'GOVERNMENT',
-            'staff_id'          => $defaultStaffId->id ?? null,
-            'vendor_id'         => $defaultVendorId->id ?? null,
-            'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
-            'quantity'          => 1,
-            'amount'            => $project->tender_fee,
-            'user_id'           => Auth::id(),
-            'voucher'           => 'NONE',
-        ]); 
+           foreach ([
+                'TENDER OPENED ON',
+                'TENDER AWARDED ON',
+                'DATE OF START OF WORK',
+                'DRAWING APPROVED'
+            ] as $subject) {
+
+                Correspondence::create([
+                    'project_id' => $project->id,
+                    'subject'    => $subject,
+                    'date'       => Carbon::now()->format('Y-m-d'),
+                ]);
+            }
+                
+            Inventory::create([
+                'project_id'        => $project->id,
+                'schedule_work_id'  => $schedule->id,
+                'date'              => Carbon::now(),
+                'net_payable'       => $project->tender_fee,
+                'item_name'         => 'TENDER FEE',
+                'description'       => 'TENDER FEE',
+                'category'          => 'FEE',
+                'subCategory'          => 'GOVERNMENT',
+                'staff_id'          => $defaultStaffId->id ?? null,
+                'vendor_id'         => $defaultVendorId->id ?? null,
+                'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
+                'quantity'          => 1,
+                'amount'            => $project->tender_fee,
+                'user_id'           => Auth::id(),
+                'voucher'           => 'NONE',
+            ]); 
+
+
         return redirect()->route('admin.projects.index')->with('success', 'Project created.');
     }
 
