@@ -27,8 +27,14 @@ class AgreementController extends Controller
         }
 
         $data['project_id'] = $project->id;
+        
         Agreement::create($data);
 
+         Correspondence::create([
+                    'project_id' => $project->id,
+                    'letter_subject'    => 'DATE OF START OF WORK',
+                    'letter_date'       => date('Y-m-d', strtotime($project->date_ofstartof_work )),
+            ]);
         $project->update(['status' => 'agreement']);
 
         return back()->with('success','Agreement stored.');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Award;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Models\Correspondence;
 
 class AwardController extends Controller
 {
@@ -26,6 +27,12 @@ class AwardController extends Controller
 
         $data['project_id'] = $project->id;
         Award::create($data);
+
+        Correspondence::create([
+                'project_id' => $project->id,
+                'letter_subject'    => 'TENDER AWARDED ON',
+                'letter_date'       =>date('Y-m-d', strtotime($project->award_date)),
+        ]);
 
         $project->update(['status' => 'awarded']);
 
