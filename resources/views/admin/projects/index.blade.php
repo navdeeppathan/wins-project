@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title','Projects')
-
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -72,7 +70,6 @@
                     <th class="text-center">Estimate Amt</th>
                     <th class="text-center">EMD Amt</th>
                     <th class="text-center">Qualified</th>
-
                     <th class="text-center" width="160">Actions</th>
                 </tr>
             </thead>

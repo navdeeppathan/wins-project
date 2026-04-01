@@ -40,7 +40,7 @@
     </div>
 </form>
 
-@if($projects->count() > 0)
+
 <div class="table-responsive">
     <table id="example" class="table class-table nowrap" style="width:100%">
 
@@ -61,92 +61,101 @@
                 <th class="text-center">Add PG</th>
             </tr>
         </thead>
-        <tbody>
-            @php
-                $i=1;
-            @endphp
-            @forelse($projects as $p)
 
-            @if ($p->isQualified == 1)
-                <tr>
-                    <td class="text-center">{{ $i }}</td>
-                    <td style="
-                            text-align: justify;
-                            word-break: break-word;
-                            text-align-last: justify;
-                            text-justify: inter-word;
-                            hyphens: auto;
-                            ">
-                        {!! implode('<br>', array_map(
-                            fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
-                        )) !!}
-                    </td>
-                    <td class="text-center">{{ $p->nit_number }}</td>
-                    <!-- <td>{{ $p->state->name ?? '-' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td> -->
-                    <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
-                    <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
-                    <!-- <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td> -->
-                    <td class="text-center">
-                        <input type="number" step="0.01"
-                            class="form-control form-control-sm tendered_amount"
-                            value="{{ $p->tendered_amount }}" required>
-                    </td>
-                    <td class="text-center">
-                        <input type="text"
-                            class="form-control form-control-sm acceptance_letter_no"
-                            value="{{ $p->acceptance_letter_no }}" required>
-                    </td>
-                    <td class="text-center">
-                        <input type="date"
-                            class="form-control form-control-sm acceptance_date"
-                            value="{{ $p->date }}" required>
-                    </td>
-                     <td class="text-center">
-                        <input type="date"
-                            class="form-control form-control-sm pg_submission_date"
-                            value="{{ $p->pg_submission_date }}" required>
-                    </td>
-                   <td class="text-center">
-                        @if($p->acceptance_upload)
-                            <a href="{{ Storage::url($p->acceptance_upload) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                                View
-                            </a>
-                        @endif
-
-                        <input type="file"
-                            class="form-control form-control-sm acceptance_upload">
-                    </td>
-
-                    <td class="text-center">
-                        {{-- @if (empty($p->pg_submission_date ) && empty($p->tendered_amount) && empty($p->acceptance_letter_no) && empty($p->date)) --}}
-                        <button class="btn btn-sm btn-success saveAcceptanceBtn"
-                                data-id="{{ $p->id }}">
-                            Save
-                        </button>
-
-                    </td>
-                    <td class="text-center">
-
-                            <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
-                                Add PG
-                            </a>
-                            @if (!empty($p->acceptance_letter_no) && $p->pgDetails->isNotEmpty())
-                            <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
-                            @endif
-                    </td>
-                </tr>
-                @endif
-                 @php
-                    $i++;
+        @if($projects->count() > 0)
+            <tbody>
+                @php
+                    $i=1;
                 @endphp
-            @empty
-                <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
-            @endforelse
-        </tbody>
+                @forelse($projects as $p)
+
+                @if ($p->isQualified == 1)
+                    <tr>
+                        <td class="text-center">{{ $i }}</td>
+                        <td style="
+                                text-align: justify;
+                                word-break: break-word;
+                                text-align-last: justify;
+                                text-justify: inter-word;
+                                hyphens: auto;
+                                ">
+                            {!! implode('<br>', array_map(
+                                fn($chunk) => implode(' ', $chunk),
+                                array_chunk(explode(' ', $p->name), 10)
+                            )) !!}
+                        </td>
+                        <td class="text-center">{{ $p->nit_number }}</td>
+                        <!-- <td>{{ $p->state->name ?? '-' }}</td>
+                        <td>{{ $p->departments->name ?? '-' }}</td> -->
+                        <td class="text-center">{{ date('d-m-Y', strtotime($p->date_of_opening)) }}</td>
+                        <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
+                        <!-- <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td> -->
+                        <td class="text-center">
+                            <input type="number" step="0.01"
+                                class="form-control form-control-sm tendered_amount"
+                                value="{{ $p->tendered_amount }}" required>
+                        </td>
+                        <td class="text-center">
+                            <input type="text"
+                                class="form-control form-control-sm acceptance_letter_no"
+                                value="{{ $p->acceptance_letter_no }}" required>
+                        </td>
+                        <td class="text-center">
+                            <input type="date"
+                                class="form-control form-control-sm acceptance_date"
+                                value="{{ $p->date }}" required>
+                        </td>
+                        <td class="text-center">
+                            <input type="date"
+                                class="form-control form-control-sm pg_submission_date"
+                                value="{{ $p->pg_submission_date }}" required>
+                        </td>
+                    <td class="text-center">
+                            @if($p->acceptance_upload)
+                                <a href="{{ Storage::url($p->acceptance_upload) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary mb-1">
+                                    View
+                                </a>
+                            @endif
+
+                            <input type="file"
+                                class="form-control form-control-sm acceptance_upload">
+                        </td>
+
+                        <td class="text-center">
+                            {{-- @if (empty($p->pg_submission_date ) && empty($p->tendered_amount) && empty($p->acceptance_letter_no) && empty($p->date)) --}}
+                            <button class="btn btn-sm btn-success saveAcceptanceBtn"
+                                    data-id="{{ $p->id }}">
+                                Save
+                            </button>
+
+                        </td>
+                        <td class="text-center">
+
+                                <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
+                                    Add PG
+                                </a>
+                                @if (!empty($p->acceptance_letter_no) && $p->pgDetails->isNotEmpty())
+                                <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
+                                @endif
+                        </td>
+                    </tr>
+                    @endif
+                    @php
+                        $i++;
+                    @endphp
+                @empty
+                    <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
+                @endforelse
+            </tbody>
+        @else
+            <tbody>
+                <tr>
+                    <td colspan="13" class="text-center">No projects yet.</td>
+                </tr>
+            </tbody>
+        @endif
     </table>
 </div>
 @else

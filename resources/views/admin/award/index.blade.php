@@ -106,7 +106,7 @@
 
                     </td>
                 </tr>
-                @endif
+             @endif
                  @php
                 $i++;
             @endphp

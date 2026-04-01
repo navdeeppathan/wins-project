@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 @extends('layouts.admin')
 
 @section('title','Projects')
@@ -16,7 +9,7 @@
     <h3>Projects (Agreement)</h3>
 
 </div>
-@if($projects->count() > 0)
+
 <div class="table-responsive">
     <table id="example" class="table class-table nowrap" style="width:100%">
 
@@ -37,92 +30,94 @@
                 <th class="text-center">Action</th>
             </tr>
         </thead>
-        <tbody>
-             @php
-                $i=1;
-            @endphp
-            @forelse($projects as $p)
-            @if (!empty($p->award_letter_no))
-                <tr>
-                    <td class="text-center">{{ $i }}</td>
-                    <td style="
-                            text-align: justify;
-                            word-break: break-word;
-                            text-align-last: justify;
-                            text-justify: inter-word;
-                            hyphens: auto;
-                            ">
-                        {!! implode('<br>', array_map(
-                            fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
-                        )) !!}
-                    </td>
-                    <td>{{ $p->state->name ?? '' }}</td>
-                    <td>{{ $p->departments->name ?? '-' }}</td>
-                    <td>{{ $p->award_letter_no }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
-                    <td>
-                        {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
+        @if($projects->count() > 0)
+            <tbody>
+                @php
+                    $i=1;
+                @endphp
+                @forelse($projects as $p)
+                @if (!empty($p->award_letter_no))
+                    <tr>
+                        <td class="text-center">{{ $i }}</td>
+                        <td style="
+                                text-align: justify;
+                                word-break: break-word;
+                                text-align-last: justify;
+                                text-justify: inter-word;
+                                hyphens: auto;
+                                ">
+                            {!! implode('<br>', array_map(
+                                fn($chunk) => implode(' ', $chunk),
+                                array_chunk(explode(' ', $p->name), 10)
+                            )) !!}
+                        </td>
+                        <td>{{ $p->state->name ?? '' }}</td>
+                        <td>{{ $p->departments->name ?? '-' }}</td>
+                        <td>{{ $p->award_letter_no }}</td>
+                        <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
+                        <td>
+                            {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
 
-                    </td>
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ number_format($p->tendered_amount,2) }}</td>
+                        </td>
+                        <td>{{ number_format($p->estimated_amount,2) }}</td>
+                        <td>{{ number_format($p->tendered_amount,2) }}</td>
 
-                    <td>
-                        <input type="text"
-                            class="form-control form-control-sm agreement_no"
-                            value="{{ $p->agreement_no }}">
-                    </td>
-                    <td>{{ date('d-m-Y', strtotime($p->date_ofstartof_work)) ?? '-' }}</td>
+                        <td>
+                            <input type="text"
+                                class="form-control form-control-sm agreement_no"
+                                value="{{ $p->agreement_no }}">
+                        </td>
+                        <td>{{ date('d-m-Y', strtotime($p->date_ofstartof_work)) ?? '-' }}</td>
 
 
-                    {{-- <td>
-                        <input type="date"
-                            class="form-control form-control-sm agreement_start_date"
-                            value="{{ $p->agreement_start_date }}">
-                    </td> --}}
-                    {{-- <td>
-                        {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
+                        {{-- <td>
+                            <input type="date"
+                                class="form-control form-control-sm agreement_start_date"
+                                value="{{ $p->agreement_start_date }}">
+                        </td> --}}
+                        {{-- <td>
+                            {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
 
-                    </td> --}}
-                    <td>
-                        @if($p->agreement_upload)
-                            <a href="{{ Storage::url($p->agreement_upload) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                                View
-                            </a>
-                        @endif
-                        <input type="file"
-                            class="form-control form-control-sm agreement_upload">
-                    </td>
-                    <td>
-                        {{-- @if (empty($p->agreement_no)) --}}
-                        <button class="btn btn-sm btn-success saveAgreementBtn"
-                                data-id="{{ $p->id }}">
-                            Save
-                        </button>
-                        {{-- @else
-                        <span class="badge bg-success">Saved</span>
-                        @endif --}}
+                        </td> --}}
+                        <td>
+                            @if($p->agreement_upload)
+                                <a href="{{ Storage::url($p->agreement_upload) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary mb-1">
+                                    View
+                                </a>
+                            @endif
+                            <input type="file"
+                                class="form-control form-control-sm agreement_upload">
+                        </td>
+                        <td>
+                            {{-- @if (empty($p->agreement_no)) --}}
+                            <button class="btn btn-sm btn-success saveAgreementBtn"
+                                    data-id="{{ $p->id }}">
+                                Save
+                            </button>
+                            {{-- @else
+                            <span class="badge bg-success">Saved</span>
+                            @endif --}}
 
-                    </td>
-                </tr>
-                @endif
-                 @php
-                $i++;
-            @endphp
-            @empty
+                        </td>
+                    </tr>
+                    @endif
+                    @php
+                    $i++;
+                @endphp
+                @empty
+                    <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
+                @endforelse
+            </tbody>
+        @else
+            <tbody>
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
-            @endforelse
-        </tbody>
+            </tbody>
+        @endif
     </table>
 </div>
-@else
-    <div class="alert alert-warning text-center">
-        Data is not available.
-    </div>
-@endif
+
 
 
 @push('scripts')
