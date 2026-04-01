@@ -34,82 +34,82 @@
                 $i=1;
             @endphp
             @forelse($projects as $p)
-            @if (!empty($p->award_letter_no))
-                <tr>
-                    <td class="text-center">{{ $i }}</td>
-                    <td style="
-                            text-align: justify;
-                            word-break: break-word;
-                            text-align-last: justify;
-                            text-justify: inter-word;
-                            hyphens: auto;
-                            ">
-                        {!! implode('<br>', array_map(
-                            fn($chunk) => implode(' ', $chunk),
-                            array_chunk(explode(' ', $p->name), 10)
-                        )) !!}
-                    </td>
-                    <td>{{ $p->award_letter_no }}</td>
-                    <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
+                @if (!empty($p->award_letter_no))
+                    <tr>
+                        <td class="text-center">{{ $i }}</td>
+                        <td style="
+                                text-align: justify;
+                                word-break: break-word;
+                                text-align-last: justify;
+                                text-justify: inter-word;
+                                hyphens: auto;
+                                ">
+                            {!! implode('<br>', array_map(
+                                fn($chunk) => implode(' ', $chunk),
+                                array_chunk(explode(' ', $p->name), 10)
+                            )) !!}
+                        </td>
+                        <td>{{ $p->award_letter_no }}</td>
+                        <td>{{ date('d-m-Y', strtotime($p->award_date)) ?? '-' }}</td>
 
-                    <td>{{ number_format($p->estimated_amount,2) }}</td>
-                    <td>{{ number_format($p->tendered_amount,2) }}</td>
-                    <td>
-                        <input type="date"
-                            class="form-control form-control-sm date_ofstartof_work"
-                            value="{{ $p->date_ofstartof_work }}">
-                    </td>
-                    <td>
-                        <input type="date"
-                            class="form-control form-control-sm stipulated_date_ofcompletion"
-                            value="{{ $p->stipulated_date_ofcompletion }}">
+                        <td>{{ number_format($p->estimated_amount,2) }}</td>
+                        <td>{{ number_format($p->tendered_amount,2) }}</td>
+                        <td>
+                            <input type="date"
+                                class="form-control form-control-sm date_ofstartof_work"
+                                value="{{ $p->date_ofstartof_work }}">
+                        </td>
+                        <td>
+                            <input type="date"
+                                class="form-control form-control-sm stipulated_date_ofcompletion"
+                                value="{{ $p->stipulated_date_ofcompletion }}">
 
-                    </td>
-                    
-                    <td>
-                        <input type="text"
-                            class="form-control form-control-sm agreement_no"
-                            value="{{ $p->agreement_no }}">
-                    </td>
+                        </td>
+                        
+                        <td>
+                            <input type="text"
+                                class="form-control form-control-sm agreement_no"
+                                value="{{ $p->agreement_no }}">
+                        </td>
 
 
 
-                    {{-- <td>
-                        <input type="date"
-                            class="form-control form-control-sm agreement_start_date"
-                            value="{{ $p->agreement_start_date }}">
-                    </td> --}}
-                    {{-- <td>
-                        {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
+                        {{-- <td>
+                            <input type="date"
+                                class="form-control form-control-sm agreement_start_date"
+                                value="{{ $p->agreement_start_date }}">
+                        </td> --}}
+                        {{-- <td>
+                            {{ date('d-m-Y', strtotime($p->stipulated_date_ofcompletion)) ?? '-' }}
 
-                    </td> --}}
-                    <td>
-                        @if($p->agreement_upload)
-                            <a href="{{ Storage::url($p->agreement_upload) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                                View
-                            </a>
-                        @endif
-                        <input type="file"
-                            class="form-control form-control-sm agreement_upload">
-                    </td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-sm btn-success saveAwardBtn"
-                                    data-id="{{ $p->id }}">
-                                Save
-                            </button>
-                            <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Diary</a>
-                            <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
-                        </div>
+                        </td> --}}
+                        <td>
+                            @if($p->agreement_upload)
+                                <a href="{{ Storage::url($p->agreement_upload) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary mb-1">
+                                    View
+                                </a>
+                            @endif
+                            <input type="file"
+                                class="form-control form-control-sm agreement_upload">
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-success saveAwardBtn"
+                                        data-id="{{ $p->id }}">
+                                    Save
+                                </button>
+                                <a href="{{ route('admin.projects.correspondence', $p->id) }}" class="btn btn-sm btn-primary"> Diary</a>
+                                <a href="{{ route('admin.activities.index2', $p) }}" class="btn btn-sm btn-primary"> Milestone</a>
+                            </div>
 
-                    </td>
-                </tr>
-             @endif
-                 @php
-                $i++;
-            @endphp
+                        </td>
+                    </tr>
+                @endif
+                    @php
+                    $i++;
+                @endphp
             @empty
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse

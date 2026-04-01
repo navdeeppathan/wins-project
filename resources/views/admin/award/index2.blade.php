@@ -10,7 +10,7 @@
 
 </div>
 
-@if($projects->count() > 0)
+
 <div class="table-responsive">
     <table id="example" class="table class-table nowrap" style="width:100%">
 
@@ -31,6 +31,7 @@
                 <th>Action</th>
             </tr>
         </thead>
+        @if($projects->count() > 0)
         <tbody>
              @php
                 $i=1;
@@ -105,13 +106,13 @@
                 <tr><td colspan="8" class="text-center">No projects yet.</td></tr>
             @endforelse
         </tbody>
+        @else
+        <tbody>
+            <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
+        </tbody>
+        @endif
     </table>
 </div>
-@else
-    <div class="alert alert-warning text-center">
-        Data is not available.
-    </div>
-@endif
 
     <a href="/admin/acceptance" class="btn btn-secondary mt-4">Back</a>
 

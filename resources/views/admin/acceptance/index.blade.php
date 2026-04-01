@@ -158,12 +158,6 @@
         @endif
     </table>
 </div>
-@else
-    <div class="alert alert-warning text-center">
-        Data is not available.
-    </div>
-@endif
-
 @push('scripts')
 <script>
 $(document).on('click', '.saveAcceptanceBtn', function () {
