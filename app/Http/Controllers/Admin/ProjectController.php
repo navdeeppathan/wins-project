@@ -817,8 +817,8 @@ class ProjectController extends Controller
 
                 Correspondence::create([
                     'project_id' => $project->id,
-                    'subject'    => $subject,
-                    'date'       => Carbon::now()->format('Y-m-d'),
+                    'letter_subject'    => $subject,
+                    'letter_date'       => Carbon::now()->format('Y-m-d'),
                 ]);
             }
                 
