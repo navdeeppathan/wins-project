@@ -195,10 +195,16 @@
                             <option value="">Select</option>
 
                             @foreach($categories as $cat)
-                            <option value="{{ $cat->name }}"
-                            {{ $i->category == $cat->name ? 'selected' : '' }}>
-                            {{ $cat->name }}
-                            </option>
+                                @if($cat->id == 1 && $cat->id == 2)
+                                    <option value="{{ $cat->name }}"
+                                        {{ $i->category == $cat->name ? 'selected' : '' }}>
+                                        {{ $cat->name }}
+                                    </option>
+                                @endif
+                                <!-- <option value="{{ $cat->name }}"
+                                    {{ $i->category == $cat->name ? 'selected' : '' }}>
+                                    {{ $cat->name }}
+                                </option> -->
                             @endforeach
 
                         </select>
@@ -220,12 +226,12 @@
                         <option value="">Select</option>
 
                         @if($i->category)
-                        @foreach($categories->where('name',$i->category)->first()?->subcategories ?? [] as $sub)
-                        <option value="{{ $sub->name }}"
-                        {{ $i->subCategory == $sub->name ? 'selected' : '' }}>
-                        {{ $sub->name }}
-                        </option>
-                        @endforeach
+                            @foreach($categories->where('name',$i->category)->first()?->subcategories ?? [] as $sub)
+                                <option value="{{ $sub->name }}"
+                                    {{ $i->subCategory == $sub->name ? 'selected' : '' }}>
+                                    {{ $sub->name }}
+                                </option>
+                            @endforeach
                         @endif
 
                         </select>
@@ -305,9 +311,11 @@
                             <option value="">Select</option>
 
                             @foreach($categories as $cat)
-                            <option value="{{ $cat->name }}">
-                            {{ $cat->name }}
-                            </option>
+                                @if($cat->id == 1 && $cat->id == 2)
+                                    <option value="{{ $cat->name }}">
+                                    {{ $cat->name }}
+                                    </option>
+                                @endif
                             @endforeach
 
                         </select>
@@ -397,9 +405,11 @@ $(function () {
                         <option value="">Select</option>
 
                         @foreach($categories as $cat)
-                        <option value="{{ $cat->name }}">
-                        {{ $cat->name }}
-                        </option>
+                            @if($cat->id == 1 && $cat->id == 2)
+                                <option value="{{ $cat->name }}">
+                                {{ $cat->name }}
+                                </option>
+                            @endif
                         @endforeach
 
                     </select>
