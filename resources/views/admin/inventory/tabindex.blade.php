@@ -612,7 +612,7 @@ $(function () {
 
 
 
- new DataTable('#inventoryTable', {
+    new DataTable('#inventoryTable', {
         scrollX: true,
         scrollY:   800,
         deferRender:    true,
@@ -621,8 +621,7 @@ $(function () {
         responsive: false,
         autoWidth: false,
         fixedHeader: true,
-
-
+    
         /* Restore DB net_payable after DT render */
         initComplete: function () {
             $('#inventoryTable tbody tr').each(function () {

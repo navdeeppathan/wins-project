@@ -176,7 +176,8 @@
         const percent = parseFloat(rate);
         if (!isNaN(percent)) {
             const emd = ((base * percent) / 100).toFixed(2);
-            emdInput.value = emd;
+            //only fixed value not decimal value
+            emdInput.value = parseFloat(emd).toFixed(2);
         }
     }
 
