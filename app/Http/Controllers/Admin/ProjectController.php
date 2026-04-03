@@ -837,7 +837,7 @@ class ProjectController extends Controller
                 'item_name'         => 'TENDER FEE',
                 'description'       => 'TENDER FEE',
                 'category'          => 'FEE',
-                'subCategory'          => 'GOVERNMENT',
+                'subCategory'       => 'GOVERNMENT',
                 'staff_id'          => $defaultStaffId->id ?? null,
                 'vendor_id'         => $defaultVendorId->id ?? null,
                 'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
@@ -855,7 +855,6 @@ class ProjectController extends Controller
     {
         $rows = $request->emd;
 
-        // 🔹 If row-wise save
         if ($request->has('row_index')) {
             $rows = [$request->emd[$request->row_index]];
         }
