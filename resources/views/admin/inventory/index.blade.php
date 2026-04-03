@@ -260,7 +260,11 @@
                         @else
                         <button class="btn btn-success btn-sm saveRow">Update</button>
                         @endif
+                        @if(in_array($project->status, ['awarded', 'agreement', 'billing']))
+                        <button disabled class="btn btn-danger btn-sm">Del</button>
+                        @else
                         <button class="btn btn-danger btn-sm removeRow">Del</button>
+                        @endif
                     </td>
                 </tr>
             @empty

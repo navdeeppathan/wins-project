@@ -219,7 +219,36 @@
         autoWidth: true,
         layout: {
             topStart: {
-                buttons: [ 'pdf', 'colvis']
+                buttons: [
+                    {
+                        extend: 'pdf',
+                        text: 'Export PDF',
+
+                        // ✅ REMOVE last column (Actions)
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        },
+
+                        // ✅ ADD TITLE
+                        title: 'LIST OF PROJECTS',
+
+                        // ✅ OPTIONAL: Styling PDF
+                        customize: function (doc) {
+
+                            // Center title
+                            doc.styles.title = {
+                                alignment: 'center',
+                                fontSize: 14,
+                                bold: true
+                            };
+
+                            // OPTIONAL: Adjust table layout
+                            doc.content[1].table.widths =
+                                Array(doc.content[1].table.body[0].length).fill('*');
+                        }
+                    },
+                    'colvis'
+                ]
             }
         },
 

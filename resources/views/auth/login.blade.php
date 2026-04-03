@@ -255,9 +255,9 @@
    <div class="auth-container"  >
 
 
-        <button class="close-btn" onclick="window.history.back()">
+        {{-- <button class="close-btn" onclick="window.history.back()">
             <i class="fas fa-times"></i>
-        </button>
+        </button> --}}
 
         <!-- LEFT PANEL -->
        <div class="left-panel bg-slider">

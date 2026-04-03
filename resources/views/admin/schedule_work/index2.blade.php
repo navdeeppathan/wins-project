@@ -153,12 +153,12 @@
                             >
                     </td> --}}
                     
-                    <td>
+                    {{-- <td>
                         @if($w->gst !== null && $w->gst !== '')
-                            {{-- GST exists → show input directly --}}
+                           
                             <input class="form-control gst" value="{{ $w->gst }}">
                         @else
-                            {{-- GST empty → show checkbox first --}}
+                            
                             <div class="gst-wrapper">
                                 <label class="d-flex align-items-center gap-2">
                                     <input type="checkbox" class="gst-toggle">
@@ -168,6 +168,16 @@
                                 <input class="form-control gst mt-1 d-none" placeholder="18%">
                             </div>
                         @endif
+                    </td> --}}
+                    <td>
+                        <select class="form-control gst">
+                            <option value="">Select</option>
+                            <option value="0" {{ $w->gst == 'INCL' ? 'selected' : '' }}>INCL</option>
+                            <option value="0" {{ $w->gst == '0' ? 'selected' : '' }}>ZERO</option>
+                            <option value="5" {{ $w->gst == '5' ? 'selected' : '' }}>FIVE</option>
+                            <option value="18" {{ $w->gst == '18' ? 'selected' : '' }}>EIGHTEEN</option>
+                            <option value="40" {{ $w->gst == '40' ? 'selected' : '' }}>FORTY</option>
+                        </select>
                     </td>
 
 
@@ -228,9 +238,9 @@
                     <td><textarea class="form-control description"></textarea></td>
                     <td><input class="form-control qty"></td>
                     {{-- <td><input class="form-control gst" placeholder="18%"></td> --}}
-                    <td>
+                    {{-- <td>
                         
-                            {{-- GST empty → show checkbox first --}}
+                            
                             <div class="gst-wrapper">
                                 <label class="d-flex align-items-center gap-2">
                                     <input type="checkbox" class="gst-toggle">
@@ -240,6 +250,16 @@
                                 <input class="form-control gst mt-1 d-none" placeholder="18%">
                             </div>
                         
+                    </td> --}}
+                    <td>
+                        <select class="form-control gst">
+                            <option value="">Select</option>
+                            <option value="0">INCL</option>
+                            <option value="0">ZERO</option>
+                            <option value="5">FIVE</option>
+                            <option value="18">EIGHTEEN</option>
+                            <option value="40">FORTY</option>
+                        </select>
                     </td>
 
                     <td><input class="form-control unit" value="1"></td>
@@ -268,6 +288,14 @@
     </div>
 </div>
 
+            {{-- <td>
+                <div class="gst-wrapper">
+                    <label class="d-flex align-items-center gap-2">
+                        <input type="checkbox" class="gst-toggle"> GST
+                    </label>
+                    <input class="form-control gst mt-1 d-none" placeholder="18%">
+                </div>
+            </td> --}}
 
 
 {{-- SCRIPT --}}
@@ -284,13 +312,16 @@
             <td><textarea class="form-control description"></textarea></td>
             <td><input class="form-control qty"></td>
             <td>
-                <div class="gst-wrapper">
-                    <label class="d-flex align-items-center gap-2">
-                        <input type="checkbox" class="gst-toggle"> GST
-                    </label>
-                    <input class="form-control gst mt-1 d-none" placeholder="18%">
-                </div>
+                <select class="form-control gst">
+                    <option value="">Select</option>
+                    <option value="0">INCL</option>
+                    <option value="0">ZERO</option>
+                    <option value="5">FIVE</option>
+                    <option value="18">EIGHTEEN</option>
+                    <option value="40">FORTY</option>
+                </select>
             </td>
+            
 
             <td><input class="form-control unit" value="1"></td>
             <td><input class="form-control rate"></td>
@@ -471,6 +502,7 @@
                 () => $('td', row).css('background-color', base)
             );
         }
+        
 
 
     });

@@ -37,7 +37,7 @@
 <tbody id="corrTable">
 @forelse($letters as $i => $l)
 <tr data-index="{{ $i }}">
-    <td>{{ $i+1 }}</td>
+    <td class="text-center">{{ $i+1 }}</td>
 
     <input type="hidden"
            name="correspondence[{{ $i }}][id]"

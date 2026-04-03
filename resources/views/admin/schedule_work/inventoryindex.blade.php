@@ -69,6 +69,7 @@
                             : $project->created_at->format('d-m-Y')
                     }}">
             </div>
+            
 
             <div class="col-md-4 mb-2">
                 <label>Percentage</label>
