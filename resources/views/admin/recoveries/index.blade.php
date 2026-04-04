@@ -89,78 +89,84 @@
                         Add Security Deposit
                     </a> --}}
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-4">
-        {{-- @include('admin.security_deposits.create') --}}
-        <div class="card">
-        <div class="card-body">
-            <h5 class="mb-4">Security Deposit Details</h5>
-
-            @php
-                $sd = $securityDeposits->first();
-            @endphp
-
-            <div class="row g-3" id="securityForm">
-
-                <div class="col-md-4">
-                    <label>Instrument Type</label>
-                    <select class="form-select instrument_type">
-                        <option value="">Select</option>
-                        <option value="FDR" {{ ($sd->instrument_type ?? '')=='FDR'?'selected':'' }}>FDR</option>
-                        <option value="BG" {{ ($sd->instrument_type ?? '')=='BG'?'selected':'' }}>BG</option>
-                        <option value="DD" {{ ($sd->instrument_type ?? '')=='DD'?'selected':'' }}>DD</option>
-                        <option value="CHALLAN" {{ ($sd->instrument_type ?? '')=='CHALLAN'?'selected':'' }}>CHALLAN</option>
-                        <option value="FROM_BILL" {{ ($sd->instrument_type ?? '')=='FROM_BILL'?'selected':'' }}>FROM BILL</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label>Instrument Number</label>
-                    <input class="form-control instrument_number"
-                        value="{{ $sd->instrument_number ?? '' }}">
-                </div>
-
-                <div class="col-md-4">
-                    <label>Instrument Date</label>
-                    <input type="date" class="form-control instrument_date"
-                        value="{{ isset($sd->instrument_date) ? \Carbon\Carbon::parse($sd->instrument_date)->format('Y-m-d') : '' }}">
-                </div>
-
-                <div class="col-md-4">
-                    <label>Amount</label>
-                    <input type="number" step="0.01" class="form-control amount"
-                        value="{{ $sd->amount ?? '' }}">
-                </div>
-
-                <div class="col-md-4">
-                    <label>Upload</label>
-
-                    @if(isset($sd->upload))
-                        <div class="mb-1">
-                            <a href="{{ Storage::url($sd->upload) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary">
-                                View Uploaded File
-                            </a>
-                        </div>
-                    @endif
-
-                    <input type="file" class="form-control upload">
-                </div>
-
-                <div class="col-md-12 mt-3">
-                    <button class="btn btn-success btn-sm rounded-pill saveSecurity">
-                        {{ $sd ? 'Update' : 'Save' }}
-                    </button>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="securityToggle">
+                    <label class="form-check-label" for="securityToggle">
+                        Security Deposit Required
+                    </label>
                 </div>
 
             </div>
         </div>
     </div>
+
+      
+        <div class="mt-4" id="securitySection" style="display:none;">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="mb-4">Security Deposit Details</h5>
+
+                @php
+                    $sd = $securityDeposits->first();
+                @endphp
+
+                <div class="row g-3" id="securityForm">
+
+                    <div class="col-md-4">
+                        <label>Instrument Type</label>
+                        <select class="form-select instrument_type">
+                            <option value="">Select</option>
+                            <option value="FDR" {{ ($sd->instrument_type ?? '')=='FDR'?'selected':'' }}>FDR</option>
+                            <option value="BG" {{ ($sd->instrument_type ?? '')=='BG'?'selected':'' }}>BG</option>
+                            <option value="DD" {{ ($sd->instrument_type ?? '')=='DD'?'selected':'' }}>DD</option>
+                            <option value="CHALLAN" {{ ($sd->instrument_type ?? '')=='CHALLAN'?'selected':'' }}>CHALLAN</option>
+                            <option value="FROM_BILL" {{ ($sd->instrument_type ?? '')=='FROM_BILL'?'selected':'' }}>FROM BILL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Instrument Number</label>
+                        <input class="form-control instrument_number"
+                            value="{{ $sd->instrument_number ?? '' }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Instrument Date</label>
+                        <input type="date" class="form-control instrument_date"
+                            value="{{ isset($sd->instrument_date) ? \Carbon\Carbon::parse($sd->instrument_date)->format('Y-m-d') : '' }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Amount</label>
+                        <input type="number" step="0.01" class="form-control amount"
+                            value="{{ $sd->amount ?? '' }}">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label>Upload</label>
+
+                        @if(isset($sd->upload))
+                            <div class="mb-1">
+                                <a href="{{ Storage::url($sd->upload) }}"
+                                target="_blank"
+                                class="btn btn-sm btn-outline-primary">
+                                    View Uploaded File
+                                </a>
+                            </div>
+                        @endif
+
+                        <input type="file" class="form-control upload">
+                    </div>
+
+                    <div class="col-md-12 mt-3">
+                        <button class="btn btn-success btn-sm rounded-pill saveSecurity">
+                            {{ $sd ? 'Update' : 'Save' }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="mt-4">
@@ -170,7 +176,26 @@
 
     @push('scripts')
 
+    
     <script>
+        const toggle = document.getElementById('securityToggle');
+        const section = document.getElementById('securitySection');
+
+        // Show/Hide on change
+        toggle.addEventListener('change', function () {
+            section.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Optional: Auto show if already data exists (edit case)
+        window.addEventListener('load', function () {
+            let hasData = document.querySelector('.instrument_type')?.value;
+            
+            if (hasData) {
+                toggle.checked = true;
+                section.style.display = 'block';
+            }
+        });
+        
     $(document).on('click', '.saveSecurity', function () {
 
         let formData = new FormData();
