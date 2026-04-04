@@ -757,11 +757,11 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $data = $request->validated();
+
         $data['created_by'] = Auth::id();
 
         $data['user_id'] = Auth::id();
 
-        // Store project main file
         if ($request->hasFile('emd_file')) {
             $data['emd_file'] = $request->emd_file->store('emd_docs', 'public');
         }
@@ -769,7 +769,6 @@ class ProjectController extends Controller
         // 1️⃣ Create Project
         $project = Project::create($data);
 
-        // 2️⃣ Insert Multiple EMD Details
         if ($request->has('emd')) {
 
             foreach ($request->emd as $row) {
@@ -789,7 +788,8 @@ class ProjectController extends Controller
                 }
 
                 EmdDetail::create($emdData);
-            }
+            }   
+
         }
 
 
@@ -1229,9 +1229,7 @@ class ProjectController extends Controller
             'stipulated_date_ofcompletion' => $request->stipulated_date_ofcompletion,
         ]);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Agreement details updated successfully.');
+        return redirect()->back()->with('success', 'Agreement details updated successfully.');
     }
 
 
@@ -1276,6 +1274,17 @@ class ProjectController extends Controller
         ]);
 
         $project->update($data);
+        
+        Inventory::updateOrCreate(
+            [
+                'project_id'        => $project->id,
+                'item_name'         => 'TENDER FEE',
+            ],
+            [
+                'net_payable'       => $project->tender_fee,
+                'amount'            => $project->tender_fee,
+            ]
+        );
 
         return redirect()
             ->route('admin.projects.index')
