@@ -837,7 +837,7 @@ class ProjectController extends Controller
                 'item_name'         => 'TENDER FEE',
                 'description'       => 'TENDER FEE',
                 'category'          => 'FEE',
-                'subCategory'       => 'GOVERNMENT',
+                'subCategory'       => 'TENDER FEE',
                 'staff_id'          => $defaultStaffId->id ?? null,
                 'vendor_id'         => $defaultVendorId->id ?? null,
                 'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
