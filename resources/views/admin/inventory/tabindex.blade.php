@@ -621,7 +621,7 @@
         responsive: false,
         autoWidth: false,
         fixedHeader: true,
-         lengthMenu: [5,10,25,50,100,500,1000,5000,10000,50000,100000,500000,1000000],
+         lengthMenu: [2,5,10,25,50,100],
     
         /* Restore DB net_payable after DT render */
         initComplete: function () {
