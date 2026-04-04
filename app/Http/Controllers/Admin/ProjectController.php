@@ -842,7 +842,7 @@ class ProjectController extends Controller
                 'vendor_id'         => $defaultVendorId->id ?? null,
                 'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
                 'quantity'          => 1,
-                'amount'            => $project->tender_fee,
+                'amount'            => 1,
                 'user_id'           => Auth::id(),
                 'voucher'           => 'NONE',
             ]); 
@@ -1274,7 +1274,7 @@ class ProjectController extends Controller
         ]);
 
         $project->update($data);
-        
+
         Inventory::updateOrCreate(
             [
                 'project_id'        => $project->id,
@@ -1282,7 +1282,7 @@ class ProjectController extends Controller
             ],
             [
                 'net_payable'       => $project->tender_fee,
-                'amount'            => $project->tender_fee,
+                'amount'            => 1,
             ]
         );
 
