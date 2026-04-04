@@ -92,7 +92,7 @@
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" id="securityToggle">
                     <label class="form-check-label" for="securityToggle">
-                        Security Deposit Required
+                        Security Deposit Details
                     </label>
                 </div>
 
@@ -195,7 +195,7 @@
                 section.style.display = 'block';
             }
         });
-        
+
     $(document).on('click', '.saveSecurity', function () {
 
         let formData = new FormData();

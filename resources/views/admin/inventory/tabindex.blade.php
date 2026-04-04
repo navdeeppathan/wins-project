@@ -437,178 +437,178 @@
 
 @push('scripts')
 <script>
-$(function () {
+    $(function () {
 
-    let selectedProjectId = "{{ $selectedProjectId }}";
+        let selectedProjectId = "{{ $selectedProjectId }}";
 
-    // ADD ROW
-    $('#addRow').click(function () {
+        // ADD ROW
+        $('#addRow').click(function () {
 
-        let index = $('#inventoryTable tbody tr').length + 1;
+            let index = $('#inventoryTable tbody tr').length + 1;
 
-        let projectCell = selectedProjectId
-            ? `<strong>{{ $selectedProjectId ? $projects->firstWhere('id',$selectedProjectId)->name : '' }}</strong>
-               <input type="hidden" class="project_id" value="${selectedProjectId}">`
-            : `<select class="form-select project_select">
-                    <option value="">Select Project</option>
-                    @foreach($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                    @endforeach
-               </select>`;
+            let projectCell = selectedProjectId
+                ? `<strong>{{ $selectedProjectId ? $projects->firstWhere('id',$selectedProjectId)->name : '' }}</strong>
+                <input type="hidden" class="project_id" value="${selectedProjectId}">`
+                : `<select class="form-select project_select">
+                        <option value="">Select Project</option>
+                        @foreach($projects as $project)
+                            <option value="{{ $project->id }}">{{ $project->name }}</option>
+                        @endforeach
+                </select>`;
 
-        let row = `
-        <tr>
-            <td>${index}</td>
+            let row = `
+            <tr>
+                <td>${index}</td>
 
-            <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
-            <td>
-                    <select class="form-select paid_to">
-                        <option value="">Select Vendor</option>
-                        @foreach($vendors as $vendor)
-                            <option value="{{ $vendor->vendor_agency_name }}">
-                                {{ $vendor->vendor_agency_name }}
+                <td><input type="date" class="form-control date" value="{{ date('Y-m-d') }}"></td>
+                <td>
+                        <select class="form-select paid_to">
+                            <option value="">Select Vendor</option>
+                            @foreach($vendors as $vendor)
+                                <option value="{{ $vendor->vendor_agency_name }}">
+                                    {{ $vendor->vendor_agency_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                </td>
+
+                <td>
+                    @if(auth()->user()->role === 'staff')
+                            <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
+                            {{ auth()->user()->name }}
+                    @else
+                    <select class="form-select staff_id">
+                        <option value="">Select Staff</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}">
+                                {{ $staff->name }}
                             </option>
                         @endforeach
                     </select>
-            </td>
+                    @endif
+                </td>
+                
+                <td>
+                    <select class="form-select category">
+                            <option value="">Select</option>
 
-            <td>
-                @if(auth()->user()->role === 'staff')
-                        <input type="hidden" class="staff_id" value="{{ auth()->id() }}">
-                        {{ auth()->user()->name }}
-                @else
-                <select class="form-select staff_id">
-                    <option value="">Select Staff</option>
-                    @foreach($staffs as $staff)
-                        <option value="{{ $staff->id }}">
-                            {{ $staff->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @endif
-            </td>
-            
-            <td>
-                <select class="form-select category">
+                            @foreach($categories as $cat)
+                            <option value="{{ $cat->name }}">
+                            {{ $cat->name }}
+                            </option>
+                            @endforeach
+
+                    </select>
+                </td>
+
+                <td>
+                    <select class="form-select sub_category">
                         <option value="">Select</option>
+                    </select>
+                </td>
 
-                        @foreach($categories as $cat)
-                        <option value="{{ $cat->name }}">
-                        {{ $cat->name }}
-                        </option>
-                        @endforeach
-
-                </select>
-            </td>
-
-            <td>
-                <select class="form-select sub_category">
-                    <option value="">Select</option>
-                </select>
-            </td>
-
-             <td><input type="text" class="form-control voucher"></td>
-            <td><input type="text" class="form-control description"></td>
+                <td><input type="text" class="form-control voucher"></td>
+                <td><input type="text" class="form-control description"></td>
 
 
-            <td><input type="number" class="form-control quantity"></td>
-            <td><input type="number" class="form-control amount"></td>
+                <td><input type="number" class="form-control quantity"></td>
+                <td><input type="number" class="form-control amount"></td>
 
-            <td class="net_payable">0.00</td>
-            <td><input type="file" class="form-control upload"></td>
-            <td>
-                <button class="btn btn-success btn-sm saveRow">Save</button>
-                <button class="btn btn-danger btn-sm removeRow">Del</button>
-            </td>
-        </tr>`;
+                <td class="net_payable">0.00</td>
+                <td><input type="file" class="form-control upload"></td>
+                <td>
+                    <button class="btn btn-success btn-sm saveRow">Save</button>
+                    <button class="btn btn-danger btn-sm removeRow">Del</button>
+                </td>
+            </tr>`;
 
-        $('#inventoryTable tbody').append(row);
-    });
+            $('#inventoryTable tbody').append(row);
+        });
 
-    // NET PAYABLE
-   $(document).on('input', '.amount, .quantity, .deduction', function () {
-        let row = $(this).closest('tr');
-        recalcRow(row);
-    });
+        // NET PAYABLE
+     $(document).on('input', '.amount, .quantity, .deduction', function () {
+            let row = $(this).closest('tr');
+            recalcRow(row);
+        });
 
-    function recalcRow(row)
-    {
-        let amount   = parseFloat(row.find('.amount').val()) || 0;
-        let qty      = parseFloat(row.find('.quantity').val()) || 1;
-        let deduct   = parseFloat(row.find('.deduction').val()) || 0;
+        function recalcRow(row)
+        {
+            let amount   = parseFloat(row.find('.amount').val()) || 0;
+            let qty      = parseFloat(row.find('.quantity').val()) || 1;
+            let deduct   = parseFloat(row.find('.deduction').val()) || 0;
 
-        let net = (amount * qty) - deduct;
+            let net = (amount * qty) - deduct;
 
-        row.find('.net_payable')
-            .text(net.toFixed(2))
-            .data('db', net);
-    }
-
-
-    // SAVE
-    $(document).on('click', '.saveRow', function () {
-
-        let row = $(this).closest('tr');
-        let id  = row.data('id') || null;
-
-        let formData = new FormData();
-        formData.append('_token', "{{ csrf_token() }}");
-
-        // ✅ SINGLE SOURCE OF PROJECT_ID
-        let projectId = row.find('.project_id').length
-            ? row.find('.project_id').val()
-            : row.find('.project_select').val();
-
-        // formData.append('project_id', projectId);
-        formData.append('date', row.find('.date').val());
-        formData.append('category', row.find('.category').val());
-        formData.append('description', row.find('.description').val());
-        formData.append('paid_to', row.find('.paid_to').val());
-        formData.append('voucher', row.find('.voucher').val());
-        formData.append('quantity', row.find('.quantity').val());
-        formData.append('amount', row.find('.amount').val());
-        // formData.append('deduction', row.find('.deduction').val());
-        formData.append('staff_id', row.find('.staff_id').val());
-        formData.append('net_payable', row.find('.net_payable').data('db'));
-        formData.append('subCategory', row.find('.sub_category').val());
-
-        let file = row.find('.upload')[0];
-        if (file && file.files.length) {
-            formData.append('upload', file.files[0]);
+            row.find('.net_payable')
+                .text(net.toFixed(2))
+                .data('db', net);
         }
 
-        $.ajax({
-            url: id
-                ? `/admin/inventory/${id}/update`
-                : "{{ route('admin.inventory.store') }}",
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function () {
-                location.reload();
+
+        // SAVE
+        $(document).on('click', '.saveRow', function () {
+
+            let row = $(this).closest('tr');
+            let id  = row.data('id') || null;
+
+            let formData = new FormData();
+            formData.append('_token', "{{ csrf_token() }}");
+
+            // ✅ SINGLE SOURCE OF PROJECT_ID
+            let projectId = row.find('.project_id').length
+                ? row.find('.project_id').val()
+                : row.find('.project_select').val();
+
+            // formData.append('project_id', projectId);
+            formData.append('date', row.find('.date').val());
+            formData.append('category', row.find('.category').val());
+            formData.append('description', row.find('.description').val());
+            formData.append('paid_to', row.find('.paid_to').val());
+            formData.append('voucher', row.find('.voucher').val());
+            formData.append('quantity', row.find('.quantity').val());
+            formData.append('amount', row.find('.amount').val());
+            // formData.append('deduction', row.find('.deduction').val());
+            formData.append('staff_id', row.find('.staff_id').val());
+            formData.append('net_payable', row.find('.net_payable').data('db'));
+            formData.append('subCategory', row.find('.sub_category').val());
+
+            let file = row.find('.upload')[0];
+            if (file && file.files.length) {
+                formData.append('upload', file.files[0]);
+            }
+
+            $.ajax({
+                url: id
+                    ? `/admin/inventory/${id}/update`
+                    : "{{ route('admin.inventory.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    location.reload();
+                }
+            });
+        });
+
+        // DELETE
+        $(document).on('click', '.removeRow', function () {
+            let row = $(this).closest('tr');
+            let id  = row.data('id');
+
+            if (id) {
+                if (confirm('Delete this item?')) {
+                    $.post(`/admin/inventory/${id}/destroy`,
+                        { _token: "{{ csrf_token() }}" },
+                        function () { row.remove(); }
+                    );
+                }
+            } else {
+                row.remove();
             }
         });
+
     });
-
-    // DELETE
-    $(document).on('click', '.removeRow', function () {
-        let row = $(this).closest('tr');
-        let id  = row.data('id');
-
-        if (id) {
-            if (confirm('Delete this item?')) {
-                $.post(`/admin/inventory/${id}/destroy`,
-                    { _token: "{{ csrf_token() }}" },
-                    function () { row.remove(); }
-                );
-            }
-        } else {
-            row.remove();
-        }
-    });
-
-});
 
 
 
@@ -621,6 +621,7 @@ $(function () {
         responsive: false,
         autoWidth: false,
         fixedHeader: true,
+         lengthMenu: [5,10,25,50,100,500,1000,5000,10000,50000,100000,500000,1000000],
     
         /* Restore DB net_payable after DT render */
         initComplete: function () {
