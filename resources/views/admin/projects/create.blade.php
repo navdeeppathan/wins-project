@@ -204,7 +204,7 @@
 
             // Auto calculation only if user has not edited manually
             if (!userEdited && rate !== 'other' && baseAmount > 0) {
-                let emd = (baseAmount * rate) / 100;
+                let emd = Math.round((baseAmount * parseFloat(rate)) / 100);
                 emd = emd;
 
                 displayAmt.value = emd;
