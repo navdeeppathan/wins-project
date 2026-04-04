@@ -274,6 +274,14 @@
                 </tr>
             @endforelse
         </tbody>
+        <tfoot>
+            <tr style="background:#000;color:#fff;font-weight:bold;">
+                <td colspan="6" class="text-end">TOTAL</td>
+                <td id="totalAmount" class="text-center">0.00</td>
+                <td id="totalAbatement" class="text-center">0.00</td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
@@ -379,6 +387,31 @@
         }
     });
 
+    // document.addEventListener('input', e => {
+    //     if (
+    //         e.target.classList.contains('qty') ||
+    //         e.target.classList.contains('rate') ||
+    //         e.target.classList.contains('gst')
+    //     ) {
+    //         let row = e.target.closest('tr');
+
+    //         let q = parseFloat(row.querySelector('.qty')?.value) || 0;
+    //         let r = parseFloat(row.querySelector('.rate')?.value) || 0;
+    //         // let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+    //         let gstInput = row.querySelector('.gst');
+    //         let gst = gstInput && !gstInput.classList.contains('d-none')
+    //             ? parseFloat(gstInput.value) || 0
+    //             : 0;
+
+
+    //         let amount = q * r;
+    //         let gstAmount = amount * gst / 100;
+    //         let finalAmount = amount + gstAmount;
+
+    //         row.querySelector('.amount').innerText = finalAmount.toFixed(2);
+    //     }
+    // });
+
     document.addEventListener('input', e => {
         if (
             e.target.classList.contains('qty') ||
@@ -389,21 +422,22 @@
 
             let q = parseFloat(row.querySelector('.qty')?.value) || 0;
             let r = parseFloat(row.querySelector('.rate')?.value) || 0;
-            // let gst = parseFloat(row.querySelector('.gst')?.value) || 0;
+
             let gstInput = row.querySelector('.gst');
             let gst = gstInput && !gstInput.classList.contains('d-none')
                 ? parseFloat(gstInput.value) || 0
                 : 0;
-
 
             let amount = q * r;
             let gstAmount = amount * gst / 100;
             let finalAmount = amount + gstAmount;
 
             row.querySelector('.amount').innerText = finalAmount.toFixed(2);
+
+            // 🔥 UPDATE TOTAL
+            calculateTotals();
         }
     });
-
 
     document.addEventListener('click', e => {
         if (!e.target.classList.contains('saveRow')) return;
@@ -441,6 +475,23 @@
 </script>
 
 <script>
+
+    function calculateTotals() {
+        let totalAmount = 0;
+        let totalAbatement = 0;
+
+        document.querySelectorAll('#workTable tr').forEach(row => {
+            let amount = parseFloat(row.children[6]?.innerText.replace(/,/g,'')) || 0;
+            let abatement = parseFloat(row.children[7]?.innerText.replace(/,/g,'')) || 0;
+
+            totalAmount += amount;
+            totalAbatement += abatement;
+        });
+
+        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+        document.getElementById('totalAbatement').innerText = totalAbatement.toFixed(2);
+    }
+
     document.addEventListener('click', function (e) {
 
         if (!e.target.classList.contains('deleteRow')) return;
