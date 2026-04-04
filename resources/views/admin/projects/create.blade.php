@@ -205,7 +205,7 @@
             // Auto calculation only if user has not edited manually
             if (!userEdited && rate !== 'other' && baseAmount > 0) {
                 let emd = (baseAmount * rate) / 100;
-                emd = emd.toFixed(2);
+                emd = emd;
 
                 displayAmt.value = emd;
                 hiddenAmt.value  = emd;
