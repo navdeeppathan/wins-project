@@ -175,9 +175,11 @@
 
         const percent = parseFloat(rate);
         if (!isNaN(percent)) {
-            const emd = ((base * percent) / 100).toFixed(2);
-            //only fixed value not decimal value
-            emdInput.value = parseFloat(emd).toFixed(2);
+            // const emd = ((base * percent) / 100).toFixed(2);
+            // //only fixed value not decimal value
+            // emdInput.value = parseFloat(emd).toFixed(2);
+            const emd = Math.round((base * percent) / 100);
+            emdInput.value = emd;
         }
     }
 
