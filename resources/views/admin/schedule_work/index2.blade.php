@@ -308,6 +308,23 @@
 
 {{-- SCRIPT --}}
 <script>
+    document.addEventListener('DOMContentLoaded', calculateTotals);
+    function calculateTotals() {
+        
+        let totalAmount = 0;
+        let totalAbatement = 0;
+
+        document.querySelectorAll('#workTable tr').forEach(row => {
+            let amount = parseFloat(row.children[6]?.innerText.replace(/,/g,'')) || 0;
+            let abatement = parseFloat(row.children[7]?.innerText.replace(/,/g,'')) || 0;
+
+            totalAmount += amount;
+            totalAbatement += abatement;
+        });
+
+        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+        document.getElementById('totalAbatement').innerText = totalAbatement.toFixed(2);
+    }
     let index = {{ $works->count() }};
 
     document.getElementById('addRow').onclick = () => {
@@ -412,21 +429,7 @@
     //     }
     // });
 
-    function calculateTotals() {
-        let totalAmount = 0;
-        let totalAbatement = 0;
-
-        document.querySelectorAll('#workTable tr').forEach(row => {
-            let amount = parseFloat(row.children[6]?.innerText.replace(/,/g,'')) || 0;
-            let abatement = parseFloat(row.children[7]?.innerText.replace(/,/g,'')) || 0;
-
-            totalAmount += amount;
-            totalAbatement += abatement;
-        });
-
-        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
-        document.getElementById('totalAbatement').innerText = totalAbatement.toFixed(2);
-    }
+   
 
     document.addEventListener('input', e => {
         if (
