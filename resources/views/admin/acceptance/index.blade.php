@@ -58,7 +58,7 @@
                 <th class="text-center">PG Submission By Date</th>
                 <th class="text-center">Upload</th>
                 <th class="text-center">Save</th>
-                <th class="text-center">Add PG</th>
+                <th class="text-center">Action</th>
             </tr>
         </thead>
 
