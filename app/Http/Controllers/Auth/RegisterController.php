@@ -96,7 +96,7 @@ class RegisterController extends Controller
         $vendor = Vendor::create([
             'user_id'=> $user->id,  
             'state' => 'Delhi',
-            'vendor_agency_name'=>'Default Vendor',
+            'vendor_agency_name'=>'ESTABLISHMENT',
             'contact_person'=> 'Default Contact Person',
             'contact_number'=> '0000000000',
             'email'=> $user->email,
@@ -107,7 +107,7 @@ class RegisterController extends Controller
 
 
         $staff = User::create([
-            'name'=> 'Default Staff',
+            'name'=> 'ESTABLISHMENT',
             'state' => 'Delhi',
             'designation' => 'Default Designation',
             'date_of_joining' => date('Y-m-d'),
