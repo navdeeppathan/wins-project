@@ -26,7 +26,7 @@
 </form> --}}
 
 <style>
-    .dt-button.btn-custom {
+    .dt-button .btn-custom {
     background-color: #4672C1 !important;
     color: #fff !important;
     border: none !important;
