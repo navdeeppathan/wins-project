@@ -34,7 +34,7 @@
                     <tbody>
                         @if($scheduleWorkItems->count() > 0)
                             {{-- EXISTING ROWS --}}
-                            @forelse($scheduleWorkItems as $item)
+                            @foreach($scheduleWorkItems as $item)
                                 <tr>
                                     <form method="POST"
                                         action="{{ route('admin.schedule-work-items.update', $item->id) }}">
@@ -62,7 +62,8 @@
                                             </form>
                                         </td>
                                 </tr>
-                            @empty
+                            @endforeach
+                        @else
                                 {{-- DEFAULT ROW IF NO ITEMS --}}
                                 <tr>
                                     <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
@@ -111,9 +112,6 @@
 
                                     </form>
                                     </tr>
-                            @endforelse
-                        @else
-                            <tr><td colspan="10" class="text-center">No items yet.</td></tr>
                         @endif
 
                     </tbody>
