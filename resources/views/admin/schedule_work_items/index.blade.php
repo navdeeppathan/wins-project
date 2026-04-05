@@ -13,7 +13,7 @@
 
             <div class="card-body p-0">
 
-                <table id="example" class="table table-bordered class-table mb-0 schedule-table "
+                <table id="scheduleWorkItemsTable" class="table table-bordered class-table mb-0 schedule-table "
                        data-schedule="{{ $scheduleWork->id }}">
 
                     <thead class="table-light">
@@ -128,7 +128,6 @@
                     </tfoot>
                 </table>
 
-                {{-- ADD ROW BUTTON --}}
                 <div class="p-2 text-end">
                     <a href="javascript:history.back()" class="btn btn-secondary">
                         Back
@@ -175,46 +174,70 @@
         }
     });
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    document.querySelectorAll(".add-row-btn").forEach(button => {
+        document.querySelectorAll(".add-row-btn").forEach(button => {
 
-         button.addEventListener("click", function () {
+            button.addEventListener("click", function () {
 
-            let scheduleId = this.dataset.schedule;
+                let scheduleId = this.dataset.schedule;
 
-            let table = document.querySelector(
-                '.schedule-table[data-schedule="'+scheduleId+'"] tbody'
-            );
+                let table = document.querySelector(
+                    '.schedule-table[data-schedule="'+scheduleId+'"] tbody'
+                );
 
-            // ✅ Correct place
-            let count = table.querySelectorAll('tr').length + 1;
+                // ✅ Correct place
+                let count = table.querySelectorAll('tr').length + 1;
 
-            let row = `
-            <tr>
-                <td>${count}</td>
-                <td><input name="sr_no" class="form-control" placeholder="Enter NO"></td>
-                <td><input name="description" class="form-control" placeholder="Enter Description"></td>
-                <td><input name="no_of_items" class="form-control" placeholder="Enter No of Items"></td>
-                <td><input name="length" class="form-control" placeholder="Enter Length"></td>
-                <td><input name="width" class="form-control" placeholder="Enter Width"></td>
-                <td><input name="height" class="form-control" placeholder="Enter Height"></td>
-                <td><input name="factor" class="form-control" placeholder="Enter Factor"></td>
-                <td><input name="qty" readonly class="form-control" placeholder="Enter Qty"></td>
-                <td>
-                    <button type="submit" class="btn btn-success btn-sm">Save</button>
-                </td>
-            </tr>
-            `;
+                let row = `
+                <tr>
+                    <td>${count}</td>
+                    <td><input name="sr_no" class="form-control" placeholder="Enter NO"></td>
+                    <td><input name="description" class="form-control" placeholder="Enter Description"></td>
+                    <td><input name="no_of_items" class="form-control" placeholder="Enter No of Items"></td>
+                    <td><input name="length" class="form-control" placeholder="Enter Length"></td>
+                    <td><input name="width" class="form-control" placeholder="Enter Width"></td>
+                    <td><input name="height" class="form-control" placeholder="Enter Height"></td>
+                    <td><input name="factor" class="form-control" placeholder="Enter Factor"></td>
+                    <td><input name="qty" readonly class="form-control" placeholder="Enter Qty"></td>
+                    <td>
+                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </td>
+                </tr>
+                `;
 
-            table.insertAdjacentHTML("beforeend", row);
+                table.insertAdjacentHTML("beforeend", row);
+
+            });
 
         });
 
     });
 
-});
-// 
+  new DataTable('#scheduleWorkItemsTable', {
+        scrollX: true,
+        scrollCollapse: true,
+        responsive: false,
+        autoWidth: true
+
+        /* 🔥 GUARANTEED ROW COLOR FIX */
+        createdRow: function (row, data, index) {
+            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            $('td', row).css('background-color', bg);
+        },
+
+        rowCallback: function (row, data, index) {
+            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+            $(row).off('mouseenter mouseleave').hover(
+                () => $('td', row).css('background-color', '#e9ecff'),
+                () => $('td', row).css('background-color', base)
+            );
+        }
+
+
+    });
+
 </script>
 @endsection
 
