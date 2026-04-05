@@ -1139,6 +1139,18 @@ class ProjectController extends Controller
         $project->date_ofstartof_work = $request->date_ofstartof_work;
         $project->agreement_no = $request->agreement_no;
 
+        Correspondence::create([
+                'project_id' => $project->id,
+                'letter_subject'    => 'TENDER AWARDED ON',
+                'letter_date'       =>date('Y-m-d', strtotime($project->award_date)),
+        ]);
+
+        Correspondence::create([
+                'project_id' => $project->id,
+                'letter_subject'    => 'DATE OF START OF WORK',
+                'letter_date'       =>date('Y-m-d', strtotime($request->date_ofstartof_work)),
+        ]);
+
          // ✅ BACKEND DATE CALCULATION
         if ($request->award_date && $project->time_allowed_number && $project->time_allowed_type) {
 
