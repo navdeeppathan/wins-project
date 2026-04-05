@@ -25,6 +25,14 @@
     </div>
 </form> --}}
 
+<style>
+    .dt-button.btn-custom {
+    background-color: #4672C1 !important;
+    color: #fff !important;
+    border: none !important;
+}
+</style>
+
 @php
     use Carbon\Carbon;
 
@@ -223,8 +231,7 @@
                     {
                         extend: 'pdf',
                         text: 'Export PDF',
-                        className: 'btn btn-primary',
-                        color: '#4672C1',
+                        className: 'btn btn-sm btn-primary text-white',
 
                         // ✅ REMOVE last column (Actions)
                         exportOptions: {
