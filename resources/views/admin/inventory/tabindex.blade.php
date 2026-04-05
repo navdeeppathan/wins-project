@@ -612,18 +612,74 @@
 
 
 
+    // new DataTable('#inventoryTable', {
+    //     scrollX: true,
+    //     scrollY:   800,
+    //     deferRender:    true,
+    //     scroller:       true,
+    //     scrollCollapse: true,
+    //     responsive: false,
+    //     autoWidth: false,
+    //     fixedHeader: true,
+    //      lengthMenu: [3,5,10,25,50,100],
+    
+    //     /* Restore DB net_payable after DT render */
+    //     initComplete: function () {
+    //         $('#inventoryTable tbody tr').each(function () {
+    //             let cell = $(this).find('.net_payable');
+    //             let dbValue = cell.data('db');
+
+    //             if (dbValue !== undefined) {
+    //                 cell.text(parseFloat(dbValue).toFixed(2));
+    //             }
+    //         });
+    //     },
+    //     /* 🔥 GUARANTEED ROW COLOR FIX */
+    //     createdRow: function (row, data, index) {
+    //         let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+    //         $('td', row).css('background-color', bg);
+    //     },
+
+    //     rowCallback: function (row, data, index) {
+    //          let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+    //         $(row).off('mouseenter mouseleave').hover(
+    //             () => $('td', row).css('background-color', '#e9ecff'),
+    //             () => $('td', row).css('background-color', base)
+    //         );
+    //     }
+
+
+    // });
     new DataTable('#inventoryTable', {
         scrollX: true,
-        scrollY:   800,
-        deferRender:    true,
-        scroller:       true,
+        scrollY: 800,
+        deferRender: true,
+        scroller: true,
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
         fixedHeader: true,
-         lengthMenu: [3,5,10,25,50,100],
-    
-        /* Restore DB net_payable after DT render */
+        lengthMenu: [3,5,10,25,50,100],
+
+        // ✅ FIX SEARCH ISSUE
+        columnDefs: [
+            {
+                targets: '_all',
+                render: function (data, type, row, meta) {
+                    if (type === 'filter' || type === 'search') {
+                        let div = document.createElement('div');
+                        div.innerHTML = data;
+
+                        // get input/select value if exists
+                        let input = div.querySelector('input, select');
+                        return input ? input.value : div.textContent;
+                    }
+                    return data;
+                }
+            }
+        ],
+
         initComplete: function () {
             $('#inventoryTable tbody tr').each(function () {
                 let cell = $(this).find('.net_payable');
@@ -634,22 +690,20 @@
                 }
             });
         },
-        /* 🔥 GUARANTEED ROW COLOR FIX */
+
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
         },
 
         rowCallback: function (row, data, index) {
-             let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
 
             $(row).off('mouseenter mouseleave').hover(
                 () => $('td', row).css('background-color', '#e9ecff'),
                 () => $('td', row).css('background-color', base)
             );
         }
-
-
     });
 </script>
 
