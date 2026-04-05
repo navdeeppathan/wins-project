@@ -12,9 +12,12 @@
         $percentageText = '-';
         if ($estimated > 0 && $tendered > 0) {
             $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+            // $percentageText = $percentage < 0
+            //     ? abs($percentage).' % BELOW'
+            //     : $percentage.' % ABOVE';
             $percentageText = $percentage < 0
-                ? abs($percentage).' % BELOW'
-                : $percentage.' % ABOVE';
+            ? number_format(abs($percentage), 4).' % BELOW'
+            : number_format($percentage, 4).' % ABOVE';
         }
     @endphp
 
@@ -194,11 +197,11 @@
                     </td>
 
                     <td class="amount text-center">
-                        {{ number_format($w->amount,4) }}
+                        {{ number_format($w->amount,2) }}
                     </td>
 
                     <td class="amount text-center">
-                        {{ number_format($w->abatement,4) }}
+                        {{ number_format($w->abatement,2) }}
                     </td>
 
                     {{-- <td>

@@ -11,9 +11,9 @@
         if ($percentage == '-0') {
             $percentageText = 'AT PAR';
         }elseif ($percentage < 0) {
-            $percentageText = abs($percentage) . ' % BELOW';
+            $percentageText = number_format(abs($percentage), 4).' % BELOW'; //$percentage < 0 ?abs($percentage) . ' % BELOW';
         } else {
-            $percentageText = $percentage . ' % ABOVE';
+            $percentageText =  number_format($percentage, 4).' % ABOVE';//$percentage . ' % ABOVE';
         }
     }
 @endphp
