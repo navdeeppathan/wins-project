@@ -36,7 +36,7 @@ class ScheduleWorkItemController extends Controller
             'height' => 'nullable|numeric',
         ]);
 
-        $quantity = $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
+        $quantity = $request->sr_no * $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
 
         ScheduleWorkItem::create(array_merge($request->all(), ['qty' => $quantity]));
 
@@ -50,7 +50,7 @@ class ScheduleWorkItemController extends Controller
     {
         $item = ScheduleWorkItem::findOrFail($id);
 
-        $quantity = $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
+        $quantity = $request->sr_no * $request->no_of_items * $request->length * $request->height * $request->width * $request->factor;
 
         $request->merge(['qty' => $quantity]);
         $item->update($request->all());

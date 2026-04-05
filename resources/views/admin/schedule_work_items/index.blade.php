@@ -18,6 +18,7 @@
 
                     <thead class="table-light">
                         <tr>
+                            <th>S. No.</th>
                             <th>Number</th>
                             <th>Description</th>
                             <th>Slides</th>
@@ -40,6 +41,7 @@
                                 @csrf
                                 @method('POST')
 
+                                <td>{{ $loop->iteration }}</td>
                                 <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
                                 <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
                                 <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
@@ -141,6 +143,33 @@
 </div>
 
 <script>
+
+    document.addEventListener('input', function (e) {
+
+        if (
+            e.target.name === 'sr_no' ||
+            e.target.name === 'no_of_items' ||
+            e.target.name === 'length' ||
+            e.target.name === 'width' ||
+            e.target.name === 'height' ||
+            e.target.name === 'factor'
+        ) {
+            let row = e.target.closest('tr');
+
+            let number  = 1; // default (if you don't have field)
+            let numberField = parseFloat(row.querySelector('[name="sr_no"]')?.value) || 0;
+            let slides  = parseFloat(row.querySelector('[name="no_of_items"]')?.value) || 0;
+            let length  = parseFloat(row.querySelector('[name="length"]')?.value) || 0;
+            let width   = parseFloat(row.querySelector('[name="width"]')?.value) || 0;
+            let height  = parseFloat(row.querySelector('[name="height"]')?.value) || 0;
+            let factor  = parseFloat(row.querySelector('[name="factor"]')?.value) || 0;
+
+            let qty = numberField * slides * length * width * factor * height;
+
+            row.querySelector('[name="qty"]').value = qty.toFixed(2);
+        }
+    });
+
 document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".add-row-btn").forEach(button => {
