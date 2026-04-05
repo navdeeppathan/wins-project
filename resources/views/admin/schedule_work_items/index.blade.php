@@ -191,15 +191,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     @csrf
                     <input type="hidden" name="schedule_work_id" value="${scheduleId}">
 
-                    <td>${count}</td>
-                    <td><input type="text" name="sr_no" class="form-control"></td>
-                    <td><input type="text" name="description" class="form-control"></td>
-                    <td><input type="text" name="no_of_items" class="form-control"></td>
-                    <td><input type="text" name="length" class="form-control"></td>
-                    <td><input type="text" name="width" class="form-control"></td>
-                    <td><input type="text" name="height" class="form-control"></td>
-                    <td><input type="text" name="factor" class="form-control"></td>
-                    <td><input type="text" name="qty" readonly class="form-control"></td>
+                    <td class="text-center">${count}</td>
+                    <td><input type="text" name="sr_no" class="form-control" placeholder="Enter No"></td>
+                    <td><input type="text" name="description" class="form-control" placeholder="Enter Description"></td>
+                    <td><input type="text" name="no_of_items" class="form-control" placeholder="Enter No of Items"></td>
+                    <td><input type="text" name="length" class="form-control" placeholder="Enter Length"></td>
+                    <td><input type="text" name="width" class="form-control" placeholder="Enter Width"></td>
+                    <td><input type="text" name="height" class="form-control" placeholder="Enter Height"></td>
+                    <td><input type="text" name="factor" class="form-control" placeholder="Enter Factor"></td>
+                    <td><input type="text" name="qty" readonly class="form-control" placeholder="Quantity"></td>
                     <td>
                         <button type="submit" class="btn btn-success btn-sm">Save</button>
                     </td>
