@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Billing;
+use App\Models\Correspondence;
 use App\Models\Project;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -79,6 +80,14 @@ class BillingController extends Controller
 
 
         $data['approved_at'] = now();
+
+        if($request->completion_date) {
+            Correspondence::create([
+                    'project_id' => $project->id,
+                    'letter_subject'    => 'COMPLETION RECORDED',
+                    'letter_date'       =>date('Y-m-d', strtotime($request->completion_date)),
+            ]);
+        }
 
         Billing::create($data);
 
