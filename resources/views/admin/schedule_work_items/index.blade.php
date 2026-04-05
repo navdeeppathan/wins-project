@@ -183,33 +183,26 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             let row = `
-            <tr>
-                <td colspan="9">
-                    <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
-                        @csrf
-                        <input type="hidden" name="schedule_work_id" value="${scheduleId}">
+                    <tr>
+                        <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
+                            @csrf
+                            <input type="hidden" name="schedule_work_id" value="${scheduleId}">
 
-                        <div class="d-flex gap-1">
-
-                            <input type="text" name="id" class="form-control" placeholder="SR No" readonly>
-                            <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
-                            <input type="text" name="description" class="form-control" placeholder="Enter Description">
-                            <input type="text" name="no_of_items" class="form-control"  placeholder="Enter Slides">
-                            <input type="text" name="length" class="form-control" placeholder="Enter Length">
-                            <input type="text" name="width" class="form-control" placeholder="Enter Width">
-                            <input type="text" name="height" class="form-control" placeholder="Enter Height">
-                            <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
-                            <input type="text" name="qty" readonly class="form-control" placeholder="Enter Qty">
-
-                            <button type="submit" class="btn btn-success btn-sm">
-                                Save
-                            </button>
-
-                        </div>
-                    </form>
-                </td>
-            </tr>
-            `;
+                            <td></td>
+                            <td><input type="text" name="sr_no" class="form-control"></td>
+                            <td><input type="text" name="description" class="form-control"></td>
+                            <td><input type="text" name="no_of_items" class="form-control"></td>
+                            <td><input type="text" name="length" class="form-control"></td>
+                            <td><input type="text" name="width" class="form-control"></td>
+                            <td><input type="text" name="height" class="form-control"></td>
+                            <td><input type="text" name="factor" class="form-control"></td>
+                            <td><input type="text" name="qty" readonly class="form-control"></td>
+                            <td>
+                                <button type="submit" class="btn btn-success btn-sm">Save</button>
+                            </td>
+                        </form>
+                    </tr>
+                `;
 
             table.insertAdjacentHTML("beforeend", row);
 
