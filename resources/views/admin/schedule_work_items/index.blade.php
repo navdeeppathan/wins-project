@@ -187,24 +187,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let row = `
             <tr>
-                <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
-                    @csrf
-                    <input type="hidden" name="schedule_work_id" value="${scheduleId}">
+                <td class="text-center">${count}</td>
 
-                    <td class="text-center">${count}</td>
+                <td colspan="9">
+                    <form method="POST" action="{{ route('admin.schedule-work-items.store') }}" class="d-flex gap-1">
+                        @csrf
+                        <input type="hidden" name="schedule_work_id" value="${scheduleId}">
 
-                    <td><input type="text" name="sr_no" class="form-control" placeholder="Enter No"></td>
-                    <td><input type="text" name="description" class="form-control" placeholder="Enter Description"></td>
-                    <td><input type="text" name="no_of_items" class="form-control" placeholder="Enter No of Items"></td>
-                    <td><input type="text" name="length" class="form-control" placeholder="Enter Length"></td>
-                    <td><input type="text" name="width" class="form-control" placeholder="Enter Width"></td>
-                    <td><input type="text" name="height" class="form-control" placeholder="Enter Height"></td>
-                    <td><input type="text" name="factor" class="form-control" placeholder="Enter Factor"></td>
-                    <td><input type="text" name="qty" readonly class="form-control" placeholder="Quantity"></td>
-                     <td>
+                        <input type="text" name="sr_no" class="form-control" placeholder="No">
+                        <input type="text" name="description" class="form-control" placeholder="Desc">
+                        <input type="text" name="no_of_items" class="form-control" placeholder="Slides">
+                        <input type="text" name="length" class="form-control" placeholder="Length">
+                        <input type="text" name="width" class="form-control" placeholder="Width">
+                        <input type="text" name="height" class="form-control" placeholder="Height">
+                        <input type="text" name="factor" class="form-control" placeholder="Factor">
+                        <input type="text" name="qty" readonly class="form-control" placeholder="Qty">
+
                         <button type="submit" class="btn btn-success btn-sm">Save</button>
-                    </td>
-                </form>
+                    </form>
+                </td>
             </tr>
             `;
 
