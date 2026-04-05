@@ -141,6 +141,9 @@
                                     <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
                                     @endif
                             </td>
+                        @else
+                            <td>
+                            </td>
                         @endif
                     </tr>
                    
