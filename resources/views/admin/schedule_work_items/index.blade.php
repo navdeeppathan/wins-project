@@ -70,14 +70,15 @@
                                 @csrf
 
                                 <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
+                            
+                                <td>
+                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
+                                </td>
 
                                 <td>
                                     <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
                                 </td>
 
-                                <td>
-                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
-                                </td>
 
                                 <td>
                                     <input type="text" name="no_of_items" class="form-control" placeholder="Enter Slides">
