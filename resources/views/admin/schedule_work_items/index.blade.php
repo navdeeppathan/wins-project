@@ -173,8 +173,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".add-row-btn").forEach(button => {
-        let count = table.querySelectorAll('tr').length + 1;
-        button.addEventListener("click", function () {
+
+         button.addEventListener("click", function () {
 
             let scheduleId = this.dataset.schedule;
 
@@ -182,27 +182,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 '.schedule-table[data-schedule="'+scheduleId+'"] tbody'
             );
 
-            let row = `
-                    <tr>
-                        <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
-                            @csrf
-                            <input type="hidden" name="schedule_work_id" value="${scheduleId}">
+            // ✅ Correct place
+            let count = table.querySelectorAll('tr').length + 1;
 
-                            <td>${count}</td>
-                            <td><input type="text" name="sr_no" class="form-control"></td>
-                            <td><input type="text" name="description" class="form-control"></td>
-                            <td><input type="text" name="no_of_items" class="form-control"></td>
-                            <td><input type="text" name="length" class="form-control"></td>
-                            <td><input type="text" name="width" class="form-control"></td>
-                            <td><input type="text" name="height" class="form-control"></td>
-                            <td><input type="text" name="factor" class="form-control"></td>
-                            <td><input type="text" name="qty" readonly class="form-control"></td>
-                            <td>
-                                <button type="submit" class="btn btn-success btn-sm">Save</button>
-                            </td>
-                        </form>
-                    </tr>
-                `;
+            let row = `
+            <tr>
+                <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
+                    @csrf
+                    <input type="hidden" name="schedule_work_id" value="${scheduleId}">
+
+                    <td>${count}</td>
+                    <td><input type="text" name="sr_no" class="form-control"></td>
+                    <td><input type="text" name="description" class="form-control"></td>
+                    <td><input type="text" name="no_of_items" class="form-control"></td>
+                    <td><input type="text" name="length" class="form-control"></td>
+                    <td><input type="text" name="width" class="form-control"></td>
+                    <td><input type="text" name="height" class="form-control"></td>
+                    <td><input type="text" name="factor" class="form-control"></td>
+                    <td><input type="text" name="qty" readonly class="form-control"></td>
+                    <td>
+                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </td>
+                </form>
+            </tr>
+            `;
 
             table.insertAdjacentHTML("beforeend", row);
 
