@@ -222,13 +222,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-new DataTable('#scheduleWorkItemsTable', {
+$(document).ready(function () {
+    $('#scheduleWorkItemsTable').DataTable({
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
         autoWidth: true,
 
-        /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
             let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
             $('td', row).css('background-color', bg);
@@ -242,10 +242,8 @@ new DataTable('#scheduleWorkItemsTable', {
                 () => $('td', row).css('background-color', base)
             );
         }
-
-
     });
-// 
+});
 </script>
 @endsection
 
