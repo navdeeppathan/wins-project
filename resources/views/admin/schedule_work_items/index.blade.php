@@ -32,7 +32,7 @@
                     </thead>
 
                     <tbody>
-                        @if($scheduleWork->scheduleWorkItems->count() > 0)
+                        @if($scheduleWorkItems->count() > 0)
                             {{-- EXISTING ROWS --}}
                             @forelse($scheduleWorkItems as $item)
                                 <tr>
