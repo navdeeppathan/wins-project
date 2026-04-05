@@ -13,15 +13,15 @@
 
             <div class="card-body p-0">
 
-                <table id="scheduleWorkItemsTable" class="table table-bordered class-table mb-0 schedule-tableexample"
+                <table id="example" class="table table-bordered class-table mb-0 schedule-table"
                        data-schedule="{{ $scheduleWork->id }}">
 
                     <thead class="table-light">
                         <tr>
                             <th>S. No.</th>
-                             <th>Description</th>
                             <th>Number</th>
-                            <th>Sides</th>
+                            <th>Description</th>
+                            <th>Slides</th>
                             <th>Length</th>
                             <th>Width</th>
                             <th>Height</th>
@@ -32,96 +32,94 @@
                     </thead>
 
                     <tbody>
-                        @if($scheduleWorkItems->count() > 0)
-                            {{-- EXISTING ROWS --}}
-                            @foreach($scheduleWorkItems as $item)
-                                <tr>
-                                    <form method="POST"
-                                        action="{{ route('admin.schedule-work-items.update', $item->id) }}">
-                                        @csrf
-                                        @method('POST')
 
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
-                                        <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
-                                        
-                                        <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
-                                        <td><input name="length" value="{{ $item->length }}" class="form-control"></td>
-                                        <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
-                                        <td><input name="height" value="{{ $item->height }}" class="form-control"></td>
-                                        <td><input name="factor" value="{{ $item->factor }}" class="form-control"></td>
-                                        <td><input name="qty" readonly value="{{ $item->qty }}" class="form-control"></td>
-                                        <td class="d-flex gap-1">
-                                                <button class="btn btn-sm btn-primary">Update</button>
-                                            </form>
+                        {{-- EXISTING ROWS --}}
+                        @forelse($scheduleWorkItems as $item)
+                        <tr>
+                            <form method="POST"
+                                  action="{{ route('admin.schedule-work-items.update', $item->id) }}">
+                                @csrf
+                                @method('POST')
 
-                                            <form method="POST"
-                                                action="{{ route('admin.schedule-work-items.destroy', $item->id) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-danger">X</button>
-                                            </form>
-                                        </td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
+                                <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
+                                <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
+                                <td><input name="length" value="{{ $item->length }}" class="form-control"></td>
+                                <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
+                                <td><input name="height" value="{{ $item->height }}" class="form-control"></td>
+                                <td><input name="factor" value="{{ $item->factor }}" class="form-control"></td>
+                                <td><input name="qty" readonly value="{{ $item->qty }}" class="form-control"></td>
+
+                                <td class="d-flex gap-1">
+                                    <button class="btn btn-sm btn-primary">Update</button>
+                            </form>
+
+                            <form method="POST"
+                                  action="{{ route('admin.schedule-work-items.destroy', $item->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger">X</button>
+                            </form>
+                                </td>
+                        </tr>
+                        @empty
+                            {{-- DEFAULT ROW IF NO ITEMS --}}
+                            <tr>
+                                <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
+                                @csrf
+
+                                <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
+
+                                <td>
+                                    <input type="text" name="id" class="form-control" placeholder="1" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="no_of_items" class="form-control" placeholder="Enter Slides">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="length" class="form-control" placeholder="Enter Length">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="width" class="form-control" placeholder="Enter Width">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="height" class="form-control" placeholder="Enter Height">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
+                                </td>
+
+                                <td>
+                                    <input type="text" name="qty" readonly class="form-control" placeholder="Enter Qty">
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-success">Save</button>
+                                </td>
+
+                                </form>
                                 </tr>
-                            @endforeach
-                        @else
-                                {{-- DEFAULT ROW IF NO ITEMS --}}
-                                <tr>
-                                    <form method="POST" action="{{ route('admin.schedule-work-items.store') }}">
-                                    @csrf
-
-                                    <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
-
-                                    <td>
-                                        <input type="text" name="id" class="form-control" placeholder="1" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" name="description" class="form-control" placeholder="Enter Description">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
-                                    </td>
-
-                                    
-                                    <td>
-                                        <input type="text" name="no_of_items" class="form-control" placeholder="Enter Sides">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="length" class="form-control" placeholder="Enter Length">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="width" class="form-control" placeholder="Enter Width">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="height" class="form-control" placeholder="Enter Height">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="factor" class="form-control" placeholder="Enter Factor">
-                                    </td>
-
-                                    <td>
-                                        <input type="text" name="qty" readonly class="form-control" placeholder="Enter Qty">
-                                    </td>
-
-                                    <td>
-                                        <button class="btn btn-sm btn-success">Save</button>
-                                    </td>
-
-                                    </form>
-                                    </tr>
-                        @endif
+                        @endforelse
 
                     </tbody>
 
                     {{-- TOTAL --}}
                     <tfoot class="table-warning">
                         <tr>
-                            <th colspan="8" class="text-end">Total</th>
+                            <th colspan="7" class="text-end">Total</th>
                             <th>{{ $scheduleWork->items->sum('qty') }}</th>
                             <th></th>
                         </tr>
@@ -146,14 +144,7 @@
     {{-- @endforeach --}}
 
 </div>
-<!-- jQuery (required for most DataTables setups) -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
-
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 <script>
 
     document.addEventListener('input', function (e) {
@@ -208,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <input type="text" name="sr_no" class="form-control" placeholder="No">
                         <input type="text" name="description" class="form-control" placeholder="Desc">
-                        <input type="text" name="no_of_items" class="form-control" placeholder="Sides">
+                        <input type="text" name="no_of_items" class="form-control" placeholder="Slides">
                         <input type="text" name="length" class="form-control" placeholder="Length">
                         <input type="text" name="width" class="form-control" placeholder="Width">
                         <input type="text" name="height" class="form-control" placeholder="Height">
@@ -228,29 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-
-$(document).ready(function () {
-    $('#scheduleWorkItemsTable').DataTable({
-        scrollX: true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: true,
-
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
-        }
-    });
-});
+// 
 </script>
 @endsection
 
