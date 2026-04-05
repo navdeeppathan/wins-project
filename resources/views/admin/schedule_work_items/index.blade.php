@@ -226,7 +226,7 @@ new DataTable('#scheduleWorkItemsTable', {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
-        autoWidth: true
+        autoWidth: true,
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
         createdRow: function (row, data, index) {
