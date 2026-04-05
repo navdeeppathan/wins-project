@@ -203,7 +203,7 @@
 
 
     <div class="mt-4 mb-1 d-flex justify-content-end">
-        <button id="exportPdf" class="btn btn-secondary mb-3">
+        <button id="exportPdf" class="btn btn-primary mb-3">
         <i class="fa fa-file-pdf"></i> Export Progress PDF
     </button>
     </div>

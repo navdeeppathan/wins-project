@@ -608,7 +608,7 @@
                 let category = row.querySelector('.category')?.value;
                 let qtyIssuedBox = row.querySelector('.qty-issued-wrapper');
 
-                if (['MATERIAL', 'SERVICE'].includes(category)) {
+                if (['MATERIAL','SERVICE'].includes(category)) {
                     qtyIssuedBox.style.display = 'block';
                 }
             });
@@ -696,35 +696,50 @@
                 if (!categorySelect || !descSelect) return;
 
                 let category = categorySelect.value;
+                 
+
                 let selectedDesc = descSelect.dataset.selected;
 
+                console.log(selectedDesc);
                 if (!category || !selectedDesc) return;
 
                 descSelect.innerHTML = '<option value="">Select description</option>';
 
                 let matches = allInventories.filter(inv => inv.category === category);
 
-                matches.forEach(inv => {
+                 console.log(allInventories);
+                if(selectedDesc != 'TENDER FEE'){
+                    matches.forEach(inv => {
 
+                    
+                        let opt = document.createElement('option');
+                        opt.value = inv.description;
+                        opt.textContent = inv.description;
+                        opt.dataset.quantity = inv.quantity;
+                        opt.dataset.amount = inv.amount;   // 🔥 IMPORTANT
+
+                        if (inv.description === selectedDesc) {
+                            opt.selected = true;
+
+                            // 🔥 SET ALL VALUES CORRECTLY
+                            qtyInput.value    = qtyInput.value || inv.quantity;
+                            amountInput.value = inv.amount;
+
+                            netInput.value =
+                                (qtyInput.value * inv.amount).toFixed(2);
+                        }
+
+                        descSelect.appendChild(opt);
+                    });
+                }else{
                     let opt = document.createElement('option');
-                    opt.value = inv.description;
-                    opt.textContent = inv.description;
-                    opt.dataset.quantity = inv.quantity;
-                    opt.dataset.amount = inv.amount;   // 🔥 IMPORTANT
-
-                    if (inv.description === selectedDesc) {
-                        opt.selected = true;
-
-                        // 🔥 SET ALL VALUES CORRECTLY
-                        qtyInput.value    = qtyInput.value || inv.quantity;
-                        amountInput.value = inv.amount;
-
-                        netInput.value =
-                            (qtyInput.value * inv.amount).toFixed(2);
-                    }
+                    opt.value = 'TENDER FEE';
+                    opt.textContent = 'TENDER FEE';
+                    opt.selected = true;
 
                     descSelect.appendChild(opt);
-                });
+                   
+                }
 
             });
         });
@@ -749,31 +764,31 @@ $(document).on('change', '.category', function () {
 
 </script> --}}
 <script>
-const CATEGORIES = @json($categories);
+    const CATEGORIES = @json($categories);
 
-$(document).on('change', '.category', function () {
+    $(document).on('change', '.category', function () {
 
-    let row = $(this).closest('tr');
-    let categoryName = $(this).val();
-    let subSelect = row.find('.sub_category');
+        let row = $(this).closest('tr');
+        let categoryName = $(this).val();
+        let subSelect = row.find('.sub_category');
 
-    subSelect.empty().append('<option value="">Select</option>');
+        subSelect.empty().append('<option value="">Select</option>');
 
-    let category = CATEGORIES.find(c => c.name == categoryName);
+        let category = CATEGORIES.find(c => c.name == categoryName);
 
-    if(category){
-        category.subcategories.forEach(function(sub){
+        if(category){
+            category.subcategories.forEach(function(sub){
 
-            if(sub.status == 1){
-                subSelect.append(
-                    `<option value="${sub.name}">${sub.name}</option>`
-                );
-            }
+                if(sub.status == 1){
+                    subSelect.append(
+                        `<option value="${sub.name}">${sub.name}</option>`
+                    );
+                }
 
-        });
-    }
+            });
+        }
 
-});
+    });
 </script>
 
     @endpush

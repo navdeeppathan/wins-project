@@ -172,7 +172,7 @@
                     <td>
                         <select class="form-control gst">
                             <option value="">Select</option>
-                            <option value="0" {{ $w->gst == 'INCL' ? 'selected' : '' }}>INCL</option>
+                            <option value="1" {{ $w->gst == '1' ? 'selected' : '' }}>INCL</option>
                             <option value="0" {{ $w->gst == '0' ? 'selected' : '' }}>ZERO</option>
                             <option value="5" {{ $w->gst == '5' ? 'selected' : '' }}>FIVE</option>
                             <option value="18" {{ $w->gst == '18' ? 'selected' : '' }}>EIGHTEEN</option>
@@ -254,7 +254,7 @@
                     <td>
                         <select class="form-control gst">
                             <option value="">Select</option>
-                            <option value="0">INCL</option>
+                            <option value="1">INCL</option>
                             <option value="0">ZERO</option>
                             <option value="5">FIVE</option>
                             <option value="18">EIGHTEEN</option>
@@ -339,7 +339,7 @@
             <td>
                 <select class="form-control gst">
                     <option value="">Select</option>
-                    <option value="0">INCL</option>
+                    <option value="1">INCL</option>
                     <option value="0">ZERO</option>
                     <option value="5">FIVE</option>
                     <option value="18">EIGHTEEN</option>

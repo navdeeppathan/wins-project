@@ -188,6 +188,28 @@
     </div>
 @endif
 
+<style>
+/* Target DataTables buttons properly */
+div.dt-buttons .dt-button {
+    background-color: #0d6efd !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px;
+}
+
+/* Hover */
+div.dt-buttons .dt-button:hover {
+    background-color: #0b5ed7 !important;
+    color: #fff !important;
+}
+
+/* Specifically PDF button (extra safety) */
+div.dt-buttons .buttons-pdf {
+    background-color: #0d6efd !important;
+    color: #fff !important;
+}
+</style>
+
 @endsection
 
 

@@ -1012,8 +1012,9 @@ class ProjectController extends Controller
         }else {
             $userIds = [$user->id];
         }
-        $projects = Project::whereIn('status', ['bidding', 'accepted','awarded'])
-                    ->whereIn('user_id', $userIds)
+        // $projects = Project::whereIn('status', ['bidding', 'accepted','awarded'])
+        $projects = Project::
+                    whereIn('user_id', $userIds)
                     ->when($request->filled('fy'), function ($query) use ($request) {
 
                         $start = Carbon::create($request->fy, 4, 1)->startOfDay();
@@ -1097,6 +1098,7 @@ class ProjectController extends Controller
             'date'                  => 'nullable|date',
             'pg_submission_date'    => 'nullable|date',
         ]);
+
 
         $project->status = 'accepted';
         $project->tendered_amount = $request->tendered_amount;
