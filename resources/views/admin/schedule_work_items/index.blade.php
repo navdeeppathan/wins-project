@@ -51,16 +51,16 @@
                                         <td><input name="factor" value="{{ $item->factor }}" class="form-control"></td>
                                         <td><input name="qty" readonly value="{{ $item->qty }}" class="form-control"></td>
                                         <td class="d-flex gap-1">
-                                        <button class="btn btn-sm btn-primary">Update</button>
-                                    </form>
+                                                <button class="btn btn-sm btn-primary">Update</button>
+                                            </form>
 
-                                    <form method="POST"
-                                        action="{{ route('admin.schedule-work-items.destroy', $item->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger">X</button>
-                                    </form>
-                                    </td>
+                                            <form method="POST"
+                                                action="{{ route('admin.schedule-work-items.destroy', $item->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger">X</button>
+                                            </form>
+                                        </td>
                                 </tr>
                             @empty
                                 {{-- DEFAULT ROW IF NO ITEMS --}}
@@ -121,7 +121,7 @@
                     {{-- TOTAL --}}
                     <tfoot class="table-warning">
                         <tr>
-                            <th colspan="7" class="text-end">Total</th>
+                            <th colspan="8" class="text-end">Total</th>
                             <th>{{ $scheduleWork->items->sum('qty') }}</th>
                             <th></th>
                         </tr>
