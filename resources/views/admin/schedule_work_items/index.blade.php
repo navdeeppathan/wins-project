@@ -19,9 +19,9 @@
                     <thead class="table-light">
                         <tr>
                             <th>S. No.</th>
+                             <th>Description</th>
                             <th>Number</th>
-                            <th>Description</th>
-                            <th>Slides</th>
+                            <th>Sides</th>
                             <th>Length</th>
                             <th>Width</th>
                             <th>Height</th>
@@ -42,8 +42,9 @@
                                         @method('POST')
 
                                         <td>{{ $loop->iteration }}</td>
-                                        <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
                                         <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
+                                        <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
+                                        
                                         <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
                                         <td><input name="length" value="{{ $item->length }}" class="form-control"></td>
                                         <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
@@ -75,15 +76,16 @@
                                         <input type="text" name="id" class="form-control" placeholder="1" readonly>
                                     </td>
                                     <td>
-                                        <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
-                                    </td>
-
-                                    <td>
                                         <input type="text" name="description" class="form-control" placeholder="Enter Description">
                                     </td>
 
                                     <td>
-                                        <input type="text" name="no_of_items" class="form-control" placeholder="Enter Slides">
+                                        <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
+                                    </td>
+
+                                    
+                                    <td>
+                                        <input type="text" name="no_of_items" class="form-control" placeholder="Enter Sides">
                                     </td>
 
                                     <td>
@@ -199,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <input type="text" name="sr_no" class="form-control" placeholder="No">
                         <input type="text" name="description" class="form-control" placeholder="Desc">
-                        <input type="text" name="no_of_items" class="form-control" placeholder="Slides">
+                        <input type="text" name="no_of_items" class="form-control" placeholder="Sides">
                         <input type="text" name="length" class="form-control" placeholder="Length">
                         <input type="text" name="width" class="form-control" placeholder="Width">
                         <input type="text" name="height" class="form-control" placeholder="Height">
