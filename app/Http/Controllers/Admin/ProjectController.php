@@ -842,7 +842,7 @@ class ProjectController extends Controller
                 'vendor_id'         => $defaultVendorId->id ?? null,
                 'paid_to'           => $defaultVendorId->vendor_agency_name ?? "Defalut Vendor",
                 'quantity'          => 1,
-                'amount'            => 1,
+                'amount'            => $project->tender_fee,
                 'user_id'           => Auth::id(),
                 'voucher'           => 'NONE',
             ]); 
