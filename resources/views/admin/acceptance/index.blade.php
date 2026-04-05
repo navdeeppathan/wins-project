@@ -67,7 +67,9 @@
                 @php
                     $i=1;
                 @endphp
+                
                 @forelse($projects as $p)
+                   @if ($p->isQualified == 1)
                     <tr>
                         <td class="text-center">{{ $i }}</td>
                         <td style="
@@ -108,7 +110,7 @@
                                 class="form-control form-control-sm pg_submission_date"
                                 value="{{ $p->pg_submission_date }}" required>
                         </td>
-                    <td class="text-center">
+                        <td class="text-center">
                             @if($p->acceptance_upload)
                                 <a href="{{ Storage::url($p->acceptance_upload) }}"
                                 target="_blank"
@@ -129,7 +131,7 @@
                             </button>
 
                         </td>
-                        @if ($p->isQualified != 1)
+                     
                             <td class="text-center">
 
                                     <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
@@ -139,18 +141,19 @@
                                     <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
                                     @endif
                             </td>
-                        @else
-                            <td>
-                            </td>
-                        @endif
+                       
                     </tr>
                    
                     @php
                         $i++;
                     @endphp
+                   
+                     @endif
                 @empty
                     <tr><td colspan="13" class="text-center">No projects yet.</td></tr>
+               
                 @endforelse
+
             </tbody>
         @else
             <tbody>

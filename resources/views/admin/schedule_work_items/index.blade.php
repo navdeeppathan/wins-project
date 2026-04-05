@@ -86,7 +86,7 @@
                                 </td>
 
                                 <td>
-                                    <input type="text" name="no_of_items" class="form-control" placeholder="Enter Slides">
+                                    <input type="text" name="no_of_items" class="form-control" placeholder="Enter Sides">
                                 </td>
 
                                 <td>
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="hidden" name="schedule_work_id" value="${scheduleId}">
                         <input type="text" name="description" class="form-control" placeholder="Desc">
                         <input type="text" name="sr_no" class="form-control" placeholder="No">
-                        <input type="text" name="no_of_items" class="form-control" placeholder="Slides">
+                        <input type="text" name="no_of_items" class="form-control" placeholder="Sides">
                         <input type="text" name="length" class="form-control" placeholder="Length">
                         <input type="text" name="width" class="form-control" placeholder="Width">
                         <input type="text" name="height" class="form-control" placeholder="Height">
