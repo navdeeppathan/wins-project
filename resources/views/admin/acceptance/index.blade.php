@@ -68,8 +68,6 @@
                     $i=1;
                 @endphp
                 @forelse($projects as $p)
-
-            
                     <tr>
                         <td class="text-center">{{ $i }}</td>
                         <td style="
