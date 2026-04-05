@@ -13,7 +13,7 @@
 
             <div class="card-body p-0">
 
-                <table id="example" class="table table-bordered class-table mb-0 schedule-table"
+                <table id="example" class="table table-bordered class-table mb-0 schedule-table example"
                        data-schedule="{{ $scheduleWork->id }}">
 
                     <thead class="table-light">
