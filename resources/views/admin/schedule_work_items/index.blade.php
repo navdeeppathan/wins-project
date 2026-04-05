@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="d-flex gap-1">
 
                             <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
-                            <input type="text" name="description" class="form-control" placeholder="Enter Number">
+                            <input type="text" name="description" class="form-control" placeholder="Enter Description">
                             <input type="text" name="no_of_items" class="form-control"  placeholder="Enter Slides">
                             <input type="text" name="length" class="form-control" placeholder="Enter Length">
                             <input type="text" name="width" class="form-control" placeholder="Enter Width">
