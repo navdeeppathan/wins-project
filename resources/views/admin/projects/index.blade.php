@@ -223,6 +223,7 @@
                     {
                         extend: 'pdf',
                         text: 'Export PDF',
+                        className: 'btn btn-primary',
 
                         // ✅ REMOVE last column (Actions)
                         exportOptions: {
