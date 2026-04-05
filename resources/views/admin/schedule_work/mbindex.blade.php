@@ -10,14 +10,13 @@
         $tendered  = (float) $project->tendered_amount;
 
         $percentageText = '-';
+
         if ($estimated > 0 && $tendered > 0) {
-            $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
-            // $percentageText = $percentage < 0
-            //     ? abs($percentage).' % BELOW'
-            //     : $percentage.' % ABOVE';
+            $percentage = (($estimated - $tendered) / $estimated) * -100;
+
             $percentageText = $percentage < 0
-            ? number_format(abs($percentage), 4).' % BELOW'
-            : number_format($percentage, 4).' % ABOVE';
+                ? number_format(abs($percentage), 4) . ' % BELOW'
+                : number_format($percentage, 4) . ' % ABOVE';
         }
     @endphp
 

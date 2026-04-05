@@ -238,26 +238,26 @@
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const submission = document.getElementById('date_of_start');
-    const opening    = document.getElementById('date_of_opening');
+        const submission = document.getElementById('date_of_start');
+        const opening    = document.getElementById('date_of_opening');
 
-    let openingManuallyChanged = false;
+        let openingManuallyChanged = false;
 
-    // Mark opening as manually edited
-    opening.addEventListener('input', function () {
-        openingManuallyChanged = true;
+        // Mark opening as manually edited
+        opening.addEventListener('input', function () {
+            openingManuallyChanged = true;
+        });
+
+        // Auto-fill opening when submission changes
+        submission.addEventListener('change', function () {
+            if (!openingManuallyChanged || opening.value === '') {
+                opening.value = submission.value;
+            }
+        });
+
     });
-
-    // Auto-fill opening when submission changes
-    submission.addEventListener('change', function () {
-        if (!openingManuallyChanged || opening.value === '') {
-            opening.value = submission.value;
-        }
-    });
-
-});
 </script>
 
 <script>
