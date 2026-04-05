@@ -224,6 +224,7 @@
                         extend: 'pdf',
                         text: 'Export PDF',
                         className: 'btn btn-primary',
+                        color: '#4672C1',
 
                         // ✅ REMOVE last column (Actions)
                         exportOptions: {
