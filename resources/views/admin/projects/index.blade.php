@@ -26,7 +26,7 @@
 </form> --}}
 
 <style>
-    .dt-button .btn-custom {
+    .exportpdfbtn .exportpdfbtn {
     background-color: #4672C1 !important;
     color: #fff !important;
     border: none !important;
@@ -231,7 +231,7 @@
                     {
                         extend: 'pdf',
                         text: 'Export PDF',
-                        className: 'btn btn-sm btn-primary text-white',
+                        className: 'text-white exportpdfbtn',
 
                         // ✅ REMOVE last column (Actions)
                         exportOptions: {
