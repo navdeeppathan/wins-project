@@ -809,19 +809,7 @@ class ProjectController extends Controller
 
         $defaultVendorId =Vendor::where('user_id', Auth::id())->where('isDefault', 1)->first();
 
-        //    foreach ([
-        //         'TENDER OPENED ON',
-        //         'TENDER AWARDED ON',
-        //         'DATE OF START OF WORK'
-        //     ] as $subject) {
-
-        //         Correspondence::create([
-        //             'project_id' => $project->id,
-        //             'letter_subject'    => $subject,
-        //             'letter_date'       => Carbon::now()->format('Y-m-d'),
-        //         ]);
-        //     }
-
+      
 
             Correspondence::create([
                     'project_id' => $project->id,

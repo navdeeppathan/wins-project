@@ -91,7 +91,7 @@
                         <td class="text-center">{{ number_format($p->estimated_amount,2) }}</td>
                         <!-- <td>{{ number_format($p->emds?->sum('amount') ?? 0, 2) }}</td> -->
                         <td class="text-center">
-                            <input type="number" step="0.01"
+                            <input type="number" step="0.0001"
                                 class="form-control form-control-sm tendered_amount"
                                 value="{{ $p->tendered_amount }}" required>
                         </td>

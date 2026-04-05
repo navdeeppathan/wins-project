@@ -8,6 +8,8 @@
     @php
         $estimated = (float) $project->estimated_amount;
         $tendered  = (float) $project->tendered_amount;
+        \Log::info($tendered);
+        \Log::info($estimated);
 
         $percentageText = '-';
 

@@ -53,7 +53,7 @@
 
         <div class="col-md-4 mb-3">
             <label class="form-label">Estimated Amount *</label>
-           <input type="number" step="0.01"
+           <input type="number" step="0.0001"
                 name="estimated_amount"
                 id="estimated_amount"
                 value="{{ old('estimated_amount', $project->estimated_amount) }}"
