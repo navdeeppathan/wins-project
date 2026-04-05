@@ -19,8 +19,8 @@
                     <thead class="table-light">
                         <tr>
                             <th>S. No.</th>
-                            <th>Number</th>
                             <th>Description</th>
+                            <th>Number</th>
                             <th>Slides</th>
                             <th>Length</th>
                             <th>Width</th>
@@ -42,8 +42,9 @@
                                 @method('POST')
 
                                 <td>{{ $loop->iteration }}</td>
-                                <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
                                 <td><input name="description"  value="{{ $item->description }}" class="form-control"></td>
+                                <td><input name="sr_no" value="{{ $item->sr_no }}" class="form-control"></td>
+                                
                                 <td><input name="no_of_items" value="{{ $item->no_of_items }}" class="form-control"></td>
                                 <td><input name="length" value="{{ $item->length }}" class="form-control"></td>
                                 <td><input name="width" value="{{ $item->width }}" class="form-control"></td>
@@ -71,15 +72,17 @@
 
                                 <input type="hidden" name="schedule_work_id" value="{{ $scheduleWork->id }}">
 
+
                                 <td>
                                     <input type="text" name="id" class="form-control" placeholder="1" readonly>
                                 </td>
+                                
                                 <td>
-                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
+                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
                                 </td>
 
                                 <td>
-                                    <input type="text" name="description" class="form-control" placeholder="Enter Description">
+                                    <input type="text" name="sr_no" class="form-control" placeholder="Enter No">
                                 </td>
 
                                 <td>
@@ -196,9 +199,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <form method="POST" action="{{ route('admin.schedule-work-items.store') }}" class="d-flex gap-1">
                         @csrf
                         <input type="hidden" name="schedule_work_id" value="${scheduleId}">
-
-                        <input type="text" name="sr_no" class="form-control" placeholder="No">
                         <input type="text" name="description" class="form-control" placeholder="Desc">
+                        <input type="text" name="sr_no" class="form-control" placeholder="No">
                         <input type="text" name="no_of_items" class="form-control" placeholder="Slides">
                         <input type="text" name="length" class="form-control" placeholder="Length">
                         <input type="text" name="width" class="form-control" placeholder="Width">
