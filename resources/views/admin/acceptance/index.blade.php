@@ -69,7 +69,7 @@
                 @endphp
                 @forelse($projects as $p)
 
-                @if ($p->isQualified == 1)
+            
                     <tr>
                         <td class="text-center">{{ $i }}</td>
                         <td style="
@@ -131,17 +131,19 @@
                             </button>
 
                         </td>
-                        <td class="text-center">
+                        @if ($p->isQualified != 1)
+                            <td class="text-center">
 
-                                <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
-                                    Add PG
-                                </a>
-                                @if (!empty($p->acceptance_letter_no) && $p->pgDetails->isNotEmpty())
-                                <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
-                                @endif
-                        </td>
+                                    <a href="{{ route('admin.projects.pg.create', $p->id) }}" class="btn btn-sm btn-primary addPgBtn">
+                                        Add PG
+                                    </a>
+                                    @if (!empty($p->acceptance_letter_no) && $p->pgDetails->isNotEmpty())
+                                    <a href="{{ route('admin.projects.awards', $p->id) }}" class="btn btn-sm btn-primary ">Awards</a>
+                                    @endif
+                            </td>
+                        @endif
                     </tr>
-                    @endif
+                   
                     @php
                         $i++;
                     @endphp
