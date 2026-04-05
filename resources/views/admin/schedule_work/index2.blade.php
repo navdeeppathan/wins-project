@@ -194,11 +194,11 @@
                     </td>
 
                     <td class="amount text-center">
-                        {{ number_format($w->amount,2) }}
+                        {{ number_format($w->amount,4) }}
                     </td>
 
                     <td class="amount text-center">
-                        {{ number_format($w->abatement,2) }}
+                        {{ number_format($w->abatement,4) }}
                     </td>
 
                     {{-- <td>
