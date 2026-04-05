@@ -173,7 +173,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll(".add-row-btn").forEach(button => {
-
+        let count = table.querySelectorAll('tr').length + 1;
         button.addEventListener("click", function () {
 
             let scheduleId = this.dataset.schedule;
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             @csrf
                             <input type="hidden" name="schedule_work_id" value="${scheduleId}">
 
-                            <td></td>
+                            <td>${count}</td>
                             <td><input type="text" name="sr_no" class="form-control"></td>
                             <td><input type="text" name="description" class="form-control"></td>
                             <td><input type="text" name="no_of_items" class="form-control"></td>
