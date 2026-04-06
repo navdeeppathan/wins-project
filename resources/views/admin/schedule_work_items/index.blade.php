@@ -21,7 +21,7 @@
                             <th>S. No.</th>
                             <th>Description</th>
                             <th>Number</th>
-                            <th>Slides</th>
+                            <th>Sides</th>
                             <th>Length</th>
                             <th>Width</th>
                             <th>Height</th>
