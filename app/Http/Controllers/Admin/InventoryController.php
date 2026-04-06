@@ -171,12 +171,15 @@ class InventoryController extends Controller
         }
 
 
-        if(($data['project_id'] ?? null) != null)
-        {
-           
-            $schedules = ScheduleWork::where('project_id', $data['project_id'])->where('description', 'SUNDRY')->first();
+        if(!empty($data['schedule_work_id'] )){
+            $data['schedule_work_id'] = $data['schedule_work_id'];
+        }else{
+            if(($data['project_id'] ?? null) != null)
+            {
+                $schedules = ScheduleWork::where('project_id', $data['project_id'])->where('description', 'SUNDRY')->first();
 
-            $data['schedule_work_id'] = $schedules->id ?? null;
+                $data['schedule_work_id'] = $schedules->id ?? null;
+            }
         }
 
         Inventory::create($data);
