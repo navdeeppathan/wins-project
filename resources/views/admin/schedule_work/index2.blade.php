@@ -137,9 +137,10 @@
                     </td>
 
                     <td style="text-align: left">
-                        <input class="form-control description text-left"
+                        <textarea class="form-control description" >{{ $w->description }}</textarea>
+                        {{-- <input class="form-control description text-left"
                             value="{{ $w->description }}"
-                        />
+                        /> --}}
                     </td>
 
 
