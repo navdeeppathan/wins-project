@@ -7,7 +7,7 @@
 
     if ($estimated > 0 && $tendered > 0) {
         $percentage = (($estimated - $tendered) / $estimated) * -100;
-        $percentage = round($percentage, 2);
+        $percentage = $percentage;
         if ($percentage == '-0') {
             $percentageText = 'AT PAR';
         }elseif ($percentage < 0) {
