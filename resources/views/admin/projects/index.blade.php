@@ -242,65 +242,56 @@ div.dt-buttons .buttons-pdf {
         });
     });
 
-    new DataTable('#projectTable', {
-        scrollX: true,
-        scrollCollapse: true,
-        responsive: false,
-        autoWidth: true,
-        lengthMenu: [5,10,25,50,100],
+new DataTable('#projectTable', {
+    scrollX: true,
+    scrollCollapse: true,
+    responsive: false,
+    autoWidth: true,
 
-        layout: {
-            topStart: {
-                buttons: [
-                    {
-                        extend: 'pdf',
-                        text: 'Export PDF',
-                        className: 'text-white exportpdfbtn',
+    pageLength: 5, // ✅ default value
 
-                        // ✅ REMOVE last column (Actions)
-                        exportOptions: {
-                            columns: ':not(:last-child)'
-                        },
+    lengthMenu: [[5, 10, 15, 16, 25, 50, 100], [5, 10, 15, 16, 25, 50, 100]],
 
-                        // ✅ ADD TITLE
-                        title: 'LIST OF PROJECTS',
-
-                        // ✅ OPTIONAL: Styling PDF
-                        customize: function (doc) {
-
-                            // Center title
-                            doc.styles.title = {
-                                alignment: 'center',
-                                fontSize: 14,
-                                bold: true
-                            };
-
-                            // OPTIONAL: Adjust table layout
-                            doc.content[1].table.widths =
-                                Array(doc.content[1].table.body[0].length).fill('*');
-                        }
+    layout: {
+        topStart: {
+            pageLength: true, // ✅ SHOW DROPDOWN
+            buttons: [
+                {
+                    extend: 'pdf',
+                    text: 'Export PDF',
+                    className: 'text-white exportpdfbtn',
+                    exportOptions: {
+                        columns: ':not(:last-child)'
                     },
-                    'colvis'
-                ]
-            }
-        },
-
-        /* 🔥 GUARANTEED ROW COLOR FIX */
-        createdRow: function (row, data, index) {
-            let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-            $('td', row).css('background-color', bg);
-        },
-
-        rowCallback: function (row, data, index) {
-            let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
-
-            $(row).off('mouseenter mouseleave').hover(
-                () => $('td', row).css('background-color', '#e9ecff'),
-                () => $('td', row).css('background-color', base)
-            );
+                    title: 'LIST OF PROJECTS',
+                    customize: function (doc) {
+                        doc.styles.title = {
+                            alignment: 'center',
+                            fontSize: 14,
+                            bold: true
+                        };
+                        doc.content[1].table.widths =
+                            Array(doc.content[1].table.body[0].length).fill('*');
+                    }
+                },
+                'colvis'
+            ]
         }
+    },
 
+    createdRow: function (row, data, index) {
+        let bg = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+        $('td', row).css('background-color', bg);
+    },
 
-    });
+    rowCallback: function (row, data, index) {
+        let base = (index % 2 === 0) ? '#D7E2F2' : '#B4C5E6';
+
+        $(row).off('mouseenter mouseleave').hover(
+            () => $('td', row).css('background-color', '#e9ecff'),
+            () => $('td', row).css('background-color', base)
+        );
+    }
+});
 </script>
 @endpush
