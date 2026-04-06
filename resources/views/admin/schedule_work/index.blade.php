@@ -127,5 +127,4 @@
         </script>
     @endpush
 
-    {{ $projects->links() }}
 @endsection

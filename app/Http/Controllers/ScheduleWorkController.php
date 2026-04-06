@@ -37,7 +37,7 @@ class ScheduleWorkController extends Controller
                 $query->whereBetween('date_of_start', [$start, $end]);
             })
             ->latest()
-            ->paginate(20);
+            ->get();
 
         return view('admin.schedule_work.index', compact('projects'));
     }
