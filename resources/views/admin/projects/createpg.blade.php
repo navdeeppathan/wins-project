@@ -15,12 +15,13 @@
 
     if ($estimated > 0 && $tendered > 0) {
         $percentage = (($estimated - $tendered) / $estimated) * -100;
-        $percentage = round($percentage, 4);
+
+        $percentage = $percentage;
 
         if ($percentage < 0) {
-            $percentageText = number_format(abs($percentage), 4).' % BELOW'; //$percentage < 0 ?abs($percentage) . ' % BELOW';
+            $percentageText = number_format(abs($percentage), 4).' % BELOW'
         } else {
-            $percentageText =  number_format($percentage, 4).' % ABOVE';//$percentage . ' % ABOVE';
+            $percentageText =  number_format($percentage, 4).' % ABOVE';
         }
     }
 @endphp
