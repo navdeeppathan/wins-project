@@ -171,7 +171,7 @@ class InventoryController extends Controller
         }
 
 
-        if($data['project_id'] != null)
+        if(($data['project_id'] ?? null) != null)
         {
            
             $schedules = ScheduleWork::where('project_id', $data['project_id'])->where('description', 'SUNDRY')->first();
