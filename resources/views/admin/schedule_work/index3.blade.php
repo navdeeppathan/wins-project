@@ -338,9 +338,11 @@
                                 <option value="">Select</option>
 
                                 @foreach($categories as $cat)
-                                <option value="{{ $cat->name }}" {{$cat->name==='T&P' ? 'selected' : '' }}>
-                                {{ $cat->name }}
-                                </option>
+                                    @if($cat->name !== 'ORGANISATION' || $cat->slug !== 'organisation')
+                                        <option value="{{ $cat->name }}" {{$cat->name==='T&P' ? 'selected' : '' }}>
+                                        {{ $cat->name }}
+                                        </option>
+                                    @endif
                                 @endforeach
 
                             </select>
