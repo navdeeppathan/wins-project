@@ -13,7 +13,7 @@
 
         $percentageText = '-';
         if ($estimated > 0 && $tendered > 0) {
-            $percentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+            $percentage = (($estimated - $tendered) / $estimated) * -100;
             // $percentageText = $percentage < 0
             //     ? abs($percentage).' % BELOW'
             //     : $percentage.' % ABOVE';
