@@ -363,7 +363,7 @@ class ProjectController extends Controller
         // All projects (paginated)
         $projects = (clone $baseQuery)
             ->latest()
-            ->paginate(20);
+            ->get();
 
         // Forfeited EMD projects
         $forfieteds = (clone $baseQuery)
