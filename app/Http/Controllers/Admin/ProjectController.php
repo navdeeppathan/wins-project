@@ -1041,7 +1041,7 @@ class ProjectController extends Controller
             $query->whereBetween('date_of_start', [$start, $end]);
         })
         ->latest()
-        ->paginate(20);
+        ->get();
 
         return view('admin.award.index', compact('projects'));
     }
@@ -1058,7 +1058,7 @@ class ProjectController extends Controller
                         $query->whereBetween('date_of_start', [$start, $end]);
                     })
 
-                    ->latest()->paginate(20);
+                    ->latest()->get();
 
         return view('admin.award.index2', compact('projects'));
     }

@@ -198,6 +198,5 @@ $(document).on('click', '.saveAwardBtn', function () {
 </script>
 @endpush
 
-{{ $projects->links() }}
 
 @endsection
