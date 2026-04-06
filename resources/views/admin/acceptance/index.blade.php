@@ -51,7 +51,6 @@
                 <th class="text-center">NIT No</th>
                 <th class="text-center">Date of Opening</th>
                 <th class="text-center">Estimate Amt</th>
-                <!-- <th class="text-center">EMD Amt</th> -->
                 <th class="text-center">Tendered Amount*</th>
                 <th class="text-center">Acceptance Letter No.</th>
                 <th class="text-center">Date</th>
@@ -68,7 +67,7 @@
                     $i=1;
                 @endphp
                 
-                @forelse($projects as $p)
+                @foreach($projects as $p)
                     @if ($p->isQualified == 1)
                         <tr>
                             <td class="text-center">{{ $i }}</td>
@@ -149,9 +148,7 @@
                         @endphp
                     
                     @endif
-                @empty
-                    <tr><td colspan="12" class="text-center">No projects yet.</td></tr>
-                @endforelse
+                @endforeach
 
             </tbody>
         @else
