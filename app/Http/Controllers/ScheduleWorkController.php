@@ -177,7 +177,7 @@ class ScheduleWorkController extends Controller
         if ($estimated > 0 && $tendered > 0) {
 
             // percentage (can be negative or positive)
-            $abatementPercentage = round((($estimated - $tendered) / $estimated) * -100, 2);
+            $abatementPercentage = (($estimated - $tendered) / $estimated) * -100;
 
             // apply on amount
             if ($abatementPercentage < 0) {
