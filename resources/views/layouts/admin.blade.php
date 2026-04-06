@@ -871,7 +871,8 @@ document.addEventListener('DOMContentLoaded', function () {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
-        autoWidth: false,
+        autoWidth: true,
+        lengthMenu: [5,10,25,50,100],
 
 
         /* 🔥 GUARANTEED ROW COLOR FIX */
