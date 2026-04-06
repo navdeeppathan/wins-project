@@ -3,7 +3,9 @@
 @section('title','Add PG Details')
 
 @section('content')
+
 <h3 class="mb-3">Project – PG Details – #{{ $project->name}}</h3>
+
 
 @php
     $estimated = (float) $project->estimated_amount;
@@ -13,13 +15,12 @@
 
     if ($estimated > 0 && $tendered > 0) {
         $percentage = (($estimated - $tendered) / $estimated) * -100;
-
         $percentage = $percentage;
 
         if ($percentage < 0) {
-            $percentageText = number_format(abs($percentage), 4).' % BELOW'
+            $percentageText = number_format(abs($percentage), 4).' % BELOW'; //$percentage < 0 ?abs($percentage) . ' % BELOW';
         } else {
-            $percentageText =  number_format($percentage, 4).' % ABOVE';
+            $percentageText =  number_format($percentage, 4).' % ABOVE';//$percentage . ' % ABOVE';
         }
     }
 @endphp
