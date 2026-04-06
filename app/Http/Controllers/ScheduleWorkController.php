@@ -164,11 +164,14 @@ class ScheduleWorkController extends Controller
         $baseAmount = $qty * $rate;
 
         /* ---------- GST as % ---------- */
-        $gstAmount = ($baseAmount * $gst) / 100;
+        if($gst == 1 || $gst == 0){ 
+            $amount = $baseAmount;
+        }else{
+            $gstAmount = ($baseAmount * $gst) / 100;
+            $amount = $baseAmount + $gstAmount;
+        }
 
-        $amount = $baseAmount + $gstAmount;
-
-        $abate_amount=$amount;
+        $abate_amount = $amount;
 
 
         /* ---------- Abatement ---------- */
@@ -176,15 +179,10 @@ class ScheduleWorkController extends Controller
 
         if ($estimated > 0 && $tendered > 0) {
 
-            // percentage (can be negative or positive)
             $abatementPercentage = (($estimated - $tendered) / $estimated) * -100;
-
-            // apply on amount
             if ($abatementPercentage < 0) {
-                // minus
                 $abate_amount -= ($abate_amount * abs($abatementPercentage)) / 100;
             } else {
-                // plus
                 $abate_amount += ($abate_amount * $abatementPercentage) / 100;
             }
         }
