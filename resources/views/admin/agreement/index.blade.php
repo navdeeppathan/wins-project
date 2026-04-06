@@ -185,6 +185,5 @@ $(document).on('click', '.saveAgreementBtn', function () {
 </script>
 @endpush
 
-{{ $projects->links() }}
 
 @endsection

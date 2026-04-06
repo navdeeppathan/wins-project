@@ -1011,7 +1011,7 @@ class ProjectController extends Controller
                         $query->whereBetween('date_of_start', [$start, $end]);
                     })
                     ->latest()
-                    ->paginate(20);
+                    ->get();
 
         return view('admin.acceptance.index', compact('projects'));
     }
@@ -1070,7 +1070,7 @@ class ProjectController extends Controller
                 $query->whereYear('created_at', $request->year);
             })
             ->latest()
-            ->paginate(10);
+            ->get();
 
         return view('admin.agreement.index', compact('projects'));
     }

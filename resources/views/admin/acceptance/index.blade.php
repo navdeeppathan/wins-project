@@ -304,6 +304,4 @@ document.querySelectorAll('.tendered_amount').forEach(input => {
 
 
 
-{{ $projects->links() }}
-
 @endsection
