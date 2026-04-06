@@ -3,9 +3,7 @@
 @section('title','Add PG Details')
 
 @section('content')
-
 <h3 class="mb-3">Project – PG Details – #{{ $project->name}}</h3>
-
 
 @php
     $estimated = (float) $project->estimated_amount;
