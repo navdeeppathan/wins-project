@@ -23,6 +23,8 @@ use App\Http\Controllers\Staff\SecurityDepositController as StaffSecurityDeposit
 use App\Http\Controllers\Staff\TAndPController;
 use App\Http\Controllers\Staff\VendorController;
 use App\Http\Controllers\Admin\CqcVaultController;
+use App\Http\Controllers\Admin\RateItemController;
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\SuperAdmin\UserTransactionController;
@@ -51,6 +53,18 @@ Route::get('clear-cache', function() {
 
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+
+
+    Route::get('/rate-items', [RateItemController::class, 'index'])
+    ->name('rate-items.index');
+
+  
+
+    Route::post('/rate-items/store', [RateItemController::class, 'store'])
+        ->name('rate-items.store');
+
+    Route::post('/rate-items/update-rate/{rateItem}', [RateItemController::class, 'update'])
+        ->name('rate-items.update-rate');
 
     /* ===================== Dashboard ===================== */
 
