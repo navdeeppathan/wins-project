@@ -280,7 +280,7 @@
         </tbody>
         <tfoot>
             <tr style="background:#000;color:#fff;font-weight:bold;">
-                <td colspan="6" class="text-end">TOTAL</td>
+                <td colspan="6" class="text-end">GRAND TOTAL</td>
                 <td id="totalAmount" class="text-center">0.00</td>
                 <td id="totalAbatement" class="text-center">0.00</td>
                 <td></td>
@@ -318,7 +318,11 @@
         let totalAmount = 0;
         let totalAbatement = 0;
 
-        document.querySelectorAll('#workTable tr').forEach(row => {
+        let rows = (window.jQuery && $.fn && $.fn.DataTable && $.fn.DataTable.isDataTable('#example'))
+            ? $('#example').DataTable().rows().nodes().toArray()
+            : Array.from(document.querySelectorAll('#workTable tr'));
+
+        rows.forEach(row => {
             let amount = parseFloat(row.children[6]?.innerText.replace(/,/g,'')) || 0;
             let abatement = parseFloat(row.children[7]?.innerText.replace(/,/g,'')) || 0;
 
@@ -326,8 +330,8 @@
             totalAbatement += abatement;
         });
 
-        document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
-        document.getElementById('totalAbatement').innerText = totalAbatement.toFixed(2);
+        document.getElementById('totalAmount').innerText = Math.round(totalAmount).toFixed(2);
+        document.getElementById('totalAbatement').innerText = Math.round(totalAbatement).toFixed(2);
     }
     let index = {{ $works->count() }};
 
@@ -536,7 +540,7 @@
         })
         .catch(() => alert('Server error'));
     });
-    new DataTable('#example', {
+    const dataTable = new DataTable('#example', {
         scrollX: true,
         scrollCollapse: true,
         responsive: false,
@@ -561,10 +565,9 @@
                 () => $('td', row).css('background-color', base)
             );
         }
-        
-
-
     });
+
+    dataTable.on('draw', calculateTotals);
 </script>
 
 
