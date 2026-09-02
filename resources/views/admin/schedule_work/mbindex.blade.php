@@ -131,9 +131,13 @@
                     </td>
 
 
+                    @php
+                        $displayQty = ($w->items && $w->items->count() > 0) ? $w->items->sum('qty') : $w->quantity;
+                        $displayAmount = ($w->items && $w->items->count() > 0) ? ($displayQty * $w->rate) : $w->amount;
+                    @endphp
                     <td>
                         <input class="form-control qty"
-                            value="{{ $w->quantity }}"
+                            value="{{ number_format($displayQty, 2, '.', '') }}"
                             >
                     </td>
 
@@ -156,7 +160,7 @@
                     </td>
 
                     <td class="amount text-center">
-                        {{ number_format($w->amount,2) }}
+                        {{ number_format($displayAmount, 2) }}
                     </td>
 
                     <td>

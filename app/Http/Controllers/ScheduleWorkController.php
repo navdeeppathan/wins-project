@@ -44,7 +44,8 @@ class ScheduleWorkController extends Controller
 
     public function index2(Project $project)
     {
-        $works = $project->scheduleWorks; // relation
+        $works = $project->scheduleWorks()->with('items')->get(); // relation
+        $this->syncWorksFromItems($works, $project);
         $inventories = $project->inventory;
         return view('admin.schedule_work.index2', compact('project','works','inventories'));
     }
@@ -52,9 +53,48 @@ class ScheduleWorkController extends Controller
     
     public function mbindex(Project $project)
     {
-        $works = $project->scheduleWorks; 
+        $works = $project->scheduleWorks()->with('items')->get(); 
+        $this->syncWorksFromItems($works, $project);
         $inventories = $project->inventory;
         return view('admin.schedule_work.mbindex', compact('project','works','inventories'));
+    }
+
+    private function syncWorksFromItems($works, Project $project)
+    {
+        $estimated = (float) $project->estimated_amount;
+        $tendered  = (float) $project->tendered_amount;
+        $abatementPercentage = 0;
+        if ($estimated > 0 && $tendered > 0) {
+            $abatementPercentage = (($estimated - $tendered) / $estimated) * -100;
+        }
+
+        foreach ($works as $w) {
+            if ($w->items && $w->items->count() > 0) {
+                $totalQty = (float) $w->items->sum('qty');
+                if (abs((float)$w->quantity - $totalQty) > 0.001) {
+                    $rate = (float) $w->rate;
+                    $gst  = (float) $w->gst;
+                    $baseAmount = $totalQty * $rate;
+                    $amount = ($gst == 1 || $gst == 0) ? $baseAmount : ($baseAmount + (($baseAmount * $gst) / 100));
+                    $abateAmount = $amount;
+                    if ($abatementPercentage != 0) {
+                        if ($abatementPercentage < 0) {
+                            $abateAmount -= ($abateAmount * abs($abatementPercentage)) / 100;
+                        } else {
+                            $abateAmount += ($abateAmount * $abatementPercentage) / 100;
+                        }
+                    }
+                    $w->update([
+                        'quantity'  => $totalQty,
+                        'amount'    => $amount,
+                        'abatement' => $abateAmount,
+                    ]);
+                    $w->quantity = $totalQty;
+                    $w->amount = $amount;
+                    $w->abatement = $abateAmount;
+                }
+            }
+        }
     }
 
     public function inventoryindex(Project $project)
