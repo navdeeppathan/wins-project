@@ -408,23 +408,6 @@
             </tr>
         @endforelse
     </tbody>
-    <tfoot>
-        <tr>
-            <th class="text-center">#</th>
-            <th class="text-center">Date</th>
-            <th class="text-center">Paid To</th>
-            <th class="text-center">Staff</th>
-            <th class="text-center">Category</th>
-            <th class="text-center">Sub Category</th>
-            <th class="text-center">Bill Number</th>
-            <th class="text-center">Description of Item</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Rate</th>
-            <th class="text-center">Amount</th>
-            <th class="text-center">Upload</th>
-            <th class="text-center" width="">Action</th>
-        </tr>
-    </tfoot>
 </table>
 </div>
 
@@ -659,8 +642,8 @@
         scrollCollapse: true,
         responsive: false,
         autoWidth: false,
-        fixedHeader: true,
-        lengthMenu: [3,5,10,25,50,100],
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50, 100],
 
         // ✅ FIX SEARCH ISSUE
         columnDefs: [
