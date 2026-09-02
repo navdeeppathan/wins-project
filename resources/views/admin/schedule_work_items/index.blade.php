@@ -122,8 +122,8 @@
                     {{-- TOTAL --}}
                     <tfoot class="table-warning">
                         <tr>
-                            <th colspan="7" class="text-end">Total</th>
-                            <th>{{ $scheduleWork->items->sum('qty') }}</th>
+                            <th colspan="8" class="text-end">Total</th>
+                            <th id="totalQty" class="text-center">{{ $scheduleWork->items->sum('qty') }}</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -173,8 +173,20 @@
             let qty = numberField * slides * length * width * factor * height;
 
             row.querySelector('[name="qty"]').value = qty.toFixed(2);
+            updateTotalQty();
         }
     });
+
+    function updateTotalQty() {
+        let total = 0;
+        document.querySelectorAll('[name="qty"]').forEach(input => {
+            total += parseFloat(input.value) || 0;
+        });
+        let totalEl = document.getElementById('totalQty');
+        if (totalEl) {
+            totalEl.innerText = total.toFixed(2);
+        }
+    }
 
 document.addEventListener("DOMContentLoaded", function () {
 
