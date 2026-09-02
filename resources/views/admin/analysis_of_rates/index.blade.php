@@ -98,7 +98,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($items as $index => $item)
+                        @foreach($items as $index => $item)
                         <tr>
                             <td class="text-center fw-bold text-muted">{{ $index + 1 }}</td>
                             <td><span class="code-badge">{{ $item->item_code ?? 'ITEM' }}</span></td>
@@ -118,14 +118,7 @@
                                 </form>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="9" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
-                                No Analysis of Rate items defined yet. Click <strong>"Add Analysis Item"</strong> to create one.
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -205,7 +198,10 @@ $(document).ready(function() {
         $('#aorTable').DataTable({
             pageLength: 10,
             lengthMenu: [5, 10, 25, 50],
-            responsive: true
+            responsive: true,
+            language: {
+                emptyTable: "No Analysis of Rate items defined yet. Click '+ Analysis Item' above to create one."
+            }
         });
     }
 });

@@ -91,7 +91,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($rates as $index => $rate)
+                        @foreach($rates as $index => $rate)
                         <tr>
                             <td class="text-center fw-bold text-muted">{{ $index + 1 }}</td>
                             <td><span class="badge bg-primary-subtle text-primary">{{ $rate->category ?? 'General' }}</span></td>
@@ -112,14 +112,7 @@
                                 </form>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="10" class="text-center py-5 text-muted">
-                                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
-                                No Plinth Area Rates defined yet. Click <strong>"Add Plinth Area Rate"</strong> to add one.
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -183,7 +176,10 @@ $(document).ready(function() {
         $('#parTable').DataTable({
             pageLength: 10,
             lengthMenu: [5, 10, 25, 50],
-            responsive: true
+            responsive: true,
+            language: {
+                emptyTable: "No Plinth Area Rates defined yet. Click '+ Plinth Area Rate' above to add one."
+            }
         });
     }
 });
