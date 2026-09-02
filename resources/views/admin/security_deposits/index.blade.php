@@ -53,7 +53,7 @@
                                 <th>Location</th>
                                 <th>Department</th>
                                 <th>Estimate Amt</th>
-                                <th>EMD Amt</th>
+                                <th>Security Amt</th>
                                 <th>Instrument Type/ Number/ Date</th>
                                 <th>Return</th>
                                 <th>Forfeited</th>
@@ -161,7 +161,7 @@
                                 <th>Location</th>
                                 <th>Department</th>
                                 <th>Estimate Amt</th>
-                                <th>EMD Amt</th>
+                                <th>Security Amt</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>
@@ -238,7 +238,7 @@
                                 <th>Department</th>
                                 <th>Estimate Amt</th>
 
-                                <th>EMD Amt</th>
+                                <th>Security Amt</th>
                                 <th>Instrument Type</th>
                                 <th>Instrument Number</th>
                                 <th>Instrument Date</th>

@@ -59,7 +59,7 @@ $recoveryTabs = [
                 <th class="text-center">State</th>
                 <th class="text-center">Department</th>
                 <th class="text-center">Estimate</th>
-                <th class="text-center">EMD</th>
+                <th class="text-center">Security Amount</th>
                 <th class="text-center">{{ $tab['label'] }}</th>
             </tr>
         </thead>
@@ -85,7 +85,7 @@ $recoveryTabs = [
                     <td class="text-center">{{ $row->state_name ?? '-' }}</td>
                     <td class="text-center">{{ $row->department_name ?? '-' }}</td>
                     <td class="text-center">{{ number_format($row->estimated_amount,2) }}</td>
-                    <td class="text-center">{{ number_format($row->emd_amount ?? 0,2) }}</td>
+                    <td class="text-center">{{ number_format($row->security_amount ?? $row->security ?? 0, 2) }}</td>
                     <td class="text-center">{{ number_format($row->{$tab['field']} ?? 0,2) }}</td>
                 </tr>
                 @php $i++; @endphp

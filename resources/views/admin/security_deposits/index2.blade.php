@@ -21,7 +21,7 @@
                 {{-- <th>Date of Opening</th> --}}
                 <th>Location</th>
                 <th>Department</th>
-                <th>EMD Amt</th>
+                <th>Security Amt</th>
                 <th>Instrument Type</th>
                 <th>Instrument Number</th>
                 <th>Instrument Date</th>

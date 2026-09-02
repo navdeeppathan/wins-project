@@ -60,6 +60,11 @@ class RecoveryController extends Controller
                 d.name AS department_name,
                 p.estimated_amount,
                 p.emd_amount,
+                COALESCE(
+                    NULLIF((SELECT SUM(sd.amount) FROM security_deposits sd WHERE sd.project_id = p.id), 0),
+                    SUM(r.security),
+                    0
+                ) AS security_amount,
 
                 SUM(r.security)      AS security,
                 SUM(r.income_tax)    AS income_tax,
