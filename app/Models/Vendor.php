@@ -22,6 +22,7 @@ class Vendor extends Model
                 'state',
                 'contact_person',
                 'vendor_agency_name',
+                'address',
                 'contact_number',
                 'email_id',
                 'gst_number',

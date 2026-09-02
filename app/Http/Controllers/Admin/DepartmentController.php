@@ -26,6 +26,7 @@ class DepartmentController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'address' => 'nullable|string',
                 'contact_person_name'=>'nullable|string|max:255',
                 'contact_person_designation'=>'nullable|string|max:255',
                 'contact_number'=>'nullable|string|max:20',
@@ -35,6 +36,7 @@ class DepartmentController extends Controller
             Department::create([
                 'user_id' => auth()->id(), // current user
                 'name' => $request->name,
+                'address' => $request->address,
                 'contact_person_name'=>$request->contact_person_name,
                 'contact_person_designation'=>$request->contact_person_designation,
                 'contact_number'=>$request->contact_number,
@@ -58,6 +60,7 @@ class DepartmentController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'address' => 'nullable|string',
                 'contact_person_name'=>'nullable|string|max:255',
                 'contact_person_designation'=>'nullable|string|max:255',
                 'contact_number'=>'nullable|string|max:20',
@@ -65,7 +68,14 @@ class DepartmentController extends Controller
             ]);
 
             $department = Department::findOrFail($id);
-            $department->update(['name' => $request->name,'contact_person_name'=>$request->contact_person_name,'contact_person_designation'=>$request->contact_person_designation,'contact_number'=>$request->contact_number,'email_id'=>$request->email_id]);
+            $department->update([
+                'name' => $request->name,
+                'address' => $request->address,
+                'contact_person_name' => $request->contact_person_name,
+                'contact_person_designation' => $request->contact_person_designation,
+                'contact_number' => $request->contact_number,
+                'email_id' => $request->email_id
+            ]);
 
             return redirect()->route('departments.index')->with('success', 'Department updated successfully!');
         } catch (Exception $e) {

@@ -10,6 +10,16 @@ use App\Models\DocumentHistory;
 use App\Models\AuditLog;
 class CqcVaultController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            if (!$user || !in_array($user->role, ['admin', 'superadmin'])) {
+                abort(403, 'Unauthorized access to E-Vault.');
+            }
+            return $next($request);
+        });
+    }
 
     public function auditLogs()
     {

@@ -37,6 +37,7 @@ class VendorController extends Controller
             'amount'        => 'required|numeric|min:0',
             'deduction'     => 'nullable|numeric|min:0',
             'upload'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'address'       => 'nullable|string',
         ]);
 
         // attach user
@@ -77,6 +78,7 @@ class VendorController extends Controller
             'amount'        => 'required|numeric|min:0',
             'deduction'     => 'nullable|numeric|min:0',
             'upload'        => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'address'       => 'nullable|string',
         ]);
 
         // recalc net payable

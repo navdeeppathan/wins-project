@@ -25,11 +25,13 @@ class DepartmentController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'address' => 'nullable|string',
             ]);
 
             Department::create([
                 'user_id' => auth()->id(), // current user
                 'name' => $request->name,
+                'address' => $request->address,
             ]);
 
             return redirect()->back()->with('success', 'Department created successfully!');
@@ -49,10 +51,14 @@ class DepartmentController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'address' => 'nullable|string',
             ]);
 
             $department = Department::findOrFail($id);
-            $department->update(['name' => $request->name]);
+            $department->update([
+                'name' => $request->name,
+                'address' => $request->address,
+            ]);
 
             return redirect()->back()->with('success', 'Department updated successfully!');
         } catch (Exception $e) {

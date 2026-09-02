@@ -38,6 +38,14 @@
                         <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control" rows="2">{{ old('address') }}</textarea>
+                    @error('address')
+                        <span class="text-danger small">{{ $message }}</span>
+                    @enderror
+                </div>
                  <div class="mb-3">
                     <label class="form-label">Contact Person Name *</label>
                     <input type="text"

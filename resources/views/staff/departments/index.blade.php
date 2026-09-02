@@ -51,6 +51,7 @@
                     <tr>
                         <th width="">No.</th>
                         <th>Name</th>
+                        <th>Address</th>
                         <th width="">Created</th>
                         <th width="">Action</th>
                     </tr>
@@ -63,6 +64,7 @@
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $dept->name }}</td>
+                        <td>{{ $dept->address ?? '-' }}</td>
                         <td>{{ date('d-m-Y', strtotime($dept->created_at)) }}</td>
                         <td class="action-btns">
                             <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -79,7 +81,7 @@
                     @endphp
                     @empty
                     <tr>
-                        <td colspan="4" class="text-muted py-3">No departments found.</td>
+                        <td colspan="5" class="text-muted py-3">No departments found.</td>
                     </tr>
 
                     @endforelse

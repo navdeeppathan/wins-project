@@ -349,10 +349,12 @@
                         STAFF
                     </a>
 
+                    @if(in_array($role, ['admin', 'superadmin']))
                     <a href="{{ route('admin.cqc-vault.index') }}"
                     class="dropdown-item {{ Request::is('admin/cqc-vault*') ? 'active' : '' }}">
                         E-Vault
                     </a>
+                    @endif
                 </div>
             </div>
             @endif

@@ -21,6 +21,7 @@
             <th class="text-center">#</th>
             <th class="text-center">State</th>
             <th class="text-center">Vendor Agency</th>
+            <th class="text-center">Address</th>
             <th class="text-center">Contact Person</th>
             <th class="text-center">Contact No</th>
             <th class="text-center">Email</th>
@@ -35,6 +36,7 @@
             <td class="text-center">{{ $i+1 }}</td>
             <td class="text-center">{{ $v->state }}</td>
             <td class="text-center">{{ $v->vendor_agency_name }}</td>
+            <td class="text-center">{{ $v->address ?? '-' }}</td>
             <td class="text-center">{{ $v->contact_person }}</td>
             <td class="text-center">{{ $v->contact_number }}</td>
             <td class="text-center">{{ $v->email_id }}</td>

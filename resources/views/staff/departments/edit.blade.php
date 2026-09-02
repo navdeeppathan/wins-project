@@ -39,6 +39,14 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control" rows="2">{{ old('address', $department->address) }}</textarea>
+                    @error('address')
+                        <span class="text-danger small">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('departments.index') }}" class="btn btn-light">Cancel</a>
             </form>

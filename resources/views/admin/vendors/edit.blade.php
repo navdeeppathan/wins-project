@@ -36,6 +36,14 @@
     </div>
 
     <div class="col-md-4">
+        <label>Address</label>
+        <textarea name="address"
+                  placeholder="Enter Address"
+                  rows="1"
+                  class="form-control">{{ old('address', $vendor->address) }}</textarea>
+    </div>
+
+    <div class="col-md-4">
         <label>Contact Person</label>
         <input type="text"
                name="contact_person"

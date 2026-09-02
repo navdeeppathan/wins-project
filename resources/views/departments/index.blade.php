@@ -51,6 +51,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Department</th>
+                        <th>Address</th>
                         <th>Contact Person</th>
                         <th>Designation</th>
                         <th>Contact No.</th>
@@ -66,6 +67,7 @@
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{{ $dept->name }}</td>
+                        <td>{{ $dept->address ?? '-' }}</td>
                         <td>
                             {{ $dept->contact_person_name }}
                         </td>
@@ -96,7 +98,7 @@
                     @endphp
                     @empty
                     <tr>
-                        <td colspan="4" class="text-muted py-3">No departments found.</td>
+                        <td colspan="8" class="text-muted py-3">No departments found.</td>
                     </tr>
 
                     @endforelse
