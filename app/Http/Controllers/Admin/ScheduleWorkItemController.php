@@ -18,7 +18,7 @@ class ScheduleWorkItemController extends Controller
         
     
        $scheduleWorkItems = ScheduleWorkItem::where('schedule_work_id', $scheduleWork->id)->get();
-// dd($scheduleWorks);
+            // dd($scheduleWorks);
 
         return view('admin.schedule_work_items.index', compact('scheduleWork', 'scheduleWorkItems'));
     }

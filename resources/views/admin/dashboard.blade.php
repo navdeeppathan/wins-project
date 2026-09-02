@@ -241,43 +241,6 @@
     </div>
 </div> --}}
 
-{{-- ================= TOP INVENTORY ================= --}}
-@if($totalInventory->count() > 0)
-
-<div class="dashboard-section">
-    <h4 class="section-title">Top Inventory</h4>
-
-    <div class="table-responsive">
-        <table class="table table-sm table-bordered class-table" id="inventoryTable">
-            <thead >
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">Item</th>
-                    <th class="text-center">Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($totalInventory as $stock)
-                    <tr>
-                        <td class="text-center">{{ $stock->id }}</td>
-                        <td class="text-center">{{ $stock->description }}</td>
-                        <td class="text-center">{{ number_format($stock->amount ?? 0, 2) }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3" class="text-center">No inventory found</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
-{{-- @else --}}
-    {{-- <div class="alert alert-warning text-center">
-        Data is not available. Start Your Projects.
-    </div> --}}
-@endif
-
 @endsection
 
 @push('scripts')
@@ -308,7 +271,6 @@
     $(document).ready(function () {
         initStyledDataTable('#projectsTable');
         initStyledDataTable('#vendorsTable');
-        initStyledDataTable('#inventoryTable');
     });
 </script>
 @endpush
