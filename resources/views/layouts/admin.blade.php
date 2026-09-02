@@ -203,22 +203,7 @@
             </div>
             @endif
 
-            {{-- @if(in_array($role, $menu['inventory'])) --}}
-            <div class="nav-item">
-                <a href="{{ route('admin.rate-items.index') }}"
-                class="nav-link {{ Request::is('admin/rate-items') ? 'active' : '' }}">
 
-                    <span class="nav-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                    </span>
-
-                    <span class="nav-text">BASIC RATES</span>
-                </a>
-            </div>
-            {{-- @endif --}}
 
 
             @php
@@ -361,28 +346,51 @@
 
 
 
+            @php
+                $estimateActive =
+                    Request::is('admin/plinth-area-rates*') ||
+                    Request::is('admin/schedule-maker*') ||
+                    Request::is('admin/rate-items*') ||
+                    Request::is('admin/analysis-of-rates*');
+            @endphp
+
             @if(in_array($role, $menu['estimate']))
-            <div class="nav-item">
-                <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(this)">
+            <div class="nav-item {{ $estimateActive ? 'open' : '' }}">
+                <a href="javascript:void(0)"
+                   class="nav-link {{ $estimateActive ? 'active' : '' }}"
+                   onclick="toggleDropdown(this)">
                     <span class="nav-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
                     </span>
                     <span class="nav-text">ESTIMATE</span>
-                    <span class="dropdown-arrow">
+                    <span class="dropdown-arrow {{ $estimateActive ? 'rotate' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </span>
                 </a>
-                <div class="sidebar-dropdown">
-                    {{-- <a href="" class="dropdown-item nav-link {{ Request::is('admin/emd*') ? 'active' : '' }}">ESTIMATION</a> --}}
+                <div class="sidebar-dropdown" style="{{ $estimateActive ? 'display:block;' : '' }}">
+                    <a href="{{ route('admin.plinth-area-rates.index') }}"
+                       class="dropdown-item {{ Request::is('admin/plinth-area-rates*') ? 'active' : '' }}">
+                        PLINTH AREA RATE
+                    </a>
 
-                    <a href="{{ route('admin.schedule-work.index') }}" class="dropdown-item {{ Request::is('admin/schedule-work*') ? 'active' : '' }}">SCHEDULE MAKER</a>
+                    <a href="{{ route('admin.schedule-maker.index') }}"
+                       class="dropdown-item {{ Request::is('admin/schedule-maker*') ? 'active' : '' }}">
+                        SCHEDULE MAKER
+                    </a>
 
-                    {{-- <a href="{{ route('admin.projects.securityreturned.index') }}" class="dropdown-item {{ Request::is('admin/security*') ? 'active' : '' }}">ANALYSIS OF RATES</a> --}}
+                    <a href="{{ route('admin.rate-items.index') }}"
+                       class="dropdown-item {{ Request::is('admin/rate-items*') ? 'active' : '' }}">
+                        BASIC RATES
+                    </a>
 
+                    <a href="{{ route('admin.analysis-of-rates.index') }}"
+                       class="dropdown-item {{ Request::is('admin/analysis-of-rates*') ? 'active' : '' }}">
+                        ANALYSIS OF RATES
+                    </a>
                 </div>
             </div>
             @endif

@@ -66,6 +66,17 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/rate-items/update-rate/{rateItem}', [RateItemController::class, 'update'])
         ->name('rate-items.update-rate');
 
+    /* ===================== ESTIMATE MODULE ===================== */
+    Route::get('/plinth-area-rates', [\App\Http\Controllers\Admin\PlinthAreaRateController::class, 'index'])->name('plinth-area-rates.index');
+    Route::post('/plinth-area-rates/store', [\App\Http\Controllers\Admin\PlinthAreaRateController::class, 'store'])->name('plinth-area-rates.store');
+    Route::delete('/plinth-area-rates/{id}', [\App\Http\Controllers\Admin\PlinthAreaRateController::class, 'destroy'])->name('plinth-area-rates.destroy');
+
+    Route::get('/schedule-maker', [\App\Http\Controllers\Admin\ScheduleMakerController::class, 'index'])->name('schedule-maker.index');
+
+    Route::get('/analysis-of-rates', [\App\Http\Controllers\Admin\AnalysisOfRateController::class, 'index'])->name('analysis-of-rates.index');
+    Route::post('/analysis-of-rates/store', [\App\Http\Controllers\Admin\AnalysisOfRateController::class, 'store'])->name('analysis-of-rates.store');
+    Route::delete('/analysis-of-rates/{id}', [\App\Http\Controllers\Admin\AnalysisOfRateController::class, 'destroy'])->name('analysis-of-rates.destroy');
+
     /* ===================== Dashboard ===================== */
 
 

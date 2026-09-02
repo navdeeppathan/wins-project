@@ -9,9 +9,9 @@ class PlinthAreaRate extends Model
 {
     use HasFactory;
 
-    protected  = 'plinth_area_rates';
+    protected $table = 'plinth_area_rates';
 
-    protected  = [
+    protected $fillable = [
         'user_id',
         'category',
         'building_type',
@@ -26,6 +26,6 @@ class PlinthAreaRate extends Model
 
     public function user()
     {
-        return ->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
