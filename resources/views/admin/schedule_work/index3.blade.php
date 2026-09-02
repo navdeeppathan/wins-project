@@ -280,10 +280,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select description" data-selected="{{ $i->description }}">
-                                <option value="">Select description</option>
-                            </select>
-                            {{-- <input type="hidden" class="form-control amount" value="1"> --}}
+                            <input type="text" class="form-control description" value="{{ $i->description }}" placeholder="Description">
                         </td>
                         <td>
                             <input type="number" class="form-control quantity" min="0" step="0.01" value="{{$i->quantity}}">
@@ -363,9 +360,7 @@
                             </select>
                         </td>
                         <td>
-                            <select class="form-select description">
-                                <option value="">Select description</option>
-                            </select>
+                            <input type="text" class="form-control description" placeholder="Description">
                             <input type="hidden" class="form-control amount" value="1">
                         </td>
 
@@ -500,9 +495,7 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-select description">
-                            <option value="">Select description</option>
-                        </select>
+                        <input type="text" class="form-control description" placeholder="Description">
                     </td>
                     <td>
                         <input type="number" class="form-control quantity" min="0" step="0.01">
@@ -510,7 +503,7 @@
                     </td>
 
                     <td>
-                        <input type="number" step="0.01" class="form-control net_payable" readonly>
+                        <input type="number" step="0.01" class="form-control net_payable">
                     </td>
 
 
@@ -620,135 +613,33 @@
         });
 
        document.addEventListener('change', function (e) {
-        if (!e.target.classList.contains('category')) return;
+            if (!e.target.classList.contains('category')) return;
             let row = e.target.closest('tr');
             let category = e.target.value;
 
-            let descSelect = row.querySelector('.description');
             let qtyIssuedBox = row.querySelector('.qty-issued-wrapper');
             let qtyIssued = row.querySelector('.qty-issued');
 
-            descSelect.innerHTML = '<option value="">Select description</option>';
-
             // SHOW / HIDE Qty Issued checkbox
             if (['MATERIAL', 'SERVICE'].includes(category)) {
-                qtyIssuedBox.style.display = 'block';
+                if (qtyIssuedBox) qtyIssuedBox.style.display = 'block';
             } else {
-                qtyIssuedBox.style.display = 'none';
-                qtyIssued.checked = false;
-            }
-
-            if (!category) return;
-
-            let matches = allInventories.filter(inv => inv.category === category);
-
-            matches.forEach(inv => {
-                let opt = document.createElement('option');
-                opt.value = inv.description;
-                opt.textContent = inv.description;
-                opt.dataset.quantity = inv.quantity;
-                opt.dataset.amount = inv.amount;
-                descSelect.appendChild(opt);
-            });
-        });
-
-        document.addEventListener('change', function (e) {
-
-            if (e.target.classList.contains('description')) {
-
-                let row = e.target.closest('tr');
-                let opt = e.target.selectedOptions[0];
-                if (!opt) return;
-
-                let qty    = parseFloat(opt.dataset.quantity) || 1;
-                let amount = parseFloat(opt.dataset.amount) || 0;
-
-                row.querySelector('.quantity').value = qty;
-                row.querySelector('.amount').value   = amount;
-
-                row.querySelector('.net_payable').value =
-                    (qty * amount).toFixed(2);
+                if (qtyIssuedBox) qtyIssuedBox.style.display = 'none';
+                if (qtyIssued) qtyIssued.checked = false;
             }
         });
 
         document.addEventListener('input', function (e) {
-
             if (e.target.classList.contains('quantity')) {
-
                 let row = e.target.closest('tr');
-
                 let qty    = parseFloat(e.target.value) || 0;
-                let amount = parseFloat(row.querySelector('.amount').value) || 0;
+                let amount = parseFloat(row.querySelector('.amount')?.value) || 0;
 
-                row.querySelector('.net_payable').value =
-                    (qty && amount) ? (qty * amount).toFixed(2) : '';
+                if (amount > 0) {
+                    row.querySelector('.net_payable').value = (qty * amount).toFixed(2);
+                }
             }
         });
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            document.querySelectorAll('#inventoryTable tbody tr').forEach(row => {
-
-                let categorySelect = row.querySelector('.category');
-                let descSelect     = row.querySelector('.description');
-                let qtyInput       = row.querySelector('.quantity');
-                let amountInput    = row.querySelector('.amount');
-                let netInput       = row.querySelector('.net_payable');
-
-                if (!categorySelect || !descSelect) return;
-
-                let category = categorySelect.value;
-                 
-
-                let selectedDesc = descSelect.dataset.selected;
-
-                console.log(selectedDesc);
-                if (!category || !selectedDesc) return;
-
-                descSelect.innerHTML = '<option value="">Select description</option>';
-
-                let matches = allInventories.filter(inv => inv.category === category);
-
-                 console.log(allInventories);
-                if(selectedDesc != 'TENDER FEE'){
-                    matches.forEach(inv => {
-
-                    
-                        let opt = document.createElement('option');
-                        opt.value = inv.description;
-                        opt.textContent = inv.description;
-                        opt.dataset.quantity = inv.quantity;
-                        opt.dataset.amount = inv.amount;   // 🔥 IMPORTANT
-
-                        if (inv.description === selectedDesc) {
-                            opt.selected = true;
-
-                            // 🔥 SET ALL VALUES CORRECTLY
-                            qtyInput.value    = qtyInput.value || inv.quantity;
-                            amountInput.value = inv.amount;
-
-                            netInput.value =
-                                (qtyInput.value * inv.amount).toFixed(2);
-                        }
-
-                        descSelect.appendChild(opt);
-                    });
-                }else{
-                    let opt = document.createElement('option');
-                    opt.value = 'TENDER FEE';
-                    opt.textContent = 'TENDER FEE';
-                    opt.selected = true;
-
-                    descSelect.appendChild(opt);
-                   
-                }
-
-            });
-        });
-
     </script>
 
     {{-- <script>
