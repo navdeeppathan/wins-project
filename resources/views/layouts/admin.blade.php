@@ -226,7 +226,9 @@
                     Request::is('admin/emd*') ||
                     Request::is('admin/pg*') ||
                     Request::is('admin/security*') ||
-                    Request::is('admin/withheld*');
+                    Request::is('admin/withheld*') ||
+                    Request::is('admin/allrecoveries*') ||
+                    Request::is('admin/recoveries*');
             @endphp
 
             @if(in_array($role, $menu['securities']))
@@ -242,7 +244,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">SECURITIES</span>
+                    <span class="nav-text">PROJECT (SECURITIES)</span>
 
                     <span class="dropdown-arrow {{ $securitiesActive ? 'rotate' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
