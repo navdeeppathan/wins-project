@@ -138,7 +138,7 @@
     @if(!in_array($project->status, ['awarded', 'agreement', 'billing']))
     <div class="d-flex flex-column align-items-end justify-content-end gap-4">
         <button type="button" id="addRow" class="btn btn-primary btn-sm mt-2 ">
-            + Add Row
+            + Row
         </button>
     </div>
     @endif

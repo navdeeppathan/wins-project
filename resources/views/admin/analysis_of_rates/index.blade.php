@@ -66,7 +66,7 @@
         </div>
         <div>
             <button class="btn btn-light text-primary fw-semibold px-3 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addAorModal">
-                <i class="bi bi-plus-circle-fill me-1"></i> Add Analysis Item
+                <i class="bi bi-plus-circle-fill me-1"></i> Analysis Item
             </button>
         </div>
     </div>

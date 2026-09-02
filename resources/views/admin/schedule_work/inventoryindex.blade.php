@@ -203,7 +203,7 @@
 </div>
 
 <div class="text-end mt-3">
-    <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
+    <button type="button" class="btn btn-primary" id="addRow">+ Row</button>
 </div>
 {{-- SCRIPT --}}
 <script>

@@ -10,7 +10,7 @@
 <h3 class="mb-3">Vendors</h3>
 <a href="{{ route('admin.vendors.create') }}"
    class="btn btn-primary btn-sm mb-3 float-end">
-    + Add Vendor
+    + Vendor
 </a>
 </div>
 

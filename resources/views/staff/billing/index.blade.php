@@ -206,7 +206,7 @@
         </table>
 
         <button id="addBillRow" class="btn btn-primary btn-sm mt-2">
-            + Add New Bill
+            + Bill
         </button>
     </div>
 </div>

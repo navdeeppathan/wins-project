@@ -353,7 +353,7 @@
  <a href="{{ route('admin.projects.index') }}" class="btn btn-secondary btn-sm mt-2">Back to Projects</a>
 
 @if(!in_array($project->status, ['awarded', 'agreement', 'billing']))
- <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New</button>
+ <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Row</button>
 @endif
 </div>
 @endsection

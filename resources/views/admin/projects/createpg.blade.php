@@ -191,7 +191,7 @@
 
 <div class="d-flex  align-items-center justify-content-end gap-2">
 <button type="button" class="btn btn-primary " id="addPgRow">
-    + Add More
+    + Row
 </button>
 <a href="/admin/acceptance" class="btn btn-secondary">Back</a>
 

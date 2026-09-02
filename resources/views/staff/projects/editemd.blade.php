@@ -117,7 +117,7 @@
 </div>
 
 <button type="button" id="addRow" class="btn btn-primary btn-sm mt-2">
-    + Add Row
+    + Row
 </button>
 
 <button class="btn btn-success mt-2 float-end">

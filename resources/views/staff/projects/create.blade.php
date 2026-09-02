@@ -145,7 +145,7 @@
 
 <div class="d-flex flex-column align-items-end">
     <button type="button" class="btn btn-primary mb-3" id="addEmdRow">
-        + Add More
+        + Row
     </button>
 <br>
     <div>

@@ -94,7 +94,7 @@
 </table>
 
 <button id="addRow" class="btn btn-primary btn-sm mt-2">
-    + Add New Row
+    + Row
 </button>
 
 </div>

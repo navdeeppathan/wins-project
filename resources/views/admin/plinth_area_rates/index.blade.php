@@ -58,7 +58,7 @@
         </div>
         <div>
             <button class="btn btn-light text-primary fw-semibold px-3 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addParModal">
-                <i class="bi bi-plus-circle-fill me-1"></i> Add Plinth Area Rate
+                <i class="bi bi-plus-circle-fill me-1"></i> Plinth Area Rate
             </button>
         </div>
     </div>

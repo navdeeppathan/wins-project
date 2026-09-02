@@ -118,7 +118,7 @@
 </div>
 
 <button id="addSecurityRow" class="btn btn-sm btn-primary mt-2">
-    + Add More Security Deposit
+    + Row
 </button>
 
 @push('scripts')

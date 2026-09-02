@@ -115,7 +115,7 @@
 
 <button id="addRecoveryRow"
         class="btn btn-sm btn-primary mt-2">
-    + Add More Recovery
+    + Row
 </button>
 
 

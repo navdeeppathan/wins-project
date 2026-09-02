@@ -26,7 +26,7 @@
     </div>
 
     <div id="additional-folders"></div>
-    <button type="button" class="btn btn-secondary mb-2" id="addFolderInput">+ Add Another Subfolder</button>
+    <button type="button" class="btn btn-secondary mb-2" id="addFolderInput">+ Subfolder</button>
     <button class="btn btn-success w-100">Create Folder(s)</button>
 </form>
 

@@ -118,7 +118,7 @@
                 </table>
 
                 <button id="addRow" class="btn btn-primary btn-sm mt-2 float-end">
-                    + Add New Vendor
+                    + Row
                 </button>
 
             </div>

@@ -147,7 +147,7 @@
 <div class="d-flex align-items-center justify-content-end gap-2">
     <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm mt-3">Back</a>
     <button id="addBillRow" class="btn btn-primary btn-sm mt-3">
-                + Add New Bill
+                + Bill
     </button>
 </div>
 @endsection

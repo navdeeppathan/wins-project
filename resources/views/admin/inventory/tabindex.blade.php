@@ -413,7 +413,7 @@
 
 <div class="d-flex align-items-center justify-content-end">
 
-<button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+<button id="addRow" class="btn btn-primary btn-sm mt-2">+ Row</button>
 
 </div>
 @endsection

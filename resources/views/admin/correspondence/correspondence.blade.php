@@ -108,7 +108,7 @@
 
 <div class="d-flex align-items-center justify-content-end gap-2 mt-3">
     <button type="button" id="addRow" class="btn btn-primary btn-sm">
-        + Add More
+        + Row
     </button>
     <a href="/admin/award" class="btn btn-secondary">Back</a>
 </div>

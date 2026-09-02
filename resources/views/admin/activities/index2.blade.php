@@ -197,7 +197,7 @@
         </table>
 
         <div class="d-flex justify-content-end">
-            <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Add New Row</button>
+            <button id="addRow" class="btn btn-primary btn-sm mt-2">+ Row</button>
             <a href="{{ url('admin/award')}}" class="btn btn-secondary btn-sm mt-2 ms-2">Back</a>
 
         </div>
@@ -517,7 +517,7 @@
                 $('#addRow').prop('disabled', false)
                     .addClass('btn-primary')
                     .removeClass('btn-secondary')
-                    .text('+ Add New Row');
+                    .text('+ Row');
             }
         }
     </script>

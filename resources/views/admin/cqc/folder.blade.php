@@ -68,7 +68,7 @@
                                 </div>
 
                                 <button type="button" class="btn btn-sm btn-outline-secondary w-100 mb-2" id="addSubfolderInput">
-                                    + Add Another
+                                    + Subfolder
                                 </button>
 
                                 <button type="submit" class="btn btn-sm btn-primary w-100">

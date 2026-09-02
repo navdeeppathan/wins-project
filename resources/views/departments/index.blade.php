@@ -29,7 +29,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="dept-title">Departments</h3>
         <a href="{{ route('departments.create') }}" class="btn btn-primary btn-sm">
-            + Add Department
+            + Department
         </a>
     </div>
 

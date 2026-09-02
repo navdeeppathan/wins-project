@@ -296,7 +296,7 @@
         Back    
     </a>
     <div class="text-end">
-        <button type="button" class="btn btn-primary" id="addRow">+ Add Row</button>
+        <button type="button" class="btn btn-primary" id="addRow">+ Row</button>
     </div>
 </div>
 

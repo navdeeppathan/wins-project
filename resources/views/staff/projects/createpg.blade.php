@@ -148,7 +148,7 @@
 
 <div class="d-flex  align-items-center justify-content-end">
 <button type="button" class="btn btn-primary mb-3" id="addPgRow">
-    + Add More
+    + Row
 </button>
 </div>
 <div class="d-flex  align-items-center justify-content-end">

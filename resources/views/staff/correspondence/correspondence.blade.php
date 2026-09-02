@@ -100,7 +100,7 @@
 
 <div class="d-flex justify-content-between mt-3">
     <button type="button" id="addRow" class="btn btn-primary btn-sm">
-        + Add More
+        + Row
     </button>
 
     <button class="btn btn-success btn-sm">

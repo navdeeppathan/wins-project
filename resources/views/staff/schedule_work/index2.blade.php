@@ -77,7 +77,7 @@
 </div>
 
 <div class="d-flex align-items-center justify-content-end mt-3 mb-3">
-<button type="button" class="btn btn-primary" id="addRow">+ Add More</button>
+<button type="button" class="btn btn-primary" id="addRow">+ Row</button>
 </div>
 <div class="d-flex align-items-center justify-content-end mt-2">
 <button class="btn btn-success float-end">Save Schedule</button>
