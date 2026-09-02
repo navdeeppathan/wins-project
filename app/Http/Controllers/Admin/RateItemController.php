@@ -47,7 +47,15 @@ class RateItemController extends Controller
             'basic_rate' => 'required'
         ]);
 
-        RateItem::create($request->all());
+        $item = RateItem::create($request->all());
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Basic rate created successfully.',
+                'item' => $item
+            ]);
+        }
 
         return back()->with('success', 'Rate item created successfully.');
     }

@@ -6,117 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3>Basic Rates</h3>
-
-
-    <button class="btn btn-success" id="addBtn">
-        + Add Basic Rate
-    </button>
-
-    
-
-
 </div>
-
-<div id="addSection" class="card mb-4" style="display:none;">
-        <div class="card-header">
-            <h5 class="mb-0">Add Basic Rate</h5>
-        </div>
-
-        <div class="card-body">
-
-            <form method="POST" action="{{ route('admin.rate-items.store') }}">
-                @csrf
-
-                <div class="row">
-
-                    <div class="col-md-3 mb-3">
-                        <label class="fw-bold">Rate Type</label>
-                        <select name="rate_types" class="form-select" required>
-                            <option value="">Select</option>
-                            <option value="DSR">DSR</option>
-                            <option value="NSR">NSR</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label class="fw-bold">Department</label>
-                        <select name="department" class="form-select" required>
-                            <option value="">Select</option>
-                            <option value="CIVIL">CIVIL</option>
-                            <option value="ELECTRICAL">ELECTRICAL</option>
-                            <option value="HORTICULTURE">HORTICULTURE</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label class="fw-bold">Category</label>
-                        <select name="category_name" class="form-select" required>
-                            <option value="">Select</option>
-                            <option value="HIRE CHARGES OF PLANTS & MACHINERY">
-                                HIRE CHARGES OF PLANTS & MACHINERY
-                            </option>
-                            <option value="LABOUR">LABOUR</option>
-                            <option value="MATERIALS">MATERIALS</option>
-                            <option value="CARRIAGE">CARRIAGE</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-3 mb-3">
-                        <label class="fw-bold">Code No</label>
-                        <input type="text"
-                            name="code_no"
-                            class="form-control"
-                            required>
-                    </div>
-
-                    <div class="col-md-8 mb-3">
-                        <label class="fw-bold">Description</label>
-                        <textarea name="description"
-                                rows="4"
-                                class="form-control"
-                                required></textarea>
-                    </div>
-
-                    <div class="col-md-2 mb-3">
-                        <label class="fw-bold">Unit</label>
-                        <input type="text"
-                            name="unit"
-                            class="form-control"
-                            required>
-                    </div>
-
-                    <div class="col-md-2 mb-3">
-                        <label class="fw-bold">Basic Rate</label>
-                        <input type="number"
-                            step="0.01"
-                            name="basic_rate"
-                            class="form-control"
-                            required>
-                    </div>
-
-                    {{-- <div class="col-md-3 mb-3">
-                        <label class="fw-bold">Effective Date</label>
-                        <input type="date"
-                            name="effective_date"
-                            class="form-control">
-                    </div> --}}
-
-                </div>
-
-                <button type="submit" class="btn btn-success">
-                    Save
-                </button>
-
-                <button type="button"
-                        class="btn btn-secondary"
-                        id="cancelAddBtn">
-                    Cancel
-                </button>
-
-            </form>
-
-        </div>
-    </div>
 
 <form method="GET" action="{{ route('admin.rate-items.index') }}" class="mb-3">
     <div class="row">
@@ -131,7 +21,7 @@
         </div>
 
         <div class="col-md-3">
-            <label class="fw-bold">Department</label>
+            <label class="fw-bold">Section</label>
             <select name="department" class="form-select">
                 <option value="">Select</option>
                 <option value="CIVIL" {{ request('department')=='CIVIL' ? 'selected':'' }}>CIVIL</option>
@@ -192,7 +82,7 @@
                 <tr>
                     <th>#</th>
                     <th>Rate Type</th>
-                    <th>Department</th>
+                    <th>Section</th>
                     <th>Category</th>
                     <th>Code No</th>
                     <th>Description</th>
@@ -258,10 +148,12 @@
 
     </div>
 
+    <div class="d-flex align-items-center justify-content-end mt-3">
+        <button type="button" id="addRowBtn" class="btn btn-primary btn-sm">+ New Row</button>
+    </div>
+
 </div>
-
-
-
+</div>
 
 @endsection
 
@@ -269,14 +161,15 @@
 
 <script>
 
-new DataTable('#rateTable', {
+let table = new DataTable('#rateTable', {
 
     scrollX: true,
     scrollCollapse: true,
     responsive: false,
     autoWidth: true,
 
-    pageLength: 10,
+    pageLength: 5,
+    lengthMenu: [5, 10, 25, 50, 100],
 
     createdRow: function(row, data, index) {
 
@@ -300,20 +193,105 @@ new DataTable('#rateTable', {
     }
 });
 
-$('#addBtn').click(function(){
+$('#addRowBtn').click(function(){
+    let index = $('#rateTable tbody tr').length + 1;
 
-    $('#addSection').slideDown();
+    let row = `
+    <tr class="new-rate-row">
+        <td>${index}</td>
+        <td>
+            <select class="form-select new_rate_types">
+                <option value="">Select</option>
+                <option value="DSR">DSR</option>
+                <option value="NSR">NSR</option>
+            </select>
+        </td>
+        <td>
+            <select class="form-select new_department">
+                <option value="">Select</option>
+                <option value="CIVIL">CIVIL</option>
+                <option value="ELECTRICAL">ELECTRICAL</option>
+                <option value="HORTICULTURE">HORTICULTURE</option>
+            </select>
+        </td>
+        <td>
+            <select class="form-select new_category_name">
+                <option value="">Select</option>
+                <option value="HIRE CHARGES OF PLANTS & MACHINERY">HIRE CHARGES OF PLANTS & MACHINERY</option>
+                <option value="LABOUR">LABOUR</option>
+                <option value="MATERIALS">MATERIALS</option>
+                <option value="CARRIAGE">CARRIAGE</option>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="form-control new_code_no" placeholder="Code No">
+        </td>
+        <td>
+            <textarea class="form-control new_description" rows="2" placeholder="Description"></textarea>
+        </td>
+        <td>
+            <input type="text" class="form-control new_unit" placeholder="Unit">
+        </td>
+        <td width="180">
+            <input type="number" step="0.01" class="form-control new_basic_rate" placeholder="0.00">
+        </td>
+        <td>
+            <button type="button" class="btn btn-success btn-sm saveNewRateBtn">Save</button>
+            <button type="button" class="btn btn-danger btn-sm cancelNewRowBtn">❌</button>
+        </td>
+    </tr>`;
 
-    $('html, body').animate({
-        scrollTop: $('#addSection').offset().top - 80
-    }, 500);
-
+    $('#rateTable tbody').append(row);
 });
 
-$('#cancelAddBtn').click(function(){
+$(document).on('click', '.cancelNewRowBtn', function () {
+    $(this).closest('tr').remove();
+});
 
-    $('#addSection').slideUp();
+$(document).on('click', '.saveNewRateBtn', function () {
+    let row = $(this).closest('tr');
 
+    let rate_types = row.find('.new_rate_types').val();
+    let department = row.find('.new_department').val();
+    let category_name = row.find('.new_category_name').val();
+    let code_no = row.find('.new_code_no').val();
+    let description = row.find('.new_description').val();
+    let unit = row.find('.new_unit').val();
+    let basic_rate = row.find('.new_basic_rate').val();
+
+    if (!rate_types || !department || !category_name || !code_no || !description || !unit || !basic_rate) {
+        alert('Please fill all required fields.');
+        return;
+    }
+
+    let btn = $(this);
+    btn.prop('disabled', true).text('Saving...');
+
+    $.ajax({
+        url: "{{ route('admin.rate-items.store') }}",
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            rate_types: rate_types,
+            department: department,
+            category_name: category_name,
+            code_no: code_no,
+            description: description,
+            unit: unit,
+            basic_rate: basic_rate
+        },
+        success: function (res) {
+            location.reload();
+        },
+        error: function (xhr) {
+            btn.prop('disabled', false).text('Save');
+            let msg = 'Failed to save rate item.';
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                msg = xhr.responseJSON.message;
+            }
+            alert(msg);
+        }
+    });
 });
 
 $(document).on('click','.saveRateBtn',function(){

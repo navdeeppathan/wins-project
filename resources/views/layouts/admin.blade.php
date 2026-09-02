@@ -215,7 +215,7 @@
                         </svg>
                     </span>
 
-                    <span class="nav-text">RATE ITEMS</span>
+                    <span class="nav-text">BASIC RATES</span>
                 </a>
             </div>
             {{-- @endif --}}
