@@ -137,7 +137,7 @@
                     <button type="button"
                             class="btn btn-sm btn-success add-row-btn"
                             data-schedule="{{ $scheduleWork->id }}">
-                        + Add Row
+                        + Row
                     </button>
                 </div>
 
