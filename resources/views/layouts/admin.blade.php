@@ -291,7 +291,7 @@
 
                     Request::is('admin/vendors*') ||
                     Request::is('admin/users*') ||
-                    Request::is('admin/cqc-vault*');
+                    ($role === 'superadmin' && Request::is('admin/cqc-vault*'));
             @endphp
 
             @if(in_array($role, $menu['establishment']))
@@ -334,7 +334,7 @@
                         STAFF
                     </a>
 
-                    @if(in_array($role, ['admin', 'superadmin']))
+                    @if($role === 'superadmin')
                     <a href="{{ route('admin.cqc-vault.index') }}"
                     class="dropdown-item {{ Request::is('admin/cqc-vault*') ? 'active' : '' }}">
                         E-Vault
