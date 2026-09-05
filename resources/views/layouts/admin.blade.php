@@ -393,10 +393,17 @@
                     </a>
                 </div>
             </div>
-            @endif
-
-
-
+            <div class="nav-item">
+                <a href="{{ route('subscription.index') }}"
+                class="nav-link {{ Request::is('*subscription*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-text">SUBSCRIPTION</span>
+                </a>
+            </div>
 
         </nav>
 
@@ -412,10 +419,27 @@
                 <input type="text" placeholder="Search campaigns, customers, or templates...">
             </div>
             <div>
-
-                    <span style="color: red;" class="topbar-title text-center text-red">YOUR DigiProject TRIAL PERIOD IS VALID UPTO 31/07/2026</span>
-
-
+                @php
+                    $navUser = auth()->user();
+                    $activeSub = $navUser ? $navUser->activeSubscription() : null;
+                @endphp
+                @if($activeSub)
+                    <span style="color: #10b981; font-weight: 600;" class="topbar-title text-center">
+                        <i class="bi bi-shield-fill-check me-1"></i> {{ strtoupper($activeSub->plan_name) }} VALID UPTO {{ date('d/m/Y', strtotime($activeSub->expiry_date)) }} ({{ $activeSub->days_remaining }} DAYS LEFT)
+                    </span>
+                @elseif($navUser && in_array($navUser->role, ['super_admin', 'superadmin']))
+                    <span style="color: #f59e0b; font-weight: 600;" class="topbar-title text-center">
+                        <i class="bi bi-star-fill me-1"></i> SUPER ADMIN FULL ACCESS
+                    </span>
+                @elseif($navUser && $navUser->plan_status === 'pending')
+                    <span style="color: #f59e0b; font-weight: 600;" class="topbar-title text-center">
+                        <i class="bi bi-clock-history me-1"></i> PAYMENT VERIFICATION PENDING
+                    </span>
+                @else
+                    <a href="{{ route('subscription.index') }}" style="color: #ef4444; font-weight: 700; text-decoration: none;" class="topbar-title text-center">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> NO ACTIVE SUBSCRIPTION - CLICK TO PURCHASE PLAN
+                    </a>
+                @endif
             </div>
             <div class="topbar-actions">
                 <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">

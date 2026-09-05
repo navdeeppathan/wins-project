@@ -52,7 +52,14 @@ Route::get('clear-cache', function() {
 
 
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/subscription', [\App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscription.index');
+    Route::post('/subscription/purchase', [\App\Http\Controllers\SubscriptionController::class, 'store'])->name('subscription.store');
+});
+
+Route::middleware(['auth', 'check.subscription'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/subscription', [\App\Http\Controllers\SubscriptionController::class, 'index'])->name('subscription.index.alias');
+    Route::post('/subscription/purchase', [\App\Http\Controllers\SubscriptionController::class, 'store'])->name('subscription.store.alias');
 
 
     Route::get('/rate-items', [RateItemController::class, 'index'])
@@ -552,7 +559,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 
-Route::middleware(['auth'])->prefix('staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'check.subscription'])->prefix('staff')->name('staff.')->group(function () {
 
     /* ===================== Dashboard ===================== */
     Route::get('/', function () {
@@ -1028,6 +1035,11 @@ Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(fu
     Route::post('/categories/status/{id}', [CategoryController::class,'status'])->name('categories.status');
 
     Route::post('/subcategories/status/{id}', [SubcategoryController::class,'status'])->name('subcategories.status');
+
+    /* ===================== SUBSCRIPTION MANAGEMENT ===================== */
+    Route::get('subscriptions', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'index'])->name('subscriptions.index');
+    Route::post('subscriptions/{id}/approve', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'approve'])->name('subscriptions.approve');
+    Route::post('subscriptions/{id}/reject', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'reject'])->name('subscriptions.reject');
 });
 
 
