@@ -1036,10 +1036,13 @@ Route::middleware(['auth'])->prefix('superadmin')->name('superadmin.')->group(fu
 
     Route::post('/subcategories/status/{id}', [SubcategoryController::class,'status'])->name('subcategories.status');
 
-    /* ===================== SUBSCRIPTION MANAGEMENT ===================== */
+    /* ===================== SUBSCRIPTION & PLAN MANAGEMENT ===================== */
     Route::get('subscriptions', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'index'])->name('subscriptions.index');
     Route::post('subscriptions/{id}/approve', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'approve'])->name('subscriptions.approve');
     Route::post('subscriptions/{id}/reject', [\App\Http\Controllers\SuperAdmin\SubscriptionManagementController::class, 'reject'])->name('subscriptions.reject');
+
+    Route::resource('plans', \App\Http\Controllers\SuperAdmin\PlanController::class);
+    Route::post('plans/{id}/toggle-status', [\App\Http\Controllers\SuperAdmin\PlanController::class, 'toggleStatus'])->name('plans.toggle-status');
 });
 
 

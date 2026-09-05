@@ -12,7 +12,9 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('slug', 50)->unique();
+            $table->string('badge', 50)->nullable();
             $table->integer('duration_months');
+            $table->decimal('original_price', 10, 2)->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('gst_percent', 5, 2)->default(18.00);
             $table->decimal('total_price', 10, 2);

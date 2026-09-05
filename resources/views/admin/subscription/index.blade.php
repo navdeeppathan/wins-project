@@ -246,11 +246,17 @@
                     <p class="text-muted small mb-0">{{ $plan->description ?? 'Full access to DigiProject tools.' }}</p>
 
                     <div class="plan-price-box">
+                        @if(!empty($plan->original_price) && $plan->original_price > $plan->price)
+                            <div class="small mb-1">
+                                <span class="text-decoration-line-through text-muted fw-semibold">₹ {{ number_format($plan->original_price, 0) }}</span>
+                                <span class="badge bg-success-subtle text-success ms-1">Save {{ round((($plan->original_price - $plan->price) / $plan->original_price) * 100) }}%</span>
+                            </div>
+                        @endif
                         <div class="plan-price-main">
                             ₹ {{ number_format($plan->price, 0) }}
                         </div>
                         <div class="plan-price-gst">
-                            + 18% GST = <strong>₹ {{ number_format($plan->total_price, 0) }}</strong>
+                            + {{ number_format($plan->gst_percent, 0) }}% GST = <strong>₹ {{ number_format($plan->total_price, 0) }}</strong>
                         </div>
                         <div class="text-muted small mt-1">
                             Validity: <strong>{{ $plan->duration_months }} Month{{ $plan->duration_months > 1 ? 's' : '' }}</strong>
