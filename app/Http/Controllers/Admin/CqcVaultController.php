@@ -14,7 +14,7 @@ class CqcVaultController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $user = auth()->user();
-            if (!$user || $user->role !== 'superadmin') {
+            if (!$user || !in_array($user->role, ['super_admin', 'superadmin'])) {
                 abort(403, 'Unauthorized access to E-Vault.');
             }
             return $next($request);
