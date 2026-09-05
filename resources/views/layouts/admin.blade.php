@@ -393,6 +393,8 @@
                     </a>
                 </div>
             </div>
+            @endif
+
             <div class="nav-item">
                 <a href="{{ route('subscription.index') }}"
                 class="nav-link {{ Request::is('*subscription*') ? 'active' : '' }}">
